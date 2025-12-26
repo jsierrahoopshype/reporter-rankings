@@ -1,107 +1,591 @@
 {
-  "generated_at": "2025-12-26T18:01:12.026075",
-  "total_rumors": 24,
-  "total_reporters": 9,
+  "generated_at": "2025-12-26T22:07:57.805419",
+  "total_rumors": 100,
+  "processed_rumors": 100,
+  "total_reporters": 52,
+  "detection_methods": {
+    "unknown_handle": 38,
+    "outlet_fallback": 33,
+    "text_start": 26,
+    "text_body": 3
+  },
   "reporters": [
     {
-      "id": "dave_mcmenamin",
-      "name": "Dave McMenamin",
-      "outlet": "ESPN",
-      "tier": 2,
-      "avatar": "DM",
-      "total": 4,
-      "breaking": 1,
+      "id": "new_york_times",
+      "name": "New York Times",
+      "outlet": "New York Times",
+      "tier": 4,
+      "avatar": "NY",
+      "total": 7,
+      "breaking": 0,
       "by_topic": {
-        "general": 2,
-        "injury": 2
+        "general": 1,
+        "trade": 1,
+        "injury": 5
       },
       "by_player": {
-        "JJ Redick": 2,
-        "Jake LaRavia": 1,
-        "Austin Reaves": 1,
-        "Luka Doncic": 1,
-        "Rui Hachimura": 1
+        "Kevin Garnett": 4,
+        "Alex Rodriguez": 4,
+        "Marc Lore": 4,
+        "Klay Thompson": 2,
+        "Steve Kerr": 1,
+        "Mike Brown": 1,
+        "Mitchell Robinson": 1
       },
       "by_team": {
-        "Lakers": 4
+        "Timberwolves": 4,
+        "Warriors": 2,
+        "Mavericks": 2,
+        "Knicks": 1
       },
       "by_date": {
-        "2025-12-25": 4
+        "2025-12-26": 6,
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "outlet_fallback": 7
       },
       "recent_rumors": [
         {
-          "id": 37,
-          "reporter": "Dave McMenamin",
-          "reporter_key": "dave_mcmenamin",
-          "outlet": "ESPN",
-          "tier": 2,
-          "date": "2025-12-25",
-          "text": "Dave McMenamin:JJ Redick said he told his group to be ready for an \u201cuncomfortable\u201d practice and film session on Saturday to address what Redick described to reporters as a lack of proper care.LAL next plays Sunday vs. SAC.x.com",
+          "date": "2025-12-26",
+          "text": "From the very first moments that Marc Lore and Alex Rodriguez joined the Minnesota Timberwolves organization, they were deluged with pleas from a forlorn fan base. Their mentions on social media were flooded with them. Anytime they would run into a Timberwolves fan in public, they would hear the dem...",
           "topic": "general",
-          "players": [
-            "JJ Redick"
-          ],
           "teams": [
-            "Lakers"
+            "Timberwolves"
           ],
-          "source_url": "https://x.com/mcten/status/2004397271971139875",
-          "is_breaking": true
+          "players": [
+            "Kevin Garnett",
+            "Alex Rodriguez",
+            "Marc Lore"
+          ],
+          "source_url": "https://www.nytimes.com/athletic/6911903/2025/12/25/kevin-garnett-timberwolves-return-a-rod/?source=emp_shared_article"
         },
         {
-          "id": 40,
-          "reporter": "Dave McMenamin",
-          "reporter_key": "dave_mcmenamin",
-          "outlet": "ESPN",
-          "tier": 2,
-          "date": "2025-12-25",
-          "text": "Dave McMenamin:Jake LaRavia said there is a \u201cdisconnect\u201d within the team right now but could not quite verbalize what it was or the cause of it.x.com",
-          "topic": "general",
-          "players": [
-            "Jake LaRavia"
-          ],
+          "date": "2025-12-26",
+          "text": "Garnett felt so betrayed by the ordeal that he refused to even show his face at Target Center despite several overtures from the team hoping to host him for big moments in the playoffs. He also rebuffed multiple efforts to hang his No. 21 in the rafters, an embarrassment for the fans that cut deeper...",
+          "topic": "trade",
           "teams": [
-            "Lakers"
+            "Timberwolves"
           ],
-          "source_url": "https://x.com/mcten/status/2004400622930706808",
-          "is_breaking": false
+          "players": [
+            "Kevin Garnett",
+            "Alex Rodriguez",
+            "Marc Lore"
+          ],
+          "source_url": "https://www.nytimes.com/athletic/6911903/2025/12/25/kevin-garnett-timberwolves-return-a-rod/?source=emp_shared_article"
         },
         {
-          "id": 43,
-          "reporter": "Dave McMenamin",
-          "reporter_key": "dave_mcmenamin",
-          "outlet": "ESPN",
-          "tier": 2,
-          "date": "2025-12-25",
-          "text": "Dave McMenamin:Austin Reaves left the arena without the assistance of any brace or boot of crutch for his left leg.He told reporters \u201cMerry Christmas\u201d as he made his exit. JJ Redick said he didn\u2019t have further information on Reaves\u2019 left calf at this time.x.com",
+          "date": "2025-12-26",
+          "text": "The unique structure of the agreement for Lore and Rodriguez to begin as limited partners and assume majority control over the course of several years took some of the pressure off the situation. They were in no position to make any sweeping changes or promises right away, and Garnett wasn\u2019t in a hu...",
           "topic": "injury",
+          "teams": [
+            "Timberwolves"
+          ],
+          "players": [
+            "Kevin Garnett",
+            "Alex Rodriguez",
+            "Marc Lore"
+          ],
+          "source_url": "https://www.nytimes.com/athletic/6911903/2025/12/25/kevin-garnett-timberwolves-return-a-rod/?source=emp_shared_article"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "\u201cWe felt it from day one,\u201d said Kelly Laferriere, a senior adviser to Lore and Rodriguez and the chief business officer of A-Rod Corp. \u201cIt was like this huge hole in the heart of the organization.\u201d Rodriguez understands all too well the strains that can come between a superstar and a franchise. But ...",
+          "topic": "injury",
+          "teams": [
+            "Timberwolves"
+          ],
+          "players": [
+            "Kevin Garnett",
+            "Alex Rodriguez",
+            "Marc Lore"
+          ],
+          "source_url": "https://www.nytimes.com/athletic/6911903/2025/12/25/kevin-garnett-timberwolves-return-a-rod/?source=emp_shared_article"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "On Christmas Eve, Steve Kerr called the Warriors a fading dynasty. Then Klay returned, and it felt like one of the pillars of the dynasty was disappearing from the family photo. He was the quintessential Warrior, the embodiment of the era\u2019s aura. It made him beloved in these parts. His legend, his l...",
+          "topic": "injury",
+          "teams": [
+            "Warriors",
+            "Mavericks"
+          ],
+          "players": [
+            "Klay Thompson"
+          ],
+          "source_url": "https://www.nytimes.com/athletic/6919481/2025/12/26/klay-thompson-warriors-mavericks-christmas/"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "\u201cI\u2019ll never get used to seeing Klay on the other side,\u201d Kerr said. \u201cI miss Klay.I wish he was still here.\u201d This day was supposed to be about Klay. Instead, the mending between Klay\u2019s former teammate and coach took precedence.New York Times",
+          "topic": "injury",
+          "teams": [
+            "Warriors",
+            "Mavericks"
+          ],
+          "players": [
+            "Steve Kerr",
+            "Klay Thompson"
+          ],
+          "source_url": "https://www.nytimes.com/athletic/6919481/2025/12/26/klay-thompson-warriors-mavericks-christmas/"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Robinson entered the game with 7:43 left and the Knicks down by 13. By the 4:09 mark, New York was down by one. In between that time, Robinson had five offensive rebounds that led to a Knicks basket every time. One less board and the Knicks lose. One less second-chance opportunity and New York\u2019s Chr...",
+          "topic": "injury",
+          "teams": [
+            "Knicks"
+          ],
+          "players": [
+            "Mike Brown",
+            "Mitchell Robinson"
+          ],
+          "source_url": "https://www.nytimes.com/athletic/6918815/2025/12/25/if-the-knicks-want-a-championship-mitchell-robinson-must-stay-past-trade-deadline/"
+        }
+      ]
+    },
+    {
+      "id": "mikeacurtis2",
+      "name": "@mikeacurtis2",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "M",
+      "total": 5,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 3,
+        "general": 2
+      },
+      "by_player": {
+        "Anthony Davis": 2,
+        "Jason Kidd": 2,
+        "Cooper Flagg": 1,
+        "Brandon Williams": 1,
+        "Klay Thompson": 1,
+        "Stephen Curry": 1
+      },
+      "by_team": {
+        "Mavericks": 4,
+        "Warriors": 3
+      },
+      "by_date": {
+        "2025-12-26": 1,
+        "2025-12-25": 4
+      },
+      "detection_methods": {
+        "unknown_handle": 5
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Mike Curtis: Asked Cooper Flagg about Anthony Davis\u2019 groin injury:\u201cIt\u2019s tough. It\u2019s really unfortunate for us. I feel like we\u2019re a better team with him on the court & when he\u2019s playing at his best. Obviously tough, but we gotta have a next man up mentality & try to fill the hole the best we can.\u201dx.c...",
+          "topic": "injury",
+          "teams": [
+            "Mavericks"
+          ],
+          "players": [
+            "Anthony Davis",
+            "Cooper Flagg"
+          ],
+          "source_url": "https://x.com/MikeACurtis2/status/2004607994412367963?s=20"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Mike Curtis: Jason Kidd on Brandon Williams' season-high 26 points:\"I thought B-Will was great. He was attacking & getting to the paint. Finishing, passing, finding guys. His speed was big for us this afternoon.I thought for our group, we missed a lot of layups there in that 1st half & that led to l...",
+          "topic": "injury",
+          "teams": [
+            "Warriors",
+            "Mavericks"
+          ],
+          "players": [
+            "Jason Kidd",
+            "Brandon Williams"
+          ],
+          "source_url": "https://x.com/MikeACurtis2/status/2004357120737923545"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Mike Curtis: Asked Klay Thompson about playing at Chase Center now that he\u2019s done it a few times since joining the Mavs:\u201cIt feels like a great day to showcase our talent on Christmas. It\u2019s obviously not as emotional compared to the 1st time, but it\u2019s always fun coming back & seeing a lot of familiar...",
+          "topic": "injury",
+          "teams": [
+            "Warriors",
+            "Mavericks"
+          ],
+          "players": [
+            "Klay Thompson"
+          ],
+          "source_url": "https://x.com/MikeACurtis2/status/2004364689158164625"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Mike Curtis:Jason Kidd said he did not have an update on Anthony Davis, who suffered left the game in the second quarter with right groin spasms.x.com",
+          "topic": "general",
+          "teams": [
+            "Mavericks"
+          ],
+          "players": [
+            "Jason Kidd",
+            "Anthony Davis"
+          ],
+          "source_url": "https://x.com/MikeACurtis2/status/2004354993969897796"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Mike Curtis:Stephen Curry just reached 26,000 career points with that layup.x.com",
+          "topic": "general",
+          "teams": [
+            "Warriors"
+          ],
+          "players": [
+            "Stephen Curry"
+          ],
+          "source_url": "https://x.com/MikeACurtis2/status/2004336586922905915"
+        }
+      ]
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "outlet": "YouTube",
+      "tier": 4,
+      "avatar": "Y",
+      "total": 5,
+      "breaking": 0,
+      "by_topic": {
+        "trade": 1,
+        "injury": 3,
+        "frontoffice": 1
+      },
+      "by_player": {
+        "Draymond Green": 3,
+        "Kevin Durant": 2,
+        "Jeff Green": 1,
+        "Ime Udoka": 1,
+        "Charles Barkley": 1
+      },
+      "by_team": {
+        "Warriors": 3,
+        "Rockets": 2
+      },
+      "by_date": {
+        "2025-12-26": 5
+      },
+      "detection_methods": {
+        "outlet_fallback": 5
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Draymond Green: \"I'm really happy that I left that huddle when I did because then it allowed us yesterday to just move forward and talk about what we needed to talkabout and the things that we need to get done with this team. I think we're starting to play a lot better. So, um, it was good to mitiga...",
+          "topic": "trade",
+          "teams": [
+            "Warriors"
+          ],
+          "players": [
+            "Draymond Green"
+          ],
+          "source_url": "https://www.youtube.com/watch?v=HiGGGVPl2_U"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Draymond Green: \"I think, you know \u2014 and in the sport that we play, which is, you know, you \u2014 you got to have very high level of testosterone in this sport to compete at a high level. Sometimes things don\u2019t \u2014 don\u2019t quite go that way.But, you know, I think oftentimes, um, Kenny, people look at certai...",
+          "topic": "injury",
+          "teams": [
+            "Warriors"
+          ],
+          "players": [
+            "Draymond Green"
+          ],
+          "source_url": "https://www.youtube.com/watch?v=HiGGGVPl2_U"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "KD, can you talk to us about your longevity and how it feels to be on a team with the only other remaining Supersonic in the league? Kevin Durant: Yeah,I'm just grateful, like I said, to be around. Especially to be around Jeff (Green) again\u2014somebody I really admire and love like a brother. Not a lot...",
+          "topic": "injury",
+          "teams": [
+            "Rockets"
+          ],
+          "players": [
+            "Kevin Durant",
+            "Jeff Green"
+          ],
+          "source_url": "https://www.youtube.com/watch?v=r-9yeIqH2UQ"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Were you surprised to be taken out in the fourth quarter? Kevin Durant: No, I trust coach.YouTube",
+          "topic": "frontoffice",
+          "teams": [
+            "Rockets"
+          ],
+          "players": [
+            "Kevin Durant",
+            "Ime Udoka"
+          ],
+          "source_url": "https://www.youtube.com/watch?v=r-9yeIqH2UQ"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Charles Barkley trolls Draymond\u201cWe'll have you back here once playoffs start\u201d?YouTube",
+          "topic": "injury",
+          "teams": [
+            "Warriors"
+          ],
+          "players": [
+            "Charles Barkley",
+            "Draymond Green"
+          ],
+          "source_url": "https://www.youtube.com/watch?v=ljgr9wi6Jts"
+        }
+      ]
+    },
+    {
+      "id": "new_york_post",
+      "name": "New York Post",
+      "outlet": "New York Post",
+      "tier": 4,
+      "avatar": "NY",
+      "total": 4,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 4
+      },
+      "by_player": {
+        "Cam Thomas": 3,
+        "Jordi Fernandez": 2,
+        "Karl-Anthony Towns": 1
+      },
+      "by_team": {
+        "Nets": 3,
+        "Knicks": 1
+      },
+      "by_date": {
+        "2025-12-26": 3,
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "outlet_fallback": 4
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Cam Thomas is finally making his Nets return. But he\u2019s coming back to a different Nets team. And he\u2019s going to have to change with it. After nearly eight weeks out with a hamstring strain, Thomas is back practicing and is slated to play Saturday at the Timberwolves. It will be the 24-year-old guard\u2019...",
+          "topic": "injury",
+          "teams": [
+            "Nets"
+          ],
+          "players": [
+            "Jordi Fernandez",
+            "Cam Thomas"
+          ],
+          "source_url": "https://nypost.com/2025/12/26/sports/cam-thomas-finally-returning-to-nets-as-roster-evolution-raises-questions/"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "A long-armed swarming defense and egalitarian quick-passing offense hunting open 3-pointers has been the order of the day, and it\u2019s worked. And Thomas \u2014 who has thrived on iso ball and feasted in the midrange \u2014 will adjust to it. \u201cYeah, last year before he got hurt, we still played like (that), not ...",
+          "topic": "injury",
+          "teams": [
+            "Nets"
+          ],
+          "players": [
+            "Jordi Fernandez",
+            "Cam Thomas"
+          ],
+          "source_url": "https://nypost.com/2025/12/26/sports/cam-thomas-finally-returning-to-nets-as-roster-evolution-raises-questions/"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "That\u2019s what the Nets \u2014 and other scouts across the league \u2014 are going to find out.\u201cEvery team adjusts when a certain player goes out. Every team that I saw adjusts to who\u2019s out there playing. We\u2019ll figure it out. Just go out there and play ball. It\u2019s not rocket science,\u201d said Thomas. \u201cWe just go out...",
+          "topic": "injury",
+          "teams": [
+            "Nets"
+          ],
+          "players": [
+            "Cam Thomas"
+          ],
+          "source_url": "https://nypost.com/2025/12/26/sports/cam-thomas-finally-returning-to-nets-as-roster-evolution-raises-questions/"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Karl-Anthony Towns is really about to ring in the new year in style \u2014 quite literally.On Christmas Day, the Knicks star and longtime girlfriend Jordyn Woods announced their engagement through a shared Instagram post full of pictures of the happy couple.New York Post",
+          "topic": "injury",
+          "teams": [
+            "Knicks"
+          ],
+          "players": [
+            "Karl-Anthony Towns"
+          ],
+          "source_url": "https://nypost.com/2025/12/25/sports/knicks-karl-anthony-towns-jordyn-woods-announce-engagement-on-christmas/"
+        }
+      ]
+    },
+    {
+      "id": "therealbeede",
+      "name": "@therealbeede",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "T",
+      "total": 4,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 4
+      },
+      "by_player": {
+        "Jamahl Mosley": 4,
+        "Jalen Suggs": 1,
+        "Franz Wagner": 1,
+        "Moritz Wagner": 1,
+        "Tristan da Silva": 1
+      },
+      "by_team": {
+        "Magic": 4
+      },
+      "by_date": {
+        "2025-12-26": 4
+      },
+      "detection_methods": {
+        "unknown_handle": 4
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Jason Beede: #Magic coach Jamahl Mosley said Jalen Suggs (who is doubtful tonight with his left hip contusion) is able to do spot shooting right now but still no contact work.\"Slowly but surely just trying to get his way back into the fold as well,\" Mosley said.x.com",
+          "topic": "injury",
+          "teams": [
+            "Magic"
+          ],
+          "players": [
+            "Jamahl Mosley",
+            "Jalen Suggs"
+          ],
+          "source_url": "https://x.com/therealBeede/status/2004597452574523662?s=20"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Jason Beede: #Magic coach Jamahl Mosley said Franz Wagner (who is OUT tonight with his left high ankle sprain) is just able to do spot shooting right now.\"Not [putting] a lot of pressure on the foot, but being able to walk around again is very important for us, just the slow progression.\"x.com",
+          "topic": "injury",
+          "teams": [
+            "Magic"
+          ],
+          "players": [
+            "Jamahl Mosley",
+            "Franz Wagner"
+          ],
+          "source_url": "https://x.com/therealBeede/status/2004593509723234389?s=20"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Jason Beede: I asked #Magic coach Jamahl Mosley where Moe Wagner is at in his rehab process, how long he has left and what's next:\"Well, there's no real time frame on what we're doing,\" Mosley said. \"He's just seeing how he keeps responding to treatment.\"Next stage is some 2-on-2, 3-on-3.x.com",
+          "topic": "injury",
+          "teams": [
+            "Magic"
+          ],
+          "players": [
+            "Jamahl Mosley",
+            "Moritz Wagner"
+          ],
+          "source_url": "https://x.com/therealBeede/status/2004595217815810324?s=20"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Jason Beede:#Magic coach Jamahl Mosley expects forward Tristan da Silva (right shoulder contusion) to be able to play tonight againstCharlotte.x.com",
+          "topic": "injury",
+          "teams": [
+            "Magic"
+          ],
+          "players": [
+            "Jamahl Mosley",
+            "Tristan da Silva"
+          ],
+          "source_url": "https://x.com/therealBeede/status/2004586624836055537?s=20"
+        }
+      ]
+    },
+    {
+      "id": "basketnews",
+      "name": "BasketNews",
+      "outlet": "BasketNews",
+      "tier": 4,
+      "avatar": "B",
+      "total": 4,
+      "breaking": 0,
+      "by_topic": {
+        "general": 1,
+        "injury": 3
+      },
+      "by_player": {
+        "Luka Doncic": 2,
+        "Stephen Curry": 1,
+        "Nikola Jokic": 1,
+        "JJ Redick": 1,
+        "Mark Daigneault": 1,
+        "Chet Holmgren": 1
+      },
+      "by_team": {
+        "Lakers": 2,
+        "Warriors": 1,
+        "Nuggets": 1,
+        "Thunder": 1
+      },
+      "by_date": {
+        "2025-12-26": 3,
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "outlet_fallback": 4
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Jokic finished the game with 56 points (15/21 FG, 4/6 3PT), 16 rebounds, and 15 assists, leading his team to an impressive win.18 of his 56 points came in overtime, which the Nuggets won 27-23. With this performance, he broke Stephen Curry's record for most points in overtime in NBA history,which wa...",
+          "topic": "general",
+          "teams": [
+            "Warriors",
+            "Nuggets"
+          ],
+          "players": [
+            "Stephen Curry",
+            "Nikola Jokic"
+          ],
+          "source_url": "https://basketnews.com/news-237535-jokic-breaks-steph-currys-record-with-historic-56-point-triple-double-on-christmas.html"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Following JJ Redick's heated postgame rant, Luka Doncic understands the level of urgency the Los Angeles Lakers need to carry in the wake of their recent disappointing losses.\"I don't know what has to change, but definitely something needs to change,\" he said in postgame after a 25-point outing in T...",
+          "topic": "injury",
+          "teams": [
+            "Lakers"
+          ],
           "players": [
             "JJ Redick",
-            "Austin Reaves"
+            "Luka Doncic"
           ],
-          "teams": [
-            "Lakers"
-          ],
-          "source_url": "https://x.com/mcten/status/2004397819931906261",
-          "is_breaking": false
+          "source_url": "https://basketnews.com/news-237532-luka-doncic-lakers-needed-changes-must-be-starting-with-me.html"
         },
         {
-          "id": 65,
-          "reporter": "Dave McMenamin",
-          "reporter_key": "dave_mcmenamin",
-          "outlet": "ESPN",
-          "tier": 2,
-          "date": "2025-12-25",
-          "text": "Dave McMenamin:Luka Doncic and Rui Hachimura are both available tonight vs. HOU,according to the Lakersx.com",
+          "date": "2025-12-26",
+          "text": "Doncic emphasized that the entire team needs to acknowledge its lapses, and he sees himself as the starting point.\"I don\u2019t know. Like I said, we need to talk about it. It\u2019s probably going to be uncomfortable, but everybody has to give better effort, starting with me,\" he said. Doncic added: \"We just...",
           "topic": "injury",
-          "players": [
-            "Luka Doncic",
-            "Rui Hachimura"
-          ],
           "teams": [
             "Lakers"
           ],
-          "source_url": "https://x.com/mcten/status/2004330404363620842",
-          "is_breaking": false
+          "players": [
+            "Luka Doncic"
+          ],
+          "source_url": "https://basketnews.com/news-237532-luka-doncic-lakers-needed-changes-must-be-starting-with-me.html"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "In his postgame presser, Thunder coach Mark Daigneault revealed that Holmgren is dealing with illness, which is connected to the center's ongoing slump. \"He's just a total competitor, so he's always gonna be up to play,\" Daigneault said about Holmgren. \"He played the entire playoff run, a little 100...",
+          "topic": "injury",
+          "teams": [
+            "Thunder"
+          ],
+          "players": [
+            "Mark Daigneault",
+            "Chet Holmgren"
+          ],
+          "source_url": "https://basketnews.com/news-237522-mark-daigneault-reveals-the-problem-behind-chet-holmgrens-struggles-vs-wemby-spurs.html"
         }
       ]
     },
@@ -109,10 +593,10 @@
       "id": "dan_woike",
       "name": "Dan Woike",
       "outlet": "LA Times",
-      "tier": 3,
+      "tier": 2,
       "avatar": "DW",
       "total": 4,
-      "breaking": 1,
+      "breaking": 0,
       "by_topic": {
         "general": 2,
         "injury": 2
@@ -127,428 +611,192 @@
       "by_date": {
         "2025-12-25": 4
       },
+      "detection_methods": {
+        "text_start": 4
+      },
       "recent_rumors": [
         {
-          "id": 38,
-          "reporter": "Dan Woike",
-          "reporter_key": "dan_woike",
-          "outlet": "LA Times",
-          "tier": 3,
           "date": "2025-12-25",
           "text": "Dan Woike:\u201cWe don\u2019t care enough right now,\u201d JJ Redick saysx.com",
           "topic": "general",
-          "players": [
-            "JJ Redick"
-          ],
           "teams": [
             "Lakers"
           ],
-          "source_url": "https://x.com/DanWoikeSports/status/2004395935749886438",
-          "is_breaking": false
+          "players": [
+            "JJ Redick"
+          ],
+          "source_url": "https://x.com/DanWoikeSports/status/2004395935749886438"
         },
         {
-          "id": 39,
-          "reporter": "Dan Woike",
-          "reporter_key": "dan_woike",
-          "outlet": "LA Times",
-          "tier": 3,
           "date": "2025-12-25",
           "text": "Dan Woike:\u201cI\u2019m not doing another 53 games like this,\u201dRedick saysx.com",
           "topic": "general",
+          "teams": [
+            "Lakers"
+          ],
           "players": [
             "JJ Redick"
           ],
-          "teams": [
-            "Lakers"
-          ],
-          "source_url": "https://x.com/DanWoikeSports/status/2004396095829574028",
-          "is_breaking": false
+          "source_url": "https://x.com/DanWoikeSports/status/2004396095829574028"
         },
         {
-          "id": 42,
-          "reporter": "Dan Woike",
-          "reporter_key": "dan_woike",
-          "outlet": "LA Times",
-          "tier": 3,
           "date": "2025-12-25",
           "text": "Dan Woike:Source tells me Austin Reaves will undergo an MRI on his injured calf Friday.x.com",
           "topic": "injury",
-          "players": [
-            "Austin Reaves"
-          ],
           "teams": [
             "Lakers"
           ],
-          "source_url": "https://x.com/DanWoikeSports/status/2004394889321320600",
-          "is_breaking": true
+          "players": [
+            "Austin Reaves"
+          ],
+          "source_url": "https://x.com/DanWoikeSports/status/2004394889321320600"
         },
         {
-          "id": 45,
-          "reporter": "Dan Woike",
-          "reporter_key": "dan_woike",
-          "outlet": "LA Times",
-          "tier": 3,
           "date": "2025-12-25",
           "text": "Dan Woike:Lakers have ruled Austin Reaves out with left calf soreness.x.com",
           "topic": "injury",
-          "players": [
-            "Austin Reaves"
-          ],
           "teams": [
             "Lakers"
           ],
-          "source_url": "https://x.com/DanWoikeSports/status/2004380333798776986",
-          "is_breaking": false
+          "players": [
+            "Austin Reaves"
+          ],
+          "source_url": "https://x.com/DanWoikeSports/status/2004380333798776986"
         }
       ]
     },
     {
-      "id": "espn",
-      "name": "ESPN",
-      "outlet": "ESPN",
-      "tier": 3,
-      "avatar": "E",
+      "id": "the_philadelphia_inquirer",
+      "name": "The Philadelphia Inquirer",
+      "outlet": "The Philadelphia Inquirer",
+      "tier": 4,
+      "avatar": "TP",
       "total": 3,
-      "breaking": 1,
+      "breaking": 0,
       "by_topic": {
-        "general": 1,
         "contract": 1,
+        "general": 1,
         "injury": 1
       },
       "by_player": {
-        "Steve Kerr": 2,
-        "Draymond Green": 2,
-        "JJ Redick": 1,
-        "Austin Reaves": 1
+        "MarJon Beauchamp": 3,
+        "Kelly Oubre": 1
       },
       "by_team": {
-        "Warriors": 2,
-        "Lakers": 1
+        "76ers": 3
       },
       "by_date": {
         "2025-12-26": 3
       },
+      "detection_methods": {
+        "outlet_fallback": 3
+      },
       "recent_rumors": [
         {
-          "id": 19,
-          "reporter": "ESPN",
-          "reporter_key": "espn",
-          "outlet": "ESPN",
-          "tier": 3,
           "date": "2025-12-26",
-          "text": "Three days after an argument between Steve Kerr and Draymond Green tested the foundation of their organization, the Golden State Warriors completed a 3-0 homestand to exit a turbulent week with the most momentum they've had in a month.\"We're in a good place,\" Kerr said after the 126-116 showcase Chr...",
-          "topic": "general",
-          "players": [
-            "Steve Kerr",
-            "Draymond Green"
-          ],
-          "teams": [
-            "Warriors"
-          ],
-          "source_url": "https://www.espn.com/nba/story/_/id/47414725/streaking-warriors-good-place-kerr-green-tiff",
-          "is_breaking": true
-        },
-        {
-          "id": 20,
-          "reporter": "ESPN",
-          "reporter_key": "espn",
-          "outlet": "ESPN",
-          "tier": 3,
-          "date": "2025-12-26",
-          "text": "\"Them two are [now] in a better place,\" Steph Curry said. \"Stuff like that happens. They have the equity of years and years of a relationship that has had its moments.They handled yesterday at practice well and we handled today well as a team.\"ESPN",
+          "text": "MarJon Beauchamp was back in Seattle, preparing to spend the holidays with his family, when the 76ers delivered him an early Christmas gift. The Delaware Blue Coats swingman received a call stating that the Sixers would sign him to a two-way contract and that he\u2019d spend the holidays on an NBA road t...",
           "topic": "contract",
-          "players": [
-            "Steve Kerr",
-            "Draymond Green"
-          ],
           "teams": [
-            "Warriors"
+            "76ers"
           ],
-          "source_url": "https://www.espn.com/nba/story/_/id/47414725/streaking-warriors-good-place-kerr-green-tiff",
-          "is_breaking": false
+          "players": [
+            "MarJon Beauchamp"
+          ],
+          "source_url": "https://www.inquirer.com/sixers/sixers-sign-marjon-beauchamp-looking-for-nba-opportunity-20251226.html?utm_source=t.co&utm_campaign=edit_social_share_twitter_traffic&utm_medium=social&utm_content=&utm_term=&int_promo="
         },
         {
-          "id": 35,
-          "reporter": "ESPN",
-          "reporter_key": "espn",
-          "outlet": "ESPN",
-          "tier": 3,
           "date": "2025-12-26",
-          "text": "\"Austin clearly felt something,\" Lakers coach JJ Redick said after the game.\"We did our normal halftime and then as we were walking out of the locker room, [Lakers director of player performance and health] Dr. [LeRoy] Sims told me he was out.\"ESPN",
-          "topic": "injury",
-          "players": [
-            "JJ Redick",
-            "Austin Reaves"
-          ],
-          "teams": [
-            "Lakers"
-          ],
-          "source_url": "https://www.espn.com/nba/story/_/id/47414854/lakers-austin-reaves-exits-christmas-day-game-due-calf-soreness",
-          "is_breaking": false
-        }
-      ]
-    },
-    {
-      "id": "anthony_slater",
-      "name": "Anthony Slater",
-      "outlet": "The Athletic",
-      "tier": 2,
-      "avatar": "AS",
-      "total": 3,
-      "breaking": 1,
-      "by_topic": {
-        "general": 2,
-        "injury": 1
-      },
-      "by_player": {
-        "Steve Kerr": 2,
-        "Jimmy Butler": 1,
-        "Draymond Green": 1,
-        "Al Horford": 1,
-        "Trayce Jackson-Davis": 1,
-        "Quinten Post": 1
-      },
-      "by_team": {
-        "Warriors": 3,
-        "Hornets": 1,
-        "Nets": 1,
-        "Raptors": 1
-      },
-      "by_date": {
-        "2025-12-25": 3
-      },
-      "recent_rumors": [
-        {
-          "id": 50,
-          "reporter": "Anthony Slater",
-          "reporter_key": "anthony_slater",
-          "outlet": "The Athletic",
-          "tier": 2,
-          "date": "2025-12-25",
-          "text": "Anthony Slater: Jimmy Butler on the Draymond Green and Steve Kerr argument and reconciliation this week\u201cI like that. Y\u2019all yell at each other. Turned me on a little bit. I\u2019m not gonna lie.\u201dx.com",
+          "text": "Having his NBA dream cut short could have been devastating. But Beauchamp said he remained focused by staying in the gym. \u201cI kept working on my game and waiting for my opportunity,\u201d he said. \u201cI feel like every time I had an opportunity, I seized the moment.\u201cObviously, I had ups and downs mentally, j...",
           "topic": "general",
+          "teams": [
+            "76ers"
+          ],
           "players": [
-            "Steve Kerr",
-            "Jimmy Butler",
-            "Draymond Green"
+            "MarJon Beauchamp"
           ],
-          "teams": [
-            "Warriors"
-          ],
-          "source_url": "https://x.com/anthonyVslater/status/2004362633072550128",
-          "is_breaking": true
+          "source_url": "https://www.inquirer.com/sixers/sixers-sign-marjon-beauchamp-looking-for-nba-opportunity-20251226.html?utm_source=t.co&utm_campaign=edit_social_share_twitter_traffic&utm_medium=social&utm_content=&utm_term=&int_promo="
         },
         {
-          "id": 56,
-          "reporter": "Anthony Slater",
-          "reporter_key": "anthony_slater",
-          "outlet": "The Athletic",
-          "tier": 2,
-          "date": "2025-12-25",
-          "text": "Anthony Slater:Warriors complete a 3-0 homestand despite turbulence. Seven players in double figures in the Christmas win: Curry, Butler, Podziemski, Horford, Moody, Melton, Jackson-Davis. They're 16-15, riding a bit of momentum into a Toronto, Brooklyn, Charlotte road trip.x.com",
-          "topic": "general",
-          "players": [],
-          "teams": [
-            "Hornets",
-            "Warriors",
-            "Nets",
-            "Raptors"
-          ],
-          "source_url": "https://x.com/anthonyVslater/status/2004352224181604492",
-          "is_breaking": false
-        },
-        {
-          "id": 86,
-          "reporter": "Anthony Slater",
-          "reporter_key": "anthony_slater",
-          "outlet": "The Athletic",
-          "tier": 2,
-          "date": "2025-12-25",
-          "text": "Anthony Slater:The Warriors expect Al Horford to make his return today against the Mavericks,assuming his pregame warmup goes smooth. Kerr did say he will stick with similar rotation and play Quinten Post and Trayce Jackson-Davis at center.Twitter @anthonyVslater",
+          "date": "2025-12-26",
+          "text": "And he could get the opportunity to provide depth for the Sixers (16-12), who need another athletic wing with Kelly Oubre Jr. sidelined by a left knee sprain.\u201cGuys are injured,\u201d Beauchamp said of the Sixers. \u201cI feel like I can help the team with my length, my defensive abilities, and my shooting abi...",
           "topic": "injury",
-          "players": [
-            "Steve Kerr",
-            "Al Horford",
-            "Trayce Jackson-Davis",
-            "Quinten Post"
-          ],
           "teams": [
-            "Warriors"
+            "76ers"
           ],
-          "source_url": "https://hoopshype.com/social/",
-          "is_breaking": false
+          "players": [
+            "Kelly Oubre",
+            "MarJon Beauchamp"
+          ],
+          "source_url": "https://www.inquirer.com/sixers/sixers-sign-marjon-beauchamp-looking-for-nba-opportunity-20251226.html?utm_source=t.co&utm_campaign=edit_social_share_twitter_traffic&utm_medium=social&utm_content=&utm_term=&int_promo="
         }
       ]
     },
     {
-      "id": "shams_charania",
-      "name": "Shams Charania",
-      "outlet": "ESPN",
-      "tier": 1,
-      "avatar": "SC",
-      "total": 3,
-      "breaking": 0,
-      "by_topic": {
-        "injury": 3
-      },
-      "by_player": {
-        "Anthony Davis": 1,
-        "Dorian Finney-Smith": 1,
-        "Cameron Johnson": 1
-      },
-      "by_team": {
-        "Mavericks": 1,
-        "Warriors": 1,
-        "Rockets": 1,
-        "Lakers": 1,
-        "Nuggets": 1
-      },
-      "by_date": {
-        "2025-12-25": 3
-      },
-      "recent_rumors": [
-        {
-          "id": 61,
-          "reporter": "Shams Charania",
-          "reporter_key": "shams_charania",
-          "outlet": "ESPN",
-          "tier": 1,
-          "date": "2025-12-25",
-          "text": "Shams Charania:Mavericks' Anthony Davis has a groin injury and is out for the remainder of the Christmas Day game against the Warriors.x.com",
-          "topic": "injury",
-          "players": [
-            "Anthony Davis"
-          ],
-          "teams": [
-            "Mavericks",
-            "Warriors"
-          ],
-          "source_url": "https://x.com/ShamsCharania/status/2004336332274126957",
-          "is_breaking": false
-        },
-        {
-          "id": 79,
-          "reporter": "Shams Charania",
-          "reporter_key": "shams_charania",
-          "outlet": "ESPN",
-          "tier": 1,
-          "date": "2025-12-25",
-          "text": "Shams Charania:Houston Rockets forward Dorian Finney-Smith will make his season debut today against the Los Angeles Lakers,sources tell me and @mcten . Finney-Smith will be on a strict minutes restriction as he returns from offseason ankle surgery to face the Lakers team he left in free agency.x.com",
-          "topic": "injury",
-          "players": [
-            "Dorian Finney-Smith"
-          ],
-          "teams": [
-            "Rockets",
-            "Lakers"
-          ],
-          "source_url": "https://x.com/ShamsCharania/status/2004294689412075785",
-          "is_breaking": false
-        },
-        {
-          "id": 97,
-          "reporter": "Shams Charania",
-          "reporter_key": "shams_charania",
-          "outlet": "ESPN",
-          "tier": 1,
-          "date": "2025-12-25",
-          "text": "Shams Charania: Denver'sCam Johnson will be reevaluated in 4 to 6 weeks with his right knee injury,sources tell ESPN. The Nuggets are now down three starters: Johnson, Aaron Gordon (hamstring) and Christian Braun (ankle).Twitter @ShamsCharania",
-          "topic": "injury",
-          "players": [
-            "Cameron Johnson"
-          ],
-          "teams": [
-            "Nuggets"
-          ],
-          "source_url": "https://hoopshype.com/social/",
-          "is_breaking": false
-        }
-      ]
-    },
-    {
-      "id": "hoopshype",
-      "name": "HoopsHype",
-      "outlet": "HoopsHype",
+      "id": "tonyreast",
+      "name": "@tonyreast",
+      "outlet": "X/Twitter",
       "tier": 3,
-      "avatar": "H",
+      "avatar": "T",
       "total": 3,
       "breaking": 0,
       "by_topic": {
-        "injury": 3
+        "contract": 3
       },
       "by_player": {
-        "Jordan Poole": 1,
-        "Bam Adebayo": 1,
-        "Nikola Jovic": 1,
-        "Keshad Johnson": 1,
-        "Pelle Larsson": 1,
-        "Jonas Valanciunas": 1
+        "Micah Potter": 2,
+        "James Wiseman": 1,
+        "Tony Bradley": 1,
+        "Garrison Mathews": 1,
+        "Isaiah Jackson": 1
       },
       "by_team": {
-        "Pelicans": 1,
-        "Heat": 1,
-        "Nuggets": 1
+        "Pacers": 3
       },
       "by_date": {
-        "2025-12-25": 3
+        "2025-12-26": 3
+      },
+      "detection_methods": {
+        "unknown_handle": 3
       },
       "recent_rumors": [
         {
-          "id": 88,
-          "reporter": "HoopsHype",
-          "reporter_key": "hoopshype",
-          "outlet": "HoopsHype",
-          "tier": 3,
-          "date": "2025-12-25",
-          "text": "The Pelicans have upgraded Jordan Poole (left ankle soreness) to questionablefor Friday\u2019s game against Phoenix.HoopsHype",
-          "topic": "injury",
-          "players": [
-            "Jordan Poole"
-          ],
+          "date": "2025-12-26",
+          "text": "Tony East:This is extremely confusing but Wiseman had to be \u201creleased\u201d because the terms of his 10-day lasted through 12.30 but the hardship exception he was added via only lasted through 12.25. Hence release as opposed to his contract just ending.x.com",
+          "topic": "contract",
           "teams": [
-            "Pelicans"
+            "Pacers"
           ],
-          "source_url": "https://www.hoopshype.com/story/sports/nba/2025/11/10/nba-injury-tracker-whos-not-available-right-now/86822180007/",
-          "is_breaking": false
+          "players": [
+            "James Wiseman"
+          ],
+          "source_url": "https://x.com/TonyREast/status/2004616654802866472?s=20"
         },
         {
-          "id": 91,
-          "reporter": "HoopsHype",
-          "reporter_key": "hoopshype",
-          "outlet": "HoopsHype",
-          "tier": 3,
-          "date": "2025-12-25",
-          "text": "The Heat have downgraded Bam Adebayo (lower back soreness) and Keshad Johnson (head illness) to questionable for Friday\u2019s gameagainst Atlanta. Pelle Larsson (left ankle sprain) and Nikola Jovic (right elbow contusion / laceration) are probable.HoopsHype",
-          "topic": "injury",
-          "players": [
-            "Bam Adebayo",
-            "Nikola Jovic",
-            "Keshad Johnson",
-            "Pelle Larsson"
-          ],
+          "date": "2025-12-26",
+          "text": "Tony East:The Pacers plan to sign center Micah Potter to a non-guaranteed contract,multiple league sources have told me.x.com",
+          "topic": "contract",
           "teams": [
-            "Heat"
+            "Pacers"
           ],
-          "source_url": "https://www.hoopshype.com/story/sports/nba/2025/11/10/nba-injury-tracker-whos-not-available-right-now/86822180007/",
-          "is_breaking": false
+          "players": [
+            "Micah Potter"
+          ],
+          "source_url": "https://x.com/TonyREast/status/2004570036506390591?s=20"
         },
         {
-          "id": 99,
-          "reporter": "HoopsHype",
-          "reporter_key": "hoopshype",
-          "outlet": "HoopsHype",
-          "tier": 3,
-          "date": "2025-12-25",
-          "text": "The Nuggets have downgraded Jonas Valanciunas (illness) to probablefor Christmas Day\u2019s game against Minnesota.HoopsHype",
-          "topic": "injury",
-          "players": [
-            "Jonas Valanciunas"
-          ],
+          "date": "2025-12-26",
+          "text": "Tony East:Garrison Mathews will be waived to make room for Potter, I'm told. Pacers need center depth with Isaiah Jackson (out, concussion) and Tony Bradley (limited, fractured thumb) currently banged up.x.com",
+          "topic": "contract",
           "teams": [
-            "Nuggets"
+            "Pacers"
           ],
-          "source_url": "https://www.hoopshype.com/story/sports/nba/2025/11/10/nba-injury-tracker-whos-not-available-right-now/86822180007/",
-          "is_breaking": false
+          "players": [
+            "Tony Bradley",
+            "Garrison Mathews",
+            "Isaiah Jackson",
+            "Micah Potter"
+          ],
+          "source_url": "https://x.com/TonyREast/status/2004570423812583607?s=20"
         }
       ]
     },
@@ -558,6 +806,626 @@
       "outlet": "The Stein Line",
       "tier": 1,
       "avatar": "MS",
+      "total": 3,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 2,
+        "contract": 1
+      },
+      "by_player": {
+        "Anthony Davis": 1,
+        "G League": 1,
+        "MarJon Beauchamp": 1,
+        "Two-Way Contracts": 1,
+        "Ja Morant": 1
+      },
+      "by_team": {
+        "Mavericks": 1,
+        "76ers": 1,
+        "Grizzlies": 1,
+        "Bucks": 1
+      },
+      "by_date": {
+        "2025-12-26": 2,
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "text_start": 3
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Marc Stein:The Mavericks' initial read is that Anthony Davis' right groin strain is not likely to be a long-term injury but I'm told they're still in the process of determining a more precise recovery timetable. AD has played in 16 of Dallas' 30 games, missing 14 due to a left calf strain.x.com",
+          "topic": "injury",
+          "teams": [
+            "Mavericks"
+          ],
+          "players": [
+            "Anthony Davis"
+          ],
+          "source_url": "https://x.com/TheSteinLine/status/2004628177478713580?s=20"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Marc Stein:The Sixers have signed MarJon Beauchamp to a two-way contract.x.com",
+          "topic": "contract",
+          "teams": [
+            "76ers"
+          ],
+          "players": [
+            "G League",
+            "MarJon Beauchamp",
+            "Two-Way Contracts"
+          ],
+          "source_url": "https://x.com/TheSteinLine/status/2004595738458943945?s=20"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Marc Stein: TheGrizzlies have upgraded Ja Morant (left ankle sprain) to questionable for Friday\u2019s game against Milwaukee:x.com",
+          "topic": "injury",
+          "teams": [
+            "Grizzlies",
+            "Bucks"
+          ],
+          "players": [
+            "Ja Morant"
+          ],
+          "source_url": "https://x.com/TheSteinLine/status/2004334811104805300"
+        }
+      ]
+    },
+    {
+      "id": "sportsnet_new_york",
+      "name": "SportsNet New York",
+      "outlet": "SportsNet New York",
+      "tier": 4,
+      "avatar": "SN",
+      "total": 3,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 2,
+        "general": 1
+      },
+      "by_player": {
+        "Mike Brown": 3,
+        "Tyler Kolek": 3
+      },
+      "by_team": {
+        "Knicks": 3
+      },
+      "by_date": {
+        "2025-12-26": 3
+      },
+      "detection_methods": {
+        "outlet_fallback": 3
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "At halftime in Minnesota on Tuesday night, Knicks head coach Mike Brown lit into Tyler Kolek. The coach watched Kolek miss seven of his 10 shots in the first half and he wasn\u2019t happy about it.\u201cYou\u2019ve taken 10 shots, the second most on the team, only made three; three or four of those shots were airb...",
+          "topic": "injury",
+          "teams": [
+            "Knicks"
+          ],
+          "players": [
+            "Mike Brown",
+            "Tyler Kolek"
+          ],
+          "source_url": "https://sny.tv/articles/knicks-tyler-kolek-role-impact-trade-plans"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Kolek didn\u2019t wilt from the criticism. He embraced it, going 6-for-12 in the second half of the Knicks\u2019 loss. At one point in the second half, he knocked down a three-pointer that led to a Timberwolves timeout. Walking over to the bench, Kolek looked Brown in the eye and delivered a message.\u201cI\u2019m gonn...",
+          "topic": "injury",
+          "teams": [
+            "Knicks"
+          ],
+          "players": [
+            "Mike Brown",
+            "Tyler Kolek"
+          ],
+          "source_url": "https://sny.tv/articles/knicks-tyler-kolek-role-impact-trade-plans"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Five minutes and three Kolek three-pointers later, the Garden crowd was engaged in long, loud \u2018Ty-ler Kol-ek\u2019 chants. Every fan in the building seemed to be stunned watching the Kolek show. His teammates weren\u2019t surprised though.\u201cIt\u2019s a testament to his mental strength, his mental fortitude and the ...",
+          "topic": "general",
+          "teams": [
+            "Knicks"
+          ],
+          "players": [
+            "Mike Brown",
+            "Tyler Kolek"
+          ],
+          "source_url": "https://sny.tv/articles/knicks-tyler-kolek-role-impact-trade-plans"
+        }
+      ]
+    },
+    {
+      "id": "espn",
+      "name": "ESPN",
+      "outlet": "ESPN",
+      "tier": 4,
+      "avatar": "E",
+      "total": 3,
+      "breaking": 0,
+      "by_topic": {
+        "contract": 2,
+        "general": 1
+      },
+      "by_player": {
+        "Steve Kerr": 2,
+        "Draymond Green": 2
+      },
+      "by_team": {
+        "Warriors": 2,
+        "Nuggets": 1
+      },
+      "by_date": {
+        "2025-12-26": 3
+      },
+      "detection_methods": {
+        "outlet_fallback": 3
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "For short-term relief, Denver has an open roster spot to sign a player or could wait until Jan. 5, the first date a team can sign a player to a 10-day contract.The Nuggets also have two trade exceptions ($6.9 million and $5.4 million) available to use in a trade. Because the exceptions were created ...",
+          "topic": "contract",
+          "teams": [
+            "Nuggets"
+          ],
+          "players": [],
+          "source_url": "https://www.espn.com/nba/story/_/id/47191162/nba-buzz-latest-live-updates-trades-intel-league"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Three days after an argument between Steve Kerr and Draymond Green tested the foundation of their organization, the Golden State Warriors completed a 3-0 homestand to exit a turbulent week with the most momentum they've had in a month.\"We're in a good place,\" Kerr said after the 126-116 showcase Chr...",
+          "topic": "general",
+          "teams": [
+            "Warriors"
+          ],
+          "players": [
+            "Steve Kerr",
+            "Draymond Green"
+          ],
+          "source_url": "https://www.espn.com/nba/story/_/id/47414725/streaking-warriors-good-place-kerr-green-tiff"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "\"Them two are [now] in a better place,\" Steph Curry said. \"Stuff like that happens. They have the equity of years and years of a relationship that has had its moments.They handled yesterday at practice well and we handled today well as a team.\"ESPN",
+          "topic": "contract",
+          "teams": [
+            "Warriors"
+          ],
+          "players": [
+            "Steve Kerr",
+            "Draymond Green"
+          ],
+          "source_url": "https://www.espn.com/nba/story/_/id/47414725/streaking-warriors-good-place-kerr-green-tiff"
+        }
+      ]
+    },
+    {
+      "id": "jj_redick",
+      "name": "JJ Redick",
+      "outlet": "ESPN",
+      "tier": 2,
+      "avatar": "JR",
+      "total": 3,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 2,
+        "general": 1
+      },
+      "by_player": {
+        "JJ Redick": 3,
+        "Austin Reaves": 2
+      },
+      "by_team": {
+        "Lakers": 3
+      },
+      "by_date": {
+        "2025-12-26": 1,
+        "2025-12-25": 2
+      },
+      "detection_methods": {
+        "text_body": 3
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "\"Austin clearly felt something,\" Lakers coach JJ Redick said after the game.\"We did our normal halftime and then as we were walking out of the locker room, [Lakers director of player performance and health] Dr. [LeRoy] Sims told me he was out.\"ESPN",
+          "topic": "injury",
+          "teams": [
+            "Lakers"
+          ],
+          "players": [
+            "JJ Redick",
+            "Austin Reaves"
+          ],
+          "source_url": "https://www.espn.com/nba/story/_/id/47414854/lakers-austin-reaves-exits-christmas-day-game-due-calf-soreness"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Dave McMenamin:JJ Redick said he told his group to be ready for an \u201cuncomfortable\u201d practice and film session on Saturday to address what Redick described to reporters as a lack of proper care.LAL next plays Sunday vs. SAC.x.com",
+          "topic": "general",
+          "teams": [
+            "Lakers"
+          ],
+          "players": [
+            "JJ Redick"
+          ],
+          "source_url": "https://x.com/mcten/status/2004397271971139875"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Dave McMenamin:Austin Reaves left the arena without the assistance of any brace or boot of crutch for his left leg.He told reporters \u201cMerry Christmas\u201d as he made his exit. JJ Redick said he didn\u2019t have further information on Reaves\u2019 left calf at this time.x.com",
+          "topic": "injury",
+          "teams": [
+            "Lakers"
+          ],
+          "players": [
+            "JJ Redick",
+            "Austin Reaves"
+          ],
+          "source_url": "https://x.com/mcten/status/2004397819931906261"
+        }
+      ]
+    },
+    {
+      "id": "nickdepaula",
+      "name": "@nickdepaula",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "N",
+      "total": 3,
+      "breaking": 0,
+      "by_topic": {
+        "general": 1,
+        "contract": 1,
+        "injury": 1
+      },
+      "by_player": {
+        "Tyrese Haliburton": 1,
+        "Luka Doncic": 1,
+        "Stephen Curry": 1,
+        "Klay Thompson": 1
+      },
+      "by_team": {
+        "Pacers": 1,
+        "Lakers": 1,
+        "Warriors": 1,
+        "Mavericks": 1
+      },
+      "by_date": {
+        "2025-12-25": 3
+      },
+      "detection_methods": {
+        "unknown_handle": 3
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Nick DePaula:Tyrese Haliburton shares a look at the \u201cHot Cocoa\u201d PE of his Puma @Hali 1s originally made for Christmas.x.com",
+          "topic": "general",
+          "teams": [
+            "Pacers"
+          ],
+          "players": [
+            "Tyrese Haliburton"
+          ],
+          "source_url": "https://x.com/NickDePaula/status/2004361061353640156"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Nick DePaula:Luka Doncic debuts the Jordan Luka 5 on Christmas. Where do these rank among Luka\u2019s first 5 signature shoes?x.com",
+          "topic": "contract",
+          "teams": [
+            "Lakers"
+          ],
+          "players": [
+            "Luka Doncic"
+          ],
+          "source_url": "https://x.com/NickDePaula/status/2004350884030124521"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Nick DePaula:Stephen Curry shows love to Klay Thompson on Christmas, lacing up the ANTA KT 11 as Klay returns to the Bay. Thompson\u2019s 11th ANTA signature shoe features a nod to his 4 titles molded along the heel: \u201cRings Rings Rings Rings\u2026\u201dx.com",
+          "topic": "injury",
+          "teams": [
+            "Warriors",
+            "Mavericks"
+          ],
+          "players": [
+            "Stephen Curry",
+            "Klay Thompson"
+          ],
+          "source_url": "https://x.com/NickDePaula/status/2004330234985033778"
+        }
+      ]
+    },
+    {
+      "id": "nbakrell",
+      "name": "@nbakrell",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "N",
+      "total": 2,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 2
+      },
+      "by_player": {
+        "Joel Embiid": 1,
+        "Quentin Grimes": 1,
+        "VJ Edgecombe": 1,
+        "Patrick Williams": 1
+      },
+      "by_team": {
+        "76ers": 1,
+        "Bulls": 1
+      },
+      "by_date": {
+        "2025-12-26": 2
+      },
+      "detection_methods": {
+        "unknown_handle": 2
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Austin Krell: UPDATE - VJ Edgecombe, Dom Barlow, and Quentin Grimes are all PROBABLE for tonight in Chicago.Joel Embiid remains questionable.x.com",
+          "topic": "injury",
+          "teams": [
+            "76ers"
+          ],
+          "players": [
+            "Joel Embiid",
+            "Quentin Grimes",
+            "VJ Edgecombe"
+          ],
+          "source_url": "https://x.com/NBAKrell/status/2004617256194764911?s=20"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Austin Krell:Patrick Williams has been added to Chicago\u2019s injury report with an illness.x.com",
+          "topic": "injury",
+          "teams": [
+            "Bulls"
+          ],
+          "players": [
+            "Patrick Williams"
+          ],
+          "source_url": "https://x.com/NBAKrell/status/2004592548510351651?s=20"
+        }
+      ]
+    },
+    {
+      "id": "shams_charania",
+      "name": "Shams Charania",
+      "outlet": "ESPN",
+      "tier": 1,
+      "avatar": "SC",
+      "total": 2,
+      "breaking": 0,
+      "by_topic": {
+        "trade": 1,
+        "injury": 1
+      },
+      "by_player": {
+        "Anthony Davis": 2
+      },
+      "by_team": {
+        "Mavericks": 2,
+        "Warriors": 1
+      },
+      "by_date": {
+        "2025-12-26": 1,
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "text_start": 2
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Shams Charania:Mavericks star Anthony Davis has sustained a minor groin strain and is likely to miss a few games,sources tell ESPN. Davis, a significant trade target, will be evaluated daily. Mavs have taken a cautious approach with injuries, specifically for Davis, and will continue to do so.x.com",
+          "topic": "trade",
+          "teams": [
+            "Mavericks"
+          ],
+          "players": [
+            "Anthony Davis"
+          ],
+          "source_url": "https://x.com/ShamsCharania/status/2004615905922400621?s=20"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Shams Charania:Mavericks' Anthony Davis has a groin injury and is out for the remainder of the Christmas Day game against the Warriors.x.com",
+          "topic": "injury",
+          "teams": [
+            "Warriors",
+            "Mavericks"
+          ],
+          "players": [
+            "Anthony Davis"
+          ],
+          "source_url": "https://x.com/ShamsCharania/status/2004336332274126957"
+        }
+      ]
+    },
+    {
+      "id": "anthony_chiang",
+      "name": "Anthony Chiang",
+      "outlet": "Miami Herald",
+      "tier": 3,
+      "avatar": "AC",
+      "total": 2,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 2
+      },
+      "by_player": {
+        "Nikola Jovic": 1,
+        "Keshad Johnson": 1,
+        "Pelle Larsson": 1,
+        "Bam Adebayo": 1
+      },
+      "by_team": {
+        "Heat": 2
+      },
+      "by_date": {
+        "2025-12-26": 2
+      },
+      "detection_methods": {
+        "text_start": 2
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Anthony Chiang:Keshad Johnson (illness) upgraded to probable for tonight. Nikola Jovic and Pelle Larsson also probable and expected to make their returns tonight.x.com",
+          "topic": "injury",
+          "teams": [
+            "Heat"
+          ],
+          "players": [
+            "Nikola Jovic",
+            "Keshad Johnson",
+            "Pelle Larsson"
+          ],
+          "source_url": "https://x.com/Anthony_Chiang/status/2004608085755875770?s=20"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Anthony Chiang:Bam Adebayo (lower back soresss) now downgraded to doubtful for tonight vs. Hawks in Atlanta.x.com",
+          "topic": "injury",
+          "teams": [
+            "Heat"
+          ],
+          "players": [
+            "Bam Adebayo"
+          ],
+          "source_url": "https://x.com/Anthony_Chiang/status/2004594647872807421?s=20"
+        }
+      ]
+    },
+    {
+      "id": "brendan_vogt",
+      "name": "Brendan Vogt",
+      "outlet": "Denver Sports",
+      "tier": 3,
+      "avatar": "BV",
+      "total": 2,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1,
+        "general": 1
+      },
+      "by_player": {
+        "Nikola Jokic": 2,
+        "Jamal Murray": 1,
+        "David Adelman": 1
+      },
+      "by_team": {
+        "Nuggets": 2
+      },
+      "by_date": {
+        "2025-12-26": 2
+      },
+      "detection_methods": {
+        "text_start": 2
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Brendan Vogt:Jamal Murray said Nikola Joki\u0107 doesn\u2019t get enough credit in the clutch. Murray acknowledged he\u2019s hit some big shots over the years, but there\u2019s a reason why they go to Joki\u0107 consistently. On Joki\u0107 setting the record for points in overtime: \u201cSounds about right.\u201dx.com",
+          "topic": "injury",
+          "teams": [
+            "Nuggets"
+          ],
+          "players": [
+            "Nikola Jokic",
+            "Jamal Murray"
+          ],
+          "source_url": "https://x.com/BrendanVogt/status/2004450175956427218"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Brendan Vogt: David Adelman called this one of the five best performances he\u2019s seen from Nikola Joki\u0107.\u201cHe still made the right play all the time even though it\u2019s 56-15-16.\u201dx.com",
+          "topic": "general",
+          "teams": [
+            "Nuggets"
+          ],
+          "players": [
+            "David Adelman",
+            "Nikola Jokic"
+          ],
+          "source_url": "https://x.com/BrendanVogt/status/2004447541296091250"
+        }
+      ]
+    },
+    {
+      "id": "bennett_durando",
+      "name": "Bennett Durando",
+      "outlet": "Denver Post",
+      "tier": 3,
+      "avatar": "BD",
+      "total": 2,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1,
+        "general": 1
+      },
+      "by_player": {
+        "Nikola Jokic": 1,
+        "Peyton Watson": 1,
+        "Anthony Edwards": 1
+      },
+      "by_team": {
+        "Nuggets": 1,
+        "Timberwolves": 1
+      },
+      "by_date": {
+        "2025-12-26": 2
+      },
+      "detection_methods": {
+        "text_start": 2
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Bennett Durando:Nikola Jokic's teammates have habit of saying they're unsurprised by his feats, but Peyton Watson says tonight: \"I'm tired of not being surprised. That shit surprised me, bro.We can't continue to just dismiss what this guy does on a night-to-night basis. Bro, it's unbelievable.\"x.com",
+          "topic": "injury",
+          "teams": [
+            "Nuggets"
+          ],
+          "players": [
+            "Nikola Jokic",
+            "Peyton Watson"
+          ],
+          "source_url": "https://x.com/BennettDurando/status/2004465179292205435"
+        },
+        {
+          "date": "2025-12-26",
+          "text": "Bennett Durando:Tried to go to the Timberwolves\u2019 locker room to ask Anthony Edwards for comment on his ejection and the game, but arena security prevented me from entering.(Not anyone with the team, to be clear.) To my knowledge, Edwards did not speak tonight.x.com",
+          "topic": "general",
+          "teams": [
+            "Timberwolves"
+          ],
+          "players": [
+            "Anthony Edwards"
+          ],
+          "source_url": "https://x.com/BennettDurando/status/2004457733064741354"
+        }
+      ]
+    },
+    {
+      "id": "mrbuckbucknba",
+      "name": "@mrbuckbucknba",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "M",
       "total": 2,
       "breaking": 0,
       "by_topic": {
@@ -565,593 +1433,1365 @@
         "injury": 1
       },
       "by_player": {
-        "G League": 1,
-        "MarJon Beauchamp": 1,
-        "Two-Way Contracts": 1,
-        "Ja Morant": 1
+        "Victor Wembanyama": 1,
+        "Shai Gilgeous-Alexander": 1
       },
       "by_team": {
-        "76ers": 1,
-        "Grizzlies": 1,
-        "Bucks": 1
+        "Spurs": 2,
+        "Thunder": 1
       },
       "by_date": {
         "2025-12-26": 1,
         "2025-12-25": 1
       },
+      "detection_methods": {
+        "unknown_handle": 2
+      },
       "recent_rumors": [
         {
-          "id": 1,
-          "reporter": "Marc Stein",
-          "reporter_key": "marc_stein",
-          "outlet": "The Stein Line",
-          "tier": 1,
           "date": "2025-12-26",
-          "text": "Marc Stein:The Sixers have signed MarJon Beauchamp to a two-way contract.x.com",
+          "text": "MrBuckBuck:Victor Wembanyama's personality begins to surface more, starting with showing his hatred for Gatorade bottlesx.com",
           "topic": "contract",
-          "players": [
-            "G League",
-            "MarJon Beauchamp",
-            "Two-Way Contracts"
-          ],
           "teams": [
-            "76ers"
+            "Spurs"
           ],
-          "source_url": "https://x.com/TheSteinLine/status/2004595738458943945?s=20",
-          "is_breaking": false
+          "players": [
+            "Victor Wembanyama"
+          ],
+          "source_url": "https://x.com/MrBuckBuckNBA/status/2004397714562601373"
         },
         {
-          "id": 64,
-          "reporter": "Marc Stein",
-          "reporter_key": "marc_stein",
-          "outlet": "The Stein Line",
-          "tier": 1,
           "date": "2025-12-25",
-          "text": "Marc Stein: TheGrizzlies have upgraded Ja Morant (left ankle sprain) to questionable for Friday\u2019s game against Milwaukee:x.com",
+          "text": "MrBuckBuck: Shai Gilgeous-Alexander: \u201cWe have to get better as a group.You don\u2019t lose to a team three times in a row in a short span without them being better than you.We have to get better. Look in the mirror, and that\u2019s everybody from top to bottom, if we want to reach our ultimate goal\u201dx.com",
           "topic": "injury",
-          "players": [
-            "Ja Morant"
-          ],
           "teams": [
-            "Grizzlies",
-            "Bucks"
+            "Thunder",
+            "Spurs"
           ],
-          "source_url": "https://x.com/TheSteinLine/status/2004334811104805300",
-          "is_breaking": false
+          "players": [
+            "Shai Gilgeous-Alexander"
+          ],
+          "source_url": "https://x.com/MrBuckBuckNBA/status/2004327424654209233"
         }
       ]
     },
     {
-      "id": "bobby_marks",
-      "name": "Bobby Marks",
-      "outlet": "ESPN",
+      "id": "mcten",
+      "name": "@mcten",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "M",
+      "total": 2,
+      "breaking": 0,
+      "by_topic": {
+        "general": 1,
+        "injury": 1
+      },
+      "by_player": {
+        "Jake LaRavia": 1,
+        "Luka Doncic": 1,
+        "Rui Hachimura": 1
+      },
+      "by_team": {
+        "Lakers": 2
+      },
+      "by_date": {
+        "2025-12-25": 2
+      },
+      "detection_methods": {
+        "unknown_handle": 2
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Dave McMenamin:Jake LaRavia said there is a \u201cdisconnect\u201d within the team right now but could not quite verbalize what it was or the cause of it.x.com",
+          "topic": "general",
+          "teams": [
+            "Lakers"
+          ],
+          "players": [
+            "Jake LaRavia"
+          ],
+          "source_url": "https://x.com/mcten/status/2004400622930706808"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Dave McMenamin:Luka Doncic and Rui Hachimura are both available tonight vs. HOU,according to the Lakersx.com",
+          "topic": "injury",
+          "teams": [
+            "Lakers"
+          ],
+          "players": [
+            "Luka Doncic",
+            "Rui Hachimura"
+          ],
+          "source_url": "https://x.com/mcten/status/2004330404363620842"
+        }
+      ]
+    },
+    {
+      "id": "anthony_slater",
+      "name": "Anthony Slater",
+      "outlet": "The Athletic",
       "tier": 2,
-      "avatar": "BM",
+      "avatar": "AS",
+      "total": 2,
+      "breaking": 0,
+      "by_topic": {
+        "general": 2
+      },
+      "by_player": {
+        "Steve Kerr": 1,
+        "Jimmy Butler": 1,
+        "Draymond Green": 1
+      },
+      "by_team": {
+        "Warriors": 2,
+        "Raptors": 1,
+        "Nets": 1,
+        "Hornets": 1
+      },
+      "by_date": {
+        "2025-12-25": 2
+      },
+      "detection_methods": {
+        "text_start": 2
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Anthony Slater: Jimmy Butler on the Draymond Green and Steve Kerr argument and reconciliation this week\u201cI like that. Y\u2019all yell at each other. Turned me on a little bit. I\u2019m not gonna lie.\u201dx.com",
+          "topic": "general",
+          "teams": [
+            "Warriors"
+          ],
+          "players": [
+            "Steve Kerr",
+            "Jimmy Butler",
+            "Draymond Green"
+          ],
+          "source_url": "https://x.com/anthonyVslater/status/2004362633072550128"
+        },
+        {
+          "date": "2025-12-25",
+          "text": "Anthony Slater:Warriors complete a 3-0 homestand despite turbulence. Seven players in double figures in the Christmas win: Curry, Butler, Podziemski, Horford, Moody, Melton, Jackson-Davis. They're 16-15, riding a bit of momentum into a Toronto, Brooklyn, Charlotte road trip.x.com",
+          "topic": "general",
+          "teams": [
+            "Raptors",
+            "Warriors",
+            "Nets",
+            "Hornets"
+          ],
+          "players": [],
+          "source_url": "https://x.com/anthonyVslater/status/2004352224181604492"
+        }
+      ]
+    },
+    {
+      "id": "aph00ps",
+      "name": "@aph00ps",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "A",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "trade": 1
+      },
+      "by_player": {},
+      "by_team": {
+        "Clippers": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "APH00PS:The LA Clippers are still internally weighing whether to be buyers or sellers at the deadline, but \u201cit will be one or the other,\u201d with the team expected to firmly commit to one direction \u2014 a decision that could impact the NBA trade deadline landscape,per @WindhorstESPN .x.com",
+          "topic": "trade",
+          "teams": [
+            "Clippers"
+          ],
+          "players": [],
+          "source_url": "https://x.com/APH00PS/status/2004636380484542780?s=20"
+        }
+      ]
+    },
+    {
+      "id": "keith_pompey",
+      "name": "Keith Pompey",
+      "outlet": "Philadelphia Inquirer",
+      "tier": 3,
+      "avatar": "KP",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Quentin Grimes": 1,
+        "Dominick Barlow": 1,
+        "VJ Edgecombe": 1
+      },
+      "by_team": {
+        "76ers": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "text_start": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Keith Pompey:VJ Edgecombe, Quentin Grimes and Dominic Barlow were upgraded to probable.x.com",
+          "topic": "injury",
+          "teams": [
+            "76ers"
+          ],
+          "players": [
+            "Quentin Grimes",
+            "Dominick Barlow",
+            "VJ Edgecombe"
+          ],
+          "source_url": "https://x.com/PompeyOnSixers/status/2004651019733795127?s=20"
+        }
+      ]
+    },
+    {
+      "id": "trailblazerspr",
+      "name": "@trailblazerspr",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "T",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "G League": 1,
+        "Robert Williams": 1,
+        "Robert Williams III": 1,
+        "Kris Murray": 1,
+        "Javonte Cooke": 1
+      },
+      "by_team": {
+        "Trail Blazers": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Trail Blazers PR: INJURY UPDATE:Kris Murray and Robert Williams III are PROBABLE for tonight\u2019s game vs. LAC. Javonte Cooke (G League Two-Way) is OUT.x.com",
+          "topic": "injury",
+          "teams": [
+            "Trail Blazers"
+          ],
+          "players": [
+            "G League",
+            "Robert Williams",
+            "Robert Williams III",
+            "Kris Murray",
+            "Javonte Cooke"
+          ],
+          "source_url": "https://x.com/TrailBlazersPR/status/2004649354704118220?s=20"
+        }
+      ]
+    },
+    {
+      "id": "ian_begley",
+      "name": "Ian Begley",
+      "outlet": "SNY",
+      "tier": 3,
+      "avatar": "IB",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Josh Hart": 1,
+        "Landry Shamet": 1,
+        "Miles McBride": 1
+      },
+      "by_team": {
+        "Knicks": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "text_start": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Ian Begley:Knicks are listing Josh Hart as out vs Hawks due to ankle sprain. Miles McBride (ankle) has been upgraded to questionable, usually a sign that a player is going to make a return from injury. Landry Shamet (shoulder) is out.x.com",
+          "topic": "injury",
+          "teams": [
+            "Knicks"
+          ],
+          "players": [
+            "Josh Hart",
+            "Landry Shamet",
+            "Miles McBride"
+          ],
+          "source_url": "https://x.com/IanBegley/status/2004639570416263427?s=20"
+        }
+      ]
+    },
+    {
+      "id": "duanerankin",
+      "name": "@duanerankin",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "D",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Grayson Allen": 1,
+        "Jalen Green": 1,
+        "Jordan Goodwin": 1
+      },
+      "by_team": {
+        "Suns": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Duane Ranking: Suns at Pelicans injury report:Grayson Allen (knee) and Jalen Green (hamstring) OUT. Jordan Goodwin (jaw sprain: mask) AVAILABLE.x.com",
+          "topic": "injury",
+          "teams": [
+            "Suns"
+          ],
+          "players": [
+            "Grayson Allen",
+            "Jalen Green",
+            "Jordan Goodwin"
+          ],
+          "source_url": "https://x.com/DuaneRankin/status/2004643562311548983?s=20"
+        }
+      ]
+    },
+    {
+      "id": "underdognba",
+      "name": "@underdognba",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "U",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Scottie Barnes": 1
+      },
+      "by_team": {
+        "Raptors": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Underdog NBA:Scottie Barnes (illness) downgraded to questionable Friday.x.com",
+          "topic": "injury",
+          "teams": [
+            "Raptors"
+          ],
+          "players": [
+            "Scottie Barnes"
+          ],
+          "source_url": "https://x.com/UnderdogNBA/status/2004566661760749686?s=20"
+        }
+      ]
+    },
+    {
+      "id": "pacers",
+      "name": "@pacers",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "P",
       "total": 1,
       "breaking": 0,
       "by_topic": {
         "contract": 1
       },
-      "by_player": {},
+      "by_player": {
+        "James Wiseman": 1,
+        "Garrison Mathews": 1,
+        "Micah Potter": 1
+      },
+      "by_team": {
+        "Pacers": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Indiana Pacers: We have signed center Micah Potter. In subsequent moves,we have waived guard Garrison Mathews and released center James Wiseman.x.com",
+          "topic": "contract",
+          "teams": [
+            "Pacers"
+          ],
+          "players": [
+            "James Wiseman",
+            "Garrison Mathews",
+            "Micah Potter"
+          ],
+          "source_url": "https://x.com/Pacers/status/2004610591823200659?s=20"
+        }
+      ]
+    },
+    {
+      "id": "kevin_chouinard",
+      "name": "Kevin Chouinard",
+      "outlet": "Hawks.com",
+      "tier": 3,
+      "avatar": "KC",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Mouhamed Gueye": 1
+      },
+      "by_team": {
+        "Hawks": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "text_start": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Kevin Chouinard:Hawks say Mouhamed Gueye (right shoulder sprain) is available.x.com",
+          "topic": "injury",
+          "teams": [
+            "Hawks"
+          ],
+          "players": [
+            "Mouhamed Gueye"
+          ],
+          "source_url": "https://x.com/KLChouinard/status/2004601978987704363?s=20"
+        }
+      ]
+    },
+    {
+      "id": "omari_sankofa_ii",
+      "name": "Omari Sankofa II",
+      "outlet": "Detroit Free Press",
+      "tier": 3,
+      "avatar": "OS",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Ron Holland": 1
+      },
+      "by_team": {
+        "Pistons": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "text_start": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Omari Sankofa II:Ron Holland (left knee sprain) is questionable tonight in Utahx.com",
+          "topic": "injury",
+          "teams": [
+            "Pistons"
+          ],
+          "players": [
+            "Ron Holland"
+          ],
+          "source_url": "https://x.com/omarisankofa/status/2004625465433358380?s=20"
+        }
+      ]
+    },
+    {
+      "id": "pelicansnba",
+      "name": "@pelicansnba",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "P",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Jordan Poole": 1
+      },
+      "by_team": {
+        "Pelicans": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Pelicans NBA:Jordan Poole (left ankle soreness) has been upgraded to PROBABLE for tonight\u2019s game vs. Phoenixx.com",
+          "topic": "injury",
+          "teams": [
+            "Pelicans"
+          ],
+          "players": [
+            "Jordan Poole"
+          ],
+          "source_url": "https://x.com/PelicansNBA/status/2004621093785809370?s=20"
+        }
+      ]
+    },
+    {
+      "id": "eric_nehm",
+      "name": "Eric Nehm",
+      "outlet": "The Athletic",
+      "tier": 3,
+      "avatar": "EN",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Gary Trent": 1,
+        "Gary Trent Jr": 1
+      },
+      "by_team": {
+        "Bucks": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "text_start": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Eric Nehm:The Bucks announce that Gary Trent Jr. is now out for tonight\u2019s game in Memphis.x.com",
+          "topic": "injury",
+          "teams": [
+            "Bucks"
+          ],
+          "players": [
+            "Gary Trent",
+            "Gary Trent Jr"
+          ],
+          "source_url": "https://x.com/eric_nehm/status/2004629974683173028?s=20"
+        }
+      ]
+    },
+    {
+      "id": "michael_scotto",
+      "name": "Michael Scotto",
+      "outlet": "HoopsHype",
+      "tier": 2,
+      "avatar": "MS",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Jordi Fernandez": 1,
+        "Cam Thomas": 1
+      },
+      "by_team": {
+        "Nets": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "text_start": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Michael Scotto:Brooklyn Nets guard Cam Thomas will make his return tomorrow night against the Minnesota Timberwolves,coach Jordi Fernandez says. Thomas, who\u2019s missed the past 20 games, has averaged 21.4 points in eight games played this season.x.com",
+          "topic": "injury",
+          "teams": [
+            "Nets"
+          ],
+          "players": [
+            "Jordi Fernandez",
+            "Cam Thomas"
+          ],
+          "source_url": "https://x.com/MikeAScotto/status/2004610213132075396?s=20"
+        }
+      ]
+    },
+    {
+      "id": "ira_winderman",
+      "name": "Ira Winderman",
+      "outlet": "South Florida Sun-Sentinel",
+      "tier": 3,
+      "avatar": "IW",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Erik Spoelstra": 1,
+        "Bam Adebayo": 1
+      },
+      "by_team": {
+        "Heat": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "text_start": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Ira Winderman:Certainly sounds like no Adebayo (back) tonight vs. Hawks. Spoelstra today at shootaround, \"I think if we handle it now, he'll be fine. He's pretty sore.\"x.com",
+          "topic": "injury",
+          "teams": [
+            "Heat"
+          ],
+          "players": [
+            "Erik Spoelstra",
+            "Bam Adebayo"
+          ],
+          "source_url": "https://x.com/IraHeatBeat/status/2004599349771432254?s=20"
+        }
+      ]
+    },
+    {
+      "id": "chris_fedor",
+      "name": "Chris Fedor",
+      "outlet": "Cleveland.com",
+      "tier": 3,
+      "avatar": "CF",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Jarrett Allen": 1
+      },
+      "by_team": {
+        "Cavaliers": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "text_start": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Chris Fedor:#Cavs Jarrett Allen has a 13.9% rebounding percentage. That ranks 37th out of all centers in the NBA who have played at least 5 games this season.x.com",
+          "topic": "injury",
+          "teams": [
+            "Cavaliers"
+          ],
+          "players": [
+            "Jarrett Allen"
+          ],
+          "source_url": "https://x.com/ChrisFedor/status/2004579568116756923?s=20"
+        }
+      ]
+    },
+    {
+      "id": "forbes.com",
+      "name": "Forbes.com",
+      "outlet": "Forbes.com",
+      "tier": 4,
+      "avatar": "F",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "contract": 1
+      },
+      "by_player": {
+        "Michael Jordan": 1,
+        "Luka Doncic": 1
+      },
+      "by_team": {
+        "Lakers": 1,
+        "Bulls": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "outlet_fallback": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Now, as he prepares to debut his latest signature sneaker, the Luka 5, Luka Doncic talks alongside Jordan Brand Lead Product Line Manager Edric Egberuare to discuss the \u201cnice shoes\u201d in question. For Don\u010di\u0107, who signed with Jordan Brand in 2019, becoming the first European player to do so, the partne...",
+          "topic": "contract",
+          "teams": [
+            "Lakers",
+            "Bulls"
+          ],
+          "players": [
+            "Michael Jordan",
+            "Luka Doncic"
+          ],
+          "source_url": "https://www.forbes.com/sites/tianarandall/2025/12/25/luka-doni-talks-luka-5-for-the-kid-trying-to-play-like-luka-this-shoe-helps/"
+        }
+      ]
+    },
+    {
+      "id": "eurohoops.net",
+      "name": "EuroHoops.net",
+      "outlet": "EuroHoops.net",
+      "tier": 4,
+      "avatar": "E",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Nikola Jokic": 1
+      },
       "by_team": {
         "Nuggets": 1
       },
       "by_date": {
         "2025-12-26": 1
       },
+      "detection_methods": {
+        "outlet_fallback": 1
+      },
       "recent_rumors": [
         {
-          "id": 12,
-          "reporter": "Bobby Marks",
-          "reporter_key": "bobby_marks",
-          "outlet": "ESPN",
-          "tier": 2,
           "date": "2025-12-26",
-          "text": "For short-term relief, Denver has an open roster spot to sign a player or could wait until Jan. 5, the first date a team can sign a player to a 10-day contract.The Nuggets also have two trade exceptions ($6.9 million and $5.4 million) available to use in a trade. Because the exceptions were created ...",
-          "topic": "contract",
-          "players": [],
+          "text": "U.S. media members were also curious about the biggest change Jokic has made this season, as he continues to push boundaries and perform at an even higher level than before\u2014however impossible that may have seemed.\u201cStopping talking to the referees was the biggest thing for me.I mean, I\u2019m still going ...",
+          "topic": "injury",
           "teams": [
             "Nuggets"
           ],
-          "source_url": "https://www.espn.com/nba/story/_/id/47191162/nba-buzz-latest-live-updates-trades-intel-league",
-          "is_breaking": false
+          "players": [
+            "Nikola Jokic"
+          ],
+          "source_url": "https://www.eurohoops.net/en/nba-news/1911867/jokic-on-biggest-change-stopping-talking-to-referees-im-not-going-to-lose-my-temper/"
         }
       ]
     },
     {
-      "id": "yahoo_sports",
-      "name": "Yahoo Sports",
-      "outlet": "Yahoo Sports",
+      "id": "fullcourtpass",
+      "name": "@fullcourtpass",
+      "outlet": "X/Twitter",
       "tier": 3,
-      "avatar": "YS",
+      "avatar": "F",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "contract": 1
+      },
+      "by_player": {
+        "Anthony Edwards": 1
+      },
+      "by_team": {
+        "Timberwolves": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Fullcourtpass:Anthony Edwards signed autographs on his way to the locker room after he was ejected(h/t @SMHighlights1 )x.com",
+          "topic": "contract",
+          "teams": [
+            "Timberwolves"
+          ],
+          "players": [
+            "Anthony Edwards"
+          ],
+          "source_url": "https://x.com/Fullcourtpass/status/2004542686565642388"
+        }
+      ]
+    },
+    {
+      "id": "awful_announcing",
+      "name": "Awful Announcing",
+      "outlet": "Awful Announcing",
+      "tier": 4,
+      "avatar": "AA",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "contract": 1
+      },
+      "by_player": {
+        "Shaquille O'Neal": 1,
+        "Inside The NBA": 1
+      },
+      "by_team": {},
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "outlet_fallback": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "During halftime of the first game between the New York Knicks and Cleveland Cavaliers, Shaq raced Kenny Smith to the wall for his regular halftime segment. And while we have seen take physical comedy to the extreme, especially during the Christmas season. Just a few years ago we saw Smith send The B...",
+          "topic": "contract",
+          "teams": [],
+          "players": [
+            "Shaquille O'Neal",
+            "Inside The NBA"
+          ],
+          "source_url": "https://awfulannouncing.com/nba/shaq-literally-ran-through-wall-inside-the-nba.html"
+        }
+      ]
+    },
+    {
+      "id": "denver_post",
+      "name": "Denver Post",
+      "outlet": "Denver Post",
+      "tier": 4,
+      "avatar": "DP",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Nikola Jokic": 1
+      },
+      "by_team": {
+        "Nuggets": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "outlet_fallback": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Jokic\u2019s 56 points matched the second-highest scoring total of his career. His career-high of 61? That was in April, the last time he played against Minnesota at Ball Arena. The Nuggets ended the game on a 27-14 run in the last three minutes of the extra period. But their comeback saved them from the...",
+          "topic": "injury",
+          "teams": [
+            "Nuggets"
+          ],
+          "players": [
+            "Nikola Jokic"
+          ],
+          "source_url": "https://www.denverpost.com/2025/12/26/nikola-jokic-nuggets-timberwolves-christmas-highlights-anthony-edwards-shot/"
+        }
+      ]
+    },
+    {
+      "id": "hpbasketball",
+      "name": "@hpbasketball",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "H",
       "total": 1,
       "breaking": 0,
       "by_topic": {
         "general": 1
       },
       "by_player": {
-        "Jalen Brunson": 1,
-        "Tyler Kolek": 1
+        "Nikola Jokic": 1
       },
       "by_team": {
-        "Knicks": 1
+        "Nuggets": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Hardwood Paroxysm:Jokic was wearing the quesarito shirt and a @tacobell cardigan tonight. I did not know a Taco Bell cardigan existed. Live mas.x.com",
+          "topic": "general",
+          "teams": [
+            "Nuggets"
+          ],
+          "players": [
+            "Nikola Jokic"
+          ],
+          "source_url": "https://x.com/HPbasketball/status/2004463306762080322"
+        }
+      ]
+    },
+    {
+      "id": "ohnohedidnt24",
+      "name": "@ohnohedidnt24",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "O",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "general": 1
+      },
+      "by_player": {
+        "Victor Wembanyama": 1,
+        "Jalen Williams": 1
+      },
+      "by_team": {
+        "Spurs": 1
+      },
+      "by_date": {
+        "2025-12-26": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-26",
+          "text": "Oh No He Didn't: JDub on what makes the Spurs so hard to stop:\"There's this guy on their team that's 7 foot 5 and takes up a lot of space on the court\"x.com",
+          "topic": "general",
+          "teams": [
+            "Spurs"
+          ],
+          "players": [
+            "Victor Wembanyama",
+            "Jalen Williams"
+          ],
+          "source_url": "https://x.com/ohnohedidnt24/status/2004453026749469073"
+        }
+      ]
+    },
+    {
+      "id": "mshap2",
+      "name": "@mshap2",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "M",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "general": 1
+      },
+      "by_player": {
+        "Amen Thompson": 1
+      },
+      "by_team": {
+        "Lakers": 1,
+        "Rockets": 1
       },
       "by_date": {
         "2025-12-25": 1
       },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
       "recent_rumors": [
         {
-          "id": 93,
-          "reporter": "Yahoo Sports",
-          "reporter_key": "yahoo_sports",
-          "outlet": "Yahoo Sports",
-          "tier": 3,
           "date": "2025-12-25",
-          "text": "Jalen Brunson came through in a big way with that 13-point fourth quarter, leading the Knicks to a dramatic 126-124 comeback.Brunson finished the game with 34 points and 4 assists. Tyler Kolek also had a strong game for the Knicks. The second-year point guard had 16 points, 9 assists, and 3 rebounds...",
+          "text": "Michael Shapiro:FINAL: Rockets 119, Lakers 96. Houston salvages road trip w/Christmas win. 26 pts for Amen Thompson. 25 pts for @KDTrey5 . Durant now 2\u20133 vs. LeBron on Christmas (other win in 2017). Durant in the tunnel postgame: \u201cBest present you could ask for right there.\u201dx.com",
           "topic": "general",
-          "players": [
-            "Jalen Brunson",
-            "Tyler Kolek"
-          ],
           "teams": [
-            "Knicks"
+            "Lakers",
+            "Rockets"
           ],
-          "source_url": "https://au.sports.yahoo.com/brunsons-13-point-fourth-quarter-fuels-knicks-comeback-win-over-cavaliers-195219474.html",
-          "is_breaking": false
+          "players": [
+            "Amen Thompson"
+          ],
+          "source_url": "https://x.com/mshap2/status/2004395144112648273"
         }
       ]
-    }
-  ],
-  "rumors": [
-    {
-      "id": 1,
-      "reporter": "Marc Stein",
-      "reporter_key": "marc_stein",
-      "outlet": "The Stein Line",
-      "tier": 1,
-      "date": "2025-12-26",
-      "text": "Marc Stein:The Sixers have signed MarJon Beauchamp to a two-way contract.x.com",
-      "topic": "contract",
-      "players": [
-        "G League",
-        "MarJon Beauchamp",
-        "Two-Way Contracts"
-      ],
-      "teams": [
-        "76ers"
-      ],
-      "source_url": "https://x.com/TheSteinLine/status/2004595738458943945?s=20",
-      "is_breaking": false
     },
     {
-      "id": 12,
-      "reporter": "Bobby Marks",
-      "reporter_key": "bobby_marks",
+      "id": "lawmurraythenu",
+      "name": "@lawmurraythenu",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "L",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "LeBron James": 1
+      },
+      "by_team": {
+        "Cavaliers": 1,
+        "Warriors": 1,
+        "Lakers": 1,
+        "Timberwolves": 1,
+        "Rockets": 1
+      },
+      "by_date": {
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Law Murray: Los Angeles Lakers were outscored by 33 points with LeBron James on the floor on Christmas vs RocketsIt\u2019s the worst of his Lakers career, and only two games worse (including playoffs) were with Cavaliers in January 2016 (-34 vs Warriors) and January 2018 (-39 at Minnesota)x.com",
+          "topic": "injury",
+          "teams": [
+            "Cavaliers",
+            "Warriors",
+            "Lakers",
+            "Timberwolves",
+            "Rockets"
+          ],
+          "players": [
+            "LeBron James"
+          ],
+          "source_url": "https://x.com/LawMurrayTheNU/status/2004399155603751190"
+        }
+      ]
+    },
+    {
+      "id": "957thegame",
+      "name": "@957thegame",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "9",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Stephen Curry": 1,
+        "Klay Thompson": 1
+      },
+      "by_team": {
+        "Warriors": 1,
+        "Mavericks": 1
+      },
+      "by_date": {
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "95.7 The Game:\u201cNo, I just randomly have some ANTA Klay Thompson 11\u2019s lying around in the back. Just thought I\u2019d wear them and they happened to be in my size, which was pretty cool.\u201dSteph having some fun with a reporter after he was asked about his shoe choice tonightx.com",
+          "topic": "injury",
+          "teams": [
+            "Warriors",
+            "Mavericks"
+          ],
+          "players": [
+            "Stephen Curry",
+            "Klay Thompson"
+          ],
+          "source_url": "https://x.com/957thegame/status/2004374228259475562"
+        }
+      ]
+    },
+    {
+      "id": "thejordancdavis",
+      "name": "@thejordancdavis",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "T",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Victor Wembanyama": 1
+      },
+      "by_team": {
+        "Thunder": 1,
+        "Spurs": 1
+      },
+      "by_date": {
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Jordan Davis: Spurs big man Victor Wembanyama says he doesn\u2019t want to \u2018say too much\u2019 about what he\u2019s gathered after going 3-0 against the Thunder this year.\"This is like a playoff series. We learned a lot on the tactical side\u2026.I don't want to say too much about it. Keep something for us.\u201cx.com",
+          "topic": "injury",
+          "teams": [
+            "Thunder",
+            "Spurs"
+          ],
+          "players": [
+            "Victor Wembanyama"
+          ],
+          "source_url": "https://x.com/thejordancdavis/status/2004325103195377939"
+        }
+      ]
+    },
+    {
+      "id": "danweisspbp",
+      "name": "@danweisspbp",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "D",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "draft": 1
+      },
+      "by_player": {
+        "Dylan Harper": 1
+      },
+      "by_team": {
+        "Spurs": 1
+      },
+      "by_date": {
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Dan Weiss: Went a bit under the radar the other night, but got to let Dylan Harper know in our post-game interview today that he was the first@spurs rookie with 10 assists & 5 steals in a game following his performance Tuesday.#PorVidax.com",
+          "topic": "draft",
+          "teams": [
+            "Spurs"
+          ],
+          "players": [
+            "Dylan Harper"
+          ],
+          "source_url": "https://x.com/DanWeissPBP/status/2004379425643942074"
+        }
+      ]
+    },
+    {
+      "id": "grantafseth",
+      "name": "@grantafseth",
+      "outlet": "X/Twitter",
+      "tier": 3,
+      "avatar": "G",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "general": 1
+      },
+      "by_player": {
+        "Stephen Curry": 1,
+        "Jimmy Butler": 1,
+        "Brandon Williams": 1,
+        "Cooper Flagg": 1
+      },
+      "by_team": {
+        "Kings": 1,
+        "Warriors": 1,
+        "Mavericks": 1
+      },
+      "by_date": {
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Grant Afseth:Final: Warriors 126, Mavericks 116Cooper Flagg: 27 PTS, 6 REB, 5 AST Brandon Williams: 26 PTS, 3 REB, 3 AST P.J. Washington: 14 PTS, 10 REB, 2 AST Stephen Curry: 23 PTS, 3 REB, 4 AST Jimmy Butler: 14 PTS, 9 REB, 9 AST Dallas (12-20) faces Sacramento on Saturday.x.com",
+          "topic": "general",
+          "teams": [
+            "Kings",
+            "Warriors",
+            "Mavericks"
+          ],
+          "players": [
+            "Stephen Curry",
+            "Jimmy Butler",
+            "Brandon Williams",
+            "Cooper Flagg"
+          ],
+          "source_url": "https://x.com/GrantAfseth/status/2004353728976245164"
+        }
+      ]
+    },
+    {
+      "id": "malika_andrews",
+      "name": "Malika Andrews",
       "outlet": "ESPN",
       "tier": 2,
-      "date": "2025-12-26",
-      "text": "For short-term relief, Denver has an open roster spot to sign a player or could wait until Jan. 5, the first date a team can sign a player to a 10-day contract.The Nuggets also have two trade exceptions ($6.9 million and $5.4 million) available to use in a trade. Because the exceptions were created ...",
-      "topic": "contract",
-      "players": [],
-      "teams": [
-        "Nuggets"
-      ],
-      "source_url": "https://www.espn.com/nba/story/_/id/47191162/nba-buzz-latest-live-updates-trades-intel-league",
-      "is_breaking": false
+      "avatar": "MA",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Anthony Davis": 1
+      },
+      "by_team": {
+        "Mavericks": 1
+      },
+      "by_date": {
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "text_start": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Malika Andrews:Anthony Davis is experiencing muscle spasms and the team tells me that this is out an \u201cabundance of caution.\u201dx.com",
+          "topic": "injury",
+          "teams": [
+            "Mavericks"
+          ],
+          "players": [
+            "Anthony Davis"
+          ],
+          "source_url": "https://x.com/malika_andrews/status/2004336914636460247"
+        }
+      ]
     },
     {
-      "id": 19,
-      "reporter": "ESPN",
-      "reporter_key": "espn",
-      "outlet": "ESPN",
+      "id": "flybyknite",
+      "name": "@flybyknite",
+      "outlet": "X/Twitter",
       "tier": 3,
-      "date": "2025-12-26",
-      "text": "Three days after an argument between Steve Kerr and Draymond Green tested the foundation of their organization, the Golden State Warriors completed a 3-0 homestand to exit a turbulent week with the most momentum they've had in a month.\"We're in a good place,\" Kerr said after the 126-116 showcase Chr...",
-      "topic": "general",
-      "players": [
-        "Steve Kerr",
-        "Draymond Green"
-      ],
-      "teams": [
-        "Warriors"
-      ],
-      "source_url": "https://www.espn.com/nba/story/_/id/47414725/streaking-warriors-good-place-kerr-green-tiff",
-      "is_breaking": true
+      "avatar": "F",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Chris Paul": 1,
+        "Bradley Beal": 1,
+        "Derrick Jones": 1,
+        "Ivica Zubac": 1
+      },
+      "by_team": {
+        "Trail Blazers": 1,
+        "Clippers": 1
+      },
+      "by_date": {
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Justin Russo:LA Clippers injury report for tomorrow at Portland:OUT Bradley Beal - Left Hip Fracture Derrick Jones Jr. - Right Knee Sprain Chris Paul - Not With Team Ivica Zubac - Left Ankle Sprainx.com",
+          "topic": "injury",
+          "teams": [
+            "Trail Blazers",
+            "Clippers"
+          ],
+          "players": [
+            "Chris Paul",
+            "Bradley Beal",
+            "Derrick Jones",
+            "Ivica Zubac"
+          ],
+          "source_url": "https://x.com/FlyByKnite/status/2004355303404716257"
+        }
+      ]
     },
     {
-      "id": 20,
-      "reporter": "ESPN",
-      "reporter_key": "espn",
-      "outlet": "ESPN",
+      "id": "nickagallo",
+      "name": "@nickagallo",
+      "outlet": "X/Twitter",
       "tier": 3,
-      "date": "2025-12-26",
-      "text": "\"Them two are [now] in a better place,\" Steph Curry said. \"Stuff like that happens. They have the equity of years and years of a relationship that has had its moments.They handled yesterday at practice well and we handled today well as a team.\"ESPN",
-      "topic": "contract",
-      "players": [
-        "Steve Kerr",
-        "Draymond Green"
-      ],
-      "teams": [
-        "Warriors"
-      ],
-      "source_url": "https://www.espn.com/nba/story/_/id/47414725/streaking-warriors-good-place-kerr-green-tiff",
-      "is_breaking": false
-    },
-    {
-      "id": 35,
-      "reporter": "ESPN",
-      "reporter_key": "espn",
-      "outlet": "ESPN",
-      "tier": 3,
-      "date": "2025-12-26",
-      "text": "\"Austin clearly felt something,\" Lakers coach JJ Redick said after the game.\"We did our normal halftime and then as we were walking out of the locker room, [Lakers director of player performance and health] Dr. [LeRoy] Sims told me he was out.\"ESPN",
-      "topic": "injury",
-      "players": [
-        "JJ Redick",
-        "Austin Reaves"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://www.espn.com/nba/story/_/id/47414854/lakers-austin-reaves-exits-christmas-day-game-due-calf-soreness",
-      "is_breaking": false
-    },
-    {
-      "id": 37,
-      "reporter": "Dave McMenamin",
-      "reporter_key": "dave_mcmenamin",
-      "outlet": "ESPN",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Dave McMenamin:JJ Redick said he told his group to be ready for an \u201cuncomfortable\u201d practice and film session on Saturday to address what Redick described to reporters as a lack of proper care.LAL next plays Sunday vs. SAC.x.com",
-      "topic": "general",
-      "players": [
-        "JJ Redick"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://x.com/mcten/status/2004397271971139875",
-      "is_breaking": true
-    },
-    {
-      "id": 38,
-      "reporter": "Dan Woike",
-      "reporter_key": "dan_woike",
-      "outlet": "LA Times",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "Dan Woike:\u201cWe don\u2019t care enough right now,\u201d JJ Redick saysx.com",
-      "topic": "general",
-      "players": [
-        "JJ Redick"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://x.com/DanWoikeSports/status/2004395935749886438",
-      "is_breaking": false
-    },
-    {
-      "id": 39,
-      "reporter": "Dan Woike",
-      "reporter_key": "dan_woike",
-      "outlet": "LA Times",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "Dan Woike:\u201cI\u2019m not doing another 53 games like this,\u201dRedick saysx.com",
-      "topic": "general",
-      "players": [
-        "JJ Redick"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://x.com/DanWoikeSports/status/2004396095829574028",
-      "is_breaking": false
-    },
-    {
-      "id": 40,
-      "reporter": "Dave McMenamin",
-      "reporter_key": "dave_mcmenamin",
-      "outlet": "ESPN",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Dave McMenamin:Jake LaRavia said there is a \u201cdisconnect\u201d within the team right now but could not quite verbalize what it was or the cause of it.x.com",
-      "topic": "general",
-      "players": [
-        "Jake LaRavia"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://x.com/mcten/status/2004400622930706808",
-      "is_breaking": false
-    },
-    {
-      "id": 42,
-      "reporter": "Dan Woike",
-      "reporter_key": "dan_woike",
-      "outlet": "LA Times",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "Dan Woike:Source tells me Austin Reaves will undergo an MRI on his injured calf Friday.x.com",
-      "topic": "injury",
-      "players": [
-        "Austin Reaves"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://x.com/DanWoikeSports/status/2004394889321320600",
-      "is_breaking": true
-    },
-    {
-      "id": 43,
-      "reporter": "Dave McMenamin",
-      "reporter_key": "dave_mcmenamin",
-      "outlet": "ESPN",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Dave McMenamin:Austin Reaves left the arena without the assistance of any brace or boot of crutch for his left leg.He told reporters \u201cMerry Christmas\u201d as he made his exit. JJ Redick said he didn\u2019t have further information on Reaves\u2019 left calf at this time.x.com",
-      "topic": "injury",
-      "players": [
-        "JJ Redick",
-        "Austin Reaves"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://x.com/mcten/status/2004397819931906261",
-      "is_breaking": false
-    },
-    {
-      "id": 45,
-      "reporter": "Dan Woike",
-      "reporter_key": "dan_woike",
-      "outlet": "LA Times",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "Dan Woike:Lakers have ruled Austin Reaves out with left calf soreness.x.com",
-      "topic": "injury",
-      "players": [
-        "Austin Reaves"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://x.com/DanWoikeSports/status/2004380333798776986",
-      "is_breaking": false
-    },
-    {
-      "id": 50,
-      "reporter": "Anthony Slater",
-      "reporter_key": "anthony_slater",
-      "outlet": "The Athletic",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Anthony Slater: Jimmy Butler on the Draymond Green and Steve Kerr argument and reconciliation this week\u201cI like that. Y\u2019all yell at each other. Turned me on a little bit. I\u2019m not gonna lie.\u201dx.com",
-      "topic": "general",
-      "players": [
-        "Steve Kerr",
-        "Jimmy Butler",
-        "Draymond Green"
-      ],
-      "teams": [
-        "Warriors"
-      ],
-      "source_url": "https://x.com/anthonyVslater/status/2004362633072550128",
-      "is_breaking": true
-    },
-    {
-      "id": 56,
-      "reporter": "Anthony Slater",
-      "reporter_key": "anthony_slater",
-      "outlet": "The Athletic",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Anthony Slater:Warriors complete a 3-0 homestand despite turbulence. Seven players in double figures in the Christmas win: Curry, Butler, Podziemski, Horford, Moody, Melton, Jackson-Davis. They're 16-15, riding a bit of momentum into a Toronto, Brooklyn, Charlotte road trip.x.com",
-      "topic": "general",
-      "players": [],
-      "teams": [
-        "Hornets",
-        "Warriors",
-        "Nets",
-        "Raptors"
-      ],
-      "source_url": "https://x.com/anthonyVslater/status/2004352224181604492",
-      "is_breaking": false
-    },
-    {
-      "id": 61,
-      "reporter": "Shams Charania",
-      "reporter_key": "shams_charania",
-      "outlet": "ESPN",
-      "tier": 1,
-      "date": "2025-12-25",
-      "text": "Shams Charania:Mavericks' Anthony Davis has a groin injury and is out for the remainder of the Christmas Day game against the Warriors.x.com",
-      "topic": "injury",
-      "players": [
-        "Anthony Davis"
-      ],
-      "teams": [
-        "Mavericks",
-        "Warriors"
-      ],
-      "source_url": "https://x.com/ShamsCharania/status/2004336332274126957",
-      "is_breaking": false
-    },
-    {
-      "id": 64,
-      "reporter": "Marc Stein",
-      "reporter_key": "marc_stein",
-      "outlet": "The Stein Line",
-      "tier": 1,
-      "date": "2025-12-25",
-      "text": "Marc Stein: TheGrizzlies have upgraded Ja Morant (left ankle sprain) to questionable for Friday\u2019s game against Milwaukee:x.com",
-      "topic": "injury",
-      "players": [
-        "Ja Morant"
-      ],
-      "teams": [
-        "Grizzlies",
-        "Bucks"
-      ],
-      "source_url": "https://x.com/TheSteinLine/status/2004334811104805300",
-      "is_breaking": false
-    },
-    {
-      "id": 65,
-      "reporter": "Dave McMenamin",
-      "reporter_key": "dave_mcmenamin",
-      "outlet": "ESPN",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Dave McMenamin:Luka Doncic and Rui Hachimura are both available tonight vs. HOU,according to the Lakersx.com",
-      "topic": "injury",
-      "players": [
-        "Luka Doncic",
-        "Rui Hachimura"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://x.com/mcten/status/2004330404363620842",
-      "is_breaking": false
-    },
-    {
-      "id": 79,
-      "reporter": "Shams Charania",
-      "reporter_key": "shams_charania",
-      "outlet": "ESPN",
-      "tier": 1,
-      "date": "2025-12-25",
-      "text": "Shams Charania:Houston Rockets forward Dorian Finney-Smith will make his season debut today against the Los Angeles Lakers,sources tell me and @mcten . Finney-Smith will be on a strict minutes restriction as he returns from offseason ankle surgery to face the Lakers team he left in free agency.x.com",
-      "topic": "injury",
-      "players": [
-        "Dorian Finney-Smith"
-      ],
-      "teams": [
-        "Rockets",
-        "Lakers"
-      ],
-      "source_url": "https://x.com/ShamsCharania/status/2004294689412075785",
-      "is_breaking": false
-    },
-    {
-      "id": 86,
-      "reporter": "Anthony Slater",
-      "reporter_key": "anthony_slater",
-      "outlet": "The Athletic",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Anthony Slater:The Warriors expect Al Horford to make his return today against the Mavericks,assuming his pregame warmup goes smooth. Kerr did say he will stick with similar rotation and play Quinten Post and Trayce Jackson-Davis at center.Twitter @anthonyVslater",
-      "topic": "injury",
-      "players": [
-        "Steve Kerr",
-        "Al Horford",
-        "Trayce Jackson-Davis",
-        "Quinten Post"
-      ],
-      "teams": [
-        "Warriors"
-      ],
-      "source_url": "https://hoopshype.com/social/",
-      "is_breaking": false
-    },
-    {
-      "id": 88,
-      "reporter": "HoopsHype",
-      "reporter_key": "hoopshype",
-      "outlet": "HoopsHype",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "The Pelicans have upgraded Jordan Poole (left ankle soreness) to questionablefor Friday\u2019s game against Phoenix.HoopsHype",
-      "topic": "injury",
-      "players": [
-        "Jordan Poole"
-      ],
-      "teams": [
-        "Pelicans"
-      ],
-      "source_url": "https://www.hoopshype.com/story/sports/nba/2025/11/10/nba-injury-tracker-whos-not-available-right-now/86822180007/",
-      "is_breaking": false
-    },
-    {
-      "id": 91,
-      "reporter": "HoopsHype",
-      "reporter_key": "hoopshype",
-      "outlet": "HoopsHype",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "The Heat have downgraded Bam Adebayo (lower back soreness) and Keshad Johnson (head illness) to questionable for Friday\u2019s gameagainst Atlanta. Pelle Larsson (left ankle sprain) and Nikola Jovic (right elbow contusion / laceration) are probable.HoopsHype",
-      "topic": "injury",
-      "players": [
-        "Bam Adebayo",
-        "Nikola Jovic",
-        "Keshad Johnson",
-        "Pelle Larsson"
-      ],
-      "teams": [
-        "Heat"
-      ],
-      "source_url": "https://www.hoopshype.com/story/sports/nba/2025/11/10/nba-injury-tracker-whos-not-available-right-now/86822180007/",
-      "is_breaking": false
-    },
-    {
-      "id": 93,
-      "reporter": "Yahoo Sports",
-      "reporter_key": "yahoo_sports",
-      "outlet": "Yahoo Sports",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "Jalen Brunson came through in a big way with that 13-point fourth quarter, leading the Knicks to a dramatic 126-124 comeback.Brunson finished the game with 34 points and 4 assists. Tyler Kolek also had a strong game for the Knicks. The second-year point guard had 16 points, 9 assists, and 3 rebounds...",
-      "topic": "general",
-      "players": [
-        "Jalen Brunson",
-        "Tyler Kolek"
-      ],
-      "teams": [
-        "Knicks"
-      ],
-      "source_url": "https://au.sports.yahoo.com/brunsons-13-point-fourth-quarter-fuels-knicks-comeback-win-over-cavaliers-195219474.html",
-      "is_breaking": false
-    },
-    {
-      "id": 97,
-      "reporter": "Shams Charania",
-      "reporter_key": "shams_charania",
-      "outlet": "ESPN",
-      "tier": 1,
-      "date": "2025-12-25",
-      "text": "Shams Charania: Denver'sCam Johnson will be reevaluated in 4 to 6 weeks with his right knee injury,sources tell ESPN. The Nuggets are now down three starters: Johnson, Aaron Gordon (hamstring) and Christian Braun (ankle).Twitter @ShamsCharania",
-      "topic": "injury",
-      "players": [
-        "Cameron Johnson"
-      ],
-      "teams": [
-        "Nuggets"
-      ],
-      "source_url": "https://hoopshype.com/social/",
-      "is_breaking": false
-    },
-    {
-      "id": 99,
-      "reporter": "HoopsHype",
-      "reporter_key": "hoopshype",
-      "outlet": "HoopsHype",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "The Nuggets have downgraded Jonas Valanciunas (illness) to probablefor Christmas Day\u2019s game against Minnesota.HoopsHype",
-      "topic": "injury",
-      "players": [
-        "Jonas Valanciunas"
-      ],
-      "teams": [
-        "Nuggets"
-      ],
-      "source_url": "https://www.hoopshype.com/story/sports/nba/2025/11/10/nba-injury-tracker-whos-not-available-right-now/86822180007/",
-      "is_breaking": false
+      "avatar": "N",
+      "total": 1,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 1
+      },
+      "by_player": {
+        "Mark Daigneault": 1
+      },
+      "by_team": {
+        "Thunder": 1,
+        "Spurs": 1
+      },
+      "by_date": {
+        "2025-12-25": 1
+      },
+      "detection_methods": {
+        "unknown_handle": 1
+      },
+      "recent_rumors": [
+        {
+          "date": "2025-12-25",
+          "text": "Nick Gallo: Mark Daigneault postgame on going 1/13 from the corners: \"I didn't think it was a make or miss outcome.They out-executed us and they played better and that's why they won. So I would never disrespect them and how they played today by making it about the ball going in or not.\"x.com",
+          "topic": "injury",
+          "teams": [
+            "Thunder",
+            "Spurs"
+          ],
+          "players": [
+            "Mark Daigneault"
+          ],
+          "source_url": "https://x.com/NickAGallo/status/2004315131740827695"
+        }
+      ]
     }
   ]
 }
