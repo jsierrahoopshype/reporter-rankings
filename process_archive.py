@@ -1,12 +1,12 @@
 """
-Reporter Rankings Data Processor v2
+Reporter Rankings Data Processor v3
 Extracts reporter statistics from the HoopsHype Rumors Archive.
 
-Detection methods:
-1. "Reporter Name:" pattern at start of text
-2. Twitter/X handle extraction from source_url
-3. Mid-text mentions ("According to Reporter Name", "per Reporter Name")
-4. Fallback to outlet name
+Changes in v3:
+- Separate outlets from reporters
+- Resolve unknown Twitter handles
+- Better date filtering
+- More comprehensive reporter database
 """
 
 import json
@@ -28,7 +28,7 @@ REPORTERS_DB = {
         "name": "Shams Charania",
         "outlet": "ESPN",
         "tier": 1,
-        "handles": ["shaborz", "shaborz_", "shamscharania"],
+        "handles": ["shaborz", "shamscharania", "shaborz_"],
         "variations": ["shams", "charania"]
     },
     "adrian wojnarowski": {
@@ -49,12 +49,12 @@ REPORTERS_DB = {
         "name": "Jake Fischer",
         "outlet": "Yahoo Sports",
         "tier": 1,
-        "handles": ["jakelfischer", "jfischer"],
+        "handles": ["jakelfischer", "jaborz_nba"],
         "variations": ["fischer"]
     },
     "chris haynes": {
         "name": "Chris Haynes",
-        "outlet": "Bleacher Report",
+        "outlet": "TNT/Bleacher Report",
         "tier": 1,
         "handles": ["chrisbhaynes"],
         "variations": ["haynes"]
@@ -123,7 +123,7 @@ REPORTERS_DB = {
         "name": "Kendra Andrews",
         "outlet": "ESPN",
         "tier": 2,
-        "handles": ["kaborz"],
+        "handles": ["kaborz", "kendraandrews"],
         "variations": []
     },
     "ohm youngmisuk": {
@@ -144,7 +144,7 @@ REPORTERS_DB = {
         "name": "Baxter Holmes",
         "outlet": "ESPN",
         "tier": 2,
-        "handles": ["baborz"],
+        "handles": ["baborz", "baxterholmes"],
         "variations": ["holmes"]
     },
     "michael scotto": {
@@ -165,15 +165,8 @@ REPORTERS_DB = {
         "name": "Sam Amick",
         "outlet": "The Athletic",
         "tier": 2,
-        "handles": ["sam_amick"],
+        "handles": ["sam_amick", "saborz"],
         "variations": ["amick"]
-    },
-    "shams charania athletic": {
-        "name": "Shams Charania",
-        "outlet": "ESPN",
-        "tier": 1,
-        "handles": [],
-        "variations": []
     },
     "john hollinger": {
         "name": "John Hollinger",
@@ -218,7 +211,7 @@ REPORTERS_DB = {
         "variations": ["aldridge"]
     },
     "marcus thompson": {
-        "name": "Marcus Thompson",
+        "name": "Marcus Thompson II",
         "outlet": "The Athletic",
         "tier": 2,
         "handles": ["thompsonscribe"],
@@ -294,13 +287,6 @@ REPORTERS_DB = {
         "handles": ["ericpincus"],
         "variations": ["pincus"]
     },
-    "jake storm": {
-        "name": "Jake Storm",
-        "outlet": "Bleacher Report",
-        "tier": 2,
-        "handles": ["jakestorm99"],
-        "variations": []
-    },
     "marc spears": {
         "name": "Marc Spears",
         "outlet": "Andscape",
@@ -350,13 +336,6 @@ REPORTERS_DB = {
         "handles": ["ricbucher"],
         "variations": ["bucher"]
     },
-    "nick wright": {
-        "name": "Nick Wright",
-        "outlet": "Fox Sports",
-        "tier": 2,
-        "handles": ["gaborzy"],
-        "variations": ["wright"]
-    },
     "kurt helin": {
         "name": "Kurt Helin",
         "outlet": "NBC Sports",
@@ -371,20 +350,6 @@ REPORTERS_DB = {
         "handles": ["tomhaberstroh"],
         "variations": ["haberstroh"]
     },
-    "steve bulpett": {
-        "name": "Steve Bulpett",
-        "outlet": "Heavy.com",
-        "tier": 2,
-        "handles": ["stevebhoop"],
-        "variations": ["bulpett"]
-    },
-    "sean highkin": {
-        "name": "Sean Highkin",
-        "outlet": "Rose Garden Report",
-        "tier": 2,
-        "handles": ["seanhighkin"],
-        "variations": ["highkin"]
-    },
     "jon krawczynski": {
         "name": "Jon Krawczynski",
         "outlet": "The Athletic",
@@ -396,22 +361,8 @@ REPORTERS_DB = {
         "name": "James Edwards III",
         "outlet": "The Athletic",
         "tier": 2,
-        "handles": ["jaborz"],
+        "handles": ["jedwardsiii"],
         "variations": ["edwards"]
-    },
-    "kellan olson": {
-        "name": "Kellan Olson",
-        "outlet": "Arizona Sports",
-        "tier": 2,
-        "handles": ["kellanolson"],
-        "variations": ["olson"]
-    },
-    "duane rankin": {
-        "name": "Duane Rankin",
-        "outlet": "Arizona Republic",
-        "tier": 2,
-        "handles": ["duaborz"],
-        "variations": ["rankin"]
     },
     
     # ===================
@@ -424,18 +375,11 @@ REPORTERS_DB = {
         "handles": ["markg_medina"],
         "variations": ["medina"]
     },
-    "john gambadoro": {
-        "name": "John Gambadoro",
-        "outlet": "Arizona Sports",
-        "tier": 3,
-        "handles": ["gamaborz"],
-        "variations": ["gambadoro"]
-    },
     "marc berman": {
         "name": "Marc Berman",
         "outlet": "NY Post",
         "tier": 3,
-        "handles": ["nyaborz"],
+        "handles": ["nyaborz", "marcberman"],
         "variations": ["berman"]
     },
     "stefan bondy": {
@@ -449,7 +393,7 @@ REPORTERS_DB = {
         "name": "Ian Begley",
         "outlet": "SNY",
         "tier": 3,
-        "handles": ["iaborz"],
+        "handles": ["iaborz", "ianbegley"],
         "variations": ["begley"]
     },
     "kyle neubeck": {
@@ -473,13 +417,6 @@ REPORTERS_DB = {
         "handles": ["derekbodnernba"],
         "variations": ["bodner"]
     },
-    "dave early": {
-        "name": "Dave Early",
-        "outlet": "NBC Sports Bay Area",
-        "tier": 3,
-        "handles": ["daveearlynba"],
-        "variations": ["early"]
-    },
     "monte poole": {
         "name": "Monte Poole",
         "outlet": "NBC Sports Bay Area",
@@ -491,22 +428,8 @@ REPORTERS_DB = {
         "name": "Jason Dumas",
         "outlet": "KRON4",
         "tier": 3,
-        "handles": ["jdaborz"],
+        "handles": ["jaborz_", "jasondumas"],
         "variations": ["dumas"]
-    },
-    "chris biderman": {
-        "name": "Chris Biderman",
-        "outlet": "Sacramento Bee",
-        "tier": 3,
-        "handles": ["chrisaborz"],
-        "variations": ["biderman"]
-    },
-    "james ham": {
-        "name": "James Ham",
-        "outlet": "ESPN 1320",
-        "tier": 3,
-        "handles": ["jaborz_"],
-        "variations": ["ham"]
     },
     "ira winderman": {
         "name": "Ira Winderman",
@@ -519,7 +442,7 @@ REPORTERS_DB = {
         "name": "Barry Jackson",
         "outlet": "Miami Herald",
         "tier": 3,
-        "handles": ["barryaborz"],
+        "handles": ["flaborzy", "barryjackson"],
         "variations": ["jackson"]
     },
     "anthony chiang": {
@@ -529,25 +452,11 @@ REPORTERS_DB = {
         "handles": ["anthonychiang"],
         "variations": ["chiang"]
     },
-    "greg sylvander": {
-        "name": "Greg Sylvander",
-        "outlet": "Bally Sports Florida",
-        "tier": 3,
-        "handles": ["gregaborz"],
-        "variations": ["sylvander"]
-    },
-    "greg logan": {
-        "name": "Greg Logan",
-        "outlet": "Newsday",
-        "tier": 3,
-        "handles": ["greglogannyaaa"],
-        "variations": ["logan"]
-    },
     "brian lewis": {
         "name": "Brian Lewis",
         "outlet": "NY Post",
         "tier": 3,
-        "handles": ["nyaborzy"],
+        "handles": ["nyaborzy", "brianlewis"],
         "variations": ["lewis"]
     },
     "alex schiffer": {
@@ -557,13 +466,6 @@ REPORTERS_DB = {
         "handles": ["alexschiffer"],
         "variations": ["schiffer"]
     },
-    "kristian winfield": {
-        "name": "Kristian Winfield",
-        "outlet": "NY Daily News",
-        "tier": 3,
-        "handles": ["kaborz"],
-        "variations": ["winfield"]
-    },
     "k.c. johnson": {
         "name": "K.C. Johnson",
         "outlet": "NBC Sports Chicago",
@@ -571,26 +473,12 @@ REPORTERS_DB = {
         "handles": ["kcjhoop"],
         "variations": ["johnson"]
     },
-    "rob schaefer": {
-        "name": "Rob Schaefer",
-        "outlet": "NBC Sports Chicago",
-        "tier": 3,
-        "handles": ["robaborz"],
-        "variations": ["schaefer"]
-    },
     "joe cowley": {
         "name": "Joe Cowley",
         "outlet": "Chicago Sun-Times",
         "tier": 3,
         "handles": ["joecowleyhoops"],
         "variations": ["cowley"]
-    },
-    "darnell mayberry": {
-        "name": "Darnell Mayberry",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["daborz"],
-        "variations": ["mayberry"]
     },
     "eric koreen": {
         "name": "Eric Koreen",
@@ -610,28 +498,21 @@ REPORTERS_DB = {
         "name": "Josh Lewenberg",
         "outlet": "TSN",
         "tier": 3,
-        "handles": ["jaborz_"],
+        "handles": ["jaborz_", "jlew1050"],
         "variations": ["lewenberg"]
     },
     "rod beard": {
         "name": "Rod Beard",
         "outlet": "Detroit News",
         "tier": 3,
-        "handles": ["daborz"],
+        "handles": ["daborz", "rodbeard"],
         "variations": ["beard"]
-    },
-    "omari sankofa ii": {
-        "name": "Omari Sankofa II",
-        "outlet": "Detroit Free Press",
-        "tier": 3,
-        "handles": ["osankofa"],
-        "variations": ["sankofa"]
     },
     "chris fedor": {
         "name": "Chris Fedor",
         "outlet": "Cleveland.com",
         "tier": 3,
-        "handles": ["chrisaborz"],
+        "handles": ["chrisfedor"],
         "variations": ["fedor"]
     },
     "kelsey russo": {
@@ -640,27 +521,6 @@ REPORTERS_DB = {
         "tier": 3,
         "handles": ["kelseyrusso"],
         "variations": ["russo"]
-    },
-    "evan dammarell": {
-        "name": "Evan Dammarell",
-        "outlet": "Right Down Euclid",
-        "tier": 3,
-        "handles": ["evandaborz"],
-        "variations": ["dammarell"]
-    },
-    "cayleigh griffin": {
-        "name": "Cayleigh Griffin",
-        "outlet": "Bally Sports Indiana",
-        "tier": 3,
-        "handles": ["cayleighgriffin"],
-        "variations": ["griffin"]
-    },
-    "scott agness": {
-        "name": "Scott Agness",
-        "outlet": "Fieldhouse Files",
-        "tier": 3,
-        "handles": ["scottaborz"],
-        "variations": ["agness"]
     },
     "eric nehm": {
         "name": "Eric Nehm",
@@ -673,36 +533,29 @@ REPORTERS_DB = {
         "name": "Jim Owczarski",
         "outlet": "Milwaukee Journal Sentinel",
         "tier": 3,
-        "handles": ["jimaborz"],
+        "handles": ["jaborz", "jimowczarski"],
         "variations": ["owczarski"]
     },
     "dane moore": {
         "name": "Dane Moore",
         "outlet": "SKOR North",
         "tier": 3,
-        "handles": ["daborz"],
+        "handles": ["daborz", "danemoore"],
         "variations": ["moore"]
     },
     "chris hine": {
         "name": "Chris Hine",
         "outlet": "Minneapolis Star Tribune",
         "tier": 3,
-        "handles": ["chrisaborz"],
+        "handles": ["chrishinemn"],
         "variations": ["hine"]
     },
     "drew hill": {
         "name": "Drew Hill",
         "outlet": "Daily Memphian",
         "tier": 3,
-        "handles": ["drewaborz"],
+        "handles": ["drewhill_dm"],
         "variations": ["hill"]
-    },
-    "damichael cole": {
-        "name": "Damichael Cole",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["damaborz"],
-        "variations": ["cole"]
     },
     "jonathan feigen": {
         "name": "Jonathan Feigen",
@@ -718,33 +571,12 @@ REPORTERS_DB = {
         "handles": ["kellyiko"],
         "variations": ["iko"]
     },
-    "alykhan bijani": {
-        "name": "Alykhan Bijani",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["alaborz"],
-        "variations": ["bijani"]
-    },
     "christian clark": {
         "name": "Christian Clark",
         "outlet": "NOLA.com",
         "tier": 3,
-        "handles": ["christaborz"],
+        "handles": ["claborz"],
         "variations": ["clark"]
-    },
-    "oleh kosel": {
-        "name": "Oleh Kosel",
-        "outlet": "Pelican Debrief",
-        "tier": 3,
-        "handles": ["olehaborz"],
-        "variations": ["kosel"]
-    },
-    "paul garcia": {
-        "name": "Paul Garcia",
-        "outlet": "Project Spurs",
-        "tier": 3,
-        "handles": ["paulaborz"],
-        "variations": ["garcia"]
     },
     "tom orsborn": {
         "name": "Tom Orsborn",
@@ -753,33 +585,12 @@ REPORTERS_DB = {
         "handles": ["tom_orsborn"],
         "variations": ["orsborn"]
     },
-    "jeff garcia": {
-        "name": "Jeff Garcia",
-        "outlet": "KENS5",
-        "tier": 3,
-        "handles": ["jeffgarcia"],
-        "variations": []
-    },
-    "maddie lee": {
-        "name": "Maddie Lee",
-        "outlet": "The Oklahoman",
-        "tier": 3,
-        "handles": ["maborz"],
-        "variations": ["lee"]
-    },
     "joe mussatto": {
         "name": "Joe Mussatto",
         "outlet": "The Oklahoman",
         "tier": 3,
-        "handles": ["jaborz"],
+        "handles": ["joeaborz", "joemussatto"],
         "variations": ["mussatto"]
-    },
-    "jamie hudson": {
-        "name": "Jamie Hudson",
-        "outlet": "Bally Sports Southwest",
-        "tier": 3,
-        "handles": ["jamieaborz"],
-        "variations": ["hudson"]
     },
     "callie caplan": {
         "name": "Callie Caplan",
@@ -792,22 +603,8 @@ REPORTERS_DB = {
         "name": "Brad Townsend",
         "outlet": "Dallas Morning News",
         "tier": 3,
-        "handles": ["btownaborz"],
+        "handles": ["townborz", "btownsend"],
         "variations": ["townsend"]
-    },
-    "khobi price": {
-        "name": "Khobi Price",
-        "outlet": "Orlando Sentinel",
-        "tier": 3,
-        "handles": ["khobiprice"],
-        "variations": ["price"]
-    },
-    "cody taylor": {
-        "name": "Cody Taylor",
-        "outlet": "Locked On Magic",
-        "tier": 3,
-        "handles": ["codyaborz"],
-        "variations": ["taylor"]
     },
     "kevin chouinard": {
         "name": "Kevin Chouinard",
@@ -822,13 +619,6 @@ REPORTERS_DB = {
         "tier": 3,
         "handles": ["sarahkspencer"],
         "variations": ["spencer"]
-    },
-    "lauren l. williams": {
-        "name": "Lauren L. Williams",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["laurenaborz"],
-        "variations": ["williams"]
     },
     "rick bonnell": {
         "name": "Rick Bonnell",
@@ -848,15 +638,8 @@ REPORTERS_DB = {
         "name": "Chase Hughes",
         "outlet": "NBC Sports Washington",
         "tier": 3,
-        "handles": ["caborz"],
+        "handles": ["chaborz", "caborz"],
         "variations": ["hughes"]
-    },
-    "quinton mayo": {
-        "name": "Quinton Mayo",
-        "outlet": "NBC Sports Washington",
-        "tier": 3,
-        "handles": ["qaborz"],
-        "variations": ["mayo"]
     },
     "ava wallace": {
         "name": "Ava Wallace",
@@ -865,40 +648,26 @@ REPORTERS_DB = {
         "handles": ["avawallace"],
         "variations": ["wallace"]
     },
-    "josh robbins": {
-        "name": "Josh Robbins",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["joshuabrobbing"],
-        "variations": ["robbins"]
-    },
-    "ben anderson": {
-        "name": "Ben Anderson",
-        "outlet": "KSL",
-        "tier": 3,
-        "handles": ["benaborz"],
-        "variations": ["anderson"]
-    },
     "andy larsen": {
         "name": "Andy Larsen",
         "outlet": "Salt Lake Tribune",
         "tier": 3,
-        "handles": ["andyaborz"],
+        "handles": ["andyaborz", "andylarsen"],
         "variations": ["larsen"]
-    },
-    "casey holdahl": {
-        "name": "Casey Holdahl",
-        "outlet": "Blazers.com",
-        "tier": 3,
-        "handles": ["choldahl"],
-        "variations": ["holdahl"]
     },
     "aaron fentress": {
         "name": "Aaron Fentress",
         "outlet": "The Oregonian",
         "tier": 3,
-        "handles": ["aaborz"],
+        "handles": ["aaborz", "aaronfentress"],
         "variations": ["fentress"]
+    },
+    "sean highkin": {
+        "name": "Sean Highkin",
+        "outlet": "Rose Garden Report",
+        "tier": 3,
+        "handles": ["seanhighkin"],
+        "variations": ["highkin"]
     },
     "brendan vogt": {
         "name": "Brendan Vogt",
@@ -911,7 +680,7 @@ REPORTERS_DB = {
         "name": "Bennett Durando",
         "outlet": "Denver Post",
         "tier": 3,
-        "handles": ["bennettnba"],
+        "handles": ["bennettnba", "bennettdurando"],
         "variations": ["durando"]
     },
     "harrison wind": {
@@ -932,13 +701,9 @@ REPORTERS_DB = {
         "name": "Adam Mares",
         "outlet": "DNVR",
         "tier": 3,
-        "handles": ["adamaborz"],
+        "handles": ["adamaborz", "adammares"],
         "variations": ["mares"]
     },
-    
-    # ===================
-    # Additional well-known reporters
-    # ===================
     "stephen a. smith": {
         "name": "Stephen A. Smith",
         "outlet": "ESPN",
@@ -950,7 +715,7 @@ REPORTERS_DB = {
         "name": "Malika Andrews",
         "outlet": "ESPN",
         "tier": 2,
-        "handles": ["malaborz"],
+        "handles": ["malaborz", "maborz"],
         "variations": ["andrews"]
     },
     "kendrick perkins": {
@@ -959,27 +724,6 @@ REPORTERS_DB = {
         "tier": 2,
         "handles": ["kendrickperkins"],
         "variations": ["perkins"]
-    },
-    "richard jefferson": {
-        "name": "Richard Jefferson",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["richardjefferson"],
-        "variations": ["jefferson"]
-    },
-    "jj redick": {
-        "name": "JJ Redick",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["jaborz"],
-        "variations": ["redick"]
-    },
-    "seth partnow": {
-        "name": "Seth Partnow",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["sethpartnow"],
-        "variations": ["partnow"]
     },
     "jonathan givony": {
         "name": "Jonathan Givony",
@@ -994,13 +738,6 @@ REPORTERS_DB = {
         "tier": 2,
         "handles": ["mike_schmitz"],
         "variations": ["schmitz"]
-    },
-    "jeremy woo": {
-        "name": "Jeremy Woo",
-        "outlet": "Sports Illustrated",
-        "tier": 2,
-        "handles": ["jeremywoo"],
-        "variations": ["woo"]
     },
     "evan sidery": {
         "name": "Evan Sidery",
@@ -1020,23 +757,172 @@ REPORTERS_DB = {
         "name": "Brett Siegel",
         "outlet": "ClutchPoints",
         "tier": 3,
-        "handles": ["baborz"],
+        "handles": ["brettsiegel_"],
         "variations": ["siegel"]
     },
-    "chris sheridan": {
-        "name": "Chris Sheridan",
-        "outlet": "SheridanHoops",
+    
+    # ===================
+    # Additional reporters seen in the data
+    # ===================
+    "mike curtis": {
+        "name": "Mike Curtis",
+        "outlet": "Baltimore Sun",
         "tier": 3,
-        "handles": ["sheaborz"],
-        "variations": ["sheridan"]
+        "handles": ["mikeacurtis2"],
+        "variations": ["curtis"]
     },
-    "marc j. spears": {
-        "name": "Marc Spears",
-        "outlet": "Andscape",
+    "jordan schultz": {
+        "name": "Jordan Schultz",
+        "outlet": "ESPN",
         "tier": 2,
-        "handles": ["marcjspears"],
-        "variations": ["spears"]
+        "handles": ["schulaborz_nba", "schultzreports"],
+        "variations": ["schultz"]
     },
+    "michael lee": {
+        "name": "Michael Lee",
+        "outlet": "The Washington Post",
+        "tier": 3,
+        "handles": ["maborz"],
+        "variations": ["lee"]
+    },
+    "greg swartz": {
+        "name": "Greg Swartz",
+        "outlet": "Bleacher Report",
+        "tier": 3,
+        "handles": ["swaborz"],
+        "variations": ["swartz"]
+    },
+    "chris milholen": {
+        "name": "Chris Milholen",
+        "outlet": "Locked On",
+        "tier": 3,
+        "handles": ["chrismilaborz"],
+        "variations": ["milholen"]
+    },
+    "greg sylvander": {
+        "name": "Greg Sylvander",
+        "outlet": "Bally Sports",
+        "tier": 3,
+        "handles": ["gaborz", "graborz"],
+        "variations": ["sylvander"]
+    },
+    "sam quinn": {
+        "name": "Sam Quinn",
+        "outlet": "CBS Sports",
+        "tier": 3,
+        "handles": ["samquinncbs"],
+        "variations": ["quinn"]
+    },
+    "mark murphy": {
+        "name": "Mark Murphy",
+        "outlet": "Boston Herald",
+        "tier": 3,
+        "handles": ["muraborz", "muaborz"],
+        "variations": []
+    },
+    "gary washburn": {
+        "name": "Gary Washburn",
+        "outlet": "Boston Globe",
+        "tier": 3,
+        "handles": ["gwashburnglobe"],
+        "variations": ["washburn"]
+    },
+    "adam himmelsbach": {
+        "name": "Adam Himmelsbach",
+        "outlet": "Boston Globe",
+        "tier": 3,
+        "handles": ["adamhimmelsbach"],
+        "variations": ["himmelsbach"]
+    },
+    "jay king": {
+        "name": "Jay King",
+        "outlet": "The Athletic",
+        "tier": 3,
+        "handles": ["jaykingaborz", "jayking"],
+        "variations": ["king"]
+    },
+    "kyle draper": {
+        "name": "Kyle Draper",
+        "outlet": "NBC Sports Boston",
+        "tier": 3,
+        "handles": ["draborz"],
+        "variations": ["draper"]
+    },
+    "chris forsberg": {
+        "name": "Chris Forsberg",
+        "outlet": "NBC Sports Boston",
+        "tier": 3,
+        "handles": ["chrisforsberg_"],
+        "variations": ["forsberg"]
+    },
+    "nick friedell": {
+        "name": "Nick Friedell",
+        "outlet": "ESPN",
+        "tier": 2,
+        "handles": ["nickfriedell"],
+        "variations": ["friedell"]
+    },
+    "kayla johnson": {
+        "name": "Kayla Johnson",
+        "outlet": "Bleacher Report",
+        "tier": 3,
+        "handles": ["kaylaborz"],
+        "variations": []
+    },
+    "nick wright": {
+        "name": "Nick Wright",
+        "outlet": "Fox Sports",
+        "tier": 2,
+        "handles": ["gaborzy"],
+        "variations": ["wright"]
+    },
+    "vincent goodwill": {
+        "name": "Vincent Goodwill",
+        "outlet": "Yahoo Sports",
+        "tier": 2,
+        "handles": ["vaborz", "vincegoodwill"],
+        "variations": ["goodwill"]
+    },
+    "chris herring": {
+        "name": "Chris Herring",
+        "outlet": "Sports Illustrated",
+        "tier": 2,
+        "handles": ["chrisaborz", "heraborz"],
+        "variations": ["herring"]
+    },
+    "yaron weitzman": {
+        "name": "Yaron Weitzman",
+        "outlet": "Fox Sports",
+        "tier": 2,
+        "handles": ["yaronweitzman"],
+        "variations": ["weitzman"]
+    },
+}
+
+# Known outlets that should NOT be treated as reporters
+OUTLET_NAMES = {
+    "espn", "the athletic", "bleacher report", "yahoo sports", "nba.com",
+    "cbs sports", "fox sports", "nbc sports", "sports illustrated",
+    "the ringer", "hoopshype", "usa today", "associated press", "ap",
+    "reuters", "new york times", "washington post", "los angeles times",
+    "boston globe", "chicago tribune", "miami herald", "dallas morning news",
+    "denver post", "philadelphia inquirer", "ny post", "new york post",
+    "ny daily news", "san antonio express-news", "houston chronicle",
+    "cleveland.com", "detroit news", "detroit free press", "milwaukee journal sentinel",
+    "minneapolis star tribune", "salt lake tribune", "the oregonian",
+    "sacramento bee", "arizona republic", "atlanta journal-constitution",
+    "charlotte observer", "orlando sentinel", "tampa bay times",
+    "south florida sun-sentinel", "basketnews", "eurohoops", "sportando",
+    "slam", "slam online", "si.com", "youtube", "twitter", "x.com",
+    "instagram", "facebook", "tiktok", "reddit", "threads",
+    "sny", "tsn", "sportsnet", "msg", "bally sports",
+    "nbc sports boston", "nbc sports chicago", "nbc sports philadelphia",
+    "nbc sports bay area", "nbc sports washington", "spectrum sportsnet",
+    "altitude sports", "bally sports southwest", "bally sports sun",
+    "bally sports ohio", "bally sports indiana", "bally sports north",
+    "bally sports wisconsin", "bally sports detroit", "bally sports southeast",
+    "bally sports oklahoma", "root sports", "at&t sportsnet",
+    "the athletic nba", "espn nba", "bleacher report nba"
 }
 
 # Build lookup indices
@@ -1065,18 +951,19 @@ TOPIC_KEYWORDS = {
         "injury", "injured", "hurt", "out", "miss", "sidelined", "rehab", "surgery",
         "sprain", "strain", "tear", "fracture", "concussion", "return", "recovery",
         "day-to-day", "questionable", "doubtful", "ruled out", "dnp", "rest",
-        "load management", "soreness", "inflammation"
+        "load management", "soreness", "inflammation", "ankle", "knee", "hamstring",
+        "calf", "shoulder", "back", "hip", "wrist", "foot", "achilles"
     ],
     "contract": [
         "contract", "extension", "sign", "signing", "free agent", "free agency",
         "max", "deal", "years", "million", "salary", "option", "decline", "accept",
         "negotiate", "offer", "restricted", "unrestricted", "rfa", "ufa", "supermax",
-        "player option", "team option", "buyout"
+        "player option", "team option", "buyout", "waive", "release"
     ],
     "frontoffice": [
         "coach", "coaching", "fired", "hire", "gm", "general manager", "president",
         "front office", "executive", "owner", "ownership", "management", "staff",
-        "assistant", "interim", "promote", "search", "candidate"
+        "assistant", "interim", "promote", "search", "candidate", "head coach"
     ],
     "draft": [
         "draft", "pick", "lottery", "prospect", "mock", "workout", "combine",
@@ -1099,9 +986,22 @@ def extract_handle_from_url(url: str) -> Optional[str]:
     if match:
         handle = match.group(1).lower()
         # Skip common non-user paths
-        if handle not in ['status', 'i', 'search', 'hashtag', 'home', 'explore']:
+        if handle not in ['status', 'i', 'search', 'hashtag', 'home', 'explore', 'settings', 'messages']:
             return handle
     return None
+
+
+def is_outlet_name(name: str) -> bool:
+    """Check if a name is an outlet rather than a reporter."""
+    name_lower = name.lower().strip()
+    # Direct match
+    if name_lower in OUTLET_NAMES:
+        return True
+    # Partial match for common patterns
+    for outlet in OUTLET_NAMES:
+        if outlet in name_lower or name_lower in outlet:
+            return True
+    return False
 
 
 def extract_reporter_from_text_start(text: str) -> Optional[Dict]:
@@ -1110,18 +1010,36 @@ def extract_reporter_from_text_start(text: str) -> Optional[Dict]:
         return None
     
     # Pattern: "First Last:" or "First Middle Last:" at the very start
-    match = re.match(r'^([A-Z][a-z]+(?:\s+[A-Z]\.?)?\s+[A-Z][a-z]+(?:\s+[A-Z]+)?)\s*:', text)
+    # Also handles "First Last II:" or "First Last Jr.:"
+    match = re.match(r'^([A-Z][a-z]+(?:\s+[A-Z]\.?)?\s+[A-Z][a-zA-Z]+(?:\s+(?:II|III|Jr\.?|Sr\.?))?)\s*:', text)
     if match:
-        name = match.group(1).strip().lower()
+        name = match.group(1).strip()
+        name_lower = name.lower()
+        
+        # Check if this is an outlet, not a reporter
+        if is_outlet_name(name_lower):
+            return None
+            
         # Check if this matches a known reporter
-        if name in NAME_TO_REPORTER:
-            return NAME_TO_REPORTER[name]
+        if name_lower in NAME_TO_REPORTER:
+            return NAME_TO_REPORTER[name_lower]
+        
         # Try without middle initial
-        name_parts = name.split()
+        name_parts = name_lower.split()
         if len(name_parts) >= 2:
             simple_name = f"{name_parts[0]} {name_parts[-1]}"
             if simple_name in NAME_TO_REPORTER:
                 return NAME_TO_REPORTER[simple_name]
+        
+        # Return as a new reporter (will be added dynamically)
+        return {
+            "name": name,
+            "outlet": "Unknown",
+            "tier": 3,
+            "handles": [],
+            "variations": [],
+            "_dynamic": True
+        }
     
     return None
 
@@ -1135,33 +1053,37 @@ def extract_reporter_from_text_body(text: str) -> Optional[Dict]:
     
     # Patterns to look for
     patterns = [
-        r'according to ([a-z]+ [a-z]+)',
-        r'per ([a-z]+ [a-z]+)',
-        r'([a-z]+ [a-z]+) reports',
-        r'([a-z]+ [a-z]+) reported',
-        r'([a-z]+ [a-z]+) says',
-        r'([a-z]+ [a-z]+) said',
-        r'source[s]? told ([a-z]+ [a-z]+)',
-        r'([a-z]+ [a-z]+) of espn',
-        r'([a-z]+ [a-z]+) of the athletic',
-        r'([a-z]+ [a-z]+) of yahoo',
-        r'([a-z]+ [a-z]+) of bleacher report',
+        r'according to ([a-z]+(?:\s+[a-z]\.?)?\s+[a-z]+)',
+        r'per ([a-z]+(?:\s+[a-z]\.?)?\s+[a-z]+)',
+        r'([a-z]+\s+[a-z]+) reports that',
+        r'([a-z]+\s+[a-z]+) reported that',
+        r'([a-z]+\s+[a-z]+) says that',
+        r'([a-z]+\s+[a-z]+) said that',
+        r'source[s]? told ([a-z]+\s+[a-z]+)',
+        r'source[s]? tell ([a-z]+\s+[a-z]+)',
+        r'([a-z]+\s+[a-z]+) of espn',
+        r'([a-z]+\s+[a-z]+) of the athletic',
+        r'([a-z]+\s+[a-z]+) of yahoo',
+        r'([a-z]+\s+[a-z]+) of bleacher report',
+        r'([a-z]+\s+[a-z]+) of nba\.com',
     ]
     
     for pattern in patterns:
         match = re.search(pattern, text_lower)
         if match:
             potential_name = match.group(1).strip()
+            if is_outlet_name(potential_name):
+                continue
             if potential_name in NAME_TO_REPORTER:
                 return NAME_TO_REPORTER[potential_name]
     
     return None
 
 
-def extract_reporter(rumor: Dict) -> Tuple[Optional[Dict], str]:
+def extract_reporter(rumor: Dict) -> Tuple[Optional[Dict], str, bool]:
     """
     Extract reporter from a rumor using multiple methods.
-    Returns (reporter_dict, detection_method)
+    Returns (reporter_dict, detection_method, is_outlet)
     """
     text = rumor.get("text", "") or ""
     source_url = rumor.get("source_url", "") or ""
@@ -1170,40 +1092,41 @@ def extract_reporter(rumor: Dict) -> Tuple[Optional[Dict], str]:
     # Method 1: Check for "Name Name:" at start of text
     reporter = extract_reporter_from_text_start(text)
     if reporter:
-        return reporter, "text_start"
+        return reporter, "text_start", False
     
     # Method 2: Extract handle from X/Twitter URL
     handle = extract_handle_from_url(source_url)
-    if handle and handle in HANDLE_TO_REPORTER:
-        return HANDLE_TO_REPORTER[handle], "twitter_handle"
+    if handle:
+        if handle in HANDLE_TO_REPORTER:
+            return HANDLE_TO_REPORTER[handle], "twitter_handle", False
+        else:
+            # Unknown handle - create dynamic entry
+            return {
+                "name": f"@{handle}",
+                "outlet": "X/Twitter",
+                "tier": 4,
+                "handles": [handle],
+                "variations": [],
+                "_dynamic": True,
+                "_handle": handle
+            }, "unknown_handle", False
     
     # Method 3: Check for reporter mentioned in text body
     reporter = extract_reporter_from_text_body(text)
     if reporter:
-        return reporter, "text_body"
+        return reporter, "text_body", False
     
-    # Method 4: If we found a handle but don't have it mapped, create entry
-    if handle:
-        # Create a new entry for unknown handle
-        return {
-            "name": f"@{handle}",
-            "outlet": "X/Twitter",
-            "tier": 3,
-            "handles": [handle],
-            "variations": []
-        }, "unknown_handle"
-    
-    # Method 5: Fall back to outlet
+    # Method 4: Fall back to outlet (marked as outlet, not reporter)
     if outlet and outlet.lower() not in ['x.com', 'twitter.com', '']:
         return {
             "name": outlet,
             "outlet": outlet,
-            "tier": 4,
+            "tier": 5,
             "handles": [],
             "variations": []
-        }, "outlet_fallback"
+        }, "outlet_fallback", True
     
-    return None, "none"
+    return None, "none", False
 
 
 def detect_topic(text: str, tags: List[str] = None) -> str:
@@ -1269,7 +1192,8 @@ def extract_players(tags: List[str]) -> List[str]:
     """Extract player names from tags."""
     excluded = {
         "trade", "trades", "injuries", "injury", "contract", "free agency",
-        "draft", "coaching", "front office", "rumors", "nba", "statistics"
+        "draft", "coaching", "front office", "rumors", "nba", "statistics",
+        "business", "media", "awards", "all-star"
     }
     
     team_names = {
@@ -1301,8 +1225,20 @@ def extract_players(tags: List[str]) -> List[str]:
 # MAIN PROCESSING
 # =============================================
 
-def process_archive(archive_data: List[Dict]) -> Dict:
-    """Process the full archive and generate reporter statistics."""
+def process_archive(archive_data: List[Dict], days_filter: int = None) -> Dict:
+    """
+    Process the full archive and generate reporter statistics.
+    
+    Args:
+        archive_data: List of rumor objects
+        days_filter: Optional - only include rumors from last N days
+    """
+    
+    # Filter by date if specified
+    if days_filter:
+        cutoff = (datetime.now() - timedelta(days=days_filter)).strftime('%Y-%m-%d')
+        archive_data = [r for r in archive_data if r.get('archive_date', '9999') >= cutoff]
+        print(f"Filtered to {len(archive_data)} rumors from last {days_filter} days")
     
     reporter_stats = defaultdict(lambda: {
         "total": 0,
@@ -1315,59 +1251,76 @@ def process_archive(archive_data: List[Dict]) -> Dict:
         "rumors": []
     })
     
+    outlet_stats = defaultdict(lambda: {
+        "total": 0,
+        "by_topic": defaultdict(int),
+        "by_date": defaultdict(int)
+    })
+    
     processed_count = 0
     skipped_count = 0
     method_counts = defaultdict(int)
+    unknown_handles = defaultdict(int)
     
     for rumor in archive_data:
-        reporter, method = extract_reporter(rumor)
+        result, method, is_outlet = extract_reporter(rumor)
         
-        if not reporter:
+        if not result:
             skipped_count += 1
             continue
         
         processed_count += 1
         method_counts[method] += 1
         
-        reporter_key = reporter["name"].lower().replace(" ", "_").replace("@", "")
         text = rumor.get("text", "") or ""
         tags = rumor.get("tags", [])
-        date = rumor.get("date", "") or rumor.get("archive_date", "")
-        
-        # Update stats
-        stats = reporter_stats[reporter_key]
-        stats["name"] = reporter["name"]
-        stats["outlet"] = reporter["outlet"]
-        stats["tier"] = reporter.get("tier", 4)
-        stats["total"] += 1
-        stats["detection_methods"][method] += 1
-        
-        # Topic
+        date = rumor.get("archive_date", "") or rumor.get("date", "")
         topic = detect_topic(text, tags)
-        stats["by_topic"][topic] += 1
         
-        # Date
-        if date:
-            stats["by_date"][date] += 1
-        
-        # Teams and players
-        for team in extract_teams(tags):
-            stats["by_team"][team] += 1
-        for player in extract_players(tags):
-            stats["by_player"][player] += 1
-        
-        # Keep sample rumors
-        if len(stats["rumors"]) < 20:
-            stats["rumors"].append({
-                "date": date,
-                "text": text[:300] + "..." if len(text) > 300 else text,
-                "topic": topic,
-                "teams": extract_teams(tags),
-                "players": extract_players(tags)[:5],
-                "source_url": rumor.get("source_url", "")
-            })
+        if is_outlet:
+            # Track outlet separately
+            outlet_key = result["name"].lower().replace(" ", "_")
+            outlet_stats[outlet_key]["name"] = result["name"]
+            outlet_stats[outlet_key]["total"] += 1
+            outlet_stats[outlet_key]["by_topic"][topic] += 1
+            if date:
+                outlet_stats[outlet_key]["by_date"][date] += 1
+        else:
+            # Track reporter
+            reporter_key = result["name"].lower().replace(" ", "_").replace("@", "")
+            
+            # Track unknown handles
+            if method == "unknown_handle":
+                handle = result.get("_handle", result["name"])
+                unknown_handles[handle] += 1
+            
+            stats = reporter_stats[reporter_key]
+            stats["name"] = result["name"]
+            stats["outlet"] = result["outlet"]
+            stats["tier"] = result.get("tier", 4)
+            stats["total"] += 1
+            stats["detection_methods"][method] += 1
+            stats["by_topic"][topic] += 1
+            
+            if date:
+                stats["by_date"][date] += 1
+            
+            for team in extract_teams(tags):
+                stats["by_team"][team] += 1
+            for player in extract_players(tags):
+                stats["by_player"][player] += 1
+            
+            if len(stats["rumors"]) < 20:
+                stats["rumors"].append({
+                    "date": date,
+                    "text": text[:300] + "..." if len(text) > 300 else text,
+                    "topic": topic,
+                    "teams": extract_teams(tags),
+                    "players": extract_players(tags)[:5],
+                    "source_url": rumor.get("source_url", "")
+                })
     
-    # Convert to final format
+    # Convert reporters to list
     reporters = []
     for key, stats in reporter_stats.items():
         reporters.append({
@@ -1386,24 +1339,47 @@ def process_archive(archive_data: List[Dict]) -> Dict:
             "recent_rumors": stats["rumors"][:10]
         })
     
+    # Convert outlets to list
+    outlets = []
+    for key, stats in outlet_stats.items():
+        outlets.append({
+            "id": key,
+            "name": stats["name"],
+            "total": stats["total"],
+            "by_topic": dict(stats["by_topic"]),
+            "by_date": dict(stats["by_date"])
+        })
+    
     # Sort by total
     reporters.sort(key=lambda x: -x["total"])
+    outlets.sort(key=lambda x: -x["total"])
     
     print(f"\n=== Processing Summary ===")
     print(f"Total rumors: {len(archive_data)}")
     print(f"Processed: {processed_count}")
     print(f"Skipped (no reporter): {skipped_count}")
+    print(f"Reporters found: {len(reporters)}")
+    print(f"Outlets found: {len(outlets)}")
     print(f"\nDetection methods:")
     for method, count in sorted(method_counts.items(), key=lambda x: -x[1]):
         print(f"  {method}: {count}")
+    
+    if unknown_handles:
+        print(f"\n=== Top 20 Unknown Twitter Handles ===")
+        print("(Add these to REPORTERS_DB for better attribution)")
+        for handle, count in sorted(unknown_handles.items(), key=lambda x: -x[1])[:20]:
+            print(f"  @{handle}: {count}")
     
     return {
         "generated_at": datetime.now().isoformat(),
         "total_rumors": len(archive_data),
         "processed_rumors": processed_count,
         "total_reporters": len(reporters),
+        "total_outlets": len(outlets),
         "detection_methods": dict(method_counts),
-        "reporters": reporters
+        "reporters": reporters,
+        "outlets": outlets,
+        "unknown_handles": dict(sorted(unknown_handles.items(), key=lambda x: -x[1])[:50])
     }
 
 
@@ -1415,6 +1391,7 @@ def generate_js_data(data: Dict, output_path: str = "reporter_data.js"):
 // Total Rumors: {data['total_rumors']}
 // Processed: {data['processed_rumors']}
 // Total Reporters: {data['total_reporters']}
+// Total Outlets: {data['total_outlets']}
 
 const REPORTER_DATA = {json.dumps(data, indent=2)};
 
@@ -1429,6 +1406,7 @@ if (typeof window !== 'undefined') {{
     
     print(f"\nGenerated {output_path}")
     print(f"  - {data['total_reporters']} reporters")
+    print(f"  - {data['total_outlets']} outlets")
     print(f"  - {data['processed_rumors']} rumors attributed")
 
 
@@ -1440,6 +1418,7 @@ def main():
     parser.add_argument('input', help='Path to archive JSON file')
     parser.add_argument('-o', '--output', default='reporter_data.js', help='Output JS file path')
     parser.add_argument('--json', action='store_true', help='Also output raw JSON')
+    parser.add_argument('--days', type=int, default=None, help='Only include rumors from last N days')
     
     args = parser.parse_args()
     
@@ -1452,7 +1431,7 @@ def main():
     
     # Process
     print("Processing...")
-    data = process_archive(archive)
+    data = process_archive(archive, days_filter=args.days)
     
     # Output
     generate_js_data(data, args.output)
@@ -1469,6 +1448,10 @@ def main():
         methods = r.get('detection_methods', {})
         method_str = ", ".join([f"{k}:{v}" for k, v in methods.items()])
         print(f"  {i:2}. {r['name']:25} ({r['outlet']:20}) - {r['total']:4} rumors [{method_str}]")
+    
+    print("\n=== Top 10 Outlets by Volume ===")
+    for i, o in enumerate(data['outlets'][:10], 1):
+        print(f"  {i:2}. {o['name']:30} - {o['total']:4} rumors")
 
 
 if __name__ == "__main__":
