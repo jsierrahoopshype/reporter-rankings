@@ -1,11 +1,11 @@
 // Reporter Rankings Data
-// Generated: 2025-12-26T22:09:08.268352
+// Generated: 2025-12-26T22:09:49.923886
 // Total Rumors: 100
 // Processed: 100
 // Total Reporters: 52
 
 const REPORTER_DATA = {
-  "generated_at": "2025-12-26T22:09:08.268352",
+  "generated_at": "2025-12-26T22:09:49.923886",
   "total_rumors": 100,
   "processed_rumors": 100,
   "total_reporters": 52,
@@ -40,8 +40,8 @@ const REPORTER_DATA = {
       },
       "by_team": {
         "Timberwolves": 4,
-        "Mavericks": 2,
         "Warriors": 2,
+        "Mavericks": 2,
         "Knicks": 1
       },
       "by_date": {
@@ -113,8 +113,8 @@ const REPORTER_DATA = {
           "text": "On Christmas Eve, Steve Kerr called the Warriors a fading dynasty. Then Klay returned, and it felt like one of the pillars of the dynasty was disappearing from the family photo. He was the quintessential Warrior, the embodiment of the era\u2019s aura. It made him beloved in these parts. His legend, his l...",
           "topic": "injury",
           "teams": [
-            "Mavericks",
-            "Warriors"
+            "Warriors",
+            "Mavericks"
           ],
           "players": [
             "Klay Thompson"
@@ -126,8 +126,8 @@ const REPORTER_DATA = {
           "text": "\u201cI\u2019ll never get used to seeing Klay on the other side,\u201d Kerr said. \u201cI miss Klay.I wish he was still here.\u201d This day was supposed to be about Klay. Instead, the mending between Klay\u2019s former teammate and coach took precedence.New York Times",
           "topic": "injury",
           "teams": [
-            "Mavericks",
-            "Warriors"
+            "Warriors",
+            "Mavericks"
           ],
           "players": [
             "Steve Kerr",
@@ -200,8 +200,8 @@ const REPORTER_DATA = {
           "text": "Mike Curtis: Jason Kidd on Brandon Williams' season-high 26 points:\"I thought B-Will was great. He was attacking & getting to the paint. Finishing, passing, finding guys. His speed was big for us this afternoon.I thought for our group, we missed a lot of layups there in that 1st half & that led to l...",
           "topic": "injury",
           "teams": [
-            "Mavericks",
-            "Warriors"
+            "Warriors",
+            "Mavericks"
           ],
           "players": [
             "Jason Kidd",
@@ -214,8 +214,8 @@ const REPORTER_DATA = {
           "text": "Mike Curtis: Asked Klay Thompson about playing at Chase Center now that he\u2019s done it a few times since joining the Mavs:\u201cIt feels like a great day to showcase our talent on Christmas. It\u2019s obviously not as emotional compared to the 1st time, but it\u2019s always fun coming back & seeing a lot of familiar...",
           "topic": "injury",
           "teams": [
-            "Mavericks",
-            "Warriors"
+            "Warriors",
+            "Mavericks"
           ],
           "players": [
             "Klay Thompson"
@@ -529,8 +529,8 @@ const REPORTER_DATA = {
       },
       "by_team": {
         "Lakers": 2,
-        "Warriors": 1,
         "Nuggets": 1,
+        "Warriors": 1,
         "Thunder": 1
       },
       "by_date": {
@@ -546,8 +546,8 @@ const REPORTER_DATA = {
           "text": "Jokic finished the game with 56 points (15/21 FG, 4/6 3PT), 16 rebounds, and 15 assists, leading his team to an impressive win.18 of his 56 points came in overtime, which the Nuggets won 27-23. With this performance, he broke Stephen Curry's record for most points in overtime in NBA history,which wa...",
           "topic": "general",
           "teams": [
-            "Warriors",
-            "Nuggets"
+            "Nuggets",
+            "Warriors"
           ],
           "players": [
             "Stephen Curry",
@@ -828,8 +828,8 @@ const REPORTER_DATA = {
       "by_team": {
         "Mavericks": 1,
         "76ers": 1,
-        "Bucks": 1,
-        "Grizzlies": 1
+        "Grizzlies": 1,
+        "Bucks": 1
       },
       "by_date": {
         "2025-12-26": 2,
@@ -870,8 +870,8 @@ const REPORTER_DATA = {
           "text": "Marc Stein: TheGrizzlies have upgraded Ja Morant (left ankle sprain) to questionable for Friday\u2019s game against Milwaukee:x.com",
           "topic": "injury",
           "teams": [
-            "Bucks",
-            "Grizzlies"
+            "Grizzlies",
+            "Bucks"
           ],
           "players": [
             "Ja Morant"
@@ -1101,8 +1101,8 @@ const REPORTER_DATA = {
       "by_team": {
         "Pacers": 1,
         "Lakers": 1,
-        "Mavericks": 1,
-        "Warriors": 1
+        "Warriors": 1,
+        "Mavericks": 1
       },
       "by_date": {
         "2025-12-25": 3
@@ -1140,8 +1140,8 @@ const REPORTER_DATA = {
           "text": "Nick DePaula:Stephen Curry shows love to Klay Thompson on Christmas, lacing up the ANTA KT 11 as Klay returns to the Bay. Thompson\u2019s 11th ANTA signature shoe features a nod to his 4 titles molded along the heel: \u201cRings Rings Rings Rings\u2026\u201dx.com",
           "topic": "injury",
           "teams": [
-            "Mavericks",
-            "Warriors"
+            "Warriors",
+            "Mavericks"
           ],
           "players": [
             "Stephen Curry",
@@ -1251,8 +1251,8 @@ const REPORTER_DATA = {
           "text": "Shams Charania:Mavericks' Anthony Davis has a groin injury and is out for the remainder of the Christmas Day game against the Warriors.x.com",
           "topic": "injury",
           "teams": [
-            "Mavericks",
-            "Warriors"
+            "Warriors",
+            "Mavericks"
           ],
           "players": [
             "Anthony Davis"
@@ -1471,8 +1471,8 @@ const REPORTER_DATA = {
           "text": "MrBuckBuck: Shai Gilgeous-Alexander: \u201cWe have to get better as a group.You don\u2019t lose to a team three times in a row in a short span without them being better than you.We have to get better. Look in the mirror, and that\u2019s everybody from top to bottom, if we want to reach our ultimate goal\u201dx.com",
           "topic": "injury",
           "teams": [
-            "Spurs",
-            "Thunder"
+            "Thunder",
+            "Spurs"
           ],
           "players": [
             "Shai Gilgeous-Alexander"
@@ -1553,8 +1553,8 @@ const REPORTER_DATA = {
       },
       "by_team": {
         "Warriors": 2,
-        "Hornets": 1,
         "Raptors": 1,
+        "Hornets": 1,
         "Nets": 1
       },
       "by_date": {
@@ -1583,10 +1583,10 @@ const REPORTER_DATA = {
           "text": "Anthony Slater:Warriors complete a 3-0 homestand despite turbulence. Seven players in double figures in the Christmas win: Curry, Butler, Podziemski, Horford, Moody, Melton, Jackson-Davis. They're 16-15, riding a bit of momentum into a Toronto, Brooklyn, Charlotte road trip.x.com",
           "topic": "general",
           "teams": [
-            "Hornets",
-            "Warriors",
             "Raptors",
-            "Nets"
+            "Hornets",
+            "Nets",
+            "Warriors"
           ],
           "players": [],
           "source_url": "https://x.com/anthonyVslater/status/2004352224181604492"
@@ -2167,8 +2167,8 @@ const REPORTER_DATA = {
         "Luka Doncic": 1
       },
       "by_team": {
-        "Bulls": 1,
-        "Lakers": 1
+        "Lakers": 1,
+        "Bulls": 1
       },
       "by_date": {
         "2025-12-26": 1
@@ -2182,8 +2182,8 @@ const REPORTER_DATA = {
           "text": "Now, as he prepares to debut his latest signature sneaker, the Luka 5, Luka Doncic talks alongside Jordan Brand Lead Product Line Manager Edric Egberuare to discuss the \u201cnice shoes\u201d in question. For Don\u010di\u0107, who signed with Jordan Brand in 2019, becoming the first European player to do so, the partne...",
           "topic": "contract",
           "teams": [
-            "Bulls",
-            "Lakers"
+            "Lakers",
+            "Bulls"
           ],
           "players": [
             "Michael Jordan",
@@ -2436,8 +2436,8 @@ const REPORTER_DATA = {
         "Amen Thompson": 1
       },
       "by_team": {
-        "Rockets": 1,
-        "Lakers": 1
+        "Lakers": 1,
+        "Rockets": 1
       },
       "by_date": {
         "2025-12-25": 1
@@ -2451,8 +2451,8 @@ const REPORTER_DATA = {
           "text": "Michael Shapiro:FINAL: Rockets 119, Lakers 96. Houston salvages road trip w/Christmas win. 26 pts for Amen Thompson. 25 pts for @KDTrey5 . Durant now 2\u20133 vs. LeBron on Christmas (other win in 2017). Durant in the tunnel postgame: \u201cBest present you could ask for right there.\u201dx.com",
           "topic": "general",
           "teams": [
-            "Rockets",
-            "Lakers"
+            "Lakers",
+            "Rockets"
           ],
           "players": [
             "Amen Thompson"
@@ -2476,10 +2476,10 @@ const REPORTER_DATA = {
         "LeBron James": 1
       },
       "by_team": {
-        "Warriors": 1,
-        "Rockets": 1,
-        "Cavaliers": 1,
         "Lakers": 1,
+        "Cavaliers": 1,
+        "Rockets": 1,
+        "Warriors": 1,
         "Timberwolves": 1
       },
       "by_date": {
@@ -2494,10 +2494,10 @@ const REPORTER_DATA = {
           "text": "Law Murray: Los Angeles Lakers were outscored by 33 points with LeBron James on the floor on Christmas vs RocketsIt\u2019s the worst of his Lakers career, and only two games worse (including playoffs) were with Cavaliers in January 2016 (-34 vs Warriors) and January 2018 (-39 at Minnesota)x.com",
           "topic": "injury",
           "teams": [
-            "Warriors",
-            "Rockets",
-            "Cavaliers",
             "Lakers",
+            "Cavaliers",
+            "Rockets",
+            "Warriors",
             "Timberwolves"
           ],
           "players": [
@@ -2523,8 +2523,8 @@ const REPORTER_DATA = {
         "Klay Thompson": 1
       },
       "by_team": {
-        "Mavericks": 1,
-        "Warriors": 1
+        "Warriors": 1,
+        "Mavericks": 1
       },
       "by_date": {
         "2025-12-25": 1
@@ -2538,8 +2538,8 @@ const REPORTER_DATA = {
           "text": "95.7 The Game:\u201cNo, I just randomly have some ANTA Klay Thompson 11\u2019s lying around in the back. Just thought I\u2019d wear them and they happened to be in my size, which was pretty cool.\u201dSteph having some fun with a reporter after he was asked about his shoe choice tonightx.com",
           "topic": "injury",
           "teams": [
-            "Mavericks",
-            "Warriors"
+            "Warriors",
+            "Mavericks"
           ],
           "players": [
             "Stephen Curry",
@@ -2564,8 +2564,8 @@ const REPORTER_DATA = {
         "Victor Wembanyama": 1
       },
       "by_team": {
-        "Spurs": 1,
-        "Thunder": 1
+        "Thunder": 1,
+        "Spurs": 1
       },
       "by_date": {
         "2025-12-25": 1
@@ -2579,8 +2579,8 @@ const REPORTER_DATA = {
           "text": "Jordan Davis: Spurs big man Victor Wembanyama says he doesn\u2019t want to \u2018say too much\u2019 about what he\u2019s gathered after going 3-0 against the Thunder this year.\"This is like a playoff series. We learned a lot on the tactical side\u2026.I don't want to say too much about it. Keep something for us.\u201cx.com",
           "topic": "injury",
           "teams": [
-            "Spurs",
-            "Thunder"
+            "Thunder",
+            "Spurs"
           ],
           "players": [
             "Victor Wembanyama"
@@ -2645,9 +2645,9 @@ const REPORTER_DATA = {
         "Cooper Flagg": 1
       },
       "by_team": {
-        "Mavericks": 1,
         "Warriors": 1,
-        "Kings": 1
+        "Kings": 1,
+        "Mavericks": 1
       },
       "by_date": {
         "2025-12-25": 1
@@ -2661,9 +2661,9 @@ const REPORTER_DATA = {
           "text": "Grant Afseth:Final: Warriors 126, Mavericks 116Cooper Flagg: 27 PTS, 6 REB, 5 AST Brandon Williams: 26 PTS, 3 REB, 3 AST P.J. Washington: 14 PTS, 10 REB, 2 AST Stephen Curry: 23 PTS, 3 REB, 4 AST Jimmy Butler: 14 PTS, 9 REB, 9 AST Dallas (12-20) faces Sacramento on Saturday.x.com",
           "topic": "general",
           "teams": [
-            "Mavericks",
             "Warriors",
-            "Kings"
+            "Kings",
+            "Mavericks"
           ],
           "players": [
             "Stephen Curry",
@@ -2774,8 +2774,8 @@ const REPORTER_DATA = {
         "Mark Daigneault": 1
       },
       "by_team": {
-        "Spurs": 1,
-        "Thunder": 1
+        "Thunder": 1,
+        "Spurs": 1
       },
       "by_date": {
         "2025-12-25": 1
@@ -2789,8 +2789,8 @@ const REPORTER_DATA = {
           "text": "Nick Gallo: Mark Daigneault postgame on going 1/13 from the corners: \"I didn't think it was a make or miss outcome.They out-executed us and they played better and that's why they won. So I would never disrespect them and how they played today by making it about the ball going in or not.\"x.com",
           "topic": "injury",
           "teams": [
-            "Spurs",
-            "Thunder"
+            "Thunder",
+            "Spurs"
           ],
           "players": [
             "Mark Daigneault"
