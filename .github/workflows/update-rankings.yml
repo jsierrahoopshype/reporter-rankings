@@ -34,37 +34,34 @@ jobs:
       
       - name: Fetch archive data from hoopshype-rumors repo
         run: |
-          echo "Fetching latest rumors data..."
+          echo "Fetching rumors data..."
           
           # Create data directory
           mkdir -p data
           
-          # Fetch the most recent parts (part1 has newest data)
-          # We only need recent data for reporter rankings (last 60 days)
-          for part in 1 2; do
+          # Fetch all parts for comprehensive data
+          for part in 1 2 3 4 5; do
             echo "Fetching part${part}..."
             curl -sL "https://jsierrahoopshype.github.io/hoopshype-rumors/hoopshype_rumors_part${part}.json" -o "data/part${part}.json"
             
             # Check if download succeeded
             if [ -s "data/part${part}.json" ]; then
-              echo "✓ Downloaded part${part}.json ($(wc -c < data/part${part}.json) bytes)"
+              SIZE=$(wc -c < "data/part${part}.json")
+              echo "✓ Downloaded part${part}.json (${SIZE} bytes)"
             else
-              echo "✗ Failed to download part${part}.json"
+              echo "✗ Failed to download part${part}.json (or empty)"
+              rm -f "data/part${part}.json"
             fi
           done
-          
-          # Also try to get the latest file if it exists
-          curl -sL "https://jsierrahoopshype.github.io/hoopshype-rumors/hoopshype_rumors_latest.json" -o "data/latest.json" || true
           
           echo "Download complete!"
           ls -la data/
       
-      - name: Merge and process archive data
+      - name: Merge archive data
         run: |
           python3 << 'EOF'
           import json
           import os
-          from datetime import datetime, timedelta
 
           # Load all available parts
           all_rumors = []
@@ -82,18 +79,32 @@ jobs:
                   except Exception as e:
                       print(f"Error loading {filename}: {e}")
 
-          # Filter to last 60 days for reporter rankings
-          cutoff = (datetime.now() - timedelta(days=60)).strftime('%Y-%m-%d')
-          recent_rumors = [r for r in all_rumors if r.get('archive_date', '') >= cutoff]
+          # Remove duplicates based on text content
+          seen = set()
+          unique_rumors = []
+          for r in all_rumors:
+              text = r.get('text', '')[:100]  # Use first 100 chars as key
+              if text and text not in seen:
+                  seen.add(text)
+                  unique_rumors.append(r)
 
-          print(f"Total rumors loaded: {len(all_rumors)}")
-          print(f"Recent rumors (60 days): {len(recent_rumors)}")
+          print(f"\nTotal rumors loaded: {len(all_rumors)}")
+          print(f"Unique rumors: {len(unique_rumors)}")
+
+          # Sort by archive_date descending (newest first)
+          unique_rumors.sort(key=lambda x: x.get('archive_date', ''), reverse=True)
 
           # Save merged file
           with open('data/merged_archive.json', 'w', encoding='utf-8') as f:
-              json.dump(recent_rumors, f)
+              json.dump(unique_rumors, f)
 
-          print(f"Saved merged archive with {len(recent_rumors)} rumors")
+          print(f"Saved merged archive with {len(unique_rumors)} rumors")
+          
+          # Show date range
+          if unique_rumors:
+              dates = [r.get('archive_date', '') for r in unique_rumors if r.get('archive_date')]
+              if dates:
+                  print(f"Date range: {min(dates)} to {max(dates)}")
           EOF
       
       - name: Generate reporter rankings data
@@ -128,7 +139,9 @@ jobs:
           echo "- **Updated:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
           if [ -f reporter_data.json ]; then
             REPORTERS=$(python3 -c "import json; d=json.load(open('reporter_data.json')); print(d.get('total_reporters', 'N/A'))")
-            RUMORS=$(python3 -c "import json; d=json.load(open('reporter_data.json')); print(d.get('total_rumors', 'N/A'))")
+            OUTLETS=$(python3 -c "import json; d=json.load(open('reporter_data.json')); print(d.get('total_outlets', 'N/A'))")
+            RUMORS=$(python3 -c "import json; d=json.load(open('reporter_data.json')); print(d.get('processed_rumors', 'N/A'))")
             echo "- **Reporters tracked:** $REPORTERS" >> $GITHUB_STEP_SUMMARY
+            echo "- **Outlets tracked:** $OUTLETS" >> $GITHUB_STEP_SUMMARY
             echo "- **Rumors processed:** $RUMORS" >> $GITHUB_STEP_SUMMARY
           fi
