@@ -1,12 +1,12 @@
 // Reporter Rankings Data
-// Generated: 2025-12-26T12:51:57.902128
-// Total Rumors: 29
-// Total Reporters: 10
+// Generated: 2025-12-26T18:01:12.026075
+// Total Rumors: 24
+// Total Reporters: 9
 
 const REPORTER_DATA = {
-  "generated_at": "2025-12-26T12:51:57.902128",
-  "total_rumors": 29,
-  "total_reporters": 10,
+  "generated_at": "2025-12-26T18:01:12.026075",
+  "total_rumors": 24,
+  "total_reporters": 9,
   "reporters": [
     {
       "id": "dave_mcmenamin",
@@ -14,29 +14,28 @@ const REPORTER_DATA = {
       "outlet": "ESPN",
       "tier": 2,
       "avatar": "DM",
-      "total": 5,
-      "breaking": 2,
+      "total": 4,
+      "breaking": 1,
       "by_topic": {
         "general": 2,
-        "injury": 3
+        "injury": 2
       },
       "by_player": {
         "JJ Redick": 2,
-        "Luka Doncic": 2,
         "Jake LaRavia": 1,
         "Austin Reaves": 1,
-        "Rui Hachimura": 1,
-        "Jaxson Hayes": 1
+        "Luka Doncic": 1,
+        "Rui Hachimura": 1
       },
       "by_team": {
-        "Lakers": 5
+        "Lakers": 4
       },
       "by_date": {
-        "2025-12-25": 5
+        "2025-12-25": 4
       },
       "recent_rumors": [
         {
-          "id": 20,
+          "id": 37,
           "reporter": "Dave McMenamin",
           "reporter_key": "dave_mcmenamin",
           "outlet": "ESPN",
@@ -54,7 +53,7 @@ const REPORTER_DATA = {
           "is_breaking": true
         },
         {
-          "id": 23,
+          "id": 40,
           "reporter": "Dave McMenamin",
           "reporter_key": "dave_mcmenamin",
           "outlet": "ESPN",
@@ -72,7 +71,7 @@ const REPORTER_DATA = {
           "is_breaking": false
         },
         {
-          "id": 26,
+          "id": 43,
           "reporter": "Dave McMenamin",
           "reporter_key": "dave_mcmenamin",
           "outlet": "ESPN",
@@ -91,7 +90,7 @@ const REPORTER_DATA = {
           "is_breaking": false
         },
         {
-          "id": 48,
+          "id": 65,
           "reporter": "Dave McMenamin",
           "reporter_key": "dave_mcmenamin",
           "outlet": "ESPN",
@@ -107,25 +106,6 @@ const REPORTER_DATA = {
             "Lakers"
           ],
           "source_url": "https://x.com/mcten/status/2004330404363620842",
-          "is_breaking": true
-        },
-        {
-          "id": 85,
-          "reporter": "Dave McMenamin",
-          "reporter_key": "dave_mcmenamin",
-          "outlet": "ESPN",
-          "tier": 2,
-          "date": "2025-12-25",
-          "text": "Dave McMenamin:Luka Doncic has been upgraded to probable for today vs HOU, per the Lakers. Jaxson Hayes (ankle) is out.x.com",
-          "topic": "injury",
-          "players": [
-            "Luka Doncic",
-            "Jaxson Hayes"
-          ],
-          "teams": [
-            "Lakers"
-          ],
-          "source_url": "https://x.com/mcten/status/2004247527802261961?s=20",
           "is_breaking": false
         }
       ]
@@ -154,7 +134,7 @@ const REPORTER_DATA = {
       },
       "recent_rumors": [
         {
-          "id": 21,
+          "id": 38,
           "reporter": "Dan Woike",
           "reporter_key": "dan_woike",
           "outlet": "LA Times",
@@ -172,7 +152,7 @@ const REPORTER_DATA = {
           "is_breaking": false
         },
         {
-          "id": 22,
+          "id": 39,
           "reporter": "Dan Woike",
           "reporter_key": "dan_woike",
           "outlet": "LA Times",
@@ -190,7 +170,7 @@ const REPORTER_DATA = {
           "is_breaking": false
         },
         {
-          "id": 25,
+          "id": 42,
           "reporter": "Dan Woike",
           "reporter_key": "dan_woike",
           "outlet": "LA Times",
@@ -208,7 +188,7 @@ const REPORTER_DATA = {
           "is_breaking": true
         },
         {
-          "id": 28,
+          "id": 45,
           "reporter": "Dan Woike",
           "reporter_key": "dan_woike",
           "outlet": "LA Times",
@@ -223,111 +203,6 @@ const REPORTER_DATA = {
             "Lakers"
           ],
           "source_url": "https://x.com/DanWoikeSports/status/2004380333798776986",
-          "is_breaking": false
-        }
-      ]
-    },
-    {
-      "id": "shams_charania",
-      "name": "Shams Charania",
-      "outlet": "ESPN",
-      "tier": 1,
-      "avatar": "SC",
-      "total": 4,
-      "breaking": 0,
-      "by_topic": {
-        "injury": 4
-      },
-      "by_player": {
-        "Anthony Davis": 1,
-        "Dorian Finney-Smith": 1,
-        "Cameron Johnson": 1,
-        "Evan Mobley": 1
-      },
-      "by_team": {
-        "Mavericks": 1,
-        "Warriors": 1,
-        "Rockets": 1,
-        "Lakers": 1,
-        "Nuggets": 1,
-        "Cavaliers": 1
-      },
-      "by_date": {
-        "2025-12-25": 4
-      },
-      "recent_rumors": [
-        {
-          "id": 44,
-          "reporter": "Shams Charania",
-          "reporter_key": "shams_charania",
-          "outlet": "ESPN",
-          "tier": 1,
-          "date": "2025-12-25",
-          "text": "Shams Charania:Mavericks' Anthony Davis has a groin injury and is out for the remainder of the Christmas Day game against the Warriors.x.com",
-          "topic": "injury",
-          "players": [
-            "Anthony Davis"
-          ],
-          "teams": [
-            "Mavericks",
-            "Warriors"
-          ],
-          "source_url": "https://x.com/ShamsCharania/status/2004336332274126957",
-          "is_breaking": false
-        },
-        {
-          "id": 62,
-          "reporter": "Shams Charania",
-          "reporter_key": "shams_charania",
-          "outlet": "ESPN",
-          "tier": 1,
-          "date": "2025-12-25",
-          "text": "Shams Charania:Houston Rockets forward Dorian Finney-Smith will make his season debut today against the Los Angeles Lakers,sources tell me and @mcten . Finney-Smith will be on a strict minutes restriction as he returns from offseason ankle surgery to face the Lakers team he left in free agency.x.com",
-          "topic": "injury",
-          "players": [
-            "Dorian Finney-Smith"
-          ],
-          "teams": [
-            "Rockets",
-            "Lakers"
-          ],
-          "source_url": "https://x.com/ShamsCharania/status/2004294689412075785",
-          "is_breaking": false
-        },
-        {
-          "id": 80,
-          "reporter": "Shams Charania",
-          "reporter_key": "shams_charania",
-          "outlet": "ESPN",
-          "tier": 1,
-          "date": "2025-12-25",
-          "text": "Shams Charania: Denver'sCam Johnson will be reevaluated in 4 to 6 weeks with his right knee injury,sources tell ESPN. The Nuggets are now down three starters: Johnson, Aaron Gordon (hamstring) and Christian Braun (ankle).Twitter @ShamsCharania",
-          "topic": "injury",
-          "players": [
-            "Cameron Johnson"
-          ],
-          "teams": [
-            "Nuggets"
-          ],
-          "source_url": "https://hoopshype.com/social/",
-          "is_breaking": false
-        },
-        {
-          "id": 90,
-          "reporter": "Shams Charania",
-          "reporter_key": "shams_charania",
-          "outlet": "ESPN",
-          "tier": 1,
-          "date": "2025-12-25",
-          "text": "Shams Charania:Cleveland Cavaliers All-Star Evan Mobley (calf strain) will return to action Christmas Day against the New York Knicks(12 pm ET, ABC/ESPN), per sources. Mobley, who has been out 13 days, is averaging career highs 19.1 points and 4.1 assists to go with 9.3 rebounds per game.x.com",
-          "topic": "injury",
-          "players": [
-            "Evan Mobley"
-          ],
-          "teams": [
-            "Cavaliers"
-          ],
-          "source_url": "https://x.com/ShamsCharania/status/2004224518727118912?s=20",
           "is_breaking": false
         }
       ]
@@ -360,7 +235,7 @@ const REPORTER_DATA = {
       },
       "recent_rumors": [
         {
-          "id": 2,
+          "id": 19,
           "reporter": "ESPN",
           "reporter_key": "espn",
           "outlet": "ESPN",
@@ -379,7 +254,7 @@ const REPORTER_DATA = {
           "is_breaking": true
         },
         {
-          "id": 3,
+          "id": 20,
           "reporter": "ESPN",
           "reporter_key": "espn",
           "outlet": "ESPN",
@@ -398,7 +273,7 @@ const REPORTER_DATA = {
           "is_breaking": false
         },
         {
-          "id": 18,
+          "id": 35,
           "reporter": "ESPN",
           "reporter_key": "espn",
           "outlet": "ESPN",
@@ -449,7 +324,7 @@ const REPORTER_DATA = {
       },
       "recent_rumors": [
         {
-          "id": 33,
+          "id": 50,
           "reporter": "Anthony Slater",
           "reporter_key": "anthony_slater",
           "outlet": "The Athletic",
@@ -469,7 +344,7 @@ const REPORTER_DATA = {
           "is_breaking": true
         },
         {
-          "id": 39,
+          "id": 56,
           "reporter": "Anthony Slater",
           "reporter_key": "anthony_slater",
           "outlet": "The Athletic",
@@ -488,7 +363,7 @@ const REPORTER_DATA = {
           "is_breaking": false
         },
         {
-          "id": 69,
+          "id": 86,
           "reporter": "Anthony Slater",
           "reporter_key": "anthony_slater",
           "outlet": "The Athletic",
@@ -504,6 +379,91 @@ const REPORTER_DATA = {
           ],
           "teams": [
             "Warriors"
+          ],
+          "source_url": "https://hoopshype.com/social/",
+          "is_breaking": false
+        }
+      ]
+    },
+    {
+      "id": "shams_charania",
+      "name": "Shams Charania",
+      "outlet": "ESPN",
+      "tier": 1,
+      "avatar": "SC",
+      "total": 3,
+      "breaking": 0,
+      "by_topic": {
+        "injury": 3
+      },
+      "by_player": {
+        "Anthony Davis": 1,
+        "Dorian Finney-Smith": 1,
+        "Cameron Johnson": 1
+      },
+      "by_team": {
+        "Mavericks": 1,
+        "Warriors": 1,
+        "Rockets": 1,
+        "Lakers": 1,
+        "Nuggets": 1
+      },
+      "by_date": {
+        "2025-12-25": 3
+      },
+      "recent_rumors": [
+        {
+          "id": 61,
+          "reporter": "Shams Charania",
+          "reporter_key": "shams_charania",
+          "outlet": "ESPN",
+          "tier": 1,
+          "date": "2025-12-25",
+          "text": "Shams Charania:Mavericks' Anthony Davis has a groin injury and is out for the remainder of the Christmas Day game against the Warriors.x.com",
+          "topic": "injury",
+          "players": [
+            "Anthony Davis"
+          ],
+          "teams": [
+            "Mavericks",
+            "Warriors"
+          ],
+          "source_url": "https://x.com/ShamsCharania/status/2004336332274126957",
+          "is_breaking": false
+        },
+        {
+          "id": 79,
+          "reporter": "Shams Charania",
+          "reporter_key": "shams_charania",
+          "outlet": "ESPN",
+          "tier": 1,
+          "date": "2025-12-25",
+          "text": "Shams Charania:Houston Rockets forward Dorian Finney-Smith will make his season debut today against the Los Angeles Lakers,sources tell me and @mcten . Finney-Smith will be on a strict minutes restriction as he returns from offseason ankle surgery to face the Lakers team he left in free agency.x.com",
+          "topic": "injury",
+          "players": [
+            "Dorian Finney-Smith"
+          ],
+          "teams": [
+            "Rockets",
+            "Lakers"
+          ],
+          "source_url": "https://x.com/ShamsCharania/status/2004294689412075785",
+          "is_breaking": false
+        },
+        {
+          "id": 97,
+          "reporter": "Shams Charania",
+          "reporter_key": "shams_charania",
+          "outlet": "ESPN",
+          "tier": 1,
+          "date": "2025-12-25",
+          "text": "Shams Charania: Denver'sCam Johnson will be reevaluated in 4 to 6 weeks with his right knee injury,sources tell ESPN. The Nuggets are now down three starters: Johnson, Aaron Gordon (hamstring) and Christian Braun (ankle).Twitter @ShamsCharania",
+          "topic": "injury",
+          "players": [
+            "Cameron Johnson"
+          ],
+          "teams": [
+            "Nuggets"
           ],
           "source_url": "https://hoopshype.com/social/",
           "is_breaking": false
@@ -539,7 +499,7 @@ const REPORTER_DATA = {
       },
       "recent_rumors": [
         {
-          "id": 71,
+          "id": 88,
           "reporter": "HoopsHype",
           "reporter_key": "hoopshype",
           "outlet": "HoopsHype",
@@ -557,7 +517,7 @@ const REPORTER_DATA = {
           "is_breaking": false
         },
         {
-          "id": 74,
+          "id": 91,
           "reporter": "HoopsHype",
           "reporter_key": "hoopshype",
           "outlet": "HoopsHype",
@@ -578,7 +538,7 @@ const REPORTER_DATA = {
           "is_breaking": false
         },
         {
-          "id": 82,
+          "id": 99,
           "reporter": "HoopsHype",
           "reporter_key": "hoopshype",
           "outlet": "HoopsHype",
@@ -606,23 +566,47 @@ const REPORTER_DATA = {
       "total": 2,
       "breaking": 0,
       "by_topic": {
-        "injury": 1,
-        "general": 1
+        "contract": 1,
+        "injury": 1
       },
       "by_player": {
-        "Ja Morant": 1,
-        "Charles Barkley": 1
+        "G League": 1,
+        "MarJon Beauchamp": 1,
+        "Two-Way Contracts": 1,
+        "Ja Morant": 1
       },
       "by_team": {
+        "76ers": 1,
         "Grizzlies": 1,
         "Bucks": 1
       },
       "by_date": {
-        "2025-12-25": 2
+        "2025-12-26": 1,
+        "2025-12-25": 1
       },
       "recent_rumors": [
         {
-          "id": 47,
+          "id": 1,
+          "reporter": "Marc Stein",
+          "reporter_key": "marc_stein",
+          "outlet": "The Stein Line",
+          "tier": 1,
+          "date": "2025-12-26",
+          "text": "Marc Stein:The Sixers have signed MarJon Beauchamp to a two-way contract.x.com",
+          "topic": "contract",
+          "players": [
+            "G League",
+            "MarJon Beauchamp",
+            "Two-Way Contracts"
+          ],
+          "teams": [
+            "76ers"
+          ],
+          "source_url": "https://x.com/TheSteinLine/status/2004595738458943945?s=20",
+          "is_breaking": false
+        },
+        {
+          "id": 64,
           "reporter": "Marc Stein",
           "reporter_key": "marc_stein",
           "outlet": "The Stein Line",
@@ -639,138 +623,42 @@ const REPORTER_DATA = {
           ],
           "source_url": "https://x.com/TheSteinLine/status/2004334811104805300",
           "is_breaking": false
-        },
-        {
-          "id": 91,
-          "reporter": "Marc Stein",
-          "reporter_key": "marc_stein",
-          "outlet": "The Stein Line",
-          "tier": 1,
-          "date": "2025-12-25",
-          "text": "Marc Stein: Charles Barkley in fine Christmas morning form on Inside:\"The NFL got greedy and started adding Christmas games. We used to have this day to ourself but Roger Goodell and them pigs at the NFL always want to hog every day of the week now. ... Christmas is an NBA day.\"x.com",
-          "topic": "general",
-          "players": [
-            "Charles Barkley"
-          ],
-          "teams": [],
-          "source_url": "https://x.com/TheSteinLine/status/2004225257612496986?s=20",
-          "is_breaking": false
         }
       ]
     },
     {
-      "id": "andscape",
-      "name": "Andscape",
-      "outlet": "Andscape",
-      "tier": 3,
-      "avatar": "A",
-      "total": 2,
-      "breaking": 1,
-      "by_topic": {
-        "trade": 1,
-        "contract": 1
-      },
-      "by_player": {
-        "Marcus Smart": 2
-      },
-      "by_team": {
-        "Lakers": 2
-      },
-      "by_date": {
-        "2025-12-25": 2
-      },
-      "recent_rumors": [
-        {
-          "id": 88,
-          "reporter": "Andscape",
-          "reporter_key": "andscape",
-          "outlet": "Andscape",
-          "tier": 3,
-          "date": "2025-12-25",
-          "text": "Los Angeles Lakers guard Marcus Smart\u2019s passion for defense stems from what he has defended against during the dark days of his youth. Today, the 2022 NBA Defensive Player of the Year is defending the league\u2019s best guards while using his foundation to help cancer victims and aid troubled inner-city ...",
-          "topic": "trade",
-          "players": [
-            "Marcus Smart"
-          ],
-          "teams": [
-            "Lakers"
-          ],
-          "source_url": "https://andscape.com/features/los-angeles-lakers-guard-marcus-smarts-foundation-is-fighting-cancer-empowering-inner-city-youth/",
-          "is_breaking": true
-        },
-        {
-          "id": 89,
-          "reporter": "Andscape",
-          "reporter_key": "andscape",
-          "outlet": "Andscape",
-          "tier": 3,
-          "date": "2025-12-25",
-          "text": "The 12-year NBA veteran\u2019s platform has also afforded the opportunity to help the less fortunate through his YounGameChanger Foundation. The mission of Smart\u2019s wide-ranging foundation is to empower inner-city youth through education, sports, STEM education and mentoring. Moreover, YounGameChanger Fou...",
-          "topic": "contract",
-          "players": [
-            "Marcus Smart"
-          ],
-          "teams": [
-            "Lakers"
-          ],
-          "source_url": "https://andscape.com/features/los-angeles-lakers-guard-marcus-smarts-foundation-is-fighting-cancer-empowering-inner-city-youth/",
-          "is_breaking": false
-        }
-      ]
-    },
-    {
-      "id": "brian_windhorst",
-      "name": "Brian Windhorst",
+      "id": "bobby_marks",
+      "name": "Bobby Marks",
       "outlet": "ESPN",
       "tier": 2,
-      "avatar": "BW",
-      "total": 2,
+      "avatar": "BM",
+      "total": 1,
       "breaking": 0,
       "by_topic": {
-        "trade": 2
+        "contract": 1
       },
-      "by_player": {
-        "Trajan Langdon": 1
-      },
+      "by_player": {},
       "by_team": {
-        "Pistons": 2
+        "Nuggets": 1
       },
       "by_date": {
-        "2025-12-25": 2
+        "2025-12-26": 1
       },
       "recent_rumors": [
         {
-          "id": 95,
-          "reporter": "Brian Windhorst",
-          "reporter_key": "brian_windhorst",
+          "id": 12,
+          "reporter": "Bobby Marks",
+          "reporter_key": "bobby_marks",
           "outlet": "ESPN",
           "tier": 2,
-          "date": "2025-12-25",
-          "text": "Tim MacMahon: The Detroit Pistons\u00a0because if the Pistons want to be\u00a0aggressive before the deadline, they\u00a0have the ammunition. They have the\u00a0flexibility. They just came through\u00a0Dallas.I can tell you they're not\u00a0looking at it as we have to be\u00a0aggressive before the deadline. They're\u00a0not going into the ...",
-          "topic": "trade",
-          "players": [
-            "Trajan Langdon"
-          ],
-          "teams": [
-            "Pistons"
-          ],
-          "source_url": "https://www.youtube.com/watch?v=qVRh98jom3Q&t=2092s",
-          "is_breaking": false
-        },
-        {
-          "id": 96,
-          "reporter": "Brian Windhorst",
-          "reporter_key": "brian_windhorst",
-          "outlet": "ESPN",
-          "tier": 2,
-          "date": "2025-12-25",
-          "text": "Brian Windhorst: I understand. But again, this is a\u00a0February 1st situation where you can\u00a0say whatever you want tosay.\u00a0When you sit down with your\u00a0organization, your owner, your scouts,\u00a0and your personnel people, and you look\u00a0at things, and you go, 'Okay, on February\u00a01st:\u00a0Do we have a chance to win t...",
-          "topic": "trade",
+          "date": "2025-12-26",
+          "text": "For short-term relief, Denver has an open roster spot to sign a player or could wait until Jan. 5, the first date a team can sign a player to a 10-day contract.The Nuggets also have two trade exceptions ($6.9 million and $5.4 million) available to use in a trade. Because the exceptions were created ...",
+          "topic": "contract",
           "players": [],
           "teams": [
-            "Pistons"
+            "Nuggets"
           ],
-          "source_url": "https://www.youtube.com/watch?v=qVRh98jom3Q&t=2131s",
+          "source_url": "https://www.espn.com/nba/story/_/id/47191162/nba-buzz-latest-live-updates-trades-intel-league",
           "is_breaking": false
         }
       ]
@@ -798,7 +686,7 @@ const REPORTER_DATA = {
       },
       "recent_rumors": [
         {
-          "id": 76,
+          "id": 93,
           "reporter": "Yahoo Sports",
           "reporter_key": "yahoo_sports",
           "outlet": "Yahoo Sports",
@@ -821,7 +709,43 @@ const REPORTER_DATA = {
   ],
   "rumors": [
     {
-      "id": 2,
+      "id": 1,
+      "reporter": "Marc Stein",
+      "reporter_key": "marc_stein",
+      "outlet": "The Stein Line",
+      "tier": 1,
+      "date": "2025-12-26",
+      "text": "Marc Stein:The Sixers have signed MarJon Beauchamp to a two-way contract.x.com",
+      "topic": "contract",
+      "players": [
+        "G League",
+        "MarJon Beauchamp",
+        "Two-Way Contracts"
+      ],
+      "teams": [
+        "76ers"
+      ],
+      "source_url": "https://x.com/TheSteinLine/status/2004595738458943945?s=20",
+      "is_breaking": false
+    },
+    {
+      "id": 12,
+      "reporter": "Bobby Marks",
+      "reporter_key": "bobby_marks",
+      "outlet": "ESPN",
+      "tier": 2,
+      "date": "2025-12-26",
+      "text": "For short-term relief, Denver has an open roster spot to sign a player or could wait until Jan. 5, the first date a team can sign a player to a 10-day contract.The Nuggets also have two trade exceptions ($6.9 million and $5.4 million) available to use in a trade. Because the exceptions were created ...",
+      "topic": "contract",
+      "players": [],
+      "teams": [
+        "Nuggets"
+      ],
+      "source_url": "https://www.espn.com/nba/story/_/id/47191162/nba-buzz-latest-live-updates-trades-intel-league",
+      "is_breaking": false
+    },
+    {
+      "id": 19,
       "reporter": "ESPN",
       "reporter_key": "espn",
       "outlet": "ESPN",
@@ -840,7 +764,7 @@ const REPORTER_DATA = {
       "is_breaking": true
     },
     {
-      "id": 3,
+      "id": 20,
       "reporter": "ESPN",
       "reporter_key": "espn",
       "outlet": "ESPN",
@@ -859,7 +783,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 18,
+      "id": 35,
       "reporter": "ESPN",
       "reporter_key": "espn",
       "outlet": "ESPN",
@@ -878,7 +802,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 20,
+      "id": 37,
       "reporter": "Dave McMenamin",
       "reporter_key": "dave_mcmenamin",
       "outlet": "ESPN",
@@ -896,7 +820,7 @@ const REPORTER_DATA = {
       "is_breaking": true
     },
     {
-      "id": 21,
+      "id": 38,
       "reporter": "Dan Woike",
       "reporter_key": "dan_woike",
       "outlet": "LA Times",
@@ -914,7 +838,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 22,
+      "id": 39,
       "reporter": "Dan Woike",
       "reporter_key": "dan_woike",
       "outlet": "LA Times",
@@ -932,7 +856,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 23,
+      "id": 40,
       "reporter": "Dave McMenamin",
       "reporter_key": "dave_mcmenamin",
       "outlet": "ESPN",
@@ -950,7 +874,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 25,
+      "id": 42,
       "reporter": "Dan Woike",
       "reporter_key": "dan_woike",
       "outlet": "LA Times",
@@ -968,7 +892,7 @@ const REPORTER_DATA = {
       "is_breaking": true
     },
     {
-      "id": 26,
+      "id": 43,
       "reporter": "Dave McMenamin",
       "reporter_key": "dave_mcmenamin",
       "outlet": "ESPN",
@@ -987,7 +911,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 28,
+      "id": 45,
       "reporter": "Dan Woike",
       "reporter_key": "dan_woike",
       "outlet": "LA Times",
@@ -1005,7 +929,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 33,
+      "id": 50,
       "reporter": "Anthony Slater",
       "reporter_key": "anthony_slater",
       "outlet": "The Athletic",
@@ -1025,7 +949,7 @@ const REPORTER_DATA = {
       "is_breaking": true
     },
     {
-      "id": 39,
+      "id": 56,
       "reporter": "Anthony Slater",
       "reporter_key": "anthony_slater",
       "outlet": "The Athletic",
@@ -1044,7 +968,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 44,
+      "id": 61,
       "reporter": "Shams Charania",
       "reporter_key": "shams_charania",
       "outlet": "ESPN",
@@ -1063,7 +987,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 47,
+      "id": 64,
       "reporter": "Marc Stein",
       "reporter_key": "marc_stein",
       "outlet": "The Stein Line",
@@ -1082,7 +1006,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 48,
+      "id": 65,
       "reporter": "Dave McMenamin",
       "reporter_key": "dave_mcmenamin",
       "outlet": "ESPN",
@@ -1098,10 +1022,10 @@ const REPORTER_DATA = {
         "Lakers"
       ],
       "source_url": "https://x.com/mcten/status/2004330404363620842",
-      "is_breaking": true
+      "is_breaking": false
     },
     {
-      "id": 62,
+      "id": 79,
       "reporter": "Shams Charania",
       "reporter_key": "shams_charania",
       "outlet": "ESPN",
@@ -1120,7 +1044,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 69,
+      "id": 86,
       "reporter": "Anthony Slater",
       "reporter_key": "anthony_slater",
       "outlet": "The Athletic",
@@ -1141,7 +1065,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 71,
+      "id": 88,
       "reporter": "HoopsHype",
       "reporter_key": "hoopshype",
       "outlet": "HoopsHype",
@@ -1159,7 +1083,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 74,
+      "id": 91,
       "reporter": "HoopsHype",
       "reporter_key": "hoopshype",
       "outlet": "HoopsHype",
@@ -1180,7 +1104,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 76,
+      "id": 93,
       "reporter": "Yahoo Sports",
       "reporter_key": "yahoo_sports",
       "outlet": "Yahoo Sports",
@@ -1199,7 +1123,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 80,
+      "id": 97,
       "reporter": "Shams Charania",
       "reporter_key": "shams_charania",
       "outlet": "ESPN",
@@ -1217,7 +1141,7 @@ const REPORTER_DATA = {
       "is_breaking": false
     },
     {
-      "id": 82,
+      "id": 99,
       "reporter": "HoopsHype",
       "reporter_key": "hoopshype",
       "outlet": "HoopsHype",
@@ -1232,129 +1156,6 @@ const REPORTER_DATA = {
         "Nuggets"
       ],
       "source_url": "https://www.hoopshype.com/story/sports/nba/2025/11/10/nba-injury-tracker-whos-not-available-right-now/86822180007/",
-      "is_breaking": false
-    },
-    {
-      "id": 85,
-      "reporter": "Dave McMenamin",
-      "reporter_key": "dave_mcmenamin",
-      "outlet": "ESPN",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Dave McMenamin:Luka Doncic has been upgraded to probable for today vs HOU, per the Lakers. Jaxson Hayes (ankle) is out.x.com",
-      "topic": "injury",
-      "players": [
-        "Luka Doncic",
-        "Jaxson Hayes"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://x.com/mcten/status/2004247527802261961?s=20",
-      "is_breaking": false
-    },
-    {
-      "id": 88,
-      "reporter": "Andscape",
-      "reporter_key": "andscape",
-      "outlet": "Andscape",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "Los Angeles Lakers guard Marcus Smart\u2019s passion for defense stems from what he has defended against during the dark days of his youth. Today, the 2022 NBA Defensive Player of the Year is defending the league\u2019s best guards while using his foundation to help cancer victims and aid troubled inner-city ...",
-      "topic": "trade",
-      "players": [
-        "Marcus Smart"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://andscape.com/features/los-angeles-lakers-guard-marcus-smarts-foundation-is-fighting-cancer-empowering-inner-city-youth/",
-      "is_breaking": true
-    },
-    {
-      "id": 89,
-      "reporter": "Andscape",
-      "reporter_key": "andscape",
-      "outlet": "Andscape",
-      "tier": 3,
-      "date": "2025-12-25",
-      "text": "The 12-year NBA veteran\u2019s platform has also afforded the opportunity to help the less fortunate through his YounGameChanger Foundation. The mission of Smart\u2019s wide-ranging foundation is to empower inner-city youth through education, sports, STEM education and mentoring. Moreover, YounGameChanger Fou...",
-      "topic": "contract",
-      "players": [
-        "Marcus Smart"
-      ],
-      "teams": [
-        "Lakers"
-      ],
-      "source_url": "https://andscape.com/features/los-angeles-lakers-guard-marcus-smarts-foundation-is-fighting-cancer-empowering-inner-city-youth/",
-      "is_breaking": false
-    },
-    {
-      "id": 90,
-      "reporter": "Shams Charania",
-      "reporter_key": "shams_charania",
-      "outlet": "ESPN",
-      "tier": 1,
-      "date": "2025-12-25",
-      "text": "Shams Charania:Cleveland Cavaliers All-Star Evan Mobley (calf strain) will return to action Christmas Day against the New York Knicks(12 pm ET, ABC/ESPN), per sources. Mobley, who has been out 13 days, is averaging career highs 19.1 points and 4.1 assists to go with 9.3 rebounds per game.x.com",
-      "topic": "injury",
-      "players": [
-        "Evan Mobley"
-      ],
-      "teams": [
-        "Cavaliers"
-      ],
-      "source_url": "https://x.com/ShamsCharania/status/2004224518727118912?s=20",
-      "is_breaking": false
-    },
-    {
-      "id": 91,
-      "reporter": "Marc Stein",
-      "reporter_key": "marc_stein",
-      "outlet": "The Stein Line",
-      "tier": 1,
-      "date": "2025-12-25",
-      "text": "Marc Stein: Charles Barkley in fine Christmas morning form on Inside:\"The NFL got greedy and started adding Christmas games. We used to have this day to ourself but Roger Goodell and them pigs at the NFL always want to hog every day of the week now. ... Christmas is an NBA day.\"x.com",
-      "topic": "general",
-      "players": [
-        "Charles Barkley"
-      ],
-      "teams": [],
-      "source_url": "https://x.com/TheSteinLine/status/2004225257612496986?s=20",
-      "is_breaking": false
-    },
-    {
-      "id": 95,
-      "reporter": "Brian Windhorst",
-      "reporter_key": "brian_windhorst",
-      "outlet": "ESPN",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Tim MacMahon: The Detroit Pistons\u00a0because if the Pistons want to be\u00a0aggressive before the deadline, they\u00a0have the ammunition. They have the\u00a0flexibility. They just came through\u00a0Dallas.I can tell you they're not\u00a0looking at it as we have to be\u00a0aggressive before the deadline. They're\u00a0not going into the ...",
-      "topic": "trade",
-      "players": [
-        "Trajan Langdon"
-      ],
-      "teams": [
-        "Pistons"
-      ],
-      "source_url": "https://www.youtube.com/watch?v=qVRh98jom3Q&t=2092s",
-      "is_breaking": false
-    },
-    {
-      "id": 96,
-      "reporter": "Brian Windhorst",
-      "reporter_key": "brian_windhorst",
-      "outlet": "ESPN",
-      "tier": 2,
-      "date": "2025-12-25",
-      "text": "Brian Windhorst: I understand. But again, this is a\u00a0February 1st situation where you can\u00a0say whatever you want tosay.\u00a0When you sit down with your\u00a0organization, your owner, your scouts,\u00a0and your personnel people, and you look\u00a0at things, and you go, 'Okay, on February\u00a01st:\u00a0Do we have a chance to win t...",
-      "topic": "trade",
-      "players": [],
-      "teams": [
-        "Pistons"
-      ],
-      "source_url": "https://www.youtube.com/watch?v=qVRh98jom3Q&t=2131s",
       "is_breaking": false
     }
   ]
