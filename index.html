@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Reporter Rankings | HoopsHype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-elevated: #1a1a25;
+            --accent-gold: #f5a623;
+            --accent-blue: #4a9eff;
+            --accent-green: #34d399;
+            --accent-red: #ef4444;
+            --accent-purple: #a78bfa;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border: #2a2a3a;
+            --gradient-gold: linear-gradient(135deg, #f5a623 0%, #f7931a 100%);
+            --gradient-silver: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%);
+            --gradient-bronze: linear-gradient(135deg, #cd7f32 0%, #b8860b 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-dark) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+        }
+
+        .logo span {
+            color: var(--text-primary);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-card);
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .nav-tab {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-primary);
+            background: var(--bg-elevated);
+        }
+
+        .nav-tab.active {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        /* Time Filter */
+        .time-filter {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .time-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .time-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .time-btn.active {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 32px;
+            background: var(--accent-gold);
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 32px;
+            padding-left: 16px;
+        }
+
+        /* Leaderboard View */
+        .leaderboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .leaderboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .leaderboard-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .leaderboard-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .leaderboard-icon {
+            font-size: 24px;
+        }
+
+        /* Reporter Row */
+        .reporter-row {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .reporter-row:hover {
+            background: var(--bg-elevated);
+        }
+
+        .reporter-row:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            margin-right: 16px;
+            border-radius: 4px;
+        }
+
+        .rank-1 { background: var(--gradient-gold); color: #000; }
+        .rank-2 { background: var(--gradient-silver); color: #000; }
+        .rank-3 { background: var(--gradient-bronze); color: #fff; }
+        .rank-default { background: var(--bg-elevated); color: var(--text-secondary); }
+
+        .reporter-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            margin-right: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            color: var(--accent-gold);
+            border: 2px solid var(--border);
+        }
+
+        .reporter-info {
+            flex: 1;
+        }
+
+        .reporter-name {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .reporter-outlet {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .reporter-stat {
+            text-align: right;
+        }
+
+        .stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            color: var(--accent-gold);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .stat-change {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .stat-change.up { color: var(--accent-green); }
+        .stat-change.down { color: var(--accent-red); }
+
+        /* Topic Tags */
+        .topic-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .topic-tag {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .topic-tag.trade { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+        .topic-tag.injury { background: rgba(245, 166, 35, 0.2); color: var(--accent-gold); }
+        .topic-tag.contract { background: rgba(74, 158, 255, 0.2); color: var(--accent-blue); }
+        .topic-tag.draft { background: rgba(167, 139, 250, 0.2); color: var(--accent-purple); }
+
+        /* Coverage Matrix */
+        .matrix-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 32px;
+        }
+
+        .matrix-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .matrix-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 160px repeat(10, 1fr);
+            font-size: 12px;
+            overflow-x: auto;
+        }
+
+        .matrix-cell {
+            padding: 12px 8px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .matrix-cell:last-child {
+            border-right: none;
+        }
+
+        .matrix-header-cell {
+            background: var(--bg-elevated);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .matrix-reporter-cell {
+            text-align: left;
+            font-weight: 600;
+            background: var(--bg-elevated);
+        }
+
+        .matrix-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+        .matrix-value.hot { color: var(--accent-gold); background: rgba(245, 166, 35, 0.1); }
+        .matrix-value.warm { color: var(--accent-blue); }
+        .matrix-value.cold { color: var(--text-muted); }
+
+        /* Reporter Profile Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 8px;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            color: var(--accent-gold);
+            border: 3px solid var(--accent-gold);
+        }
+
+        .profile-info h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            letter-spacing: 1px;
+        }
+
+        .profile-info .outlet {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .profile-tier {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        .tier-1 { background: var(--gradient-gold); color: #000; }
+        .tier-2 { background: var(--accent-blue); color: #fff; }
+        .tier-3 { background: var(--bg-elevated); color: var(--text-secondary); }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 24px 32px;
+            background: var(--bg-elevated);
+        }
+
+        .profile-stat-box {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            color: var(--accent-gold);
+            line-height: 1;
+        }
+
+        .profile-stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .profile-body {
+            padding: 32px;
+        }
+
+        .profile-section {
+            margin-bottom: 32px;
+        }
+
+        .profile-section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Chart placeholder */
+        .chart-container {
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            padding: 24px;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: var(--accent-gold);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            min-height: 10px;
+        }
+
+        .chart-bar:hover {
+            background: var(--accent-blue);
+        }
+
+        .chart-bar::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Coverage list */
+        .coverage-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .coverage-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+        }
+
+        .coverage-item-name {
+            font-weight: 600;
+        }
+
+        .coverage-item-count {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-gold);
+        }
+
+        /* Recent Rumors */
+        .recent-rumors {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .rumor-item {
+            padding: 16px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .rumor-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .rumor-text {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .rumor-players {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .rumor-player {
+            padding: 2px 8px;
+            background: rgba(74, 158, 255, 0.2);
+            color: var(--accent-blue);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+        }
+
+        /* Historical Comparison */
+        .historical-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-top: 32px;
+            overflow: hidden;
+        }
+
+        .historical-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .historical-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .period-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .period-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .period-btn.active {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--border);
+        }
+
+        .comparison-column {
+            background: var(--bg-card);
+            padding: 24px;
+        }
+
+        .comparison-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .comparison-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-rank {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            margin-right: 12px;
+            border-radius: 4px;
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+        }
+
+        .comparison-name {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .comparison-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--accent-gold);
+        }
+
+        /* Breaking News Leaders */
+        .breaking-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        .breaking-badge::before {
+            content: '⚡';
+        }
+
+        /* Hidden sections */
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-tabs {
+                overflow-x: auto;
+                width: 100%;
+            }
+
+            .matrix-grid {
+                font-size: 10px;
+            }
+
+            .profile-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .coverage-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">REPORTER <span>RANKINGS</span></div>
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-view="leaderboard">Leaderboard</button>
+                <button class="nav-tab" data-view="breaking">Breaking News</button>
+                <button class="nav-tab" data-view="specialists">Topic Specialists</button>
+                <button class="nav-tab" data-view="matrix">Coverage Matrix</button>
+                <button class="nav-tab" data-view="historical">Historical</button>
+            </nav>
+            <div class="time-filter">
+                <button class="time-btn active" data-days="7">7D</button>
+                <button class="time-btn" data-days="14">14D</button>
+                <button class="time-btn" data-days="30">30D</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Leaderboard View -->
+        <section id="leaderboard" class="view-section active">
+            <h1 class="section-title">Most Active Reporters</h1>
+            <p class="section-subtitle">Ranked by total rumors reported in the selected time period</p>
+            
+            <div class="leaderboard-grid">
+                <div class="leaderboard-card">
+                    <div class="leaderboard-header">
+                        <div class="leaderboard-title">
+                            <span class="leaderboard-icon">📊</span>
+                            Overall Volume Leaders
+                        </div>
+                    </div>
+                    <div id="volume-leaders"></div>
+                </div>
+
+                <div class="leaderboard-card">
+                    <div class="leaderboard-header">
+                        <div class="leaderboard-title">
+                            <span class="leaderboard-icon">📈</span>
+                            Trending Up
+                        </div>
+                    </div>
+                    <div id="trending-up"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Breaking News View -->
+        <section id="breaking" class="view-section">
+            <h1 class="section-title">Breaking News Leaders</h1>
+            <p class="section-subtitle">Who breaks stories first when multiple outlets cover the same rumor</p>
+            
+            <div class="leaderboard-card" style="max-width: 700px;">
+                <div class="leaderboard-header">
+                    <div class="leaderboard-title">
+                        <span class="leaderboard-icon">⚡</span>
+                        First to Report
+                    </div>
+                </div>
+                <div id="breaking-leaders"></div>
+            </div>
+        </section>
+
+        <!-- Topic Specialists View -->
+        <section id="specialists" class="view-section">
+            <h1 class="section-title">Topic Specialists</h1>
+            <p class="section-subtitle">Which reporters dominate specific coverage areas</p>
+            
+            <div class="leaderboard-grid">
+                <div class="leaderboard-card">
+                    <div class="leaderboard-header">
+                        <div class="leaderboard-title">
+                            <span class="leaderboard-icon">🔄</span>
+                            Trade Rumors
+                        </div>
+                    </div>
+                    <div id="trade-specialists"></div>
+                </div>
+
+                <div class="leaderboard-card">
+                    <div class="leaderboard-header">
+                        <div class="leaderboard-title">
+                            <span class="leaderboard-icon">🏥</span>
+                            Injury Reports
+                        </div>
+                    </div>
+                    <div id="injury-specialists"></div>
+                </div>
+
+                <div class="leaderboard-card">
+                    <div class="leaderboard-header">
+                        <div class="leaderboard-title">
+                            <span class="leaderboard-icon">💰</span>
+                            Contract News
+                        </div>
+                    </div>
+                    <div id="contract-specialists"></div>
+                </div>
+
+                <div class="leaderboard-card">
+                    <div class="leaderboard-header">
+                        <div class="leaderboard-title">
+                            <span class="leaderboard-icon">🏀</span>
+                            Front Office
+                        </div>
+                    </div>
+                    <div id="frontoffice-specialists"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coverage Matrix View -->
+        <section id="matrix" class="view-section">
+            <h1 class="section-title">Who Covers Who</h1>
+            <p class="section-subtitle">Reporter coverage patterns by team and player</p>
+            
+            <div class="matrix-container">
+                <div class="matrix-header">
+                    <div class="matrix-title">Reporter × Team Coverage Matrix</div>
+                </div>
+                <div class="matrix-grid" id="team-matrix"></div>
+            </div>
+        </section>
+
+        <!-- Historical View -->
+        <section id="historical" class="view-section">
+            <h1 class="section-title">Historical Comparison</h1>
+            <p class="section-subtitle">Compare reporter activity across different periods</p>
+            
+            <div class="historical-container">
+                <div class="historical-header">
+                    <div class="historical-title">Trade Deadline Comparison</div>
+                    <div class="period-selector">
+                        <button class="period-btn active" data-period="2025">2025</button>
+                        <button class="period-btn" data-period="2024">2024</button>
+                        <button class="period-btn" data-period="2023">2023</button>
+                    </div>
+                </div>
+                <div class="comparison-grid" id="historical-comparison"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Reporter Profile Modal -->
+    <div class="modal-overlay" id="profile-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="modal-avatar"></div>
+                    <div class="profile-info">
+                        <h2 id="modal-name"></h2>
+                        <div class="outlet" id="modal-outlet"></div>
+                        <div class="profile-tier" id="modal-tier"></div>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="profile-stats">
+                <div class="profile-stat-box">
+                    <div class="profile-stat-value" id="modal-total">0</div>
+                    <div class="profile-stat-label">Total Rumors</div>
+                </div>
+                <div class="profile-stat-box">
+                    <div class="profile-stat-value" id="modal-breaking">0</div>
+                    <div class="profile-stat-label">Breaking News</div>
+                </div>
+                <div class="profile-stat-box">
+                    <div class="profile-stat-value" id="modal-players">0</div>
+                    <div class="profile-stat-label">Players Covered</div>
+                </div>
+                <div class="profile-stat-box">
+                    <div class="profile-stat-value" id="modal-teams">0</div>
+                    <div class="profile-stat-label">Teams Covered</div>
+                </div>
+            </div>
+            <div class="profile-body">
+                <div class="profile-section">
+                    <div class="profile-section-title">Activity (Last 30 Days)</div>
+                    <div class="chart-container" id="modal-chart"></div>
+                </div>
+                <div class="profile-section">
+                    <div class="profile-section-title">Top Players Covered</div>
+                    <div class="coverage-list" id="modal-players-list"></div>
+                </div>
+                <div class="profile-section">
+                    <div class="profile-section-title">Recent Rumors</div>
+                    <div class="recent-rumors" id="modal-rumors"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load processed data -->
+    <script src="reporter_data.js"></script>
+    <script>
+        // =============================================
+        // DATA LOADING
+        // =============================================
+        
+        // Check if data is loaded, otherwise use fallback
+        let REPORTERS = [];
+        let ALL_RUMORS = [];
+        let DATA_LOADED = false;
+        
+        const NBA_TEAMS = [
+            "Lakers", "Celtics", "Warriors", "Nets", "Heat", 
+            "Bucks", "Suns", "Mavericks", "76ers", "Knicks",
+            "Bulls", "Cavaliers", "Nuggets", "Pistons", "Rockets",
+            "Pacers", "Clippers", "Grizzlies", "Timberwolves", "Pelicans",
+            "Knicks", "Thunder", "Magic", "76ers", "Trail Blazers",
+            "Kings", "Spurs", "Raptors", "Jazz", "Wizards", "Hawks", "Hornets"
+        ];
+        
+        if (typeof REPORTER_DATA !== 'undefined' && REPORTER_DATA.reporters) {
+            console.log('Loaded real data:', REPORTER_DATA.total_rumors, 'rumors');
+            REPORTERS = REPORTER_DATA.reporters.map((r, i) => ({
+                id: r.id || i + 1,
+                name: r.name,
+                outlet: r.outlet,
+                tier: r.tier,
+                avatar: r.avatar,
+                total: r.total,
+                breaking: r.breaking,
+                byTopic: r.by_topic || {},
+                byPlayer: r.by_player || {},
+                byTeam: r.by_team || {},
+                byDate: r.by_date || {},
+                recentRumors: r.recent_rumors || []
+            }));
+            ALL_RUMORS = REPORTER_DATA.rumors || [];
+            DATA_LOADED = true;
+            
+            // Update header to show data status
+            document.addEventListener('DOMContentLoaded', () => {
+                const logo = document.querySelector('.logo');
+                if (logo) {
+                    logo.innerHTML += ` <span style="font-size: 12px; color: var(--accent-green);">● LIVE</span>`;
+                }
+            });
+        } else {
+            console.warn('No data file found, using sample data');
+            // Fallback sample data
+            REPORTERS = [
+                { id: 1, name: "Shams Charania", outlet: "ESPN", tier: 1, avatar: "SC" },
+                { id: 2, name: "Marc Stein", outlet: "The Stein Line", tier: 1, avatar: "MS" },
+                { id: 3, name: "Jake Fischer", outlet: "Yahoo Sports", tier: 1, avatar: "JF" },
+                { id: 4, name: "Chris Haynes", outlet: "Bleacher Report", tier: 1, avatar: "CH" },
+                { id: 5, name: "Brian Windhorst", outlet: "ESPN", tier: 2, avatar: "BW" },
+            ];
+        }
+
+        // =============================================
+        // STATE
+        // =============================================
+        let currentDays = 7;
+        let currentView = 'leaderboard';
+
+        // =============================================
+        // CALCULATIONS
+        // =============================================
+        
+        function filterByDays(days) {
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - days);
+            const cutoffStr = cutoff.toISOString().split('T')[0];
+            
+            return REPORTERS.map(reporter => {
+                // If we have pre-processed date data, filter it
+                let total = 0;
+                let byTopic = { trade: 0, injury: 0, contract: 0, frontoffice: 0, draft: 0, general: 0 };
+                let breaking = 0;
+                let filteredRumors = [];
+                
+                if (reporter.byDate && Object.keys(reporter.byDate).length > 0) {
+                    // Use pre-processed data
+                    for (const [date, count] of Object.entries(reporter.byDate)) {
+                        if (date >= cutoffStr) {
+                            total += count;
+                        }
+                    }
+                    
+                    // Estimate topic breakdown (proportional)
+                    const proportion = reporter.total > 0 ? total / reporter.total : 0;
+                    for (const [topic, count] of Object.entries(reporter.byTopic || {})) {
+                        byTopic[topic] = Math.round(count * proportion);
+                    }
+                    
+                    breaking = Math.round((reporter.breaking || 0) * proportion);
+                    filteredRumors = (reporter.recentRumors || []).filter(r => r.date >= cutoffStr);
+                } else {
+                    // Fallback for sample data
+                    total = Math.floor(Math.random() * 30) + 5;
+                    byTopic = {
+                        trade: Math.floor(total * 0.4),
+                        injury: Math.floor(total * 0.3),
+                        contract: Math.floor(total * 0.2),
+                        frontoffice: Math.floor(total * 0.1)
+                    };
+                    breaking = Math.floor(total * 0.15);
+                }
+                
+                return {
+                    ...reporter,
+                    filteredTotal: total,
+                    filteredByTopic: byTopic,
+                    filteredBreaking: breaking,
+                    filteredRumors: filteredRumors
+                };
+            });
+        }
+
+        function getReporterStats(days) {
+            const filtered = filterByDays(days);
+            const previousFiltered = filterByDays(days * 2);
+            
+            return filtered.map((reporter, idx) => {
+                const previous = previousFiltered[idx];
+                const previousTotal = previous ? Math.max(0, previous.filteredTotal - reporter.filteredTotal) : 0;
+                
+                const teams = reporter.byTeam ? Object.keys(reporter.byTeam) : [];
+                const players = reporter.byPlayer ? Object.keys(reporter.byPlayer) : [];
+                
+                return {
+                    ...reporter,
+                    total: reporter.filteredTotal,
+                    previous: previousTotal,
+                    change: reporter.filteredTotal - previousTotal,
+                    changePercent: previousTotal > 0 
+                        ? Math.round((reporter.filteredTotal - previousTotal) / previousTotal * 100)
+                        : 0,
+                    breaking: reporter.filteredBreaking,
+                    teams: teams.length,
+                    teamsList: teams,
+                    players: players.length,
+                    playersList: players,
+                    byTopic: reporter.filteredByTopic,
+                    rumors: reporter.filteredRumors || reporter.recentRumors || []
+                };
+            }).filter(r => r.total > 0);
+        }
+
+        function getTeamMatrix(days) {
+            const matrix = {};
+            const topTeams = [...new Set(NBA_TEAMS)].slice(0, 10);
+            
+            REPORTERS.slice(0, 8).forEach(reporter => {
+                matrix[reporter.id] = {};
+                topTeams.forEach(team => {
+                    matrix[reporter.id][team] = reporter.byTeam ? (reporter.byTeam[team] || 0) : 0;
+                });
+            });
+            
+            return { matrix, teams: topTeams };
+        }
+
+        // =============================================
+        // RENDERING
+        // =============================================
+        
+        function createReporterRow(reporter, rank, showChange = false, showTopics = false) {
+            const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-default';
+            const changeHtml = showChange && reporter.change !== 0 
+                ? `<div class="stat-change ${reporter.change > 0 ? 'up' : 'down'}">
+                     ${reporter.change > 0 ? '↑' : '↓'} ${Math.abs(reporter.change)}
+                   </div>`
+                : '';
+            
+            const topicsHtml = showTopics ? `
+                <div class="topic-tags">
+                    ${reporter.byTopic.trade > 0 ? `<span class="topic-tag trade">Trade ${reporter.byTopic.trade}</span>` : ''}
+                    ${reporter.byTopic.injury > 0 ? `<span class="topic-tag injury">Injury ${reporter.byTopic.injury}</span>` : ''}
+                </div>
+            ` : '';
+
+            return `
+                <div class="reporter-row" onclick="openProfile(${reporter.id})">
+                    <div class="rank ${rankClass}">${rank}</div>
+                    <div class="reporter-avatar">${reporter.avatar}</div>
+                    <div class="reporter-info">
+                        <div class="reporter-name">${reporter.name}</div>
+                        <div class="reporter-outlet">${reporter.outlet}</div>
+                        ${topicsHtml}
+                    </div>
+                    <div class="reporter-stat">
+                        <div class="stat-value">${reporter.total}</div>
+                        <div class="stat-label">Rumors</div>
+                        ${changeHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLeaderboard() {
+            const stats = getReporterStats(currentDays);
+            
+            // Volume Leaders
+            const volumeLeaders = [...stats].sort((a, b) => b.total - a.total).slice(0, 8);
+            document.getElementById('volume-leaders').innerHTML = 
+                volumeLeaders.map((r, i) => createReporterRow(r, i + 1, false, true)).join('');
+            
+            // Trending Up
+            const trendingUp = [...stats].sort((a, b) => b.change - a.change).slice(0, 8);
+            document.getElementById('trending-up').innerHTML = 
+                trendingUp.map((r, i) => createReporterRow(r, i + 1, true)).join('');
+        }
+
+        function renderBreaking() {
+            const stats = getReporterStats(currentDays);
+            const breakingLeaders = [...stats].sort((a, b) => b.breaking - a.breaking).slice(0, 10);
+            
+            document.getElementById('breaking-leaders').innerHTML = breakingLeaders.map((reporter, i) => `
+                <div class="reporter-row" onclick="openProfile(${reporter.id})">
+                    <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
+                    <div class="reporter-avatar">${reporter.avatar}</div>
+                    <div class="reporter-info">
+                        <div class="reporter-name">${reporter.name}</div>
+                        <div class="reporter-outlet">${reporter.outlet}</div>
+                        <span class="breaking-badge">Breaking News Leader</span>
+                    </div>
+                    <div class="reporter-stat">
+                        <div class="stat-value">${reporter.breaking}</div>
+                        <div class="stat-label">First Reports</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSpecialists() {
+            const stats = getReporterStats(currentDays);
+            
+            ['trade', 'injury', 'contract', 'frontoffice'].forEach(topic => {
+                const sorted = [...stats].sort((a, b) => b.byTopic[topic] - a.byTopic[topic]).slice(0, 5);
+                document.getElementById(`${topic}-specialists`).innerHTML = sorted.map((r, i) => `
+                    <div class="reporter-row" onclick="openProfile(${r.id})">
+                        <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
+                        <div class="reporter-avatar">${r.avatar}</div>
+                        <div class="reporter-info">
+                            <div class="reporter-name">${r.name}</div>
+                            <div class="reporter-outlet">${r.outlet}</div>
+                        </div>
+                        <div class="reporter-stat">
+                            <div class="stat-value">${r.byTopic[topic]}</div>
+                            <div class="stat-label">Reports</div>
+                        </div>
+                    </div>
+                `).join('');
+            });
+        }
+
+        function renderMatrix() {
+            const { matrix, teams } = getTeamMatrix(currentDays);
+            const reporters = REPORTERS.slice(0, 8);
+            
+            let html = `
+                <div class="matrix-cell matrix-header-cell">Reporter</div>
+                ${teams.map(team => `<div class="matrix-cell matrix-header-cell">${team}</div>`).join('')}
+            `;
+            
+            reporters.forEach(reporter => {
+                const values = teams.map(team => matrix[reporter.id]?.[team] || 0);
+                const max = Math.max(...values);
+                
+                html += `<div class="matrix-cell matrix-reporter-cell">${reporter.name.split(' ').pop()}</div>`;
+                teams.forEach(team => {
+                    const val = matrix[reporter.id]?.[team] || 0;
+                    const heatClass = val === max && val > 0 ? 'hot' : val > 0 ? 'warm' : 'cold';
+                    html += `<div class="matrix-cell matrix-value ${heatClass}">${val || '-'}</div>`;
+                });
+            });
+            
+            document.getElementById('team-matrix').innerHTML = html;
+        }
+
+        function renderHistorical() {
+            // Mock historical data
+            const data2025 = getReporterStats(30).sort((a, b) => b.total - a.total).slice(0, 5);
+            const data2024 = [...data2025].map(r => ({...r, total: Math.floor(r.total * 0.85)}));
+            
+            document.getElementById('historical-comparison').innerHTML = `
+                <div class="comparison-column">
+                    <div class="comparison-label">2025 Trade Deadline</div>
+                    ${data2025.map((r, i) => `
+                        <div class="comparison-item">
+                            <div class="comparison-rank">${i + 1}</div>
+                            <div class="comparison-name">${r.name}</div>
+                            <div class="comparison-value">${r.total}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="comparison-column">
+                    <div class="comparison-label">2024 Trade Deadline</div>
+                    ${data2024.map((r, i) => `
+                        <div class="comparison-item">
+                            <div class="comparison-rank">${i + 1}</div>
+                            <div class="comparison-name">${r.name}</div>
+                            <div class="comparison-value">${r.total}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // =============================================
+        // PROFILE MODAL
+        // =============================================
+        
+        function openProfile(reporterId) {
+            const stats = getReporterStats(30);
+            const reporter = stats.find(r => r.id === reporterId);
+            if (!reporter) return;
+            
+            document.getElementById('modal-avatar').textContent = reporter.avatar;
+            document.getElementById('modal-name').textContent = reporter.name;
+            document.getElementById('modal-outlet').textContent = reporter.outlet;
+            document.getElementById('modal-tier').textContent = `Tier ${reporter.tier}`;
+            document.getElementById('modal-tier').className = `profile-tier tier-${reporter.tier}`;
+            
+            document.getElementById('modal-total').textContent = reporter.total;
+            document.getElementById('modal-breaking').textContent = reporter.breaking;
+            document.getElementById('modal-players').textContent = reporter.players;
+            document.getElementById('modal-teams').textContent = reporter.teams;
+            
+            // Chart - use real date data if available
+            const chartHtml = Array.from({length: 7}, (_, i) => {
+                const day = new Date();
+                day.setDate(day.getDate() - (6 - i));
+                const dateStr = day.toISOString().split('T')[0];
+                const label = day.toLocaleDateString('en-US', { weekday: 'short' });
+                
+                // Try to get real data
+                let count = 0;
+                if (reporter.byDate) {
+                    count = reporter.byDate[dateStr] || 0;
+                }
+                const height = Math.max(10, count * 15);
+                
+                return `<div class="chart-bar" style="height: ${Math.min(height, 100)}%" data-label="${label}" title="${count} rumors"></div>`;
+            }).join('');
+            document.getElementById('modal-chart').innerHTML = chartHtml;
+            
+            // Players list - use real data if available
+            const playersList = reporter.playersList || [];
+            const playersHtml = playersList.slice(0, 6).map(player => {
+                const count = reporter.byPlayer?.[player] || 0;
+                return `
+                    <div class="coverage-item">
+                        <span class="coverage-item-name">${player}</span>
+                        <span class="coverage-item-count">${count}</span>
+                    </div>
+                `;
+            }).join('') || '<div class="coverage-item"><span class="coverage-item-name">No data available</span></div>';
+            document.getElementById('modal-players-list').innerHTML = playersHtml;
+            
+            // Recent rumors
+            const rumors = reporter.rumors || reporter.recentRumors || [];
+            const rumorsHtml = rumors.slice(0, 5).map(rumor => `
+                <div class="rumor-item">
+                    <div class="rumor-date">${rumor.date || 'Unknown date'}</div>
+                    <div class="rumor-text">${rumor.text || 'No text available'}</div>
+                    <div class="rumor-players">
+                        ${(rumor.players || []).map(p => `<span class="rumor-player">${p}</span>`).join('')}
+                        ${(rumor.teams || []).map(t => `<span class="rumor-player">${t}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('') || '<div class="rumor-item"><div class="rumor-text">No recent rumors</div></div>';
+            document.getElementById('modal-rumors').innerHTML = rumorsHtml;
+            
+            document.getElementById('profile-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('profile-modal').classList.remove('active');
+        }
+
+        // =============================================
+        // EVENT HANDLERS
+        // =============================================
+        
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const view = tab.dataset.view;
+                currentView = view;
+                
+                document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+                document.getElementById(view).classList.add('active');
+                
+                renderCurrentView();
+            });
+        });
+
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDays = parseInt(btn.dataset.days);
+                renderCurrentView();
+            });
+        });
+
+        document.getElementById('profile-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'profile-modal') closeModal();
+        });
+
+        function renderCurrentView() {
+            switch(currentView) {
+                case 'leaderboard': renderLeaderboard(); break;
+                case 'breaking': renderBreaking(); break;
+                case 'specialists': renderSpecialists(); break;
+                case 'matrix': renderMatrix(); break;
+                case 'historical': renderHistorical(); break;
+            }
+        }
+
+        // Initialize
+        renderCurrentView();
+    </script>
+</body>
+</html>
