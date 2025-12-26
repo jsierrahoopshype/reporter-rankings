@@ -1,0 +1,131 @@
+name: Update Reporter Rankings
+
+on:
+  # Run every 6 hours
+  schedule:
+    - cron: '0 */6 * * *'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+  
+  # Run on push to main
+  push:
+    branches: [main]
+
+jobs:
+  update-rankings:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests python-dateutil
+      
+      - name: Fetch archive data from hoopshype-rumors repo
+        run: |
+          echo "Fetching latest rumors data..."
+          
+          # Create data directory
+          mkdir -p data
+          
+          # Fetch the most recent parts (part1 has newest data)
+          # We only need recent data for reporter rankings (last 60 days)
+          for part in 1 2; do
+            echo "Fetching part${part}..."
+            curl -sL "https://jsierrahoopshype.github.io/hoopshype-rumors/hoopshype_rumors_part${part}.json" -o "data/part${part}.json"
+            
+            # Check if download succeeded
+            if [ -s "data/part${part}.json" ]; then
+              echo "✓ Downloaded part${part}.json ($(wc -c < data/part${part}.json) bytes)"
+            else
+              echo "✗ Failed to download part${part}.json"
+            fi
+          done
+          
+          # Also try to get the latest file if it exists
+          curl -sL "https://jsierrahoopshype.github.io/hoopshype-rumors/hoopshype_rumors_latest.json" -o "data/latest.json" || true
+          
+          echo "Download complete!"
+          ls -la data/
+      
+      - name: Merge and process archive data
+        run: |
+          python3 << 'EOF'
+          import json
+          import os
+          from datetime import datetime, timedelta
+
+          # Load all available parts
+          all_rumors = []
+          data_dir = 'data'
+
+          for filename in sorted(os.listdir(data_dir)):
+              if filename.endswith('.json'):
+                  filepath = os.path.join(data_dir, filename)
+                  try:
+                      with open(filepath, 'r', encoding='utf-8') as f:
+                          data = json.load(f)
+                          if isinstance(data, list):
+                              all_rumors.extend(data)
+                              print(f"Loaded {len(data)} rumors from {filename}")
+                  except Exception as e:
+                      print(f"Error loading {filename}: {e}")
+
+          # Filter to last 60 days for reporter rankings
+          cutoff = (datetime.now() - timedelta(days=60)).strftime('%Y-%m-%d')
+          recent_rumors = [r for r in all_rumors if r.get('archive_date', '') >= cutoff]
+
+          print(f"Total rumors loaded: {len(all_rumors)}")
+          print(f"Recent rumors (60 days): {len(recent_rumors)}")
+
+          # Save merged file
+          with open('data/merged_archive.json', 'w', encoding='utf-8') as f:
+              json.dump(recent_rumors, f)
+
+          print(f"Saved merged archive with {len(recent_rumors)} rumors")
+          EOF
+      
+      - name: Generate reporter rankings data
+        run: |
+          python3 process_archive.py data/merged_archive.json -o reporter_data.js --json
+      
+      - name: Update timestamp
+        run: |
+          echo "Last updated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" > last_updated.txt
+          cat last_updated.txt
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Add all generated files
+          git add reporter_data.js reporter_data.json last_updated.txt
+          
+          # Check if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update reporter rankings data - $(date -u '+%Y-%m-%d %H:%M')"
+            git push
+          fi
+      
+      - name: Summary
+        run: |
+          echo "## Reporter Rankings Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Updated:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          if [ -f reporter_data.json ]; then
+            REPORTERS=$(python3 -c "import json; d=json.load(open('reporter_data.json')); print(d.get('total_reporters', 'N/A'))")
+            RUMORS=$(python3 -c "import json; d=json.load(open('reporter_data.json')); print(d.get('total_rumors', 'N/A'))")
+            echo "- **Reporters tracked:** $REPORTERS" >> $GITHUB_STEP_SUMMARY
+            echo "- **Rumors processed:** $RUMORS" >> $GITHUB_STEP_SUMMARY
+          fi
