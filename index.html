@@ -789,6 +789,7 @@
                 <button class="nav-tab" data-view="breaking">Breaking News</button>
                 <button class="nav-tab" data-view="specialists">Topic Specialists</button>
                 <button class="nav-tab" data-view="matrix">Coverage Matrix</button>
+                <button class="nav-tab" data-view="outlets">Outlets</button>
                 <button class="nav-tab" data-view="historical">Historical</button>
             </nav>
             <div class="time-filter">
@@ -905,6 +906,22 @@
             </div>
         </section>
 
+        <!-- Outlets View -->
+        <section id="outlets" class="view-section">
+            <h1 class="section-title">Media Outlets</h1>
+            <p class="section-subtitle">Coverage volume by publication (when no specific reporter byline)</p>
+            
+            <div class="leaderboard-card" style="max-width: 800px;">
+                <div class="leaderboard-header">
+                    <div class="leaderboard-title">
+                        <span class="leaderboard-icon">📰</span>
+                        Top Outlets by Volume
+                    </div>
+                </div>
+                <div id="outlets-list"></div>
+            </div>
+        </section>
+
         <!-- Historical View -->
         <section id="historical" class="view-section">
             <h1 class="section-title">Historical Comparison</h1>
@@ -982,6 +999,7 @@
         
         // Check if data is loaded, otherwise use fallback
         let REPORTERS = [];
+        let OUTLETS = [];
         let ALL_RUMORS = [];
         let DATA_LOADED = false;
         
@@ -1011,6 +1029,16 @@
                 recentRumors: r.recent_rumors || []
             }));
             ALL_RUMORS = REPORTER_DATA.rumors || [];
+            
+            // Load outlets separately
+            OUTLETS = (REPORTER_DATA.outlets || []).map((o, i) => ({
+                id: o.id || `outlet_${i}`,
+                name: o.name,
+                total: o.total,
+                byTopic: o.by_topic || {},
+                byDate: o.by_date || {}
+            }));
+            
             DATA_LOADED = true;
             
             // Update header to show data status
@@ -1283,6 +1311,44 @@
             `;
         }
 
+        function renderOutlets() {
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - currentDays);
+            const cutoffStr = cutoff.toISOString().split('T')[0];
+            
+            // Filter outlets by date
+            const filteredOutlets = OUTLETS.map(outlet => {
+                let total = 0;
+                if (outlet.byDate && Object.keys(outlet.byDate).length > 0) {
+                    for (const [date, count] of Object.entries(outlet.byDate)) {
+                        if (date >= cutoffStr) {
+                            total += count;
+                        }
+                    }
+                } else {
+                    total = outlet.total || 0;
+                }
+                return { ...outlet, filteredTotal: total };
+            }).filter(o => o.filteredTotal > 0).sort((a, b) => b.filteredTotal - a.filteredTotal);
+            
+            document.getElementById('outlets-list').innerHTML = filteredOutlets.slice(0, 15).map((outlet, i) => `
+                <div class="reporter-row">
+                    <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
+                    <div class="reporter-avatar" style="background: var(--bg-elevated); color: var(--text-secondary);">
+                        ${outlet.name.substring(0, 2).toUpperCase()}
+                    </div>
+                    <div class="reporter-info">
+                        <div class="reporter-name">${outlet.name}</div>
+                        <div class="reporter-outlet">Media Outlet</div>
+                    </div>
+                    <div class="reporter-stat">
+                        <div class="stat-value">${outlet.filteredTotal}</div>
+                        <div class="stat-label">Rumors</div>
+                    </div>
+                </div>
+            `).join('') || '<div style="padding: 20px; color: var(--text-muted);">No outlet data available</div>';
+        }
+
         // =============================================
         // PROFILE MODAL
         // =============================================
@@ -1393,6 +1459,7 @@
                 case 'breaking': renderBreaking(); break;
                 case 'specialists': renderSpecialists(); break;
                 case 'matrix': renderMatrix(); break;
+                case 'outlets': renderOutlets(); break;
                 case 'historical': renderHistorical(); break;
             }
         }
