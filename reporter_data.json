@@ -1,9 +1,4 @@
-// Reporter Rankings Data
-// Generated: 2025-12-26T12:51:57.902128
-// Total Rumors: 29
-// Total Reporters: 10
-
-const REPORTER_DATA = {
+{
   "generated_at": "2025-12-26T12:51:57.902128",
   "total_rumors": 29,
   "total_reporters": 10,
@@ -1358,9 +1353,4 @@ const REPORTER_DATA = {
       "is_breaking": false
     }
   ]
-};
-
-// Export for use in HTML
-if (typeof window !== 'undefined') {
-    window.REPORTER_DATA = REPORTER_DATA;
 }
