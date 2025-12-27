@@ -669,19 +669,57 @@
         // =============================================
         
         const NBA_TEAMS = [
-            "Hawks", "Celtics", "Nets", "Hornets", "Bulls", "Cavaliers",
-            "Mavericks", "Nuggets", "Pistons", "Warriors", "Rockets", "Pacers",
-            "Clippers", "Lakers", "Grizzlies", "Heat", "Bucks", "Timberwolves",
-            "Pelicans", "Knicks", "Thunder", "Magic", "76ers", "Suns",
-            "Trail Blazers", "Kings", "Spurs", "Raptors", "Jazz", "Wizards"
+            "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets", 
+            "Chicago Bulls", "Cleveland Cavaliers", "Dallas Mavericks", "Denver Nuggets", 
+            "Detroit Pistons", "Golden State Warriors", "Houston Rockets", "Indiana Pacers",
+            "Los Angeles Clippers", "Los Angeles Lakers", "Memphis Grizzlies", "Miami Heat", 
+            "Milwaukee Bucks", "Minnesota Timberwolves", "New Orleans Pelicans", "New York Knicks", 
+            "Oklahoma City Thunder", "Orlando Magic", "Philadelphia 76ers", "Phoenix Suns",
+            "Portland Trail Blazers", "Sacramento Kings", "San Antonio Spurs", 
+            "Toronto Raptors", "Utah Jazz", "Washington Wizards"
         ];
+        
+        // Also map short names to full names for data that uses short names
+        const TEAM_SHORT_TO_FULL = {
+            "Hawks": "Atlanta Hawks", "Celtics": "Boston Celtics", "Nets": "Brooklyn Nets",
+            "Hornets": "Charlotte Hornets", "Bulls": "Chicago Bulls", "Cavaliers": "Cleveland Cavaliers",
+            "Mavericks": "Dallas Mavericks", "Nuggets": "Denver Nuggets", "Pistons": "Detroit Pistons",
+            "Warriors": "Golden State Warriors", "Rockets": "Houston Rockets", "Pacers": "Indiana Pacers",
+            "Clippers": "Los Angeles Clippers", "Lakers": "Los Angeles Lakers", "Grizzlies": "Memphis Grizzlies",
+            "Heat": "Miami Heat", "Bucks": "Milwaukee Bucks", "Timberwolves": "Minnesota Timberwolves",
+            "Pelicans": "New Orleans Pelicans", "Knicks": "New York Knicks", "Thunder": "Oklahoma City Thunder",
+            "Magic": "Orlando Magic", "76ers": "Philadelphia 76ers", "Suns": "Phoenix Suns",
+            "Trail Blazers": "Portland Trail Blazers", "Kings": "Sacramento Kings", "Spurs": "San Antonio Spurs",
+            "Raptors": "Toronto Raptors", "Jazz": "Utah Jazz", "Wizards": "Washington Wizards"
+        };
 
-        // Non-player tags to exclude
+        // Non-player tags to exclude (executives, coaches, non-persons)
         const NON_PLAYERS = new Set([
+            // Organizations/Events
             "team usa", "usa basketball", "g league", "nba", "all-star",
             "hall of fame", "olympics", "fiba", "eurobasket", "world cup",
+            "summer league", "las vegas summer league", "nba draft", "draft combine",
+            // Categories
             "rookie", "free agency", "trade", "draft", "injuries", "contract",
-            "business", "media", "statistics", "coaching", "front office"
+            "business", "media", "statistics", "coaching", "front office",
+            // Commissioners/Executives
+            "david stern", "adam silver", "billy hunter", "michele roberts",
+            // Coaches
+            "doc rivers", "brad stevens", "gregg popovich", "brett brown", 
+            "rick carlisle", "erik spoelstra", "phil jackson", "mike d'antoni",
+            "dwane casey", "frank vogel", "steve kerr", "tyronn lue", "tom thibodeau",
+            "mike budenholzer", "nick nurse", "quin snyder", "monty williams",
+            "jason kidd", "ime udoka", "chauncey billups", "wes unseld jr",
+            "steve clifford", "michael malone", "joe mazzulla", "darvin ham",
+            "chris finch", "willie green", "mark daigneault", "taylor jenkins",
+            "jb bickerstaff", "jamahl mosley", "jacque vaughn", "kenny atkinson",
+            "larry brown", "don nelson", "george karl", "jerry sloan", "pat riley",
+            "stan van gundy", "jeff van gundy", "mike brown", "scott brooks",
+            "terry stotts", "alvin gentry", "nate mcmillan", "luke walton",
+            "dave joerger", "david fizdale", "earl watson", "derek fisher",
+            // GMs/Presidents
+            "bob myers", "sam presti", "daryl morey", "masai ujiri", "rob pelinka",
+            "james jones", "koby altman", "brad stevens"
         ].map(s => s.toLowerCase()));
 
         // =============================================
@@ -713,6 +751,13 @@
                         filteredByPlayer[name] = count;
                     }
                 }
+                
+                // Normalize team names (convert short names to full names)
+                const normalizedByTeam = {};
+                for (const [team, count] of Object.entries(r.by_team || {})) {
+                    const fullName = TEAM_SHORT_TO_FULL[team] || team;
+                    normalizedByTeam[fullName] = (normalizedByTeam[fullName] || 0) + count;
+                }
 
                 return {
                     id: r.id || `reporter_${i}`,
@@ -723,7 +768,7 @@
                     total: r.total || 0,
                     byTopic: r.by_topic || {},
                     byPlayer: filteredByPlayer,
-                    byTeam: r.by_team || {},
+                    byTeam: normalizedByTeam,
                     byDate: r.by_date || {}
                 };
             });
@@ -994,6 +1039,20 @@
         function renderHeatmap() {
             const stats = getReporterStats().sort((a, b) => b.filteredTotal - a.filteredTotal).slice(0, 15);
             const teams = NBA_TEAMS.slice(0, 20);
+            
+            // Short names for header display
+            const TEAM_FULL_TO_SHORT = {
+                "Atlanta Hawks": "ATL", "Boston Celtics": "BOS", "Brooklyn Nets": "BKN",
+                "Charlotte Hornets": "CHA", "Chicago Bulls": "CHI", "Cleveland Cavaliers": "CLE",
+                "Dallas Mavericks": "DAL", "Denver Nuggets": "DEN", "Detroit Pistons": "DET",
+                "Golden State Warriors": "GSW", "Houston Rockets": "HOU", "Indiana Pacers": "IND",
+                "Los Angeles Clippers": "LAC", "Los Angeles Lakers": "LAL", "Memphis Grizzlies": "MEM",
+                "Miami Heat": "MIA", "Milwaukee Bucks": "MIL", "Minnesota Timberwolves": "MIN",
+                "New Orleans Pelicans": "NOP", "New York Knicks": "NYK", "Oklahoma City Thunder": "OKC",
+                "Orlando Magic": "ORL", "Philadelphia 76ers": "PHI", "Phoenix Suns": "PHX",
+                "Portland Trail Blazers": "POR", "Sacramento Kings": "SAC", "San Antonio Spurs": "SAS",
+                "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WAS"
+            };
 
             // Find max for scaling
             let maxCount = 0;
@@ -1014,7 +1073,7 @@
                 return 'heat-5';
             };
 
-            const headerRow = `<tr><th>Reporter</th>${teams.map(t => `<th>${t}</th>`).join('')}</tr>`;
+            const headerRow = `<tr><th>Reporter</th>${teams.map(t => `<th title="${t}">${TEAM_FULL_TO_SHORT[t] || t}</th>`).join('')}</tr>`;
             
             const dataRows = stats.map(r => {
                 const cells = teams.map(t => {
@@ -1022,6 +1081,7 @@
                     return `<td class="${getHeatClass(count)}">${count || '-'}</td>`;
                 }).join('');
                 return `<tr><td onclick="openProfile('${r.id}')" style="cursor:pointer">${r.name}</td>${cells}</tr>`;
+            }).join('');
             }).join('');
 
             document.getElementById('heatmap-table').innerHTML = headerRow + dataRows;
