@@ -19,9 +19,6 @@
             --text-secondary: #9ca3af;
             --text-muted: #6b7280;
             --border: #2a2a3a;
-            --gradient-gold: linear-gradient(135deg, #f5a623 0%, #f7931a 100%);
-            --gradient-silver: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%);
-            --gradient-bronze: linear-gradient(135deg, #cd7f32 0%, #b8860b 100%);
         }
 
         * {
@@ -38,7 +35,6 @@
             min-height: 100vh;
         }
 
-        /* Header */
         .header {
             background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-dark) 100%);
             border-bottom: 1px solid var(--border);
@@ -55,6 +51,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .logo {
@@ -68,7 +66,6 @@
             color: var(--text-primary);
         }
 
-        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
             gap: 4px;
@@ -102,11 +99,9 @@
             color: var(--bg-dark);
         }
 
-        /* Time Filter */
         .time-filter {
             display: flex;
-            gap: 8px;
-            align-items: center;
+            gap: 4px;
         }
 
         .time-btn {
@@ -123,7 +118,7 @@
 
         .time-btn:hover {
             border-color: var(--accent-gold);
-            color: var(--accent-gold);
+            color: var(--text-primary);
         }
 
         .time-btn.active {
@@ -132,60 +127,40 @@
             color: var(--bg-dark);
         }
 
-        /* Main Content */
         .main {
             max-width: 1400px;
             margin: 0 auto;
             padding: 32px 24px;
         }
 
-        /* Section Title */
         .section-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 36px;
             letter-spacing: 2px;
             margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 32px;
-            background: var(--accent-gold);
+            color: var(--accent-gold);
         }
 
         .section-subtitle {
             color: var(--text-secondary);
-            font-size: 16px;
             margin-bottom: 32px;
-            padding-left: 16px;
         }
 
-        /* Leaderboard View */
         .leaderboard-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
             gap: 24px;
-        }
-
-        @media (max-width: 1024px) {
-            .leaderboard-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         .leaderboard-card {
             background: var(--bg-card);
-            border: 1px solid var(--border);
             border-radius: 12px;
+            border: 1px solid var(--border);
             overflow: hidden;
         }
 
         .leaderboard-header {
-            padding: 20px 24px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
@@ -193,26 +168,24 @@
         }
 
         .leaderboard-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
             letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: var(--text-secondary);
         }
 
         .leaderboard-icon {
-            font-size: 24px;
+            margin-right: 8px;
         }
 
-        /* Reporter Row */
         .reporter-row {
             display: flex;
             align-items: center;
-            padding: 16px 24px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s ease;
         }
 
         .reporter-row:hover {
@@ -232,27 +205,41 @@
             font-family: 'Bebas Neue', sans-serif;
             font-size: 18px;
             margin-right: 16px;
-            border-radius: 4px;
+            border-radius: 50%;
         }
 
-        .rank-1 { background: var(--gradient-gold); color: #000; }
-        .rank-2 { background: var(--gradient-silver); color: #000; }
-        .rank-3 { background: var(--gradient-bronze); color: #fff; }
-        .rank-default { background: var(--bg-elevated); color: var(--text-secondary); }
+        .rank-1 {
+            background: linear-gradient(135deg, #f5a623 0%, #f7931a 100%);
+            color: #000;
+        }
+
+        .rank-2 {
+            background: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%);
+            color: #000;
+        }
+
+        .rank-3 {
+            background: linear-gradient(135deg, #cd7f32 0%, #b8860b 100%);
+            color: #000;
+        }
+
+        .rank-default {
+            background: var(--bg-elevated);
+            color: var(--text-muted);
+        }
 
         .reporter-avatar {
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: var(--bg-elevated);
-            margin-right: 16px;
+            background: var(--accent-gold);
+            color: var(--bg-dark);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            color: var(--accent-gold);
-            border: 2px solid var(--border);
+            font-size: 16px;
+            margin-right: 16px;
         }
 
         .reporter-info {
@@ -261,16 +248,13 @@
 
         .reporter-name {
             font-weight: 600;
-            font-size: 15px;
+            font-size: 16px;
             margin-bottom: 2px;
         }
 
         .reporter-outlet {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 13px;
+            color: var(--text-secondary);
         }
 
         .reporter-stat {
@@ -279,473 +263,100 @@
 
         .stat-value {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
+            font-size: 24px;
             color: var(--accent-gold);
-            line-height: 1;
         }
 
         .stat-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text-muted);
             text-transform: uppercase;
         }
 
         .stat-change {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+            font-size: 12px;
             margin-top: 2px;
         }
 
-        .stat-change.up { color: var(--accent-green); }
-        .stat-change.down { color: var(--accent-red); }
+        .stat-change.up {
+            color: var(--accent-green);
+        }
 
-        /* Topic Tags */
+        .stat-change.down {
+            color: var(--accent-red);
+        }
+
         .topic-tags {
             display: flex;
             gap: 6px;
-            flex-wrap: wrap;
-            margin-top: 6px;
-        }
-
-        .topic-tag {
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .topic-tag.trade { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
-        .topic-tag.injury { background: rgba(245, 166, 35, 0.2); color: var(--accent-gold); }
-        .topic-tag.contract { background: rgba(74, 158, 255, 0.2); color: var(--accent-blue); }
-        .topic-tag.draft { background: rgba(167, 139, 250, 0.2); color: var(--accent-purple); }
-
-        /* Coverage Matrix */
-        .matrix-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            margin-top: 32px;
-        }
-
-        .matrix-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .matrix-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            letter-spacing: 1px;
-        }
-
-        .matrix-grid {
-            display: grid;
-            grid-template-columns: 160px repeat(10, 1fr);
-            font-size: 12px;
-            overflow-x: auto;
-        }
-
-        .matrix-cell {
-            padding: 12px 8px;
-            text-align: center;
-            border-right: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .matrix-cell:last-child {
-            border-right: none;
-        }
-
-        .matrix-header-cell {
-            background: var(--bg-elevated);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .matrix-reporter-cell {
-            text-align: left;
-            font-weight: 600;
-            background: var(--bg-elevated);
-        }
-
-        .matrix-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 500;
-        }
-
-        .matrix-value.hot { color: var(--accent-gold); background: rgba(245, 166, 35, 0.1); }
-        .matrix-value.warm { color: var(--accent-blue); }
-        .matrix-value.cold { color: var(--text-muted); }
-
-        /* Reporter Profile Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 200;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            max-width: 900px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            padding: 32px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 28px;
-            cursor: pointer;
-            padding: 8px;
-            line-height: 1;
-        }
-
-        .modal-close:hover {
-            color: var(--text-primary);
-        }
-
-        .profile-header {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-        }
-
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--bg-elevated);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            color: var(--accent-gold);
-            border: 3px solid var(--accent-gold);
-        }
-
-        .profile-info h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 36px;
-            letter-spacing: 1px;
-        }
-
-        .profile-info .outlet {
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        .profile-tier {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            text-transform: uppercase;
-            margin-top: 8px;
-        }
-
-        .tier-1 { background: var(--gradient-gold); color: #000; }
-        .tier-2 { background: var(--accent-blue); color: #fff; }
-        .tier-3 { background: var(--bg-elevated); color: var(--text-secondary); }
-
-        .profile-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            padding: 24px 32px;
-            background: var(--bg-elevated);
-        }
-
-        .profile-stat-box {
-            text-align: center;
-        }
-
-        .profile-stat-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 36px;
-            color: var(--accent-gold);
-            line-height: 1;
-        }
-
-        .profile-stat-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
             margin-top: 4px;
         }
 
-        .profile-body {
-            padding: 32px;
-        }
-
-        .profile-section {
-            margin-bottom: 32px;
-        }
-
-        .profile-section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-            color: var(--text-secondary);
-        }
-
-        /* Chart placeholder */
-        .chart-container {
-            background: var(--bg-elevated);
-            border-radius: 8px;
-            padding: 24px;
-            height: 200px;
-            display: flex;
-            align-items: flex-end;
-            gap: 8px;
-        }
-
-        .chart-bar {
-            flex: 1;
-            background: var(--accent-gold);
-            border-radius: 4px 4px 0 0;
-            position: relative;
-            transition: all 0.3s ease;
-            min-height: 10px;
-        }
-
-        .chart-bar:hover {
-            background: var(--accent-blue);
-        }
-
-        .chart-bar::after {
-            content: attr(data-label);
-            position: absolute;
-            bottom: -24px;
-            left: 50%;
-            transform: translateX(-50%);
+        .topic-tag {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            color: var(--text-muted);
-            white-space: nowrap;
         }
 
-        /* Coverage list */
-        .coverage-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .coverage-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 16px;
-            background: var(--bg-elevated);
-            border-radius: 8px;
-        }
-
-        .coverage-item-name {
-            font-weight: 600;
-        }
-
-        .coverage-item-count {
-            font-family: 'JetBrains Mono', monospace;
+        .topic-tag.trade {
+            background: rgba(245, 166, 35, 0.2);
             color: var(--accent-gold);
         }
 
-        /* Recent Rumors */
-        .recent-rumors {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .topic-tag.injury {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
         }
 
-        .rumor-item {
-            padding: 16px;
-            background: var(--bg-elevated);
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-gold);
+        .topic-tag.contract {
+            background: rgba(52, 211, 153, 0.2);
+            color: var(--accent-green);
         }
 
-        .rumor-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .rumor-text {
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .rumor-players {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .rumor-player {
-            padding: 2px 8px;
+        .topic-tag.team {
             background: rgba(74, 158, 255, 0.2);
             color: var(--accent-blue);
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
         }
 
-        /* Historical Comparison */
-        .historical-container {
+        .topic-tag.player {
+            background: rgba(167, 139, 250, 0.2);
+            color: var(--accent-purple);
+        }
+
+        .specialists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .specialist-card {
             background: var(--bg-card);
-            border: 1px solid var(--border);
             border-radius: 12px;
-            margin-top: 32px;
+            border: 1px solid var(--border);
             overflow: hidden;
         }
 
-        .historical-header {
-            padding: 20px 24px;
+        .specialist-header {
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .historical-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        .period-selector {
             display: flex;
+            align-items: center;
             gap: 8px;
         }
 
-        .period-btn {
-            padding: 6px 14px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-secondary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.2s ease;
+        .specialist-header.teams {
+            color: var(--accent-blue);
         }
 
-        .period-btn.active {
-            background: var(--accent-gold);
-            border-color: var(--accent-gold);
-            color: var(--bg-dark);
+        .specialist-header.players {
+            color: var(--accent-purple);
         }
 
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1px;
-            background: var(--border);
-        }
-
-        .comparison-column {
-            background: var(--bg-card);
-            padding: 24px;
-        }
-
-        .comparison-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            text-align: center;
-        }
-
-        .comparison-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .comparison-item:last-child {
-            border-bottom: none;
-        }
-
-        .comparison-rank {
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 14px;
-            margin-right: 12px;
-            border-radius: 4px;
-            background: var(--bg-elevated);
-            color: var(--text-secondary);
-        }
-
-        .comparison-name {
-            flex: 1;
-            font-size: 14px;
-        }
-
-        .comparison-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            color: var(--accent-gold);
-        }
-
-        /* Breaking News Leaders */
-        .breaking-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 2px 8px;
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--accent-red);
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            text-transform: uppercase;
-        }
-
-        .breaking-badge::before {
-            content: '⚡';
-        }
-
-        /* Hidden sections */
         .view-section {
             display: none;
         }
@@ -754,11 +365,186 @@
             display: block;
         }
 
-        /* Responsive */
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+        }
+
+        .profile-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .profile-outlet {
+            color: var(--text-secondary);
+        }
+
+        .profile-tier {
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 4px;
+            display: inline-block;
+        }
+
+        .tier-1 {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        .tier-2 {
+            background: var(--accent-blue);
+            color: var(--bg-dark);
+        }
+
+        .tier-3 {
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .profile-stat-card {
+            background: var(--bg-elevated);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            color: var(--accent-gold);
+        }
+
+        .profile-stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .coverage-section {
+            margin-bottom: 24px;
+        }
+
+        .coverage-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .coverage-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .coverage-item {
+            background: var(--bg-elevated);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .coverage-item .count {
+            color: var(--accent-gold);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
-                gap: 16px;
             }
 
             .nav-tabs {
@@ -766,16 +552,12 @@
                 width: 100%;
             }
 
-            .matrix-grid {
-                font-size: 10px;
+            .leaderboard-grid {
+                grid-template-columns: 1fr;
             }
 
             .profile-stats {
                 grid-template-columns: repeat(2, 1fr);
-            }
-
-            .coverage-list {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -783,14 +565,11 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <div class="logo">REPORTER <span>RANKINGS</span></div>
+            <div class="logo">REPORTER <span>RANKINGS</span> <span id="live-indicator" style="font-size: 12px; color: var(--accent-green); display: none;">● LIVE</span></div>
             <nav class="nav-tabs">
                 <button class="nav-tab active" data-view="leaderboard">Leaderboard</button>
-                <button class="nav-tab" data-view="breaking">Breaking News</button>
-                <button class="nav-tab" data-view="specialists">Topic Specialists</button>
-                <button class="nav-tab" data-view="matrix">Coverage Matrix</button>
+                <button class="nav-tab" data-view="specialists">Team & Player Coverage</button>
                 <button class="nav-tab" data-view="outlets">Outlets</button>
-                <button class="nav-tab" data-view="historical">Historical</button>
             </nav>
             <div class="time-filter">
                 <button class="time-btn" data-days="7">Week</button>
@@ -814,98 +593,43 @@
                     <div class="leaderboard-header">
                         <div class="leaderboard-title">
                             <span class="leaderboard-icon">📊</span>
-                            Overall Volume Leaders
+                            Top 50 Reporters by Volume
                         </div>
                     </div>
-                    <div id="volume-leaders"></div>
+                    <div id="volume-leaders" class="loading">Loading...</div>
                 </div>
 
                 <div class="leaderboard-card">
                     <div class="leaderboard-header">
                         <div class="leaderboard-title">
                             <span class="leaderboard-icon">📈</span>
-                            Trending Up
+                            Trending Up (vs Previous Period)
                         </div>
                     </div>
-                    <div id="trending-up"></div>
+                    <div id="trending-up" class="loading">Loading...</div>
                 </div>
             </div>
         </section>
 
-        <!-- Breaking News View -->
-        <section id="breaking" class="view-section">
-            <h1 class="section-title">Breaking News Leaders</h1>
-            <p class="section-subtitle">Who breaks stories first when multiple outlets cover the same rumor</p>
-            
-            <div class="leaderboard-card" style="max-width: 700px;">
-                <div class="leaderboard-header">
-                    <div class="leaderboard-title">
-                        <span class="leaderboard-icon">⚡</span>
-                        First to Report
-                    </div>
-                </div>
-                <div id="breaking-leaders"></div>
-            </div>
-        </section>
-
-        <!-- Topic Specialists View -->
+        <!-- Team & Player Specialists View -->
         <section id="specialists" class="view-section">
-            <h1 class="section-title">Topic Specialists</h1>
-            <p class="section-subtitle">Which reporters dominate specific coverage areas</p>
+            <h1 class="section-title">Team & Player Coverage</h1>
+            <p class="section-subtitle">Which reporters cover which teams and players the most</p>
             
-            <div class="leaderboard-grid">
-                <div class="leaderboard-card">
-                    <div class="leaderboard-header">
-                        <div class="leaderboard-title">
-                            <span class="leaderboard-icon">🔄</span>
-                            Trade Rumors
-                        </div>
+            <div class="specialists-grid">
+                <div class="specialist-card">
+                    <div class="specialist-header teams">
+                        <span>🏀</span> Top Team Reporters
                     </div>
-                    <div id="trade-specialists"></div>
+                    <div id="team-specialists" class="loading">Loading...</div>
                 </div>
 
-                <div class="leaderboard-card">
-                    <div class="leaderboard-header">
-                        <div class="leaderboard-title">
-                            <span class="leaderboard-icon">🏥</span>
-                            Injury Reports
-                        </div>
+                <div class="specialist-card">
+                    <div class="specialist-header players">
+                        <span>⭐</span> Top Player Reporters
                     </div>
-                    <div id="injury-specialists"></div>
+                    <div id="player-specialists" class="loading">Loading...</div>
                 </div>
-
-                <div class="leaderboard-card">
-                    <div class="leaderboard-header">
-                        <div class="leaderboard-title">
-                            <span class="leaderboard-icon">💰</span>
-                            Contract News
-                        </div>
-                    </div>
-                    <div id="contract-specialists"></div>
-                </div>
-
-                <div class="leaderboard-card">
-                    <div class="leaderboard-header">
-                        <div class="leaderboard-title">
-                            <span class="leaderboard-icon">🏀</span>
-                            Front Office
-                        </div>
-                    </div>
-                    <div id="frontoffice-specialists"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Coverage Matrix View -->
-        <section id="matrix" class="view-section">
-            <h1 class="section-title">Who Covers Who</h1>
-            <p class="section-subtitle">Reporter coverage patterns by team and player</p>
-            
-            <div class="matrix-container">
-                <div class="matrix-header">
-                    <div class="matrix-title">Reporter × Team Coverage Matrix</div>
-                </div>
-                <div class="matrix-grid" id="team-matrix"></div>
             </div>
         </section>
 
@@ -921,25 +645,7 @@
                         Top Outlets by Volume
                     </div>
                 </div>
-                <div id="outlets-list"></div>
-            </div>
-        </section>
-
-        <!-- Historical View -->
-        <section id="historical" class="view-section">
-            <h1 class="section-title">Historical Comparison</h1>
-            <p class="section-subtitle">Compare reporter activity across different periods</p>
-            
-            <div class="historical-container">
-                <div class="historical-header">
-                    <div class="historical-title">Trade Deadline Comparison</div>
-                    <div class="period-selector">
-                        <button class="period-btn active" data-period="2025">2025</button>
-                        <button class="period-btn" data-period="2024">2024</button>
-                        <button class="period-btn" data-period="2023">2023</button>
-                    </div>
-                </div>
-                <div class="comparison-grid" id="historical-comparison"></div>
+                <div id="outlets-list" class="loading">Loading...</div>
             </div>
         </section>
     </main>
@@ -951,260 +657,210 @@
                 <div class="profile-header">
                     <div class="profile-avatar" id="modal-avatar"></div>
                     <div class="profile-info">
-                        <h2 id="modal-name"></h2>
-                        <div class="outlet" id="modal-outlet"></div>
+                        <div class="profile-name" id="modal-name"></div>
+                        <div class="profile-outlet" id="modal-outlet"></div>
                         <div class="profile-tier" id="modal-tier"></div>
                     </div>
                 </div>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" onclick="closeProfile()">&times;</button>
             </div>
-            <div class="profile-stats">
-                <div class="profile-stat-box">
-                    <div class="profile-stat-value" id="modal-total">0</div>
-                    <div class="profile-stat-label">Total Rumors</div>
+            <div class="modal-body">
+                <div class="profile-stats">
+                    <div class="profile-stat-card">
+                        <div class="profile-stat-value" id="modal-total">0</div>
+                        <div class="profile-stat-label">Total Rumors</div>
+                    </div>
+                    <div class="profile-stat-card">
+                        <div class="profile-stat-value" id="modal-teams">0</div>
+                        <div class="profile-stat-label">Teams Covered</div>
+                    </div>
+                    <div class="profile-stat-card">
+                        <div class="profile-stat-value" id="modal-players">0</div>
+                        <div class="profile-stat-label">Players Covered</div>
+                    </div>
+                    <div class="profile-stat-card">
+                        <div class="profile-stat-value" id="modal-trade">0</div>
+                        <div class="profile-stat-label">Trade Rumors</div>
+                    </div>
                 </div>
-                <div class="profile-stat-box">
-                    <div class="profile-stat-value" id="modal-breaking">0</div>
-                    <div class="profile-stat-label">Breaking News</div>
+
+                <div class="coverage-section">
+                    <div class="coverage-title">Top Teams Covered</div>
+                    <div class="coverage-list" id="modal-teams-list"></div>
                 </div>
-                <div class="profile-stat-box">
-                    <div class="profile-stat-value" id="modal-players">0</div>
-                    <div class="profile-stat-label">Players Covered</div>
-                </div>
-                <div class="profile-stat-box">
-                    <div class="profile-stat-value" id="modal-teams">0</div>
-                    <div class="profile-stat-label">Teams Covered</div>
-                </div>
-            </div>
-            <div class="profile-body">
-                <div class="profile-section">
-                    <div class="profile-section-title">Activity (Last 30 Days)</div>
-                    <div class="chart-container" id="modal-chart"></div>
-                </div>
-                <div class="profile-section">
-                    <div class="profile-section-title">Top Players Covered</div>
+
+                <div class="coverage-section">
+                    <div class="coverage-title">Top Players Covered</div>
                     <div class="coverage-list" id="modal-players-list"></div>
-                </div>
-                <div class="profile-section">
-                    <div class="profile-section-title">Recent Rumors</div>
-                    <div class="recent-rumors" id="modal-rumors"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Load processed data -->
+    <!-- Load data file -->
     <script src="reporter_data.js"></script>
+    
     <script>
         // =============================================
-        // DATA LOADING
+        // INITIALIZE DATA
         // =============================================
-        
-        // Check if data is loaded, otherwise use fallback
         let REPORTERS = [];
         let OUTLETS = [];
-        let ALL_RUMORS = [];
-        let DATA_LOADED = false;
-        
-        const NBA_TEAMS = [
-            "Lakers", "Celtics", "Warriors", "Nets", "Heat", 
-            "Bucks", "Suns", "Mavericks", "76ers", "Knicks",
-            "Bulls", "Cavaliers", "Nuggets", "Pistons", "Rockets",
-            "Pacers", "Clippers", "Grizzlies", "Timberwolves", "Pelicans",
-            "Knicks", "Thunder", "Magic", "76ers", "Trail Blazers",
-            "Kings", "Spurs", "Raptors", "Jazz", "Wizards", "Hawks", "Hornets"
-        ];
-        
-        if (typeof REPORTER_DATA !== 'undefined' && REPORTER_DATA.reporters) {
-            console.log('Loaded real data:', REPORTER_DATA.total_rumors, 'rumors');
+        let currentDays = 365;
+        let currentView = 'leaderboard';
+
+        function initializeData() {
+            if (typeof REPORTER_DATA === 'undefined') {
+                console.error('REPORTER_DATA not loaded');
+                return false;
+            }
+
+            console.log('Initializing data from REPORTER_DATA:', REPORTER_DATA.total_reporters, 'reporters');
+
             REPORTERS = REPORTER_DATA.reporters.map((r, i) => ({
-                id: r.id || i + 1,
+                id: r.id || `reporter_${i}`,
                 name: r.name,
                 outlet: r.outlet,
-                tier: r.tier,
-                avatar: r.avatar,
-                total: r.total,
-                breaking: r.breaking,
+                tier: r.tier || 3,
+                avatar: r.avatar || r.name.substring(0, 2).toUpperCase(),
+                total: r.total || 0,
+                breaking: r.breaking || 0,
                 byTopic: r.by_topic || {},
                 byPlayer: r.by_player || {},
                 byTeam: r.by_team || {},
                 byDate: r.by_date || {},
                 recentRumors: r.recent_rumors || []
             }));
-            ALL_RUMORS = REPORTER_DATA.rumors || [];
-            
-            // Load outlets separately
+
             OUTLETS = (REPORTER_DATA.outlets || []).map((o, i) => ({
                 id: o.id || `outlet_${i}`,
                 name: o.name,
-                total: o.total,
+                total: o.total || 0,
                 byTopic: o.by_topic || {},
                 byDate: o.by_date || {}
             }));
+
+            console.log('Loaded', REPORTERS.length, 'reporters and', OUTLETS.length, 'outlets');
             
-            DATA_LOADED = true;
+            // Show live indicator
+            document.getElementById('live-indicator').style.display = 'inline';
             
-            // Update header to show data status
-            document.addEventListener('DOMContentLoaded', () => {
-                const logo = document.querySelector('.logo');
-                if (logo) {
-                    logo.innerHTML += ` <span style="font-size: 12px; color: var(--accent-green);">● LIVE</span>`;
-                }
-            });
-        } else {
-            console.warn('No data file found, using sample data');
-            // Fallback sample data
-            REPORTERS = [
-                { id: 1, name: "Shams Charania", outlet: "ESPN", tier: 1, avatar: "SC" },
-                { id: 2, name: "Marc Stein", outlet: "The Stein Line", tier: 1, avatar: "MS" },
-                { id: 3, name: "Jake Fischer", outlet: "Yahoo Sports", tier: 1, avatar: "JF" },
-                { id: 4, name: "Chris Haynes", outlet: "Bleacher Report", tier: 1, avatar: "CH" },
-                { id: 5, name: "Brian Windhorst", outlet: "ESPN", tier: 2, avatar: "BW" },
-            ];
+            return true;
         }
 
         // =============================================
-        // STATE
-        // =============================================
-        let currentDays = 365;
-        let currentView = 'leaderboard';
-
-        // =============================================
-        // CALCULATIONS
+        // FILTERING
         // =============================================
         
-        function filterByDays(days) {
-            // If days is 0, return all-time totals
+        function getReporterStats(days) {
             if (days === 0) {
-                return REPORTERS.map(reporter => ({
-                    ...reporter,
-                    filteredTotal: reporter.total || 0,
-                    filteredByTopic: reporter.byTopic || {},
-                    filteredBreaking: reporter.breaking || 0,
-                    filteredRumors: reporter.recentRumors || []
-                }));
+                // All time - use totals directly
+                return REPORTERS.map(r => ({
+                    ...r,
+                    filteredTotal: r.total,
+                    change: 0,
+                    changePercent: 0
+                })).filter(r => r.filteredTotal > 0);
             }
-            
+
             const cutoff = new Date();
             cutoff.setDate(cutoff.getDate() - days);
             const cutoffStr = cutoff.toISOString().split('T')[0];
-            
-            return REPORTERS.map(reporter => {
-                // If we have pre-processed date data, filter it
+
+            const prevCutoff = new Date();
+            prevCutoff.setDate(prevCutoff.getDate() - (days * 2));
+            const prevCutoffStr = prevCutoff.toISOString().split('T')[0];
+
+            return REPORTERS.map(r => {
+                let currentTotal = 0;
+                let previousTotal = 0;
+
+                if (r.byDate && Object.keys(r.byDate).length > 0) {
+                    for (const [date, count] of Object.entries(r.byDate)) {
+                        if (date >= cutoffStr) {
+                            currentTotal += count;
+                        } else if (date >= prevCutoffStr && date < cutoffStr) {
+                            previousTotal += count;
+                        }
+                    }
+                }
+
+                // If no date-based data, fall back to total (for "Year" especially)
+                if (currentTotal === 0 && days >= 365) {
+                    currentTotal = r.total;
+                }
+
+                const change = currentTotal - previousTotal;
+                const changePercent = previousTotal > 0 ? Math.round((change / previousTotal) * 100) : 0;
+
+                return {
+                    ...r,
+                    filteredTotal: currentTotal,
+                    change,
+                    changePercent
+                };
+            }).filter(r => r.filteredTotal > 0);
+        }
+
+        function getOutletStats(days) {
+            if (days === 0) {
+                return OUTLETS.map(o => ({
+                    ...o,
+                    filteredTotal: o.total
+                })).filter(o => o.filteredTotal > 0);
+            }
+
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - days);
+            const cutoffStr = cutoff.toISOString().split('T')[0];
+
+            return OUTLETS.map(o => {
                 let total = 0;
-                let byTopic = { trade: 0, injury: 0, contract: 0, frontoffice: 0, draft: 0, general: 0 };
-                let breaking = 0;
-                let filteredRumors = [];
-                
-                if (reporter.byDate && Object.keys(reporter.byDate).length > 0) {
-                    // Use pre-processed data
-                    for (const [date, count] of Object.entries(reporter.byDate)) {
+
+                if (o.byDate && Object.keys(o.byDate).length > 0) {
+                    for (const [date, count] of Object.entries(o.byDate)) {
                         if (date >= cutoffStr) {
                             total += count;
                         }
                     }
-                    
-                    // Estimate topic breakdown (proportional)
-                    const proportion = reporter.total > 0 ? total / reporter.total : 0;
-                    for (const [topic, count] of Object.entries(reporter.byTopic || {})) {
-                        byTopic[topic] = Math.round(count * proportion);
-                    }
-                    
-                    breaking = Math.round((reporter.breaking || 0) * proportion);
-                    filteredRumors = (reporter.recentRumors || []).filter(r => r.date >= cutoffStr);
-                } else {
-                    // No date data - use totals
-                    total = reporter.total || 0;
-                    byTopic = reporter.byTopic || {};
-                    breaking = reporter.breaking || 0;
-                    filteredRumors = reporter.recentRumors || [];
                 }
-                
-                return {
-                    ...reporter,
-                    filteredTotal: total,
-                    filteredByTopic: byTopic,
-                    filteredBreaking: breaking,
-                    filteredRumors: filteredRumors
-                };
-            });
-        }
 
-        function getReporterStats(days) {
-            const filtered = filterByDays(days);
-            
-            // For All Time (days=0), don't calculate previous/change
-            const previousFiltered = days > 0 ? filterByDays(days * 2) : filtered;
-            
-            return filtered.map((reporter, idx) => {
-                const previous = previousFiltered[idx];
-                let previousTotal = 0;
-                let change = 0;
-                let changePercent = 0;
-                
-                if (days > 0 && previous) {
-                    previousTotal = Math.max(0, previous.filteredTotal - reporter.filteredTotal);
-                    change = reporter.filteredTotal - previousTotal;
-                    changePercent = previousTotal > 0 
-                        ? Math.round((reporter.filteredTotal - previousTotal) / previousTotal * 100)
-                        : 0;
+                // Fallback for year
+                if (total === 0 && days >= 365) {
+                    total = o.total;
                 }
-                
-                const teams = reporter.byTeam ? Object.keys(reporter.byTeam) : [];
-                const players = reporter.byPlayer ? Object.keys(reporter.byPlayer) : [];
-                
-                return {
-                    ...reporter,
-                    total: reporter.filteredTotal,
-                    previous: previousTotal,
-                    change: change,
-                    changePercent: changePercent,
-                    breaking: reporter.filteredBreaking,
-                    teams: teams.length,
-                    teamsList: teams,
-                    players: players.length,
-                    playersList: players,
-                    byTopic: reporter.filteredByTopic,
-                    rumors: reporter.filteredRumors || reporter.recentRumors || []
-                };
-            }).filter(r => r.total > 0);
-        }
 
-        function getTeamMatrix(days) {
-            const matrix = {};
-            const topTeams = [...new Set(NBA_TEAMS)].slice(0, 10);
-            
-            REPORTERS.slice(0, 8).forEach(reporter => {
-                matrix[reporter.id] = {};
-                topTeams.forEach(team => {
-                    matrix[reporter.id][team] = reporter.byTeam ? (reporter.byTeam[team] || 0) : 0;
-                });
-            });
-            
-            return { matrix, teams: topTeams };
+                return { ...o, filteredTotal: total };
+            }).filter(o => o.filteredTotal > 0);
         }
 
         // =============================================
         // RENDERING
         // =============================================
-        
-        function createReporterRow(reporter, rank, showChange = false, showTopics = false) {
+
+        function createReporterRow(reporter, rank, showChange = false) {
             const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-default';
             const changeHtml = showChange && reporter.change !== 0 
                 ? `<div class="stat-change ${reporter.change > 0 ? 'up' : 'down'}">
                      ${reporter.change > 0 ? '↑' : '↓'} ${Math.abs(reporter.change)}
                    </div>`
                 : '';
-            
-            const topicsHtml = showTopics ? `
+
+            // Get top topics
+            const topTopics = Object.entries(reporter.byTopic || {})
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 2);
+
+            const topicsHtml = topTopics.length > 0 ? `
                 <div class="topic-tags">
-                    ${reporter.byTopic.trade > 0 ? `<span class="topic-tag trade">Trade ${reporter.byTopic.trade}</span>` : ''}
-                    ${reporter.byTopic.injury > 0 ? `<span class="topic-tag injury">Injury ${reporter.byTopic.injury}</span>` : ''}
+                    ${topTopics.map(([topic, count]) => 
+                        `<span class="topic-tag ${topic}">${topic} ${count}</span>`
+                    ).join('')}
                 </div>
             ` : '';
 
             return `
-                <div class="reporter-row" onclick="openProfile(${reporter.id})">
+                <div class="reporter-row" onclick="openProfile('${reporter.id}')">
                     <div class="rank ${rankClass}">${rank}</div>
                     <div class="reporter-avatar">${reporter.avatar}</div>
                     <div class="reporter-info">
@@ -1213,7 +869,7 @@
                         ${topicsHtml}
                     </div>
                     <div class="reporter-stat">
-                        <div class="stat-value">${reporter.total}</div>
+                        <div class="stat-value">${reporter.filteredTotal}</div>
                         <div class="stat-label">Rumors</div>
                         ${changeHtml}
                     </div>
@@ -1224,247 +880,215 @@
         function renderLeaderboard() {
             const stats = getReporterStats(currentDays);
             
-            // Volume Leaders
-            const volumeLeaders = [...stats].sort((a, b) => b.total - a.total).slice(0, 8);
-            document.getElementById('volume-leaders').innerHTML = 
-                volumeLeaders.map((r, i) => createReporterRow(r, i + 1, false, true)).join('');
-            
-            // Trending Up
-            const trendingUp = [...stats].sort((a, b) => b.change - a.change).slice(0, 8);
-            document.getElementById('trending-up').innerHTML = 
-                trendingUp.map((r, i) => createReporterRow(r, i + 1, true)).join('');
-        }
+            if (stats.length === 0) {
+                document.getElementById('volume-leaders').innerHTML = '<div class="loading">No data for selected period</div>';
+                document.getElementById('trending-up').innerHTML = '<div class="loading">No data for selected period</div>';
+                return;
+            }
 
-        function renderBreaking() {
-            const stats = getReporterStats(currentDays);
-            const breakingLeaders = [...stats].sort((a, b) => b.breaking - a.breaking).slice(0, 10);
-            
-            document.getElementById('breaking-leaders').innerHTML = breakingLeaders.map((reporter, i) => `
-                <div class="reporter-row" onclick="openProfile(${reporter.id})">
-                    <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
-                    <div class="reporter-avatar">${reporter.avatar}</div>
-                    <div class="reporter-info">
-                        <div class="reporter-name">${reporter.name}</div>
-                        <div class="reporter-outlet">${reporter.outlet}</div>
-                        <span class="breaking-badge">Breaking News Leader</span>
-                    </div>
-                    <div class="reporter-stat">
-                        <div class="stat-value">${reporter.breaking}</div>
-                        <div class="stat-label">First Reports</div>
-                    </div>
-                </div>
-            `).join('');
+            // Volume Leaders - Top 50
+            const volumeLeaders = [...stats].sort((a, b) => b.filteredTotal - a.filteredTotal).slice(0, 50);
+            document.getElementById('volume-leaders').innerHTML = 
+                volumeLeaders.map((r, i) => createReporterRow(r, i + 1, false)).join('');
+
+            // Trending Up - Only show if we have change data
+            if (currentDays > 0 && currentDays < 365) {
+                const trendingUp = [...stats]
+                    .filter(r => r.change > 0)
+                    .sort((a, b) => b.change - a.change)
+                    .slice(0, 20);
+                document.getElementById('trending-up').innerHTML = 
+                    trendingUp.length > 0 
+                        ? trendingUp.map((r, i) => createReporterRow(r, i + 1, true)).join('')
+                        : '<div class="loading">No trending data for this period</div>';
+            } else {
+                document.getElementById('trending-up').innerHTML = 
+                    '<div class="loading">Trending requires shorter time periods (Week/Month/3Mo)</div>';
+            }
         }
 
         function renderSpecialists() {
             const stats = getReporterStats(currentDays);
-            
-            ['trade', 'injury', 'contract', 'frontoffice'].forEach(topic => {
-                const sorted = [...stats].sort((a, b) => b.byTopic[topic] - a.byTopic[topic]).slice(0, 5);
-                document.getElementById(`${topic}-specialists`).innerHTML = sorted.map((r, i) => `
-                    <div class="reporter-row" onclick="openProfile(${r.id})">
+
+            // Team specialists - reporters who cover the most teams
+            const teamSpecialists = [...stats]
+                .filter(r => Object.keys(r.byTeam || {}).length > 0)
+                .map(r => {
+                    const teams = Object.entries(r.byTeam || {}).sort((a, b) => b[1] - a[1]);
+                    const topTeam = teams[0] || ['N/A', 0];
+                    const totalTeamRumors = teams.reduce((sum, [_, count]) => sum + count, 0);
+                    return {
+                        ...r,
+                        topTeam: topTeam[0],
+                        topTeamCount: topTeam[1],
+                        totalTeamRumors,
+                        teamsCount: teams.length
+                    };
+                })
+                .sort((a, b) => b.totalTeamRumors - a.totalTeamRumors)
+                .slice(0, 20);
+
+            document.getElementById('team-specialists').innerHTML = teamSpecialists.length > 0 
+                ? teamSpecialists.map((r, i) => `
+                    <div class="reporter-row" onclick="openProfile('${r.id}')">
                         <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
                         <div class="reporter-avatar">${r.avatar}</div>
                         <div class="reporter-info">
                             <div class="reporter-name">${r.name}</div>
                             <div class="reporter-outlet">${r.outlet}</div>
+                            <div class="topic-tags">
+                                <span class="topic-tag team">${r.topTeam} (${r.topTeamCount})</span>
+                            </div>
                         </div>
                         <div class="reporter-stat">
-                            <div class="stat-value">${r.byTopic[topic]}</div>
-                            <div class="stat-label">Reports</div>
+                            <div class="stat-value">${r.teamsCount}</div>
+                            <div class="stat-label">Teams</div>
                         </div>
                     </div>
-                `).join('');
-            });
-        }
+                `).join('')
+                : '<div class="loading">No team data available</div>';
 
-        function renderMatrix() {
-            const { matrix, teams } = getTeamMatrix(currentDays);
-            const reporters = REPORTERS.slice(0, 8);
-            
-            let html = `
-                <div class="matrix-cell matrix-header-cell">Reporter</div>
-                ${teams.map(team => `<div class="matrix-cell matrix-header-cell">${team}</div>`).join('')}
-            `;
-            
-            reporters.forEach(reporter => {
-                const values = teams.map(team => matrix[reporter.id]?.[team] || 0);
-                const max = Math.max(...values);
-                
-                html += `<div class="matrix-cell matrix-reporter-cell">${reporter.name.split(' ').pop()}</div>`;
-                teams.forEach(team => {
-                    const val = matrix[reporter.id]?.[team] || 0;
-                    const heatClass = val === max && val > 0 ? 'hot' : val > 0 ? 'warm' : 'cold';
-                    html += `<div class="matrix-cell matrix-value ${heatClass}">${val || '-'}</div>`;
-                });
-            });
-            
-            document.getElementById('team-matrix').innerHTML = html;
-        }
+            // Player specialists
+            const playerSpecialists = [...stats]
+                .filter(r => Object.keys(r.byPlayer || {}).length > 0)
+                .map(r => {
+                    const players = Object.entries(r.byPlayer || {}).sort((a, b) => b[1] - a[1]);
+                    const topPlayer = players[0] || ['N/A', 0];
+                    const totalPlayerRumors = players.reduce((sum, [_, count]) => sum + count, 0);
+                    return {
+                        ...r,
+                        topPlayer: topPlayer[0],
+                        topPlayerCount: topPlayer[1],
+                        totalPlayerRumors,
+                        playersCount: players.length
+                    };
+                })
+                .sort((a, b) => b.totalPlayerRumors - a.totalPlayerRumors)
+                .slice(0, 20);
 
-        function renderHistorical() {
-            // Mock historical data
-            const data2025 = getReporterStats(30).sort((a, b) => b.total - a.total).slice(0, 5);
-            const data2024 = [...data2025].map(r => ({...r, total: Math.floor(r.total * 0.85)}));
-            
-            document.getElementById('historical-comparison').innerHTML = `
-                <div class="comparison-column">
-                    <div class="comparison-label">2025 Trade Deadline</div>
-                    ${data2025.map((r, i) => `
-                        <div class="comparison-item">
-                            <div class="comparison-rank">${i + 1}</div>
-                            <div class="comparison-name">${r.name}</div>
-                            <div class="comparison-value">${r.total}</div>
+            document.getElementById('player-specialists').innerHTML = playerSpecialists.length > 0
+                ? playerSpecialists.map((r, i) => `
+                    <div class="reporter-row" onclick="openProfile('${r.id}')">
+                        <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
+                        <div class="reporter-avatar">${r.avatar}</div>
+                        <div class="reporter-info">
+                            <div class="reporter-name">${r.name}</div>
+                            <div class="reporter-outlet">${r.outlet}</div>
+                            <div class="topic-tags">
+                                <span class="topic-tag player">${r.topPlayer} (${r.topPlayerCount})</span>
+                            </div>
                         </div>
-                    `).join('')}
-                </div>
-                <div class="comparison-column">
-                    <div class="comparison-label">2024 Trade Deadline</div>
-                    ${data2024.map((r, i) => `
-                        <div class="comparison-item">
-                            <div class="comparison-rank">${i + 1}</div>
-                            <div class="comparison-name">${r.name}</div>
-                            <div class="comparison-value">${r.total}</div>
+                        <div class="reporter-stat">
+                            <div class="stat-value">${r.playersCount}</div>
+                            <div class="stat-label">Players</div>
                         </div>
-                    `).join('')}
-                </div>
-            `;
+                    </div>
+                `).join('')
+                : '<div class="loading">No player data available</div>';
         }
 
         function renderOutlets() {
-            let filteredOutlets;
-            
-            if (currentDays === 0) {
-                // All time - use totals
-                filteredOutlets = OUTLETS.map(outlet => ({
-                    ...outlet,
-                    filteredTotal: outlet.total || 0
-                })).filter(o => o.filteredTotal > 0).sort((a, b) => b.filteredTotal - a.filteredTotal);
-            } else {
-                const cutoff = new Date();
-                cutoff.setDate(cutoff.getDate() - currentDays);
-                const cutoffStr = cutoff.toISOString().split('T')[0];
-                
-                filteredOutlets = OUTLETS.map(outlet => {
-                    let total = 0;
-                    if (outlet.byDate && Object.keys(outlet.byDate).length > 0) {
-                        for (const [date, count] of Object.entries(outlet.byDate)) {
-                            if (date >= cutoffStr) {
-                                total += count;
-                            }
-                        }
-                    } else {
-                        total = outlet.total || 0;
-                    }
-                    return { ...outlet, filteredTotal: total };
-                }).filter(o => o.filteredTotal > 0).sort((a, b) => b.filteredTotal - a.filteredTotal);
-            }
-            
-            document.getElementById('outlets-list').innerHTML = filteredOutlets.slice(0, 15).map((outlet, i) => `
-                <div class="reporter-row">
-                    <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
-                    <div class="reporter-avatar" style="background: var(--bg-elevated); color: var(--text-secondary);">
-                        ${outlet.name.substring(0, 2).toUpperCase()}
+            const stats = getOutletStats(currentDays);
+            const sorted = [...stats].sort((a, b) => b.filteredTotal - a.filteredTotal).slice(0, 30);
+
+            document.getElementById('outlets-list').innerHTML = sorted.length > 0
+                ? sorted.map((outlet, i) => `
+                    <div class="reporter-row">
+                        <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
+                        <div class="reporter-avatar" style="background: var(--bg-elevated); color: var(--text-secondary);">
+                            ${outlet.name.substring(0, 2).toUpperCase()}
+                        </div>
+                        <div class="reporter-info">
+                            <div class="reporter-name">${outlet.name}</div>
+                            <div class="reporter-outlet">Media Outlet</div>
+                        </div>
+                        <div class="reporter-stat">
+                            <div class="stat-value">${outlet.filteredTotal}</div>
+                            <div class="stat-label">Rumors</div>
+                        </div>
                     </div>
-                    <div class="reporter-info">
-                        <div class="reporter-name">${outlet.name}</div>
-                        <div class="reporter-outlet">Media Outlet</div>
-                    </div>
-                    <div class="reporter-stat">
-                        <div class="stat-value">${outlet.filteredTotal}</div>
-                        <div class="stat-label">Rumors</div>
-                    </div>
-                </div>
-            `).join('') || '<div style="padding: 20px; color: var(--text-muted);">No outlet data available</div>';
+                `).join('')
+                : '<div class="loading">No outlet data available</div>';
         }
 
         // =============================================
         // PROFILE MODAL
         // =============================================
-        
+
         function openProfile(reporterId) {
-            const stats = getReporterStats(30);
-            const reporter = stats.find(r => r.id === reporterId);
-            if (!reporter) return;
-            
+            const reporter = REPORTERS.find(r => r.id === reporterId);
+            if (!reporter) {
+                console.error('Reporter not found:', reporterId);
+                return;
+            }
+
             document.getElementById('modal-avatar').textContent = reporter.avatar;
             document.getElementById('modal-name').textContent = reporter.name;
             document.getElementById('modal-outlet').textContent = reporter.outlet;
             document.getElementById('modal-tier').textContent = `Tier ${reporter.tier}`;
             document.getElementById('modal-tier').className = `profile-tier tier-${reporter.tier}`;
-            
+
             document.getElementById('modal-total').textContent = reporter.total;
-            document.getElementById('modal-breaking').textContent = reporter.breaking;
-            document.getElementById('modal-players').textContent = reporter.players;
-            document.getElementById('modal-teams').textContent = reporter.teams;
-            
-            // Chart - use real date data if available
-            const chartHtml = Array.from({length: 7}, (_, i) => {
-                const day = new Date();
-                day.setDate(day.getDate() - (6 - i));
-                const dateStr = day.toISOString().split('T')[0];
-                const label = day.toLocaleDateString('en-US', { weekday: 'short' });
-                
-                // Try to get real data
-                let count = 0;
-                if (reporter.byDate) {
-                    count = reporter.byDate[dateStr] || 0;
-                }
-                const height = Math.max(10, count * 15);
-                
-                return `<div class="chart-bar" style="height: ${Math.min(height, 100)}%" data-label="${label}" title="${count} rumors"></div>`;
-            }).join('');
-            document.getElementById('modal-chart').innerHTML = chartHtml;
-            
-            // Players list - use real data if available
-            const playersList = reporter.playersList || [];
-            const playersHtml = playersList.slice(0, 6).map(player => {
-                const count = reporter.byPlayer?.[player] || 0;
-                return `
+            document.getElementById('modal-teams').textContent = Object.keys(reporter.byTeam || {}).length;
+            document.getElementById('modal-players').textContent = Object.keys(reporter.byPlayer || {}).length;
+            document.getElementById('modal-trade').textContent = reporter.byTopic?.trade || 0;
+
+            // Top teams
+            const topTeams = Object.entries(reporter.byTeam || {})
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+            document.getElementById('modal-teams-list').innerHTML = topTeams.length > 0
+                ? topTeams.map(([team, count]) => `
                     <div class="coverage-item">
-                        <span class="coverage-item-name">${player}</span>
-                        <span class="coverage-item-count">${count}</span>
+                        <span>${team}</span>
+                        <span class="count">${count}</span>
                     </div>
-                `;
-            }).join('') || '<div class="coverage-item"><span class="coverage-item-name">No data available</span></div>';
-            document.getElementById('modal-players-list').innerHTML = playersHtml;
-            
-            // Recent rumors
-            const rumors = reporter.rumors || reporter.recentRumors || [];
-            const rumorsHtml = rumors.slice(0, 5).map(rumor => `
-                <div class="rumor-item">
-                    <div class="rumor-date">${rumor.date || 'Unknown date'}</div>
-                    <div class="rumor-text">${rumor.text || 'No text available'}</div>
-                    <div class="rumor-players">
-                        ${(rumor.players || []).map(p => `<span class="rumor-player">${p}</span>`).join('')}
-                        ${(rumor.teams || []).map(t => `<span class="rumor-player">${t}</span>`).join('')}
+                `).join('')
+                : '<div class="loading">No team data</div>';
+
+            // Top players
+            const topPlayers = Object.entries(reporter.byPlayer || {})
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+            document.getElementById('modal-players-list').innerHTML = topPlayers.length > 0
+                ? topPlayers.map(([player, count]) => `
+                    <div class="coverage-item">
+                        <span>${player}</span>
+                        <span class="count">${count}</span>
                     </div>
-                </div>
-            `).join('') || '<div class="rumor-item"><div class="rumor-text">No recent rumors</div></div>';
-            document.getElementById('modal-rumors').innerHTML = rumorsHtml;
-            
+                `).join('')
+                : '<div class="loading">No player data</div>';
+
             document.getElementById('profile-modal').classList.add('active');
         }
 
-        function closeModal() {
+        function closeProfile() {
             document.getElementById('profile-modal').classList.remove('active');
         }
 
         // =============================================
-        // EVENT HANDLERS
+        // VIEW SWITCHING
         // =============================================
-        
+
+        function renderCurrentView() {
+            switch(currentView) {
+                case 'leaderboard': renderLeaderboard(); break;
+                case 'specialists': renderSpecialists(); break;
+                case 'outlets': renderOutlets(); break;
+            }
+        }
+
+        // =============================================
+        // EVENT LISTENERS
+        // =============================================
+
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                const view = tab.dataset.view;
-                currentView = view;
-                
                 document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-                document.getElementById(view).classList.add('active');
-                
+                tab.classList.add('active');
+                currentView = tab.dataset.view;
+                document.getElementById(currentView).classList.add('active');
                 renderCurrentView();
             });
         });
@@ -1479,22 +1103,22 @@
         });
 
         document.getElementById('profile-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'profile-modal') closeModal();
+            if (e.target.id === 'profile-modal') {
+                closeProfile();
+            }
         });
 
-        function renderCurrentView() {
-            switch(currentView) {
-                case 'leaderboard': renderLeaderboard(); break;
-                case 'breaking': renderBreaking(); break;
-                case 'specialists': renderSpecialists(); break;
-                case 'matrix': renderMatrix(); break;
-                case 'outlets': renderOutlets(); break;
-                case 'historical': renderHistorical(); break;
-            }
-        }
+        // =============================================
+        // INITIALIZATION
+        // =============================================
 
-        // Initialize
-        renderCurrentView();
+        document.addEventListener('DOMContentLoaded', () => {
+            if (initializeData()) {
+                renderCurrentView();
+            } else {
+                document.getElementById('volume-leaders').innerHTML = '<div class="loading">Failed to load data. Check console for errors.</div>';
+            }
+        });
     </script>
 </body>
 </html>
