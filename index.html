@@ -793,9 +793,12 @@
                 <button class="nav-tab" data-view="historical">Historical</button>
             </nav>
             <div class="time-filter">
-                <button class="time-btn active" data-days="7">7D</button>
-                <button class="time-btn" data-days="14">14D</button>
-                <button class="time-btn" data-days="30">30D</button>
+                <button class="time-btn" data-days="7">Week</button>
+                <button class="time-btn" data-days="30">Month</button>
+                <button class="time-btn" data-days="90">3 Mo</button>
+                <button class="time-btn" data-days="180">6 Mo</button>
+                <button class="time-btn active" data-days="365">Year</button>
+                <button class="time-btn" data-days="0">All</button>
             </div>
         </div>
     </header>
@@ -1063,7 +1066,7 @@
         // =============================================
         // STATE
         // =============================================
-        let currentDays = 7;
+        let currentDays = 365;
         let currentView = 'leaderboard';
 
         // =============================================
@@ -1071,6 +1074,17 @@
         // =============================================
         
         function filterByDays(days) {
+            // If days is 0, return all-time totals
+            if (days === 0) {
+                return REPORTERS.map(reporter => ({
+                    ...reporter,
+                    filteredTotal: reporter.total || 0,
+                    filteredByTopic: reporter.byTopic || {},
+                    filteredBreaking: reporter.breaking || 0,
+                    filteredRumors: reporter.recentRumors || []
+                }));
+            }
+            
             const cutoff = new Date();
             cutoff.setDate(cutoff.getDate() - days);
             const cutoffStr = cutoff.toISOString().split('T')[0];
@@ -1099,15 +1113,11 @@
                     breaking = Math.round((reporter.breaking || 0) * proportion);
                     filteredRumors = (reporter.recentRumors || []).filter(r => r.date >= cutoffStr);
                 } else {
-                    // Fallback for sample data
-                    total = Math.floor(Math.random() * 30) + 5;
-                    byTopic = {
-                        trade: Math.floor(total * 0.4),
-                        injury: Math.floor(total * 0.3),
-                        contract: Math.floor(total * 0.2),
-                        frontoffice: Math.floor(total * 0.1)
-                    };
-                    breaking = Math.floor(total * 0.15);
+                    // No date data - use totals
+                    total = reporter.total || 0;
+                    byTopic = reporter.byTopic || {};
+                    breaking = reporter.breaking || 0;
+                    filteredRumors = reporter.recentRumors || [];
                 }
                 
                 return {
@@ -1122,11 +1132,23 @@
 
         function getReporterStats(days) {
             const filtered = filterByDays(days);
-            const previousFiltered = filterByDays(days * 2);
+            
+            // For All Time (days=0), don't calculate previous/change
+            const previousFiltered = days > 0 ? filterByDays(days * 2) : filtered;
             
             return filtered.map((reporter, idx) => {
                 const previous = previousFiltered[idx];
-                const previousTotal = previous ? Math.max(0, previous.filteredTotal - reporter.filteredTotal) : 0;
+                let previousTotal = 0;
+                let change = 0;
+                let changePercent = 0;
+                
+                if (days > 0 && previous) {
+                    previousTotal = Math.max(0, previous.filteredTotal - reporter.filteredTotal);
+                    change = reporter.filteredTotal - previousTotal;
+                    changePercent = previousTotal > 0 
+                        ? Math.round((reporter.filteredTotal - previousTotal) / previousTotal * 100)
+                        : 0;
+                }
                 
                 const teams = reporter.byTeam ? Object.keys(reporter.byTeam) : [];
                 const players = reporter.byPlayer ? Object.keys(reporter.byPlayer) : [];
@@ -1135,10 +1157,8 @@
                     ...reporter,
                     total: reporter.filteredTotal,
                     previous: previousTotal,
-                    change: reporter.filteredTotal - previousTotal,
-                    changePercent: previousTotal > 0 
-                        ? Math.round((reporter.filteredTotal - previousTotal) / previousTotal * 100)
-                        : 0,
+                    change: change,
+                    changePercent: changePercent,
                     breaking: reporter.filteredBreaking,
                     teams: teams.length,
                     teamsList: teams,
@@ -1312,24 +1332,33 @@
         }
 
         function renderOutlets() {
-            const cutoff = new Date();
-            cutoff.setDate(cutoff.getDate() - currentDays);
-            const cutoffStr = cutoff.toISOString().split('T')[0];
+            let filteredOutlets;
             
-            // Filter outlets by date
-            const filteredOutlets = OUTLETS.map(outlet => {
-                let total = 0;
-                if (outlet.byDate && Object.keys(outlet.byDate).length > 0) {
-                    for (const [date, count] of Object.entries(outlet.byDate)) {
-                        if (date >= cutoffStr) {
-                            total += count;
+            if (currentDays === 0) {
+                // All time - use totals
+                filteredOutlets = OUTLETS.map(outlet => ({
+                    ...outlet,
+                    filteredTotal: outlet.total || 0
+                })).filter(o => o.filteredTotal > 0).sort((a, b) => b.filteredTotal - a.filteredTotal);
+            } else {
+                const cutoff = new Date();
+                cutoff.setDate(cutoff.getDate() - currentDays);
+                const cutoffStr = cutoff.toISOString().split('T')[0];
+                
+                filteredOutlets = OUTLETS.map(outlet => {
+                    let total = 0;
+                    if (outlet.byDate && Object.keys(outlet.byDate).length > 0) {
+                        for (const [date, count] of Object.entries(outlet.byDate)) {
+                            if (date >= cutoffStr) {
+                                total += count;
+                            }
                         }
+                    } else {
+                        total = outlet.total || 0;
                     }
-                } else {
-                    total = outlet.total || 0;
-                }
-                return { ...outlet, filteredTotal: total };
-            }).filter(o => o.filteredTotal > 0).sort((a, b) => b.filteredTotal - a.filteredTotal);
+                    return { ...outlet, filteredTotal: total };
+                }).filter(o => o.filteredTotal > 0).sort((a, b) => b.filteredTotal - a.filteredTotal);
+            }
             
             document.getElementById('outlets-list').innerHTML = filteredOutlets.slice(0, 15).map((outlet, i) => `
                 <div class="reporter-row">
