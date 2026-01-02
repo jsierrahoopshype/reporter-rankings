@@ -6,19 +6,9 @@
     <title>NBA Reporter Rankings | HoopsHype</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: #f5f5f5;
-            color: #333;
-            line-height: 1.5;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #333; line-height: 1.5; }
+        
         .header {
             background: white;
             border-bottom: 3px solid #e74c3c;
@@ -28,132 +18,56 @@
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #e74c3c;
-            margin-bottom: 16px;
-        }
-
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo { font-size: 24px; font-weight: 700; color: #e74c3c; margin-bottom: 16px; }
         .logo span { color: #333; }
 
-        .stats-banner {
-            display: flex;
-            gap: 30px;
-            padding: 16px 0;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
+        .stats-banner { display: flex; gap: 30px; padding: 16px 0; border-bottom: 1px solid #eee; margin-bottom: 16px; flex-wrap: wrap; }
         .stat-item { text-align: center; }
         .stat-value { font-size: 28px; font-weight: 700; color: #e74c3c; }
         .stat-label { font-size: 12px; color: #666; text-transform: uppercase; }
 
-        .nav-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
+        .nav-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
         .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
-
         .nav-tab {
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            background: white;
-            color: #666;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s;
+            padding: 10px 20px; border: 1px solid #ddd; background: white;
+            color: #666; font-size: 13px; font-weight: 500; cursor: pointer;
+            border-radius: 6px; transition: all 0.2s;
         }
-
         .nav-tab:hover { border-color: #e74c3c; color: #e74c3c; }
         .nav-tab.active { background: #e74c3c; border-color: #e74c3c; color: white; }
 
         .time-filter { display: flex; gap: 4px; flex-wrap: wrap; }
-
         .time-btn {
-            padding: 8px 14px;
-            border: 1px solid #ddd;
-            background: white;
-            color: #666;
-            font-size: 12px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.2s;
+            padding: 8px 14px; border: 1px solid #ddd; background: white;
+            color: #666; font-size: 12px; cursor: pointer; border-radius: 4px; transition: all 0.2s;
         }
-
         .time-btn:hover { border-color: #e74c3c; }
         .time-btn.active { background: #e74c3c; border-color: #e74c3c; color: white; }
 
-        .main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #333;
-        }
+        .main { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        .section-title { font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #333; }
 
         .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            overflow: hidden;
-            margin-bottom: 20px;
+            background: white; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; margin-bottom: 20px;
         }
-
         .card-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid #eee;
-            font-weight: 600;
-            color: #333;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 16px 20px; border-bottom: 1px solid #eee;
+            font-weight: 600; color: #333; display: flex; align-items: center; gap: 10px;
         }
 
         .reporter-row {
-            display: flex;
-            align-items: center;
-            padding: 16px 20px;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            transition: background 0.2s;
+            display: flex; align-items: center; padding: 16px 20px;
+            border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: background 0.2s;
         }
-
         .reporter-row:hover { background: #fafafa; }
         .reporter-row:last-child { border-bottom: none; }
 
         .rank {
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-            margin-right: 16px;
-            border-radius: 50%;
-            flex-shrink: 0;
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px; margin-right: 16px; border-radius: 50%; flex-shrink: 0;
         }
-
         .rank-1 { background: linear-gradient(135deg, #f5a623, #f7931a); color: white; }
         .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a8a8a8); color: white; }
         .rank-3 { background: linear-gradient(135deg, #cd7f32, #b8860b); color: white; }
@@ -163,7 +77,6 @@
         .reporter-name { font-weight: 600; font-size: 15px; color: #333; }
         .reporter-outlet { font-size: 13px; color: #888; }
 
-        .reporter-stats { display: flex; gap: 20px; align-items: center; }
         .reporter-stat { text-align: right; }
         .reporter-stat-value { font-size: 20px; font-weight: 700; color: #e74c3c; }
         .reporter-stat-label { font-size: 11px; color: #888; text-transform: uppercase; }
@@ -176,165 +89,59 @@
         .profile-page.active { display: block; }
 
         .profile-header-card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            background: white; border-radius: 12px; padding: 30px;
+            margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
-
-        .profile-top {
-            display: flex;
-            align-items: flex-start;
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-
+        .profile-top { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 24px; }
         .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #e74c3c;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: 700;
-            flex-shrink: 0;
+            width: 80px; height: 80px; border-radius: 50%; background: #e74c3c; color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 700; flex-shrink: 0;
         }
-
         .profile-info h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
         .profile-info .outlet { font-size: 16px; color: #666; margin-bottom: 8px; }
 
-        .tier-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
+        .tier-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; }
         .tier-1 { background: #e74c3c; color: white; }
         .tier-2 { background: #3498db; color: white; }
         .tier-3 { background: #95a5a6; color: white; }
 
-        .profile-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 12px;
-        }
+        .profile-stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+        @media (max-width: 900px) { .profile-stats-grid { grid-template-columns: repeat(3, 1fr); } }
 
-        @media (max-width: 900px) {
-            .profile-stats-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .profile-stat-box {
-            background: #f8f9fa;
-            padding: 16px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
+        .profile-stat-box { background: #f8f9fa; padding: 16px; border-radius: 8px; text-align: center; }
         .profile-stat-box .value { font-size: 24px; font-weight: 700; color: #e74c3c; }
         .profile-stat-box .label { font-size: 10px; color: #666; text-transform: uppercase; margin-top: 4px; }
 
         .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            color: #333;
-            font-size: 14px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
+            background: white; border: 1px solid #ddd; border-radius: 6px;
+            color: #333; font-size: 14px; cursor: pointer; margin-bottom: 20px; transition: all 0.2s;
         }
-
         .back-btn:hover { border-color: #e74c3c; color: #e74c3c; }
 
-        .coverage-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 8px;
-            padding: 16px;
-        }
-
+        .coverage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; padding: 16px; }
         .coverage-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            background: #f8f9fa;
-            border-radius: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 14px; background: #f8f9fa; border-radius: 6px;
         }
-
         .coverage-item .name { font-size: 14px; color: #333; }
         .coverage-item .count { font-weight: 600; color: #e74c3c; font-size: 14px; }
 
-        .team-coverage-card {
-            background: white;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 12px;
-        }
-
-        .team-name {
-            font-weight: 600;
-            font-size: 15px;
-            color: #333;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .reporter-mini {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            font-size: 13px;
-            cursor: pointer;
-        }
-
+        .team-coverage-card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+        .team-name { font-weight: 600; font-size: 15px; color: #333; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+        .reporter-mini { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; cursor: pointer; }
         .reporter-mini:hover { color: #e74c3c; }
         .reporter-mini .count { color: #e74c3c; font-weight: 600; }
 
         .heatmap-container { overflow-x: auto; }
+        .heatmap { display: table; border-collapse: collapse; font-size: 11px; }
+        .heatmap th, .heatmap td { padding: 6px 8px; text-align: center; border: 1px solid #eee; white-space: nowrap; }
+        .heatmap th { background: #f5f5f5; font-weight: 600; position: sticky; top: 0; }
+        .heatmap td:first-child { position: sticky; left: 0; background: white; font-weight: 500; text-align: left; z-index: 1; min-width: 140px; }
+        .heatmap td { min-width: 45px; }
 
-        .heatmap {
-            display: table;
-            border-collapse: collapse;
-            font-size: 11px;
-            width: 100%;
-        }
-
-        .heatmap th, .heatmap td {
-            padding: 6px 8px;
-            text-align: center;
-            border: 1px solid #eee;
-            white-space: nowrap;
-        }
-
-        .heatmap th {
-            background: #f5f5f5;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-        }
-
-        .heatmap td:first-child {
-            position: sticky;
-            left: 0;
-            background: white;
-            font-weight: 500;
-            text-align: left;
-            z-index: 1;
-        }
-
-        .heat-0 { background: #fff; }
+        .heat-0 { background: #fff; color: #ccc; }
         .heat-1 { background: #fff5f5; }
         .heat-2 { background: #fed7d7; }
         .heat-3 { background: #feb2b2; }
@@ -344,6 +151,9 @@
         .loading { padding: 40px; text-align: center; color: #888; }
         .view-section { display: none; }
         .view-section.active { display: block; }
+
+        /* Tooltip for heatmap */
+        .heatmap td[title] { cursor: help; }
     </style>
 </head>
 <body>
@@ -383,8 +193,8 @@
                     <button class="time-btn" data-days="30">Month</button>
                     <button class="time-btn" data-days="90">3 Mo</button>
                     <button class="time-btn" data-days="180">6 Mo</button>
-                    <button class="time-btn active" data-days="365">Year</button>
-                    <button class="time-btn" data-days="0">All</button>
+                    <button class="time-btn" data-days="365">Year</button>
+                    <button class="time-btn active" data-days="0">All</button>
                 </div>
             </div>
         </div>
@@ -446,30 +256,12 @@
                     </div>
                 </div>
                 <div class="profile-stats-grid">
-                    <div class="profile-stat-box">
-                        <div class="value" id="profile-week">0</div>
-                        <div class="label">Week</div>
-                    </div>
-                    <div class="profile-stat-box">
-                        <div class="value" id="profile-month">0</div>
-                        <div class="label">Month</div>
-                    </div>
-                    <div class="profile-stat-box">
-                        <div class="value" id="profile-3mo">0</div>
-                        <div class="label">3 Months</div>
-                    </div>
-                    <div class="profile-stat-box">
-                        <div class="value" id="profile-6mo">0</div>
-                        <div class="label">6 Months</div>
-                    </div>
-                    <div class="profile-stat-box">
-                        <div class="value" id="profile-year">0</div>
-                        <div class="label">Year</div>
-                    </div>
-                    <div class="profile-stat-box">
-                        <div class="value" id="profile-total">0</div>
-                        <div class="label">All-Time</div>
-                    </div>
+                    <div class="profile-stat-box"><div class="value" id="profile-week">0</div><div class="label">Week</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-month">0</div><div class="label">Month</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-3mo">0</div><div class="label">3 Months</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-6mo">0</div><div class="label">6 Months</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-year">0</div><div class="label">Year</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-total">0</div><div class="label">All-Time</div></div>
                 </div>
             </div>
 
@@ -530,56 +322,40 @@
             "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WAS"
         };
 
-        // Non-players to exclude from player lists
+        // Non-players to exclude
         const NON_PLAYERS = new Set([
-            // Organizations/Events
             "team usa", "usa basketball", "g league", "nba", "all-star",
             "hall of fame", "olympics", "fiba", "eurobasket", "world cup",
-            "summer league", "las vegas summer league", "nba draft", "draft combine",
-            "social media", "free agency", "trade", "draft", "injuries", "contract",
-            "business", "media", "statistics", "coaching", "front office",
-            // Commissioners/Executives
-            "david stern", "adam silver", "billy hunter", "michele roberts", "mark cuban",
-            // Coaches (extensive list)
+            "summer league", "social media", "free agency", "trade", "draft",
+            "david stern", "adam silver", "billy hunter", "mark cuban",
             "doc rivers", "brad stevens", "gregg popovich", "brett brown", 
             "rick carlisle", "erik spoelstra", "phil jackson", "mike d'antoni",
             "dwane casey", "frank vogel", "steve kerr", "tyronn lue", "tom thibodeau",
             "mike budenholzer", "nick nurse", "quin snyder", "monty williams",
-            "jason kidd", "ime udoka", "chauncey billups", "wes unseld jr",
-            "steve clifford", "michael malone", "joe mazzulla", "darvin ham",
-            "chris finch", "willie green", "mark daigneault", "taylor jenkins",
-            "jb bickerstaff", "jamahl mosley", "jacque vaughn", "kenny atkinson",
-            "larry brown", "don nelson", "george karl", "jerry sloan", "pat riley",
-            "stan van gundy", "jeff van gundy", "mike brown", "scott brooks",
-            "terry stotts", "alvin gentry", "nate mcmillan", "luke walton",
-            "dave joerger", "david fizdale", "earl watson", "derek fisher",
-            // GMs/Executives
-            "bob myers", "sam presti", "daryl morey", "masai ujiri", "rob pelinka",
-            "james jones", "koby altman"
+            "jason kidd", "ime udoka", "bob myers", "sam presti", "daryl morey",
+            "masai ujiri", "rob pelinka", "james jones", "koby altman"
         ].map(s => s.toLowerCase()));
 
-        // Fake reporters to exclude (Twitter handles, PR accounts, etc.)
+        // Excluded reporters (fake, PR accounts, players)
         const EXCLUDED_REPORTERS = new Set([
             "@mrbuckbucknba", "@nbapr", "@ohnohedidnt24", "@hornetspr", "@espnstatsinfo",
             "mrbuckbucknba", "nbapr", "ohnohedidnt24", "hornetspr", "espnstatsinfo",
-            // Players who might show up as reporters
             "carmelo anthony", "chris paul", "dwight howard", "giannis antetokounmpo",
             "dwyane wade", "bradley beal", "magic johnson", "isaiah thomas", "john wall",
-            // Generic/non-reporter entries
-            "social media", "unknown", "n/a", ""
+            "damian lillard", "social media", "unknown", "n/a", "clutch points"
+        ].map(s => s.toLowerCase()));
+
+        // Excluded outlets (user-generated platforms)
+        const EXCLUDED_OUTLETS = new Set([
+            "youtube", "reddit", "twitter", "x.com", "instagram", "facebook", 
+            "tiktok", "threads", "unknown"
         ].map(s => s.toLowerCase()));
 
         // Handle to reporter name mapping
-        const HANDLE_TO_NAME = {
-            "kcjhoop": "KC Johnson"
-        };
+        const HANDLE_TO_NAME = { "kcjhoop": "KC Johnson" };
 
-        // Outlet normalization (merge duplicates)
-        const OUTLET_NORMALIZE = {
-            "espn.com": "ESPN",
-            "ESPN.com": "ESPN",
-            "espn": "ESPN"
-        };
+        // Outlet normalization
+        const OUTLET_NORMALIZE = { "espn.com": "ESPN", "ESPN.com": "ESPN" };
 
         // =============================================
         // STATE
@@ -587,7 +363,7 @@
         
         let REPORTERS = [];
         let OUTLETS = [];
-        let currentDays = 365;
+        let currentDays = 0; // Default to All Time
         let currentView = 'leaderboard';
 
         // =============================================
@@ -596,7 +372,9 @@
 
         function getFilteredCount(byDate, days) {
             if (!byDate || Object.keys(byDate).length === 0) return 0;
+            
             if (days === 0) {
+                // All time - sum everything
                 return Object.values(byDate).reduce((sum, c) => sum + c, 0);
             }
             
@@ -613,15 +391,26 @@
             return total;
         }
 
+        // Get filtered count for a specific field (byTeam, byPlayer) based on time
+        // This requires knowing the dates of each rumor, which we don't have per-team/player
+        // So we estimate by the proportion of byDate in the time range
+        function getProportionalCount(totalCount, byDate, days) {
+            if (days === 0) return totalCount;
+            
+            const allTimeTotal = Object.values(byDate || {}).reduce((sum, c) => sum + c, 0);
+            if (allTimeTotal === 0) return 0;
+            
+            const filteredTotal = getFilteredCount(byDate, days);
+            const proportion = filteredTotal / allTimeTotal;
+            
+            return Math.round(totalCount * proportion);
+        }
+
         function isValidReporter(name) {
             if (!name) return false;
             const nameLower = name.toLowerCase().trim();
             if (EXCLUDED_REPORTERS.has(nameLower)) return false;
             if (nameLower.startsWith('@') && nameLower.length < 4) return false;
-            // Exclude if it looks like a team name
-            for (const team of NBA_TEAMS) {
-                if (nameLower === team.toLowerCase()) return false;
-            }
             return true;
         }
 
@@ -629,14 +418,15 @@
             if (!name) return false;
             const nameLower = name.toLowerCase().trim();
             if (NON_PLAYERS.has(nameLower)) return false;
-            // Exclude team names
-            for (const team of NBA_TEAMS) {
-                if (nameLower.includes(team.toLowerCase().split(' ').pop())) return false;
-            }
             for (const short of Object.keys(TEAM_SHORT_TO_FULL)) {
                 if (nameLower === short.toLowerCase()) return false;
             }
             return true;
+        }
+
+        function isValidOutlet(name) {
+            if (!name) return false;
+            return !EXCLUDED_OUTLETS.has(name.toLowerCase().trim());
         }
 
         function normalizeTeamName(team) {
@@ -649,12 +439,8 @@
 
         function normalizeReporterName(name) {
             if (!name) return name;
-            // Check if it's a known handle
             const handle = name.replace('@', '').toLowerCase();
-            if (HANDLE_TO_NAME[handle]) {
-                return HANDLE_TO_NAME[handle];
-            }
-            return name;
+            return HANDLE_TO_NAME[handle] || name;
         }
 
         // =============================================
@@ -667,15 +453,11 @@
                 return false;
             }
 
-            console.log('Loading data...');
-
             REPORTERS = REPORTER_DATA.reporters
                 .filter(r => isValidReporter(r.name))
                 .map((r, i) => {
-                    // Normalize name
                     const name = normalizeReporterName(r.name);
                     
-                    // Filter players
                     const filteredByPlayer = {};
                     for (const [playerName, count] of Object.entries(r.by_player || {})) {
                         if (isValidPlayer(playerName)) {
@@ -683,7 +465,6 @@
                         }
                     }
                     
-                    // Normalize team names
                     const normalizedByTeam = {};
                     for (const [team, count] of Object.entries(r.by_team || {})) {
                         const fullName = normalizeTeamName(team);
@@ -694,7 +475,7 @@
 
                     return {
                         id: r.id || `reporter_${i}`,
-                        name: name,
+                        name,
                         outlet: normalizeOutletName(r.outlet),
                         tier: r.tier || 3,
                         avatar: r.avatar || name.replace('@', '').substring(0, 2).toUpperCase(),
@@ -706,10 +487,12 @@
                     };
                 });
 
-            // Merge outlets with same normalized name
+            // Merge and filter outlets
             const outletMap = {};
             for (const o of (REPORTER_DATA.outlets || [])) {
                 const name = normalizeOutletName(o.name);
+                if (!isValidOutlet(name)) continue;
+                
                 if (!outletMap[name]) {
                     outletMap[name] = { name, total: 0, byDate: {} };
                 }
@@ -720,7 +503,6 @@
             }
             OUTLETS = Object.values(outletMap);
 
-            // Update stats banner
             document.getElementById('stat-reporters').textContent = REPORTERS.length.toLocaleString();
             document.getElementById('stat-rumors').textContent = (REPORTER_DATA.processed_rumors || 0).toLocaleString();
             document.getElementById('stat-outlets').textContent = OUTLETS.length.toLocaleString();
@@ -732,40 +514,50 @@
 
         function updatePeriodLabel() {
             const labels = { 7: 'Week', 30: 'Month', 90: '3 Months', 180: '6 Months', 365: 'Year', 0: 'All Time' };
-            document.getElementById('stat-period').textContent = labels[currentDays] || 'Year';
+            document.getElementById('stat-period').textContent = labels[currentDays] || 'All Time';
         }
 
         // =============================================
-        // FILTERING
+        // FILTERING - FIXED!
         // =============================================
 
         function getReporterStats() {
             return REPORTERS.map(r => {
-                const filtered = getFilteredCount(r.byDate, currentDays);
-                const total = currentDays === 0 ? r.total : (filtered || r.total);
+                // FIXED: Always use filtered count, don't fall back to total
+                const filteredTotal = getFilteredCount(r.byDate, currentDays);
 
+                // Calculate previous period for trending
                 let prevTotal = 0;
                 if (currentDays > 0 && currentDays <= 180) {
-                    prevTotal = getFilteredCount(r.byDate, currentDays * 2) - filtered;
+                    const prevCutoff = new Date();
+                    prevCutoff.setDate(prevCutoff.getDate() - currentDays);
+                    const prevCutoffStr = prevCutoff.toISOString().split('T')[0];
+                    
+                    const doubleCutoff = new Date();
+                    doubleCutoff.setDate(doubleCutoff.getDate() - (currentDays * 2));
+                    const doubleCutoffStr = doubleCutoff.toISOString().split('T')[0];
+
+                    for (const [date, count] of Object.entries(r.byDate || {})) {
+                        if (date >= doubleCutoffStr && date < prevCutoffStr) {
+                            prevTotal += count;
+                        }
+                    }
                 }
 
                 return {
                     ...r,
-                    filteredTotal: total,
+                    filteredTotal,
                     previousTotal: prevTotal,
-                    change: total - prevTotal
+                    change: filteredTotal - prevTotal
                 };
-            }).filter(r => r.filteredTotal > 0);
+            }).filter(r => r.filteredTotal > 0); // Only include reporters with data in this period
         }
 
         function getOutletStats() {
-            return OUTLETS.map(o => {
-                const filtered = getFilteredCount(o.byDate, currentDays);
-                return {
-                    ...o,
-                    filteredTotal: currentDays === 0 ? o.total : (filtered || o.total)
-                };
-            }).filter(o => o.filteredTotal > 0);
+            return OUTLETS.map(o => ({
+                ...o,
+                filteredTotal: getFilteredCount(o.byDate, currentDays)
+            })).filter(o => o.filteredTotal > 0);
         }
 
         // =============================================
@@ -795,6 +587,7 @@
                 </div>
             `).join('');
 
+            // Trending
             if (currentDays > 0 && currentDays <= 180) {
                 const trending = stats.filter(r => r.change > 0).sort((a, b) => b.change - a.change).slice(0, 20);
                 document.getElementById('trending-list').innerHTML = trending.length > 0 
@@ -805,11 +598,9 @@
                                 <div class="reporter-name">${r.name}</div>
                                 <div class="reporter-outlet">${r.outlet}</div>
                             </div>
-                            <div class="reporter-stats">
-                                <div class="reporter-stat">
-                                    <div class="reporter-stat-value" style="color: #27ae60;">+${r.change}</div>
-                                    <div class="reporter-stat-label">vs prev</div>
-                                </div>
+                            <div class="reporter-stat">
+                                <div class="reporter-stat-value" style="color: #27ae60;">+${r.change}</div>
+                                <div class="reporter-stat-label">vs prev</div>
                             </div>
                         </div>
                     `).join('')
@@ -820,7 +611,7 @@
         }
 
         // =============================================
-        // RENDERING - BY TEAM
+        // RENDERING - BY TEAM (WITH TIME FILTERING)
         // =============================================
 
         function renderTeams() {
@@ -830,9 +621,13 @@
             NBA_TEAMS.forEach(team => { teamReporters[team] = []; });
 
             stats.forEach(r => {
-                for (const [team, count] of Object.entries(r.byTeam || {})) {
+                for (const [team, totalCount] of Object.entries(r.byTeam || {})) {
                     if (teamReporters[team]) {
-                        teamReporters[team].push({ ...r, teamCount: count });
+                        // FIXED: Use proportional count based on time filter
+                        const filteredCount = getProportionalCount(totalCount, r.byDate, currentDays);
+                        if (filteredCount > 0) {
+                            teamReporters[team].push({ ...r, teamCount: filteredCount });
+                        }
                     }
                 }
             });
@@ -857,16 +652,20 @@
         }
 
         // =============================================
-        // RENDERING - BY PLAYER
+        // RENDERING - BY PLAYER (WITH TIME FILTERING)
         // =============================================
 
         function renderPlayers() {
             const stats = getReporterStats();
             
+            // Calculate player counts with time filtering
             const playerCounts = {};
             stats.forEach(r => {
-                for (const [player, count] of Object.entries(r.byPlayer || {})) {
-                    playerCounts[player] = (playerCounts[player] || 0) + count;
+                for (const [player, totalCount] of Object.entries(r.byPlayer || {})) {
+                    const filteredCount = getProportionalCount(totalCount, r.byDate, currentDays);
+                    if (filteredCount > 0) {
+                        playerCounts[player] = (playerCounts[player] || 0) + filteredCount;
+                    }
                 }
             });
 
@@ -878,7 +677,11 @@
             const html = topPlayers.map(player => {
                 const reporters = stats
                     .filter(r => r.byPlayer && r.byPlayer[player])
-                    .map(r => ({ ...r, playerCount: r.byPlayer[player] }))
+                    .map(r => ({ 
+                        ...r, 
+                        playerCount: getProportionalCount(r.byPlayer[player], r.byDate, currentDays)
+                    }))
+                    .filter(r => r.playerCount > 0)
                     .sort((a, b) => b.playerCount - a.playerCount)
                     .slice(0, 5);
 
@@ -900,18 +703,30 @@
         }
 
         // =============================================
-        // RENDERING - HEATMAP (ALL 30 TEAMS)
+        // RENDERING - HEATMAP (WITH TOOLTIPS)
         // =============================================
 
         function renderHeatmap() {
             const stats = getReporterStats().sort((a, b) => b.filteredTotal - a.filteredTotal).slice(0, 20);
-            const teams = NBA_TEAMS; // All 30 teams
+            const teams = NBA_TEAMS;
 
-            let maxCount = 0;
-            stats.forEach(r => {
+            // Calculate counts with time filtering
+            const heatData = stats.map(r => {
+                const teamCounts = {};
+                let maxForReporter = 0;
                 teams.forEach(t => {
-                    const count = r.byTeam?.[t] || 0;
-                    if (count > maxCount) maxCount = count;
+                    const count = getProportionalCount(r.byTeam?.[t] || 0, r.byDate, currentDays);
+                    teamCounts[t] = count;
+                    if (count > maxForReporter) maxForReporter = count;
+                });
+                return { reporter: r, teamCounts, maxForReporter };
+            });
+
+            // Find global max for scaling
+            let maxCount = 0;
+            heatData.forEach(d => {
+                Object.values(d.teamCounts).forEach(c => {
+                    if (c > maxCount) maxCount = c;
                 });
             });
 
@@ -925,14 +740,16 @@
                 return 'heat-5';
             };
 
-            const headerRow = `<tr><th>Reporter</th>${teams.map(t => `<th title="${t}">${TEAM_ABBREV[t] || t}</th>`).join('')}</tr>`;
+            const headerRow = `<tr><th>Reporter</th>${teams.map(t => 
+                `<th title="${t}">${TEAM_ABBREV[t]}</th>`
+            ).join('')}</tr>`;
             
-            const dataRows = stats.map(r => {
+            const dataRows = heatData.map(d => {
                 const cells = teams.map(t => {
-                    const count = r.byTeam?.[t] || 0;
-                    return `<td class="${getHeatClass(count)}">${count || '-'}</td>`;
+                    const count = d.teamCounts[t];
+                    return `<td class="${getHeatClass(count)}" title="${d.reporter.name}: ${count} rumors about ${t}">${count || '-'}</td>`;
                 }).join('');
-                return `<tr><td onclick="openProfile('${r.id}')" style="cursor:pointer">${r.name}</td>${cells}</tr>`;
+                return `<tr><td onclick="openProfile('${d.reporter.id}')" style="cursor:pointer">${d.reporter.name}</td>${cells}</tr>`;
             }).join('');
 
             document.getElementById('heatmap-table').innerHTML = headerRow + dataRows;
@@ -963,7 +780,7 @@
         }
 
         // =============================================
-        // REPORTER PROFILE (WITH TIME BREAKDOWNS)
+        // REPORTER PROFILE
         // =============================================
 
         function openProfile(reporterId) {
@@ -979,7 +796,6 @@
             document.getElementById('profile-tier').textContent = `Tier ${reporter.tier}`;
             document.getElementById('profile-tier').className = `tier-badge tier-${reporter.tier}`;
 
-            // Time-based stats
             document.getElementById('profile-week').textContent = getFilteredCount(reporter.byDate, 7).toLocaleString();
             document.getElementById('profile-month').textContent = getFilteredCount(reporter.byDate, 30).toLocaleString();
             document.getElementById('profile-3mo').textContent = getFilteredCount(reporter.byDate, 90).toLocaleString();
@@ -987,29 +803,17 @@
             document.getElementById('profile-year').textContent = getFilteredCount(reporter.byDate, 365).toLocaleString();
             document.getElementById('profile-total').textContent = reporter.total.toLocaleString();
 
-            // Top 30 teams
-            const topTeams = Object.entries(reporter.byTeam || {})
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 30);
+            const topTeams = Object.entries(reporter.byTeam || {}).sort((a, b) => b[1] - a[1]).slice(0, 30);
             document.getElementById('profile-teams-list').innerHTML = topTeams.length > 0
                 ? `<div class="coverage-grid">${topTeams.map(([team, count]) => `
-                    <div class="coverage-item">
-                        <span class="name">${team}</span>
-                        <span class="count">${count}</span>
-                    </div>
+                    <div class="coverage-item"><span class="name">${team}</span><span class="count">${count}</span></div>
                 `).join('')}</div>`
                 : '<div class="loading">No team data</div>';
 
-            // Top 30 players
-            const topPlayers = Object.entries(reporter.byPlayer || {})
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 30);
+            const topPlayers = Object.entries(reporter.byPlayer || {}).sort((a, b) => b[1] - a[1]).slice(0, 30);
             document.getElementById('profile-players-list').innerHTML = topPlayers.length > 0
                 ? `<div class="coverage-grid">${topPlayers.map(([player, count]) => `
-                    <div class="coverage-item">
-                        <span class="name">${player}</span>
-                        <span class="count">${count}</span>
-                    </div>
+                    <div class="coverage-item"><span class="name">${player}</span><span class="count">${count}</span></div>
                 `).join('')}</div>`
                 : '<div class="loading">No player data</div>';
 
