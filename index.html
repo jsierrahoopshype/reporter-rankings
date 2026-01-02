@@ -111,9 +111,10 @@
         .back-btn {
             display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
             background: white; border: 1px solid #ddd; border-radius: 6px;
-            color: #333; font-size: 14px; cursor: pointer; margin-top: 20px; transition: all 0.2s;
+            color: #333; font-size: 14px; cursor: pointer; margin-bottom: 20px; transition: all 0.2s;
         }
         .back-btn:hover { border-color: #e74c3c; color: #e74c3c; }
+        .back-btn-bottom { margin-top: 20px; margin-bottom: 0; }
 
         .coverage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; padding: 16px; }
         .coverage-item {
@@ -159,7 +160,7 @@
         .timeline-labels { display: flex; gap: 2px; font-size: 10px; color: #888; }
         .timeline-labels span { flex: 1; text-align: center; min-width: 8px; }
 
-        .period-note { font-size: 13px; color: #666; margin-bottom: 16px; padding: 10px 16px; background: #f8f9fa; border-radius: 6px; }
+        .period-note { font-size: 12px; color: #888; margin-top: 8px; text-align: center; }
     </style>
 </head>
 <body>
@@ -225,6 +226,8 @@
         </div>
 
         <div id="profile-page" class="profile-page">
+            <button class="back-btn" onclick="closeProfile()">← Back to Rankings</button>
+            
             <div class="profile-header-card">
                 <div class="profile-top">
                     <div class="profile-avatar" id="profile-avatar"></div>
@@ -234,8 +237,7 @@
                         <span class="tier-badge" id="profile-tier"></span>
                     </div>
                 </div>
-                <div class="period-note" id="profile-period-note">Showing: All Time</div>
-                <div class="profile-stats-grid" id="profile-stats-grid">
+                <div class="profile-stats-grid">
                     <div class="profile-stat-box"><div class="value" id="profile-week">0</div><div class="label">Week</div></div>
                     <div class="profile-stat-box"><div class="value" id="profile-month">0</div><div class="label">Month</div></div>
                     <div class="profile-stat-box"><div class="value" id="profile-3mo">0</div><div class="label">3 Months</div></div>
@@ -243,6 +245,7 @@
                     <div class="profile-stat-box"><div class="value" id="profile-year">0</div><div class="label">Year</div></div>
                     <div class="profile-stat-box"><div class="value" id="profile-total">0</div><div class="label">All-Time</div></div>
                 </div>
+                <div class="period-note">Use the time filter buttons above to change the period for Teams, Players, and Agents below.</div>
             </div>
 
             <div class="card">
@@ -259,7 +262,7 @@
                 <div class="card"><div class="card-header">🤝 Top 10 Agents</div><div id="profile-agents-list"></div></div>
             </div>
 
-            <button class="back-btn" onclick="closeProfile()">← Back to Rankings</button>
+            <button class="back-btn back-btn-bottom" onclick="closeProfile()">← Back to Rankings</button>
         </div>
     </main>
 
@@ -319,7 +322,7 @@
             "erik spoelstra", "phil jackson", "mike d'antoni", "dwane casey", "frank vogel",
             "steve kerr", "tyronn lue", "tom thibodeau", "mike budenholzer", "nick nurse",
             "quin snyder", "monty williams", "jason kidd", "ime udoka", "jb bickerstaff",
-            "mark daigneault", "doug christie", "scott brooks",
+            "mark daigneault", "doug christie", "scott brooks", "steve nash",
             // GMs/Executives  
             "bob myers", "sam presti", "daryl morey", "masai ujiri", "rob pelinka",
             "james jones", "koby altman",
@@ -344,10 +347,10 @@
             "carmelo anthony", "chris paul", "dwight howard", "giannis antetokounmpo",
             "dwyane wade", "bradley beal", "magic johnson", "isaiah thomas", "john wall",
             "damian lillard", "cade cunningham", "tyrese haliburton", "tyrese maxey",
-            "austin reaves", "ben simmons", "norman powell", "kobe bryant", "kevin love",
-            "rudy gobert", "donovan mitchell", "trae young", "kevin durant", "joel embiid",
-            "draymond green", "kyrie irving", "steve nash", "pau gasol", "andre iguodala",
-            "kyle kuzma",
+            "austin reaves", "ben simmons", "norman powell",
+            "kobe bryant", "kevin love", "rudy gobert", "donovan mitchell", "trae young",
+            "kevin durant", "joel embiid", "draymond green", "kyrie irving", "steve nash",
+            "pau gasol", "andre iguodala", "kyle kuzma",
             // Coaches/Others
             "steve kerr", "mat ishbia", "kevin hart", "doug christie", "training camp",
             // Generic
@@ -374,7 +377,7 @@
         // Outlet normalization
         const OUTLET_NORMALIZE = {
             "espn.com": "ESPN", "ESPN.com": "ESPN",
-            "hoopshype": "HoopsHype", "HoopsHype": "HoopsHype"
+            "hoopshype": "HoopsHype", "Hoopshype": "HoopsHype"
         };
 
         // =============================================
@@ -449,7 +452,12 @@
         }
 
         function normalizeOutletName(outlet) {
-            return OUTLET_NORMALIZE[outlet?.toLowerCase()] || OUTLET_NORMALIZE[outlet] || outlet;
+            if (!outlet) return outlet;
+            const lower = outlet.toLowerCase();
+            for (const [key, val] of Object.entries(OUTLET_NORMALIZE)) {
+                if (key.toLowerCase() === lower) return val;
+            }
+            return outlet;
         }
 
         function normalizeReporterName(name) {
@@ -462,11 +470,6 @@
             const nameLower = name.toLowerCase();
             if (REPORTER_TO_OUTLET[nameLower]) return REPORTER_TO_OUTLET[nameLower];
             return normalizeOutletName(defaultOutlet);
-        }
-
-        function getPeriodLabel(days) {
-            const labels = { 7: 'Week', 30: 'Month', 90: '3 Months', 180: '6 Months', 365: 'Year', 0: 'All Time' };
-            return labels[days] || 'All Time';
         }
 
         // =============================================
@@ -532,7 +535,8 @@
         }
 
         function updatePeriodLabel() {
-            document.getElementById('stat-period').textContent = getPeriodLabel(currentDays);
+            const labels = { 7: 'Week', 30: 'Month', 90: '3 Months', 180: '6 Months', 365: 'Year', 0: 'All Time' };
+            document.getElementById('stat-period').textContent = labels[currentDays] || 'All Time';
         }
 
         // =============================================
@@ -649,11 +653,17 @@
         }
 
         function renderHeatmap() {
-            // Get top 20 reporters by volume FIRST, then sort those alphabetically
-            const stats = getReporterStats()
-                .sort((a, b) => b.filteredTotal - a.filteredTotal)
-                .slice(0, 20)
-                .sort((a, b) => a.name.localeCompare(b.name));
+            // Get top 30 reporters by ALL-TIME total, then sort alphabetically for display
+            const allStats = REPORTERS.map(r => ({
+                ...r,
+                allTimeTotal: Object.values(r.byDate || {}).reduce((sum, c) => sum + c, 0)
+            })).filter(r => r.allTimeTotal > 0);
+            
+            // Sort by all-time total to get top 30
+            const top30 = allStats.sort((a, b) => b.allTimeTotal - a.allTimeTotal).slice(0, 30);
+            
+            // Then sort those alphabetically for display
+            const stats = top30.sort((a, b) => a.name.localeCompare(b.name));
             
             const teams = NBA_TEAMS;
 
@@ -720,7 +730,7 @@
             document.getElementById('profile-tier').textContent = `Tier ${reporter.tier}`;
             document.getElementById('profile-tier').className = `tier-badge tier-${reporter.tier}`;
 
-            // Static stats (always show all periods)
+            // Stats (always show all periods)
             document.getElementById('profile-week').textContent = getFilteredCount(reporter.byDate, 7).toLocaleString();
             document.getElementById('profile-month').textContent = getFilteredCount(reporter.byDate, 30).toLocaleString();
             document.getElementById('profile-3mo').textContent = getFilteredCount(reporter.byDate, 90).toLocaleString();
@@ -729,7 +739,7 @@
             document.getElementById('profile-total').textContent = reporter.total.toLocaleString();
 
             renderTimelineChart(reporter);
-            updateProfileCoverage(reporter, currentDays);
+            updateProfileCoverage(reporter);
 
             window.scrollTo(0, 0);
         }
@@ -761,11 +771,15 @@
             document.getElementById('timeline-labels').innerHTML = years.map(y => `<span>${y}</span>`).join('');
         }
 
-        function updateProfileCoverage(reporter, days) {
-            // Update period note
-            document.getElementById('profile-period-note').textContent = `Showing coverage for: ${getPeriodLabel(days)}`;
+        function updateProfileCoverage(reporter) {
+            if (!reporter) {
+                reporter = REPORTERS.find(r => r.id === currentProfileId);
+                if (!reporter) return;
+            }
 
-            // Top 30 teams (exactly 30)
+            const days = currentDays; // Use the global time filter
+
+            // Top 30 teams
             const topTeams = Object.entries(reporter.byTeam || {})
                 .map(([team, count]) => [team, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
                 .filter(([_, count]) => count > 0)
@@ -812,10 +826,9 @@
         function renderCurrentView() {
             updatePeriodLabel();
             
-            // If on profile page, update profile coverage
+            // If viewing a profile, update the coverage sections
             if (currentProfileId) {
-                const reporter = REPORTERS.find(r => r.id === currentProfileId);
-                if (reporter) updateProfileCoverage(reporter, currentDays);
+                updateProfileCoverage();
                 return;
             }
             
@@ -845,7 +858,7 @@
                 document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentDays = parseInt(btn.dataset.days);
-                renderCurrentView();
+                renderCurrentView(); // Now also updates profile if open
             });
         });
 
