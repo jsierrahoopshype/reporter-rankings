@@ -104,17 +104,14 @@
         .profile-stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
         @media (max-width: 900px) { .profile-stats-grid { grid-template-columns: repeat(3, 1fr); } }
 
-        .profile-stat-box { background: #f8f9fa; padding: 16px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
-        .profile-stat-box:hover { background: #eee; }
-        .profile-stat-box.active { background: #e74c3c; }
-        .profile-stat-box.active .value, .profile-stat-box.active .label { color: white; }
+        .profile-stat-box { background: #f8f9fa; padding: 16px; border-radius: 8px; text-align: center; }
         .profile-stat-box .value { font-size: 24px; font-weight: 700; color: #e74c3c; }
         .profile-stat-box .label { font-size: 10px; color: #666; text-transform: uppercase; margin-top: 4px; }
 
         .back-btn {
             display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
             background: white; border: 1px solid #ddd; border-radius: 6px;
-            color: #333; font-size: 14px; cursor: pointer; margin-bottom: 20px; transition: all 0.2s;
+            color: #333; font-size: 14px; cursor: pointer; margin-top: 20px; transition: all 0.2s;
         }
         .back-btn:hover { border-color: #e74c3c; color: #e74c3c; }
 
@@ -161,6 +158,8 @@
         }
         .timeline-labels { display: flex; gap: 2px; font-size: 10px; color: #888; }
         .timeline-labels span { flex: 1; text-align: center; min-width: 8px; }
+
+        .period-note { font-size: 13px; color: #666; margin-bottom: 16px; padding: 10px 16px; background: #f8f9fa; border-radius: 6px; }
     </style>
 </head>
 <body>
@@ -226,8 +225,6 @@
         </div>
 
         <div id="profile-page" class="profile-page">
-            <button class="back-btn" onclick="closeProfile()">← Back to Rankings</button>
-            
             <div class="profile-header-card">
                 <div class="profile-top">
                     <div class="profile-avatar" id="profile-avatar"></div>
@@ -237,13 +234,14 @@
                         <span class="tier-badge" id="profile-tier"></span>
                     </div>
                 </div>
+                <div class="period-note" id="profile-period-note">Showing: All Time</div>
                 <div class="profile-stats-grid" id="profile-stats-grid">
-                    <div class="profile-stat-box" data-days="7"><div class="value" id="profile-week">0</div><div class="label">Week</div></div>
-                    <div class="profile-stat-box" data-days="30"><div class="value" id="profile-month">0</div><div class="label">Month</div></div>
-                    <div class="profile-stat-box" data-days="90"><div class="value" id="profile-3mo">0</div><div class="label">3 Months</div></div>
-                    <div class="profile-stat-box" data-days="180"><div class="value" id="profile-6mo">0</div><div class="label">6 Months</div></div>
-                    <div class="profile-stat-box" data-days="365"><div class="value" id="profile-year">0</div><div class="label">Year</div></div>
-                    <div class="profile-stat-box active" data-days="0"><div class="value" id="profile-total">0</div><div class="label">All-Time</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-week">0</div><div class="label">Week</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-month">0</div><div class="label">Month</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-3mo">0</div><div class="label">3 Months</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-6mo">0</div><div class="label">6 Months</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-year">0</div><div class="label">Year</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-total">0</div><div class="label">All-Time</div></div>
                 </div>
             </div>
 
@@ -260,6 +258,8 @@
                 <div class="card"><div class="card-header">⭐ Top 30 Players</div><div id="profile-players-list"></div></div>
                 <div class="card"><div class="card-header">🤝 Top 10 Agents</div><div id="profile-agents-list"></div></div>
             </div>
+
+            <button class="back-btn" onclick="closeProfile()">← Back to Rankings</button>
         </div>
     </main>
 
@@ -311,7 +311,7 @@
         const NON_PLAYERS = new Set([
             "team usa", "usa basketball", "g league", "nba", "all-star", "hall of fame", 
             "olympics", "fiba", "eurobasket", "world cup", "summer league", "social media",
-            "free agency", "trade", "draft", "new orleans hornets",
+            "free agency", "trade", "draft", "new orleans hornets", "training camp",
             // Commissioners/Executives
             "david stern", "adam silver", "billy hunter", "mark cuban", "mat ishbia",
             // Coaches
@@ -319,11 +319,11 @@
             "erik spoelstra", "phil jackson", "mike d'antoni", "dwane casey", "frank vogel",
             "steve kerr", "tyronn lue", "tom thibodeau", "mike budenholzer", "nick nurse",
             "quin snyder", "monty williams", "jason kidd", "ime udoka", "jb bickerstaff",
-            "mark daigneault", "doug christie",
+            "mark daigneault", "doug christie", "scott brooks",
             // GMs/Executives  
             "bob myers", "sam presti", "daryl morey", "masai ujiri", "rob pelinka",
             "james jones", "koby altman",
-            // Agents - keep them out of player list
+            // Agents
             "mark bartelstein", "rich paul", "jeff schwartz", "aaron mintz", "bill duffy",
             "leon rose", "dan fegan", "arn tellem", "aaron goodwin", "happy walters"
         ].map(s => s.toLowerCase()));
@@ -344,9 +344,12 @@
             "carmelo anthony", "chris paul", "dwight howard", "giannis antetokounmpo",
             "dwyane wade", "bradley beal", "magic johnson", "isaiah thomas", "john wall",
             "damian lillard", "cade cunningham", "tyrese haliburton", "tyrese maxey",
-            "austin reaves", "ben simmons", "norman powell",
+            "austin reaves", "ben simmons", "norman powell", "kobe bryant", "kevin love",
+            "rudy gobert", "donovan mitchell", "trae young", "kevin durant", "joel embiid",
+            "draymond green", "kyrie irving", "steve nash", "pau gasol", "andre iguodala",
+            "kyle kuzma",
             // Coaches/Others
-            "steve kerr", "mat ishbia", "kevin hart", "doug christie",
+            "steve kerr", "mat ishbia", "kevin hart", "doug christie", "training camp",
             // Generic
             "social media", "unknown", "n/a", "clutch points"
         ].map(s => s.toLowerCase()));
@@ -383,7 +386,6 @@
         let currentDays = 0;
         let currentView = 'leaderboard';
         let currentProfileId = null;
-        let currentProfileDays = 0;
 
         // =============================================
         // HELPER FUNCTIONS
@@ -462,6 +464,11 @@
             return normalizeOutletName(defaultOutlet);
         }
 
+        function getPeriodLabel(days) {
+            const labels = { 7: 'Week', 30: 'Month', 90: '3 Months', 180: '6 Months', 365: 'Year', 0: 'All Time' };
+            return labels[days] || 'All Time';
+        }
+
         // =============================================
         // INITIALIZATION
         // =============================================
@@ -525,8 +532,7 @@
         }
 
         function updatePeriodLabel() {
-            const labels = { 7: 'Week', 30: 'Month', 90: '3 Months', 180: '6 Months', 365: 'Year', 0: 'All Time' };
-            document.getElementById('stat-period').textContent = labels[currentDays] || 'All Time';
+            document.getElementById('stat-period').textContent = getPeriodLabel(currentDays);
         }
 
         // =============================================
@@ -643,8 +649,12 @@
         }
 
         function renderHeatmap() {
-            // Sort reporters ALPHABETICALLY
-            const stats = getReporterStats().sort((a, b) => a.name.localeCompare(b.name)).slice(0, 30);
+            // Get top 20 reporters by volume FIRST, then sort those alphabetically
+            const stats = getReporterStats()
+                .sort((a, b) => b.filteredTotal - a.filteredTotal)
+                .slice(0, 20)
+                .sort((a, b) => a.name.localeCompare(b.name));
+            
             const teams = NBA_TEAMS;
 
             const heatData = stats.map(r => {
@@ -700,7 +710,6 @@
             if (!reporter) return;
 
             currentProfileId = reporterId;
-            currentProfileDays = 0;
 
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('profile-page').classList.add('active');
@@ -711,6 +720,7 @@
             document.getElementById('profile-tier').textContent = `Tier ${reporter.tier}`;
             document.getElementById('profile-tier').className = `tier-badge tier-${reporter.tier}`;
 
+            // Static stats (always show all periods)
             document.getElementById('profile-week').textContent = getFilteredCount(reporter.byDate, 7).toLocaleString();
             document.getElementById('profile-month').textContent = getFilteredCount(reporter.byDate, 30).toLocaleString();
             document.getElementById('profile-3mo').textContent = getFilteredCount(reporter.byDate, 90).toLocaleString();
@@ -718,11 +728,8 @@
             document.getElementById('profile-year').textContent = getFilteredCount(reporter.byDate, 365).toLocaleString();
             document.getElementById('profile-total').textContent = reporter.total.toLocaleString();
 
-            document.querySelectorAll('.profile-stat-box').forEach(b => b.classList.remove('active'));
-            document.querySelector('.profile-stat-box[data-days="0"]').classList.add('active');
-
             renderTimelineChart(reporter);
-            updateProfileCoverage(reporter, 0);
+            updateProfileCoverage(reporter, currentDays);
 
             window.scrollTo(0, 0);
         }
@@ -755,7 +762,8 @@
         }
 
         function updateProfileCoverage(reporter, days) {
-            currentProfileDays = days;
+            // Update period note
+            document.getElementById('profile-period-note').textContent = `Showing coverage for: ${getPeriodLabel(days)}`;
 
             // Top 30 teams (exactly 30)
             const topTeams = Object.entries(reporter.byTeam || {})
@@ -797,25 +805,20 @@
             currentProfileId = null;
         }
 
-        // Profile stat box click handlers
-        document.getElementById('profile-stats-grid').addEventListener('click', (e) => {
-            const box = e.target.closest('.profile-stat-box');
-            if (!box || !currentProfileId) return;
-
-            document.querySelectorAll('.profile-stat-box').forEach(b => b.classList.remove('active'));
-            box.classList.add('active');
-
-            const days = parseInt(box.dataset.days);
-            const reporter = REPORTERS.find(r => r.id === currentProfileId);
-            if (reporter) updateProfileCoverage(reporter, days);
-        });
-
         // =============================================
         // VIEW SWITCHING
         // =============================================
 
         function renderCurrentView() {
             updatePeriodLabel();
+            
+            // If on profile page, update profile coverage
+            if (currentProfileId) {
+                const reporter = REPORTERS.find(r => r.id === currentProfileId);
+                if (reporter) updateProfileCoverage(reporter, currentDays);
+                return;
+            }
+            
             switch(currentView) {
                 case 'leaderboard': renderLeaderboard(); break;
                 case 'teams': renderTeams(); break;
