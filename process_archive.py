@@ -1221,6 +1221,107 @@ def extract_players(tags: List[str]) -> List[str]:
     return players
 
 
+# Agent names for tracking
+AGENT_NAMES = {
+    "aaron goodwin", "aaron klevan", "aaron mintz", "aaron reilly", "aaron turner",
+    "adam godes", "adam pensack", "ademola okulaja", "adie von gontard", "adisa bakari",
+    "aj vaynerchuk", "alberto ebanks", "aleksander raskovic", "alex saratsis", "alvaro tor",
+    "amandeep dhesi", "andre buck", "andre colona", "andrew hoenig", "andrew lehman",
+    "andrew morrison", "andrew vye", "andy bountogianis", "andy miller", "andy shiffman",
+    "anthony coleman", "anthony fields", "ara vartanian", "arn tellem", "arturo ortega",
+    "arturs kalnitis", "austin brown", "austin eastman", "austin walton", "aviad gronich",
+    "aylton tesch", "bj armstrong", "bj bass", "barry bolahood", "bellonora mccallum",
+    "ben pensack", "benji burke", "bernie lee", "bill duffy", "bill mccandless",
+    "bill neff", "billy ceisler", "billy davis", "bobby petriella", "boris lelchitski",
+    "bouna ndiaye", "brad ames", "brandon cavanaugh", "brandon grier", "brandon rosenthal",
+    "brian dyke", "brian elfus", "brian jungreis", "buddy baker", "byron irvin",
+    "calvin andrews", "cam brennick", "carmen wallace", "cervando tejeda", "chad speck",
+    "chafie fields", "charles bonsignore", "charles briscoe", "charles grantham", "charles tucker",
+    "chet ervin", "chris emens", "chris gaston", "chris luchey", "chris patrick",
+    "chris warren", "christian dawkins", "cody castleman", "colin bryant", "corey barker",
+    "corey marcum", "dan brinkley", "dan fegan", "dan tobin", "dana dotson",
+    "daniel curtin", "daniel frank", "daniel green", "daniel harrison", "daniel hazan",
+    "daniel moldovan", "daniel poneman", "danielle cantor", "danny servick", "darrell comer",
+    "darren matsubara", "darren weiner", "dave spahn", "david bauman", "david carro",
+    "david falk", "david gasman", "david hamilton", "david lee", "david mondress",
+    "david putterie", "deangelo simmons", "deddrick faison", "deirunas visockas", "derek jackson",
+    "derek lafayette", "derek malloy", "derrick powell", "diana day", "diego arguelles",
+    "dino pergola", "donald dell", "donte grant", "doug davis", "doug neustadt",
+    "drew gross", "duncan lloyd", "dwayne washington", "dwon clifton", "ej kusnyer",
+    "eddie grochowiak", "elias sbiet", "emilio duran", "eric fleisher", "erik kabe",
+    "erika ruiz", "errol bennett", "fletcher cockrell", "francois nyman", "frank catapano",
+    "gary durrant", "geoffrey mcguire", "george bass", "george david", "george langberg",
+    "george roussakis", "george sfairopoulos", "gerald collier", "giovanni funiciello",
+    "glenn schwartzman", "graham boone", "greer love", "greg lawrence", "gregory nunn",
+    "guillermo bermejo", "gustavo monella", "guy zucker", "happy walters", "harrison gaines",
+    "henry thomas", "herb rudoy", "hirant manakian", "holger geschwindner", "holman harley",
+    "igor crespo", "isaiah garrett", "isiah turner", "jr hensley", "jaafar choufani",
+    "james dunleavy", "jamie knox", "jan rohdewald", "janis porzingis", "jared karnes",
+    "jared mucha", "jarinn akana", "jason elam", "jason glushon", "jason martin",
+    "jason ranne", "javon phillips", "jay baptiste", "jay-z", "jeff austin",
+    "jeff fried", "jeff schwartz", "jeff wechsler", "jelani floyd", "jenn carton",
+    "jeremiah haylett", "jeremy medjana", "jerome stanley", "jerry dianis", "jerry hicks",
+    "jessica holtz", "jim buckley", "jim tanner", "joby branion", "joe abunassar",
+    "joe branch", "joe smith", "joel bell", "joel cornette", "joey pennavaria",
+    "john baker", "john foster", "john hamilton", "john huizinga", "john noonan",
+    "john spencer", "jordan cornish", "jordan gertler", "jose paris ramirez",
+    "josh beauregard-bell", "josh goodwin", "josh hairston", "josh ketroser", "joshua ebrahim",
+    "juan morrow", "juan perez", "justin haynes", "justin zanik", "kareem memarian",
+    "kashif pratt", "keith glass", "keith kreiter", "kenge stevenson", "kenny grant",
+    "kevin bradbury", "kevin martin", "kevin poston", "kevin t. conner", "kieran piller",
+    "kim grillier", "kurt schoeppler", "kyle mcalarney", "lance young", "larry fox",
+    "lee melchioni", "leon rose", "lewis tucker", "lorenzo mccloud", "lucas newton",
+    "makhtar ndiaye", "marc cornstein", "marc fleisher", "marcus monk", "mark bartelstein",
+    "mark bryant", "mark mcneil", "mark termini", "marlon harrison", "matt bollero",
+    "matt brown", "matt laczkowski", "matt ranker", "matt ward", "matthew babcock",
+    "maurizio balducci", "max ergul", "max lipsett", "maxwell saidman", "maxwell wiepking",
+    "mayar zokaei", "melvin booker", "merle scott", "michael harrison", "michael lelchitski",
+    "michael siegel", "michael silverman", "michael tellem", "michael whitaker", "mick sandhu",
+    "mike conley", "mike george", "mike higgins", "mike hodges", "mike kneisley",
+    "mike lindeman", "mike miller", "mike naiditch", "mike simonetta", "mindaugas veromejus",
+    "misko raznatovic", "mitch frankel", "mitch nathan", "mitchell butler", "muhammad abdur-rahim",
+    "nate daniels", "nathan conley", "nathan pezeshki", "neal rosenshein", "nick blatchford",
+    "nick lotsos", "nicolas dos santos", "niko filipovich", "nima namakian", "noah croom",
+    "obrad fimic", "odell mccants", "odell witherspoon iii", "olivier mazet", "omar cooper",
+    "omar wilkes", "paco lopez", "paolo zamorano", "paul washington", "pedja materic",
+    "pedro power", "perry rogers", "phillip parun", "qais haider", "quique villalobos",
+    "rade filipovich", "rafael calvo", "ramon sessions", "raymond brothers", "reggie brown",
+    "rich beda", "rich kleiman", "rich paul", "richard clarke", "richard felder",
+    "richard gray", "richard howell", "richard kaplan", "rishi daulat", "rob pelinka",
+    "robert fayne", "rodney blackstock", "roger montgomery", "ronald shade", "ronnie zeidel",
+    "roosevelt barnes", "ross aroyo", "ryan davis", "sam goldfeder", "sam permut",
+    "sam porter", "sam rose", "sammy wloszczowski", "sarunas broga", "scott alexander",
+    "scott nichols", "sead galijasevic", "sean davis", "sean kennedy", "seth cohen",
+    "shayaun saee", "shetellia riley irving", "stephen george boykin", "stephen pina",
+    "steve haney", "steve heumann", "steve kauffman", "steve mccaskill", "steve mountain",
+    "stu lash", "tabetha plummer", "tadas bulotas", "tallen todorovich", "terrance doyle",
+    "terrence felder", "thaddeus foucher", "toby bailey", "todd eley", "todd ramasar",
+    "todd seidel", "tony dutt", "tony ronzone", "torrell harris", "tracey carney",
+    "travis king", "trinity best", "troy payne", "troy thompson", "ty sullivan",
+    "tyler glass", "ugo udezue", "wallace prather", "wassim boutanos", "wilmer jackson",
+    "yann balikouzou", "zach kurtin", "zach schreiber", "zack charles"
+}
+
+def extract_agents(tags: List[str], text: str = "") -> List[str]:
+    """Extract agent names from tags and text."""
+    agents = []
+    
+    # Check tags
+    for tag in (tags or []):
+        tag_lower = tag.lower()
+        if tag_lower in AGENT_NAMES:
+            agents.append(tag)
+    
+    # Also check text for agent mentions
+    text_lower = (text or "").lower()
+    for agent in AGENT_NAMES:
+        if agent in text_lower:
+            # Capitalize properly
+            agents.append(agent.title())
+    
+    return list(set(agents))
+
+
 # =============================================
 # MAIN PROCESSING
 # =============================================
@@ -1245,6 +1346,7 @@ def process_archive(archive_data: List[Dict], days_filter: int = None) -> Dict:
         "by_topic": defaultdict(int),
         "by_player": defaultdict(int),
         "by_team": defaultdict(int),
+        "by_agent": defaultdict(int),
         "by_date": defaultdict(int),
         "breaking": 0,
         "detection_methods": defaultdict(int),
@@ -1309,6 +1411,8 @@ def process_archive(archive_data: List[Dict], days_filter: int = None) -> Dict:
                 stats["by_team"][team] += 1
             for player in extract_players(tags):
                 stats["by_player"][player] += 1
+            for agent in extract_agents(tags, text):
+                stats["by_agent"][agent] += 1
             
             if len(stats["rumors"]) < 20:
                 stats["rumors"].append({
@@ -1332,8 +1436,9 @@ def process_archive(archive_data: List[Dict], days_filter: int = None) -> Dict:
             "total": stats["total"],
             "breaking": stats["breaking"],
             "by_topic": dict(stats["by_topic"]),
-            "by_player": dict(sorted(stats["by_player"].items(), key=lambda x: -x[1])[:20]),
+            "by_player": dict(sorted(stats["by_player"].items(), key=lambda x: -x[1])[:100]),
             "by_team": dict(sorted(stats["by_team"].items(), key=lambda x: -x[1])),
+            "by_agent": dict(sorted(stats["by_agent"].items(), key=lambda x: -x[1])[:50]),
             "by_date": dict(stats["by_date"]),
             "detection_methods": dict(stats["detection_methods"]),
             "recent_rumors": stats["rumors"][:10]
