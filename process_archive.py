@@ -154,6 +154,13 @@ REPORTERS_DB = {
         "handles": ["mikeascotto"],
         "variations": ["scotto"]
     },
+    "jorge sierra": {
+        "name": "Jorge Sierra",
+        "outlet": "HoopsHype",
+        "tier": 2,
+        "handles": ["hoaborz", "jsiaborz", "jsierra"],
+        "variations": ["sierra", "jorge"]
+    },
     "alex kennedy": {
         "name": "Alex Kennedy",
         "outlet": "HoopsHype",
@@ -1277,7 +1284,7 @@ AGENT_NAMES = {
     "maurizio balducci", "max ergul", "max lipsett", "maxwell saidman", "maxwell wiepking",
     "mayar zokaei", "melvin booker", "merle scott", "michael harrison", "michael lelchitski",
     "michael siegel", "michael silverman", "michael tellem", "michael whitaker", "mick sandhu",
-    "mike conley", "mike george", "mike higgins", "mike hodges", "mike kneisley",
+    "mike george", "mike higgins", "mike hodges", "mike kneisley",
     "mike lindeman", "mike miller", "mike naiditch", "mike simonetta", "mindaugas veromejus",
     "misko raznatovic", "mitch frankel", "mitch nathan", "mitchell butler", "muhammad abdur-rahim",
     "nate daniels", "nathan conley", "nathan pezeshki", "neal rosenshein", "nick blatchford",
