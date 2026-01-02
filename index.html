@@ -10,13 +10,8 @@
         body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #333; line-height: 1.5; }
         
         .header {
-            background: white;
-            border-bottom: 3px solid #e74c3c;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: white; border-bottom: 3px solid #e74c3c; padding: 20px 0;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .logo { font-size: 24px; font-weight: 700; color: #e74c3c; margin-bottom: 16px; }
@@ -92,7 +87,7 @@
             background: white; border-radius: 12px; padding: 30px;
             margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
-        .profile-top { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 24px; }
+        .profile-top { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
         .profile-avatar {
             width: 80px; height: 80px; border-radius: 50%; background: #e74c3c; color: white;
             display: flex; align-items: center; justify-content: center;
@@ -109,7 +104,10 @@
         .profile-stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
         @media (max-width: 900px) { .profile-stats-grid { grid-template-columns: repeat(3, 1fr); } }
 
-        .profile-stat-box { background: #f8f9fa; padding: 16px; border-radius: 8px; text-align: center; }
+        .profile-stat-box { background: #f8f9fa; padding: 16px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .profile-stat-box:hover { background: #eee; }
+        .profile-stat-box.active { background: #e74c3c; }
+        .profile-stat-box.active .value, .profile-stat-box.active .label { color: white; }
         .profile-stat-box .value { font-size: 24px; font-weight: 700; color: #e74c3c; }
         .profile-stat-box .label { font-size: 10px; color: #666; text-transform: uppercase; margin-top: 4px; }
 
@@ -120,13 +118,13 @@
         }
         .back-btn:hover { border-color: #e74c3c; color: #e74c3c; }
 
-        .coverage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; padding: 16px; }
+        .coverage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; padding: 16px; }
         .coverage-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 10px 14px; background: #f8f9fa; border-radius: 6px;
         }
-        .coverage-item .name { font-size: 14px; color: #333; }
-        .coverage-item .count { font-weight: 600; color: #e74c3c; font-size: 14px; }
+        .coverage-item .name { font-size: 13px; color: #333; }
+        .coverage-item .count { font-weight: 600; color: #e74c3c; font-size: 13px; }
 
         .team-coverage-card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
         .team-name { font-weight: 600; font-size: 15px; color: #333; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
@@ -139,7 +137,7 @@
         .heatmap th, .heatmap td { padding: 6px 8px; text-align: center; border: 1px solid #eee; white-space: nowrap; }
         .heatmap th { background: #f5f5f5; font-weight: 600; position: sticky; top: 0; }
         .heatmap td:first-child { position: sticky; left: 0; background: white; font-weight: 500; text-align: left; z-index: 1; min-width: 140px; }
-        .heatmap td { min-width: 45px; }
+        .heatmap td { min-width: 40px; }
 
         .heat-0 { background: #fff; color: #ccc; }
         .heat-1 { background: #fff5f5; }
@@ -152,8 +150,17 @@
         .view-section { display: none; }
         .view-section.active { display: block; }
 
-        /* Tooltip for heatmap */
-        .heatmap td[title] { cursor: help; }
+        .timeline-container { padding: 20px; }
+        .timeline-chart { display: flex; align-items: flex-end; gap: 2px; height: 120px; margin-bottom: 8px; }
+        .timeline-bar { flex: 1; background: #e74c3c; border-radius: 2px 2px 0 0; min-width: 8px; transition: all 0.2s; position: relative; }
+        .timeline-bar:hover { background: #c0392b; }
+        .timeline-bar:hover::after {
+            content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%;
+            transform: translateX(-50%); background: #333; color: white; padding: 4px 8px;
+            border-radius: 4px; font-size: 11px; white-space: nowrap; z-index: 10;
+        }
+        .timeline-labels { display: flex; gap: 2px; font-size: 10px; color: #888; }
+        .timeline-labels span { flex: 1; text-align: center; min-width: 8px; }
     </style>
 </head>
 <body>
@@ -162,22 +169,10 @@
             <div class="logo">REPORTER <span>RANKINGS</span></div>
             
             <div class="stats-banner">
-                <div class="stat-item">
-                    <div class="stat-value" id="stat-reporters">-</div>
-                    <div class="stat-label">Reporters</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="stat-rumors">-</div>
-                    <div class="stat-label">Rumors Tracked</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="stat-outlets">-</div>
-                    <div class="stat-label">Outlets</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="stat-period">-</div>
-                    <div class="stat-label">Current Period</div>
-                </div>
+                <div class="stat-item"><div class="stat-value" id="stat-reporters">-</div><div class="stat-label">Reporters</div></div>
+                <div class="stat-item"><div class="stat-value" id="stat-rumors">-</div><div class="stat-label">Rumors Tracked</div></div>
+                <div class="stat-item"><div class="stat-value" id="stat-outlets">-</div><div class="stat-label">Outlets</div></div>
+                <div class="stat-item"><div class="stat-value" id="stat-period">-</div><div class="stat-label">Current Period</div></div>
             </div>
 
             <div class="nav-row">
@@ -204,14 +199,8 @@
         <div id="main-content">
             <section id="leaderboard" class="view-section active">
                 <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header">📊 Top 50 Reporters</div>
-                        <div id="leaderboard-list" class="loading">Loading...</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">📈 Trending Up</div>
-                        <div id="trending-list" class="loading">Loading...</div>
-                    </div>
+                    <div class="card"><div class="card-header">📊 Top 50 Reporters</div><div id="leaderboard-list" class="loading">Loading...</div></div>
+                    <div class="card"><div class="card-header">📈 Trending Up</div><div id="trending-list" class="loading">Loading...</div></div>
                 </div>
             </section>
 
@@ -227,19 +216,12 @@
 
             <section id="heatmap" class="view-section">
                 <h2 class="section-title">Reporter × Team Coverage Heatmap</h2>
-                <div class="card">
-                    <div class="heatmap-container">
-                        <table class="heatmap" id="heatmap-table"></table>
-                    </div>
-                </div>
+                <div class="card"><div class="heatmap-container"><table class="heatmap" id="heatmap-table"></table></div></div>
             </section>
 
             <section id="outlets" class="view-section">
                 <h2 class="section-title">Media Outlets</h2>
-                <div class="card">
-                    <div class="card-header">📰 Top Outlets by Volume</div>
-                    <div id="outlets-list" class="loading">Loading...</div>
-                </div>
+                <div class="card"><div class="card-header">📰 Top Outlets by Volume</div><div id="outlets-list" class="loading">Loading...</div></div>
             </section>
         </div>
 
@@ -255,25 +237,28 @@
                         <span class="tier-badge" id="profile-tier"></span>
                     </div>
                 </div>
-                <div class="profile-stats-grid">
-                    <div class="profile-stat-box"><div class="value" id="profile-week">0</div><div class="label">Week</div></div>
-                    <div class="profile-stat-box"><div class="value" id="profile-month">0</div><div class="label">Month</div></div>
-                    <div class="profile-stat-box"><div class="value" id="profile-3mo">0</div><div class="label">3 Months</div></div>
-                    <div class="profile-stat-box"><div class="value" id="profile-6mo">0</div><div class="label">6 Months</div></div>
-                    <div class="profile-stat-box"><div class="value" id="profile-year">0</div><div class="label">Year</div></div>
-                    <div class="profile-stat-box"><div class="value" id="profile-total">0</div><div class="label">All-Time</div></div>
+                <div class="profile-stats-grid" id="profile-stats-grid">
+                    <div class="profile-stat-box" data-days="7"><div class="value" id="profile-week">0</div><div class="label">Week</div></div>
+                    <div class="profile-stat-box" data-days="30"><div class="value" id="profile-month">0</div><div class="label">Month</div></div>
+                    <div class="profile-stat-box" data-days="90"><div class="value" id="profile-3mo">0</div><div class="label">3 Months</div></div>
+                    <div class="profile-stat-box" data-days="180"><div class="value" id="profile-6mo">0</div><div class="label">6 Months</div></div>
+                    <div class="profile-stat-box" data-days="365"><div class="value" id="profile-year">0</div><div class="label">Year</div></div>
+                    <div class="profile-stat-box active" data-days="0"><div class="value" id="profile-total">0</div><div class="label">All-Time</div></div>
                 </div>
             </div>
 
-            <div class="grid-2">
-                <div class="card">
-                    <div class="card-header">🏀 Top 30 Teams Covered</div>
-                    <div id="profile-teams-list"></div>
+            <div class="card">
+                <div class="card-header">📈 Activity Over Time</div>
+                <div class="timeline-container">
+                    <div class="timeline-chart" id="timeline-chart"></div>
+                    <div class="timeline-labels" id="timeline-labels"></div>
                 </div>
-                <div class="card">
-                    <div class="card-header">⭐ Top 30 Players Covered</div>
-                    <div id="profile-players-list"></div>
-                </div>
+            </div>
+
+            <div class="grid-3" id="profile-coverage-grid">
+                <div class="card"><div class="card-header">🏀 Top 30 Teams</div><div id="profile-teams-list"></div></div>
+                <div class="card"><div class="card-header">⭐ Top 30 Players</div><div id="profile-players-list"></div></div>
+                <div class="card"><div class="card-header">🤝 Top 10 Agents</div><div id="profile-agents-list"></div></div>
             </div>
         </div>
     </main>
@@ -324,38 +309,70 @@
 
         // Non-players to exclude
         const NON_PLAYERS = new Set([
-            "team usa", "usa basketball", "g league", "nba", "all-star",
-            "hall of fame", "olympics", "fiba", "eurobasket", "world cup",
-            "summer league", "social media", "free agency", "trade", "draft",
-            "david stern", "adam silver", "billy hunter", "mark cuban",
-            "doc rivers", "brad stevens", "gregg popovich", "brett brown", 
-            "rick carlisle", "erik spoelstra", "phil jackson", "mike d'antoni",
-            "dwane casey", "frank vogel", "steve kerr", "tyronn lue", "tom thibodeau",
-            "mike budenholzer", "nick nurse", "quin snyder", "monty williams",
-            "jason kidd", "ime udoka", "bob myers", "sam presti", "daryl morey",
-            "masai ujiri", "rob pelinka", "james jones", "koby altman"
+            "team usa", "usa basketball", "g league", "nba", "all-star", "hall of fame", 
+            "olympics", "fiba", "eurobasket", "world cup", "summer league", "social media",
+            "free agency", "trade", "draft", "new orleans hornets",
+            // Commissioners/Executives
+            "david stern", "adam silver", "billy hunter", "mark cuban", "mat ishbia",
+            // Coaches
+            "doc rivers", "brad stevens", "gregg popovich", "brett brown", "rick carlisle",
+            "erik spoelstra", "phil jackson", "mike d'antoni", "dwane casey", "frank vogel",
+            "steve kerr", "tyronn lue", "tom thibodeau", "mike budenholzer", "nick nurse",
+            "quin snyder", "monty williams", "jason kidd", "ime udoka", "jb bickerstaff",
+            "mark daigneault", "doug christie",
+            // GMs/Executives  
+            "bob myers", "sam presti", "daryl morey", "masai ujiri", "rob pelinka",
+            "james jones", "koby altman",
+            // Agents - keep them out of player list
+            "mark bartelstein", "rich paul", "jeff schwartz", "aaron mintz", "bill duffy",
+            "leon rose", "dan fegan", "arn tellem", "aaron goodwin", "happy walters"
         ].map(s => s.toLowerCase()));
 
-        // Excluded reporters (fake, PR accounts, players)
+        // Excluded "reporters" (PR accounts, teams, players, non-reporters)
         const EXCLUDED_REPORTERS = new Set([
+            // PR accounts
             "@mrbuckbucknba", "@nbapr", "@ohnohedidnt24", "@hornetspr", "@espnstatsinfo",
+            "@trailblazerspr", "@trailblazerpr", "@pelicansnba", "@magic_pr", "@fullcourtpass",
+            "@kingjames", "@nba__courtside", "@hellowelcomepod", "@wwe",
             "mrbuckbucknba", "nbapr", "ohnohedidnt24", "hornetspr", "espnstatsinfo",
+            "trailblazerspr", "trailblazerpr", "pelicansnba", "magic_pr", "fullcourtpass",
+            "mavs pr", "grizzlies pr", "timberwolves pr", "heat centel",
+            // Teams listed as reporters
+            "atlanta hawks", "chicago bulls", "indiana pacers", "milwaukee bucks",
+            "utah jazz", "miami heat",
+            // Players listed as reporters
             "carmelo anthony", "chris paul", "dwight howard", "giannis antetokounmpo",
             "dwyane wade", "bradley beal", "magic johnson", "isaiah thomas", "john wall",
-            "damian lillard", "social media", "unknown", "n/a", "clutch points"
+            "damian lillard", "cade cunningham", "tyrese haliburton", "tyrese maxey",
+            "austin reaves", "ben simmons", "norman powell",
+            // Coaches/Others
+            "steve kerr", "mat ishbia", "kevin hart", "doug christie",
+            // Generic
+            "social media", "unknown", "n/a", "clutch points"
         ].map(s => s.toLowerCase()));
 
-        // Excluded outlets (user-generated platforms)
+        // Excluded outlets
         const EXCLUDED_OUTLETS = new Set([
             "youtube", "reddit", "twitter", "x.com", "instagram", "facebook", 
-            "tiktok", "threads", "unknown"
+            "tiktok", "threads", "unknown", "@kcjhoop"
         ].map(s => s.toLowerCase()));
 
         // Handle to reporter name mapping
-        const HANDLE_TO_NAME = { "kcjhoop": "KC Johnson" };
+        const HANDLE_TO_NAME = {
+            "kcjhoop": "K.C. Johnson"
+        };
+
+        // Reporter to outlet mapping
+        const REPORTER_TO_OUTLET = {
+            "jorge sierra": "HoopsHype",
+            "michael scotto": "HoopsHype"
+        };
 
         // Outlet normalization
-        const OUTLET_NORMALIZE = { "espn.com": "ESPN", "ESPN.com": "ESPN" };
+        const OUTLET_NORMALIZE = {
+            "espn.com": "ESPN", "ESPN.com": "ESPN",
+            "hoopshype": "HoopsHype", "HoopsHype": "HoopsHype"
+        };
 
         // =============================================
         // STATE
@@ -363,8 +380,10 @@
         
         let REPORTERS = [];
         let OUTLETS = [];
-        let currentDays = 0; // Default to All Time
+        let currentDays = 0;
         let currentView = 'leaderboard';
+        let currentProfileId = null;
+        let currentProfileDays = 0;
 
         // =============================================
         // HELPER FUNCTIONS
@@ -372,11 +391,7 @@
 
         function getFilteredCount(byDate, days) {
             if (!byDate || Object.keys(byDate).length === 0) return 0;
-            
-            if (days === 0) {
-                // All time - sum everything
-                return Object.values(byDate).reduce((sum, c) => sum + c, 0);
-            }
+            if (days === 0) return Object.values(byDate).reduce((sum, c) => sum + c, 0);
             
             const cutoff = new Date();
             cutoff.setDate(cutoff.getDate() - days);
@@ -384,26 +399,17 @@
 
             let total = 0;
             for (const [date, count] of Object.entries(byDate)) {
-                if (date >= cutoffStr) {
-                    total += count;
-                }
+                if (date >= cutoffStr) total += count;
             }
             return total;
         }
 
-        // Get filtered count for a specific field (byTeam, byPlayer) based on time
-        // This requires knowing the dates of each rumor, which we don't have per-team/player
-        // So we estimate by the proportion of byDate in the time range
         function getProportionalCount(totalCount, byDate, days) {
             if (days === 0) return totalCount;
-            
             const allTimeTotal = Object.values(byDate || {}).reduce((sum, c) => sum + c, 0);
             if (allTimeTotal === 0) return 0;
-            
             const filteredTotal = getFilteredCount(byDate, days);
-            const proportion = filteredTotal / allTimeTotal;
-            
-            return Math.round(totalCount * proportion);
+            return Math.round(totalCount * (filteredTotal / allTimeTotal));
         }
 
         function isValidReporter(name) {
@@ -411,6 +417,9 @@
             const nameLower = name.toLowerCase().trim();
             if (EXCLUDED_REPORTERS.has(nameLower)) return false;
             if (nameLower.startsWith('@') && nameLower.length < 4) return false;
+            for (const team of NBA_TEAMS) {
+                if (nameLower === team.toLowerCase()) return false;
+            }
             return true;
         }
 
@@ -418,8 +427,12 @@
             if (!name) return false;
             const nameLower = name.toLowerCase().trim();
             if (NON_PLAYERS.has(nameLower)) return false;
+            if (EXCLUDED_REPORTERS.has(nameLower)) return false;
             for (const short of Object.keys(TEAM_SHORT_TO_FULL)) {
                 if (nameLower === short.toLowerCase()) return false;
+            }
+            for (const team of NBA_TEAMS) {
+                if (nameLower === team.toLowerCase()) return false;
             }
             return true;
         }
@@ -434,7 +447,7 @@
         }
 
         function normalizeOutletName(outlet) {
-            return OUTLET_NORMALIZE[outlet] || OUTLET_NORMALIZE[outlet?.toLowerCase()] || outlet;
+            return OUTLET_NORMALIZE[outlet?.toLowerCase()] || OUTLET_NORMALIZE[outlet] || outlet;
         }
 
         function normalizeReporterName(name) {
@@ -443,15 +456,18 @@
             return HANDLE_TO_NAME[handle] || name;
         }
 
+        function getReporterOutlet(name, defaultOutlet) {
+            const nameLower = name.toLowerCase();
+            if (REPORTER_TO_OUTLET[nameLower]) return REPORTER_TO_OUTLET[nameLower];
+            return normalizeOutletName(defaultOutlet);
+        }
+
         // =============================================
         // INITIALIZATION
         // =============================================
 
         function initializeData() {
-            if (typeof REPORTER_DATA === 'undefined') {
-                console.error('REPORTER_DATA not loaded');
-                return false;
-            }
+            if (typeof REPORTER_DATA === 'undefined') return false;
 
             REPORTERS = REPORTER_DATA.reporters
                 .filter(r => isValidReporter(r.name))
@@ -476,13 +492,14 @@
                     return {
                         id: r.id || `reporter_${i}`,
                         name,
-                        outlet: normalizeOutletName(r.outlet),
+                        outlet: getReporterOutlet(name, r.outlet),
                         tier: r.tier || 3,
                         avatar: r.avatar || name.replace('@', '').substring(0, 2).toUpperCase(),
                         total: r.total || 0,
                         byTopic: r.by_topic || {},
                         byPlayer: filteredByPlayer,
                         byTeam: normalizedByTeam,
+                        byAgent: r.by_agent || {},
                         byDate: r.by_date || {}
                     };
                 });
@@ -492,10 +509,7 @@
             for (const o of (REPORTER_DATA.outlets || [])) {
                 const name = normalizeOutletName(o.name);
                 if (!isValidOutlet(name)) continue;
-                
-                if (!outletMap[name]) {
-                    outletMap[name] = { name, total: 0, byDate: {} };
-                }
+                if (!outletMap[name]) outletMap[name] = { name, total: 0, byDate: {} };
                 outletMap[name].total += o.total || 0;
                 for (const [date, count] of Object.entries(o.by_date || {})) {
                     outletMap[name].byDate[date] = (outletMap[name].byDate[date] || 0) + count;
@@ -507,8 +521,6 @@
             document.getElementById('stat-rumors').textContent = (REPORTER_DATA.processed_rumors || 0).toLocaleString();
             document.getElementById('stat-outlets').textContent = OUTLETS.length.toLocaleString();
             updatePeriodLabel();
-
-            console.log('Loaded', REPORTERS.length, 'reporters');
             return true;
         }
 
@@ -518,39 +530,24 @@
         }
 
         // =============================================
-        // FILTERING - FIXED!
+        // FILTERING
         // =============================================
 
         function getReporterStats() {
             return REPORTERS.map(r => {
-                // FIXED: Always use filtered count, don't fall back to total
                 const filteredTotal = getFilteredCount(r.byDate, currentDays);
-
-                // Calculate previous period for trending
                 let prevTotal = 0;
                 if (currentDays > 0 && currentDays <= 180) {
-                    const prevCutoff = new Date();
-                    prevCutoff.setDate(prevCutoff.getDate() - currentDays);
-                    const prevCutoffStr = prevCutoff.toISOString().split('T')[0];
-                    
-                    const doubleCutoff = new Date();
-                    doubleCutoff.setDate(doubleCutoff.getDate() - (currentDays * 2));
+                    const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - currentDays);
+                    const cutoffStr = cutoff.toISOString().split('T')[0];
+                    const doubleCutoff = new Date(); doubleCutoff.setDate(doubleCutoff.getDate() - (currentDays * 2));
                     const doubleCutoffStr = doubleCutoff.toISOString().split('T')[0];
-
                     for (const [date, count] of Object.entries(r.byDate || {})) {
-                        if (date >= doubleCutoffStr && date < prevCutoffStr) {
-                            prevTotal += count;
-                        }
+                        if (date >= doubleCutoffStr && date < cutoffStr) prevTotal += count;
                     }
                 }
-
-                return {
-                    ...r,
-                    filteredTotal,
-                    previousTotal: prevTotal,
-                    change: filteredTotal - prevTotal
-                };
-            }).filter(r => r.filteredTotal > 0); // Only include reporters with data in this period
+                return { ...r, filteredTotal, previousTotal: prevTotal, change: filteredTotal - prevTotal };
+            }).filter(r => r.filteredTotal > 0);
         }
 
         function getOutletStats() {
@@ -561,12 +558,11 @@
         }
 
         // =============================================
-        // RENDERING - LEADERBOARD
+        // RENDERING
         // =============================================
 
         function renderLeaderboard() {
             const stats = getReporterStats().sort((a, b) => b.filteredTotal - a.filteredTotal);
-
             if (stats.length === 0) {
                 document.getElementById('leaderboard-list').innerHTML = '<div class="loading">No data for this period</div>';
                 document.getElementById('trending-list').innerHTML = '<div class="loading">No data for this period</div>';
@@ -587,21 +583,14 @@
                 </div>
             `).join('');
 
-            // Trending
             if (currentDays > 0 && currentDays <= 180) {
                 const trending = stats.filter(r => r.change > 0).sort((a, b) => b.change - a.change).slice(0, 20);
                 document.getElementById('trending-list').innerHTML = trending.length > 0 
                     ? trending.map((r, i) => `
                         <div class="reporter-row" onclick="openProfile('${r.id}')">
                             <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
-                            <div class="reporter-info">
-                                <div class="reporter-name">${r.name}</div>
-                                <div class="reporter-outlet">${r.outlet}</div>
-                            </div>
-                            <div class="reporter-stat">
-                                <div class="reporter-stat-value" style="color: #27ae60;">+${r.change}</div>
-                                <div class="reporter-stat-label">vs prev</div>
-                            </div>
+                            <div class="reporter-info"><div class="reporter-name">${r.name}</div><div class="reporter-outlet">${r.outlet}</div></div>
+                            <div class="reporter-stat"><div class="reporter-stat-value" style="color: #27ae60;">+${r.change}</div><div class="reporter-stat-label">vs prev</div></div>
                         </div>
                     `).join('')
                     : '<div class="loading">No trending data</div>';
@@ -610,125 +599,62 @@
             }
         }
 
-        // =============================================
-        // RENDERING - BY TEAM (WITH TIME FILTERING)
-        // =============================================
-
         function renderTeams() {
             const stats = getReporterStats();
-            
-            const teamReporters = {};
-            NBA_TEAMS.forEach(team => { teamReporters[team] = []; });
+            const teamReporters = {}; NBA_TEAMS.forEach(team => { teamReporters[team] = []; });
 
             stats.forEach(r => {
                 for (const [team, totalCount] of Object.entries(r.byTeam || {})) {
                     if (teamReporters[team]) {
-                        // FIXED: Use proportional count based on time filter
                         const filteredCount = getProportionalCount(totalCount, r.byDate, currentDays);
-                        if (filteredCount > 0) {
-                            teamReporters[team].push({ ...r, teamCount: filteredCount });
-                        }
+                        if (filteredCount > 0) teamReporters[team].push({ ...r, teamCount: filteredCount });
                     }
                 }
             });
 
-            const html = NBA_TEAMS.map(team => {
+            document.getElementById('teams-grid').innerHTML = NBA_TEAMS.map(team => {
                 const reporters = teamReporters[team].sort((a, b) => b.teamCount - a.teamCount).slice(0, 5);
-                return `
-                    <div class="team-coverage-card">
-                        <div class="team-name">${team}</div>
-                        ${reporters.length > 0 ? reporters.map(r => `
-                            <div class="reporter-mini" onclick="openProfile('${r.id}')">
-                                <span>${r.name}</span>
-                                <span class="count">${r.teamCount}</span>
-                            </div>
-                        `).join('') : '<div style="color:#888;font-size:13px;">No data</div>'}
-                    </div>
-                `;
+                return `<div class="team-coverage-card"><div class="team-name">${team}</div>
+                    ${reporters.length > 0 ? reporters.map(r => `<div class="reporter-mini" onclick="openProfile('${r.id}')"><span>${r.name}</span><span class="count">${r.teamCount}</span></div>`).join('') : '<div style="color:#888;font-size:13px;">No data</div>'}</div>`;
             }).join('');
-
-            document.getElementById('teams-grid').innerHTML = html;
             document.getElementById('teams-grid').classList.remove('loading');
         }
 
-        // =============================================
-        // RENDERING - BY PLAYER (WITH TIME FILTERING)
-        // =============================================
-
         function renderPlayers() {
             const stats = getReporterStats();
-            
-            // Calculate player counts with time filtering
             const playerCounts = {};
             stats.forEach(r => {
                 for (const [player, totalCount] of Object.entries(r.byPlayer || {})) {
                     const filteredCount = getProportionalCount(totalCount, r.byDate, currentDays);
-                    if (filteredCount > 0) {
-                        playerCounts[player] = (playerCounts[player] || 0) + filteredCount;
-                    }
+                    if (filteredCount > 0) playerCounts[player] = (playerCounts[player] || 0) + filteredCount;
                 }
             });
 
-            const topPlayers = Object.entries(playerCounts)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 50)
-                .map(([name]) => name);
+            const topPlayers = Object.entries(playerCounts).sort((a, b) => b[1] - a[1]).slice(0, 50).map(([name]) => name);
 
-            const html = topPlayers.map(player => {
-                const reporters = stats
-                    .filter(r => r.byPlayer && r.byPlayer[player])
-                    .map(r => ({ 
-                        ...r, 
-                        playerCount: getProportionalCount(r.byPlayer[player], r.byDate, currentDays)
-                    }))
-                    .filter(r => r.playerCount > 0)
-                    .sort((a, b) => b.playerCount - a.playerCount)
-                    .slice(0, 5);
-
-                return `
-                    <div class="team-coverage-card">
-                        <div class="team-name">${player}</div>
-                        ${reporters.length > 0 ? reporters.map(r => `
-                            <div class="reporter-mini" onclick="openProfile('${r.id}')">
-                                <span>${r.name}</span>
-                                <span class="count">${r.playerCount}</span>
-                            </div>
-                        `).join('') : '<div style="color:#888;font-size:13px;">No data</div>'}
-                    </div>
-                `;
+            document.getElementById('players-grid').innerHTML = topPlayers.map(player => {
+                const reporters = stats.filter(r => r.byPlayer && r.byPlayer[player])
+                    .map(r => ({ ...r, playerCount: getProportionalCount(r.byPlayer[player], r.byDate, currentDays) }))
+                    .filter(r => r.playerCount > 0).sort((a, b) => b.playerCount - a.playerCount).slice(0, 5);
+                return `<div class="team-coverage-card"><div class="team-name">${player}</div>
+                    ${reporters.length > 0 ? reporters.map(r => `<div class="reporter-mini" onclick="openProfile('${r.id}')"><span>${r.name}</span><span class="count">${r.playerCount}</span></div>`).join('') : '<div style="color:#888;font-size:13px;">No data</div>'}</div>`;
             }).join('');
-
-            document.getElementById('players-grid').innerHTML = html;
             document.getElementById('players-grid').classList.remove('loading');
         }
 
-        // =============================================
-        // RENDERING - HEATMAP (WITH TOOLTIPS)
-        // =============================================
-
         function renderHeatmap() {
-            const stats = getReporterStats().sort((a, b) => b.filteredTotal - a.filteredTotal).slice(0, 20);
+            // Sort reporters ALPHABETICALLY
+            const stats = getReporterStats().sort((a, b) => a.name.localeCompare(b.name)).slice(0, 30);
             const teams = NBA_TEAMS;
 
-            // Calculate counts with time filtering
             const heatData = stats.map(r => {
                 const teamCounts = {};
-                let maxForReporter = 0;
-                teams.forEach(t => {
-                    const count = getProportionalCount(r.byTeam?.[t] || 0, r.byDate, currentDays);
-                    teamCounts[t] = count;
-                    if (count > maxForReporter) maxForReporter = count;
-                });
-                return { reporter: r, teamCounts, maxForReporter };
+                teams.forEach(t => { teamCounts[t] = getProportionalCount(r.byTeam?.[t] || 0, r.byDate, currentDays); });
+                return { reporter: r, teamCounts };
             });
 
-            // Find global max for scaling
             let maxCount = 0;
-            heatData.forEach(d => {
-                Object.values(d.teamCounts).forEach(c => {
-                    if (c > maxCount) maxCount = c;
-                });
-            });
+            heatData.forEach(d => { Object.values(d.teamCounts).forEach(c => { if (c > maxCount) maxCount = c; }); });
 
             const getHeatClass = (count) => {
                 if (count === 0) return 'heat-0';
@@ -740,10 +666,7 @@
                 return 'heat-5';
             };
 
-            const headerRow = `<tr><th>Reporter</th>${teams.map(t => 
-                `<th title="${t}">${TEAM_ABBREV[t]}</th>`
-            ).join('')}</tr>`;
-            
+            const headerRow = `<tr><th>Reporter</th>${teams.map(t => `<th title="${t}">${TEAM_ABBREV[t]}</th>`).join('')}</tr>`;
             const dataRows = heatData.map(d => {
                 const cells = teams.map(t => {
                     const count = d.teamCounts[t];
@@ -755,25 +678,14 @@
             document.getElementById('heatmap-table').innerHTML = headerRow + dataRows;
         }
 
-        // =============================================
-        // RENDERING - OUTLETS
-        // =============================================
-
         function renderOutlets() {
             const stats = getOutletStats().sort((a, b) => b.filteredTotal - a.filteredTotal).slice(0, 30);
-
             document.getElementById('outlets-list').innerHTML = stats.length > 0
                 ? stats.map((o, i) => `
                     <div class="reporter-row">
                         <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
-                        <div class="reporter-info">
-                            <div class="reporter-name">${o.name}</div>
-                            <div class="reporter-outlet">Media Outlet</div>
-                        </div>
-                        <div class="reporter-stat">
-                            <div class="reporter-stat-value">${o.filteredTotal.toLocaleString()}</div>
-                            <div class="reporter-stat-label">Rumors</div>
-                        </div>
+                        <div class="reporter-info"><div class="reporter-name">${o.name}</div><div class="reporter-outlet">Media Outlet</div></div>
+                        <div class="reporter-stat"><div class="reporter-stat-value">${o.filteredTotal.toLocaleString()}</div><div class="reporter-stat-label">Rumors</div></div>
                     </div>
                 `).join('')
                 : '<div class="loading">No outlet data</div>';
@@ -786,6 +698,9 @@
         function openProfile(reporterId) {
             const reporter = REPORTERS.find(r => r.id === reporterId);
             if (!reporter) return;
+
+            currentProfileId = reporterId;
+            currentProfileDays = 0;
 
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('profile-page').classList.add('active');
@@ -803,27 +718,97 @@
             document.getElementById('profile-year').textContent = getFilteredCount(reporter.byDate, 365).toLocaleString();
             document.getElementById('profile-total').textContent = reporter.total.toLocaleString();
 
-            const topTeams = Object.entries(reporter.byTeam || {}).sort((a, b) => b[1] - a[1]).slice(0, 30);
-            document.getElementById('profile-teams-list').innerHTML = topTeams.length > 0
-                ? `<div class="coverage-grid">${topTeams.map(([team, count]) => `
-                    <div class="coverage-item"><span class="name">${team}</span><span class="count">${count}</span></div>
-                `).join('')}</div>`
-                : '<div class="loading">No team data</div>';
+            document.querySelectorAll('.profile-stat-box').forEach(b => b.classList.remove('active'));
+            document.querySelector('.profile-stat-box[data-days="0"]').classList.add('active');
 
-            const topPlayers = Object.entries(reporter.byPlayer || {}).sort((a, b) => b[1] - a[1]).slice(0, 30);
-            document.getElementById('profile-players-list').innerHTML = topPlayers.length > 0
-                ? `<div class="coverage-grid">${topPlayers.map(([player, count]) => `
-                    <div class="coverage-item"><span class="name">${player}</span><span class="count">${count}</span></div>
-                `).join('')}</div>`
-                : '<div class="loading">No player data</div>';
+            renderTimelineChart(reporter);
+            updateProfileCoverage(reporter, 0);
 
             window.scrollTo(0, 0);
+        }
+
+        function renderTimelineChart(reporter) {
+            const byDate = reporter.byDate || {};
+            const dates = Object.keys(byDate).sort();
+            if (dates.length === 0) {
+                document.getElementById('timeline-chart').innerHTML = '<div class="loading">No timeline data</div>';
+                document.getElementById('timeline-labels').innerHTML = '';
+                return;
+            }
+
+            const byYear = {};
+            for (const [date, count] of Object.entries(byDate)) {
+                const year = date.substring(0, 4);
+                byYear[year] = (byYear[year] || 0) + count;
+            }
+
+            const years = Object.keys(byYear).sort();
+            const maxCount = Math.max(...Object.values(byYear));
+
+            document.getElementById('timeline-chart').innerHTML = years.map(year => {
+                const count = byYear[year];
+                const height = maxCount > 0 ? Math.max(5, (count / maxCount) * 100) : 5;
+                return `<div class="timeline-bar" style="height: ${height}%" data-tooltip="${year}: ${count} rumors"></div>`;
+            }).join('');
+
+            document.getElementById('timeline-labels').innerHTML = years.map(y => `<span>${y}</span>`).join('');
+        }
+
+        function updateProfileCoverage(reporter, days) {
+            currentProfileDays = days;
+
+            // Top 30 teams (exactly 30)
+            const topTeams = Object.entries(reporter.byTeam || {})
+                .map(([team, count]) => [team, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
+                .filter(([_, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 30);
+
+            document.getElementById('profile-teams-list').innerHTML = topTeams.length > 0
+                ? `<div class="coverage-grid">${topTeams.map(([team, count]) => `<div class="coverage-item"><span class="name">${team}</span><span class="count">${count}</span></div>`).join('')}</div>`
+                : '<div class="loading">No team data</div>';
+
+            // Top 30 players (exactly 30)
+            const topPlayers = Object.entries(reporter.byPlayer || {})
+                .map(([player, count]) => [player, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
+                .filter(([_, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 30);
+
+            document.getElementById('profile-players-list').innerHTML = topPlayers.length > 0
+                ? `<div class="coverage-grid">${topPlayers.map(([player, count]) => `<div class="coverage-item"><span class="name">${player}</span><span class="count">${count}</span></div>`).join('')}</div>`
+                : '<div class="loading">No player data</div>';
+
+            // Top 10 agents
+            const topAgents = Object.entries(reporter.byAgent || {})
+                .map(([agent, count]) => [agent, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
+                .filter(([_, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            document.getElementById('profile-agents-list').innerHTML = topAgents.length > 0
+                ? `<div class="coverage-grid">${topAgents.map(([agent, count]) => `<div class="coverage-item"><span class="name">${agent}</span><span class="count">${count}</span></div>`).join('')}</div>`
+                : '<div class="loading">No agent data yet</div>';
         }
 
         function closeProfile() {
             document.getElementById('profile-page').classList.remove('active');
             document.getElementById('main-content').style.display = 'block';
+            currentProfileId = null;
         }
+
+        // Profile stat box click handlers
+        document.getElementById('profile-stats-grid').addEventListener('click', (e) => {
+            const box = e.target.closest('.profile-stat-box');
+            if (!box || !currentProfileId) return;
+
+            document.querySelectorAll('.profile-stat-box').forEach(b => b.classList.remove('active'));
+            box.classList.add('active');
+
+            const days = parseInt(box.dataset.days);
+            const reporter = REPORTERS.find(r => r.id === currentProfileId);
+            if (reporter) updateProfileCoverage(reporter, days);
+        });
 
         // =============================================
         // VIEW SWITCHING
@@ -839,10 +824,6 @@
                 case 'outlets': renderOutlets(); break;
             }
         }
-
-        // =============================================
-        // EVENT LISTENERS
-        // =============================================
 
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -870,11 +851,8 @@
         // =============================================
 
         document.addEventListener('DOMContentLoaded', () => {
-            if (initializeData()) {
-                renderCurrentView();
-            } else {
-                document.getElementById('leaderboard-list').innerHTML = '<div class="loading">Failed to load data</div>';
-            }
+            if (initializeData()) renderCurrentView();
+            else document.getElementById('leaderboard-list').innerHTML = '<div class="loading">Failed to load data</div>';
         });
     </script>
 </body>
