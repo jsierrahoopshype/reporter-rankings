@@ -19,7 +19,6 @@
             line-height: 1.5;
         }
 
-        /* Header */
         .header {
             background: white;
             border-bottom: 3px solid #e74c3c;
@@ -43,36 +42,21 @@
             margin-bottom: 16px;
         }
 
-        .logo span {
-            color: #333;
-        }
+        .logo span { color: #333; }
 
-        /* Stats Banner */
         .stats-banner {
             display: flex;
             gap: 30px;
             padding: 16px 0;
             border-bottom: 1px solid #eee;
             margin-bottom: 16px;
+            flex-wrap: wrap;
         }
 
-        .stat-item {
-            text-align: center;
-        }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 28px; font-weight: 700; color: #e74c3c; }
+        .stat-label { font-size: 12px; color: #666; text-transform: uppercase; }
 
-        .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #e74c3c;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-        }
-
-        /* Navigation */
         .nav-row {
             display: flex;
             justify-content: space-between;
@@ -81,10 +65,7 @@
             gap: 16px;
         }
 
-        .nav-tabs {
-            display: flex;
-            gap: 8px;
-        }
+        .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
 
         .nav-tab {
             padding: 10px 20px;
@@ -98,21 +79,10 @@
             transition: all 0.2s;
         }
 
-        .nav-tab:hover {
-            border-color: #e74c3c;
-            color: #e74c3c;
-        }
+        .nav-tab:hover { border-color: #e74c3c; color: #e74c3c; }
+        .nav-tab.active { background: #e74c3c; border-color: #e74c3c; color: white; }
 
-        .nav-tab.active {
-            background: #e74c3c;
-            border-color: #e74c3c;
-            color: white;
-        }
-
-        .time-filter {
-            display: flex;
-            gap: 4px;
-        }
+        .time-filter { display: flex; gap: 4px; flex-wrap: wrap; }
 
         .time-btn {
             padding: 8px 14px;
@@ -125,17 +95,9 @@
             transition: all 0.2s;
         }
 
-        .time-btn:hover {
-            border-color: #e74c3c;
-        }
+        .time-btn:hover { border-color: #e74c3c; }
+        .time-btn.active { background: #e74c3c; border-color: #e74c3c; color: white; }
 
-        .time-btn.active {
-            background: #e74c3c;
-            border-color: #e74c3c;
-            color: white;
-        }
-
-        /* Main Content */
         .main {
             max-width: 1200px;
             margin: 0 auto;
@@ -149,7 +111,6 @@
             color: #333;
         }
 
-        /* Cards */
         .card {
             background: white;
             border-radius: 12px;
@@ -168,7 +129,6 @@
             gap: 10px;
         }
 
-        /* Reporter Rows */
         .reporter-row {
             display: flex;
             align-items: center;
@@ -178,13 +138,8 @@
             transition: background 0.2s;
         }
 
-        .reporter-row:hover {
-            background: #fafafa;
-        }
-
-        .reporter-row:last-child {
-            border-bottom: none;
-        }
+        .reporter-row:hover { background: #fafafa; }
+        .reporter-row:last-child { border-bottom: none; }
 
         .rank {
             width: 36px;
@@ -204,89 +159,21 @@
         .rank-3 { background: linear-gradient(135deg, #cd7f32, #b8860b); color: white; }
         .rank-default { background: #f0f0f0; color: #666; }
 
-        .reporter-info {
-            flex: 1;
-            min-width: 0;
-        }
+        .reporter-info { flex: 1; min-width: 0; }
+        .reporter-name { font-weight: 600; font-size: 15px; color: #333; }
+        .reporter-outlet { font-size: 13px; color: #888; }
 
-        .reporter-name {
-            font-weight: 600;
-            font-size: 15px;
-            color: #333;
-        }
+        .reporter-stats { display: flex; gap: 20px; align-items: center; }
+        .reporter-stat { text-align: right; }
+        .reporter-stat-value { font-size: 20px; font-weight: 700; color: #e74c3c; }
+        .reporter-stat-label { font-size: 11px; color: #888; text-transform: uppercase; }
 
-        .reporter-outlet {
-            font-size: 13px;
-            color: #888;
-        }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
-        .reporter-stats {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .reporter-stat {
-            text-align: right;
-        }
-
-        .reporter-stat-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: #e74c3c;
-        }
-
-        .reporter-stat-label {
-            font-size: 11px;
-            color: #888;
-            text-transform: uppercase;
-        }
-
-        /* Tags */
-        .tags {
-            display: flex;
-            gap: 6px;
-            margin-top: 6px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-
-        .tag-team { background: #e3f2fd; color: #1976d2; }
-        .tag-player { background: #f3e5f5; color: #7b1fa2; }
-        .tag-trade { background: #fff3e0; color: #e65100; }
-        .tag-injury { background: #ffebee; color: #c62828; }
-
-        /* Grid Layouts */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        @media (max-width: 900px) {
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
-        }
-
-        /* Reporter Profile Page */
-        .profile-page {
-            display: none;
-        }
-
-        .profile-page.active {
-            display: block;
-        }
+        .profile-page { display: none; }
+        .profile-page.active { display: block; }
 
         .profile-header-card {
             background: white;
@@ -317,17 +204,8 @@
             flex-shrink: 0;
         }
 
-        .profile-info h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .profile-info .outlet {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 8px;
-        }
+        .profile-info h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+        .profile-info .outlet { font-size: 16px; color: #666; margin-bottom: 8px; }
 
         .tier-badge {
             display: inline-block;
@@ -343,29 +221,23 @@
 
         .profile-stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .profile-stats-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
         .profile-stat-box {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 16px;
             border-radius: 8px;
             text-align: center;
         }
 
-        .profile-stat-box .value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #e74c3c;
-        }
-
-        .profile-stat-box .label {
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
+        .profile-stat-box .value { font-size: 24px; font-weight: 700; color: #e74c3c; }
+        .profile-stat-box .label { font-size: 10px; color: #666; text-transform: uppercase; margin-top: 4px; }
 
         .back-btn {
             display: inline-flex;
@@ -382,16 +254,13 @@
             transition: all 0.2s;
         }
 
-        .back-btn:hover {
-            border-color: #e74c3c;
-            color: #e74c3c;
-        }
+        .back-btn:hover { border-color: #e74c3c; color: #e74c3c; }
 
-        /* Coverage Lists */
         .coverage-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 8px;
+            padding: 16px;
         }
 
         .coverage-item {
@@ -403,75 +272,8 @@
             border-radius: 6px;
         }
 
-        .coverage-item .name {
-            font-size: 14px;
-            color: #333;
-        }
-
-        .coverage-item .count {
-            font-weight: 600;
-            color: #e74c3c;
-            font-size: 14px;
-        }
-
-        /* Heatmap */
-        .heatmap-container {
-            overflow-x: auto;
-        }
-
-        .heatmap {
-            display: table;
-            border-collapse: collapse;
-            font-size: 12px;
-            width: 100%;
-        }
-
-        .heatmap th, .heatmap td {
-            padding: 8px 10px;
-            text-align: center;
-            border: 1px solid #eee;
-            white-space: nowrap;
-        }
-
-        .heatmap th {
-            background: #f5f5f5;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-        }
-
-        .heatmap th:first-child {
-            position: sticky;
-            left: 0;
-            z-index: 2;
-        }
-
-        .heatmap td:first-child {
-            position: sticky;
-            left: 0;
-            background: white;
-            font-weight: 500;
-            text-align: left;
-            z-index: 1;
-        }
-
-        .heat-0 { background: #fff; }
-        .heat-1 { background: #fff5f5; }
-        .heat-2 { background: #fed7d7; }
-        .heat-3 { background: #feb2b2; }
-        .heat-4 { background: #fc8181; }
-        .heat-5 { background: #f56565; color: white; }
-
-        /* Team/Player Coverage Section */
-        .coverage-section {
-            margin-bottom: 30px;
-        }
-
-        .coverage-section h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
-            color: #333;
-        }
+        .coverage-item .name { font-size: 14px; color: #333; }
+        .coverage-item .count { font-weight: 600; color: #e74c3c; font-size: 14px; }
 
         .team-coverage-card {
             background: white;
@@ -497,30 +299,51 @@
             cursor: pointer;
         }
 
-        .reporter-mini:hover {
-            color: #e74c3c;
+        .reporter-mini:hover { color: #e74c3c; }
+        .reporter-mini .count { color: #e74c3c; font-weight: 600; }
+
+        .heatmap-container { overflow-x: auto; }
+
+        .heatmap {
+            display: table;
+            border-collapse: collapse;
+            font-size: 11px;
+            width: 100%;
         }
 
-        .reporter-mini .count {
-            color: #e74c3c;
-            font-weight: 600;
-        }
-
-        /* Loading */
-        .loading {
-            padding: 40px;
+        .heatmap th, .heatmap td {
+            padding: 6px 8px;
             text-align: center;
-            color: #888;
+            border: 1px solid #eee;
+            white-space: nowrap;
         }
 
-        /* View Sections */
-        .view-section {
-            display: none;
+        .heatmap th {
+            background: #f5f5f5;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
         }
 
-        .view-section.active {
-            display: block;
+        .heatmap td:first-child {
+            position: sticky;
+            left: 0;
+            background: white;
+            font-weight: 500;
+            text-align: left;
+            z-index: 1;
         }
+
+        .heat-0 { background: #fff; }
+        .heat-1 { background: #fff5f5; }
+        .heat-2 { background: #fed7d7; }
+        .heat-3 { background: #feb2b2; }
+        .heat-4 { background: #fc8181; }
+        .heat-5 { background: #f56565; color: white; }
+
+        .loading { padding: 40px; text-align: center; color: #888; }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
     </style>
 </head>
 <body>
@@ -528,7 +351,7 @@
         <div class="header-content">
             <div class="logo">REPORTER <span>RANKINGS</span></div>
             
-            <div class="stats-banner" id="stats-banner">
+            <div class="stats-banner">
                 <div class="stat-item">
                     <div class="stat-value" id="stat-reporters">-</div>
                     <div class="stat-label">Reporters</div>
@@ -568,9 +391,7 @@
     </header>
 
     <main class="main">
-        <!-- Main Views -->
         <div id="main-content">
-            <!-- Leaderboard View -->
             <section id="leaderboard" class="view-section active">
                 <div class="grid-2">
                     <div class="card">
@@ -584,19 +405,16 @@
                 </div>
             </section>
 
-            <!-- By Team View -->
             <section id="teams" class="view-section">
                 <h2 class="section-title">Top 5 Reporters for Each Team</h2>
                 <div id="teams-grid" class="grid-3 loading">Loading...</div>
             </section>
 
-            <!-- By Player View -->
             <section id="players" class="view-section">
                 <h2 class="section-title">Top 5 Reporters for Most Mentioned Players</h2>
                 <div id="players-grid" class="grid-3 loading">Loading...</div>
             </section>
 
-            <!-- Heatmap View -->
             <section id="heatmap" class="view-section">
                 <h2 class="section-title">Reporter × Team Coverage Heatmap</h2>
                 <div class="card">
@@ -606,7 +424,6 @@
                 </div>
             </section>
 
-            <!-- Outlets View -->
             <section id="outlets" class="view-section">
                 <h2 class="section-title">Media Outlets</h2>
                 <div class="card">
@@ -616,7 +433,6 @@
             </section>
         </div>
 
-        <!-- Reporter Profile Page -->
         <div id="profile-page" class="profile-page">
             <button class="back-btn" onclick="closeProfile()">← Back to Rankings</button>
             
@@ -631,20 +447,28 @@
                 </div>
                 <div class="profile-stats-grid">
                     <div class="profile-stat-box">
+                        <div class="value" id="profile-week">0</div>
+                        <div class="label">Week</div>
+                    </div>
+                    <div class="profile-stat-box">
+                        <div class="value" id="profile-month">0</div>
+                        <div class="label">Month</div>
+                    </div>
+                    <div class="profile-stat-box">
+                        <div class="value" id="profile-3mo">0</div>
+                        <div class="label">3 Months</div>
+                    </div>
+                    <div class="profile-stat-box">
+                        <div class="value" id="profile-6mo">0</div>
+                        <div class="label">6 Months</div>
+                    </div>
+                    <div class="profile-stat-box">
+                        <div class="value" id="profile-year">0</div>
+                        <div class="label">Year</div>
+                    </div>
+                    <div class="profile-stat-box">
                         <div class="value" id="profile-total">0</div>
-                        <div class="label">Total Rumors</div>
-                    </div>
-                    <div class="profile-stat-box">
-                        <div class="value" id="profile-teams">0</div>
-                        <div class="label">Teams Covered</div>
-                    </div>
-                    <div class="profile-stat-box">
-                        <div class="value" id="profile-players">0</div>
-                        <div class="label">Players Covered</div>
-                    </div>
-                    <div class="profile-stat-box">
-                        <div class="value" id="profile-trade">0</div>
-                        <div class="label">Trade Rumors</div>
+                        <div class="label">All-Time</div>
                     </div>
                 </div>
             </div>
@@ -679,7 +503,6 @@
             "Toronto Raptors", "Utah Jazz", "Washington Wizards"
         ];
         
-        // Also map short names to full names for data that uses short names
         const TEAM_SHORT_TO_FULL = {
             "Hawks": "Atlanta Hawks", "Celtics": "Boston Celtics", "Nets": "Brooklyn Nets",
             "Hornets": "Charlotte Hornets", "Bulls": "Chicago Bulls", "Cavaliers": "Cleveland Cavaliers",
@@ -688,23 +511,36 @@
             "Clippers": "Los Angeles Clippers", "Lakers": "Los Angeles Lakers", "Grizzlies": "Memphis Grizzlies",
             "Heat": "Miami Heat", "Bucks": "Milwaukee Bucks", "Timberwolves": "Minnesota Timberwolves",
             "Pelicans": "New Orleans Pelicans", "Knicks": "New York Knicks", "Thunder": "Oklahoma City Thunder",
-            "Magic": "Orlando Magic", "76ers": "Philadelphia 76ers", "Suns": "Phoenix Suns",
-            "Trail Blazers": "Portland Trail Blazers", "Kings": "Sacramento Kings", "Spurs": "San Antonio Spurs",
-            "Raptors": "Toronto Raptors", "Jazz": "Utah Jazz", "Wizards": "Washington Wizards"
+            "Magic": "Orlando Magic", "76ers": "Philadelphia 76ers", "Sixers": "Philadelphia 76ers",
+            "Suns": "Phoenix Suns", "Trail Blazers": "Portland Trail Blazers", "Blazers": "Portland Trail Blazers",
+            "Kings": "Sacramento Kings", "Spurs": "San Antonio Spurs", "Raptors": "Toronto Raptors", 
+            "Jazz": "Utah Jazz", "Wizards": "Washington Wizards"
         };
 
-        // Non-player tags to exclude (executives, coaches, non-persons)
+        const TEAM_ABBREV = {
+            "Atlanta Hawks": "ATL", "Boston Celtics": "BOS", "Brooklyn Nets": "BKN",
+            "Charlotte Hornets": "CHA", "Chicago Bulls": "CHI", "Cleveland Cavaliers": "CLE",
+            "Dallas Mavericks": "DAL", "Denver Nuggets": "DEN", "Detroit Pistons": "DET",
+            "Golden State Warriors": "GSW", "Houston Rockets": "HOU", "Indiana Pacers": "IND",
+            "Los Angeles Clippers": "LAC", "Los Angeles Lakers": "LAL", "Memphis Grizzlies": "MEM",
+            "Miami Heat": "MIA", "Milwaukee Bucks": "MIL", "Minnesota Timberwolves": "MIN",
+            "New Orleans Pelicans": "NOP", "New York Knicks": "NYK", "Oklahoma City Thunder": "OKC",
+            "Orlando Magic": "ORL", "Philadelphia 76ers": "PHI", "Phoenix Suns": "PHX",
+            "Portland Trail Blazers": "POR", "Sacramento Kings": "SAC", "San Antonio Spurs": "SAS",
+            "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WAS"
+        };
+
+        // Non-players to exclude from player lists
         const NON_PLAYERS = new Set([
             // Organizations/Events
             "team usa", "usa basketball", "g league", "nba", "all-star",
             "hall of fame", "olympics", "fiba", "eurobasket", "world cup",
             "summer league", "las vegas summer league", "nba draft", "draft combine",
-            // Categories
-            "rookie", "free agency", "trade", "draft", "injuries", "contract",
+            "social media", "free agency", "trade", "draft", "injuries", "contract",
             "business", "media", "statistics", "coaching", "front office",
             // Commissioners/Executives
-            "david stern", "adam silver", "billy hunter", "michele roberts",
-            // Coaches
+            "david stern", "adam silver", "billy hunter", "michele roberts", "mark cuban",
+            // Coaches (extensive list)
             "doc rivers", "brad stevens", "gregg popovich", "brett brown", 
             "rick carlisle", "erik spoelstra", "phil jackson", "mike d'antoni",
             "dwane casey", "frank vogel", "steve kerr", "tyronn lue", "tom thibodeau",
@@ -717,10 +553,33 @@
             "stan van gundy", "jeff van gundy", "mike brown", "scott brooks",
             "terry stotts", "alvin gentry", "nate mcmillan", "luke walton",
             "dave joerger", "david fizdale", "earl watson", "derek fisher",
-            // GMs/Presidents
+            // GMs/Executives
             "bob myers", "sam presti", "daryl morey", "masai ujiri", "rob pelinka",
-            "james jones", "koby altman", "brad stevens"
+            "james jones", "koby altman"
         ].map(s => s.toLowerCase()));
+
+        // Fake reporters to exclude (Twitter handles, PR accounts, etc.)
+        const EXCLUDED_REPORTERS = new Set([
+            "@mrbuckbucknba", "@nbapr", "@ohnohedidnt24", "@hornetspr", "@espnstatsinfo",
+            "mrbuckbucknba", "nbapr", "ohnohedidnt24", "hornetspr", "espnstatsinfo",
+            // Players who might show up as reporters
+            "carmelo anthony", "chris paul", "dwight howard", "giannis antetokounmpo",
+            "dwyane wade", "bradley beal", "magic johnson", "isaiah thomas", "john wall",
+            // Generic/non-reporter entries
+            "social media", "unknown", "n/a", ""
+        ].map(s => s.toLowerCase()));
+
+        // Handle to reporter name mapping
+        const HANDLE_TO_NAME = {
+            "kcjhoop": "KC Johnson"
+        };
+
+        // Outlet normalization (merge duplicates)
+        const OUTLET_NORMALIZE = {
+            "espn.com": "ESPN",
+            "ESPN.com": "ESPN",
+            "espn": "ESPN"
+        };
 
         // =============================================
         // STATE
@@ -730,6 +589,73 @@
         let OUTLETS = [];
         let currentDays = 365;
         let currentView = 'leaderboard';
+
+        // =============================================
+        // HELPER FUNCTIONS
+        // =============================================
+
+        function getFilteredCount(byDate, days) {
+            if (!byDate || Object.keys(byDate).length === 0) return 0;
+            if (days === 0) {
+                return Object.values(byDate).reduce((sum, c) => sum + c, 0);
+            }
+            
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - days);
+            const cutoffStr = cutoff.toISOString().split('T')[0];
+
+            let total = 0;
+            for (const [date, count] of Object.entries(byDate)) {
+                if (date >= cutoffStr) {
+                    total += count;
+                }
+            }
+            return total;
+        }
+
+        function isValidReporter(name) {
+            if (!name) return false;
+            const nameLower = name.toLowerCase().trim();
+            if (EXCLUDED_REPORTERS.has(nameLower)) return false;
+            if (nameLower.startsWith('@') && nameLower.length < 4) return false;
+            // Exclude if it looks like a team name
+            for (const team of NBA_TEAMS) {
+                if (nameLower === team.toLowerCase()) return false;
+            }
+            return true;
+        }
+
+        function isValidPlayer(name) {
+            if (!name) return false;
+            const nameLower = name.toLowerCase().trim();
+            if (NON_PLAYERS.has(nameLower)) return false;
+            // Exclude team names
+            for (const team of NBA_TEAMS) {
+                if (nameLower.includes(team.toLowerCase().split(' ').pop())) return false;
+            }
+            for (const short of Object.keys(TEAM_SHORT_TO_FULL)) {
+                if (nameLower === short.toLowerCase()) return false;
+            }
+            return true;
+        }
+
+        function normalizeTeamName(team) {
+            return TEAM_SHORT_TO_FULL[team] || team;
+        }
+
+        function normalizeOutletName(outlet) {
+            return OUTLET_NORMALIZE[outlet] || OUTLET_NORMALIZE[outlet?.toLowerCase()] || outlet;
+        }
+
+        function normalizeReporterName(name) {
+            if (!name) return name;
+            // Check if it's a known handle
+            const handle = name.replace('@', '').toLowerCase();
+            if (HANDLE_TO_NAME[handle]) {
+                return HANDLE_TO_NAME[handle];
+            }
+            return name;
+        }
 
         // =============================================
         // INITIALIZATION
@@ -743,42 +669,56 @@
 
             console.log('Loading data...');
 
-            REPORTERS = REPORTER_DATA.reporters.map((r, i) => {
-                // Filter out non-players from byPlayer
-                const filteredByPlayer = {};
-                for (const [name, count] of Object.entries(r.by_player || {})) {
-                    if (!NON_PLAYERS.has(name.toLowerCase()) && !NBA_TEAMS.some(t => name.toLowerCase().includes(t.toLowerCase()))) {
-                        filteredByPlayer[name] = count;
+            REPORTERS = REPORTER_DATA.reporters
+                .filter(r => isValidReporter(r.name))
+                .map((r, i) => {
+                    // Normalize name
+                    const name = normalizeReporterName(r.name);
+                    
+                    // Filter players
+                    const filteredByPlayer = {};
+                    for (const [playerName, count] of Object.entries(r.by_player || {})) {
+                        if (isValidPlayer(playerName)) {
+                            filteredByPlayer[playerName] = count;
+                        }
                     }
-                }
-                
-                // Normalize team names (convert short names to full names)
-                const normalizedByTeam = {};
-                for (const [team, count] of Object.entries(r.by_team || {})) {
-                    const fullName = TEAM_SHORT_TO_FULL[team] || team;
-                    normalizedByTeam[fullName] = (normalizedByTeam[fullName] || 0) + count;
-                }
+                    
+                    // Normalize team names
+                    const normalizedByTeam = {};
+                    for (const [team, count] of Object.entries(r.by_team || {})) {
+                        const fullName = normalizeTeamName(team);
+                        if (NBA_TEAMS.includes(fullName)) {
+                            normalizedByTeam[fullName] = (normalizedByTeam[fullName] || 0) + count;
+                        }
+                    }
 
-                return {
-                    id: r.id || `reporter_${i}`,
-                    name: r.name,
-                    outlet: r.outlet,
-                    tier: r.tier || 3,
-                    avatar: r.avatar || r.name.substring(0, 2).toUpperCase(),
-                    total: r.total || 0,
-                    byTopic: r.by_topic || {},
-                    byPlayer: filteredByPlayer,
-                    byTeam: normalizedByTeam,
-                    byDate: r.by_date || {}
-                };
-            });
+                    return {
+                        id: r.id || `reporter_${i}`,
+                        name: name,
+                        outlet: normalizeOutletName(r.outlet),
+                        tier: r.tier || 3,
+                        avatar: r.avatar || name.replace('@', '').substring(0, 2).toUpperCase(),
+                        total: r.total || 0,
+                        byTopic: r.by_topic || {},
+                        byPlayer: filteredByPlayer,
+                        byTeam: normalizedByTeam,
+                        byDate: r.by_date || {}
+                    };
+                });
 
-            OUTLETS = (REPORTER_DATA.outlets || []).map((o, i) => ({
-                id: o.id || `outlet_${i}`,
-                name: o.name,
-                total: o.total || 0,
-                byDate: o.by_date || {}
-            }));
+            // Merge outlets with same normalized name
+            const outletMap = {};
+            for (const o of (REPORTER_DATA.outlets || [])) {
+                const name = normalizeOutletName(o.name);
+                if (!outletMap[name]) {
+                    outletMap[name] = { name, total: 0, byDate: {} };
+                }
+                outletMap[name].total += o.total || 0;
+                for (const [date, count] of Object.entries(o.by_date || {})) {
+                    outletMap[name].byDate[date] = (outletMap[name].byDate[date] || 0) + count;
+                }
+            }
+            OUTLETS = Object.values(outletMap);
 
             // Update stats banner
             document.getElementById('stat-reporters').textContent = REPORTERS.length.toLocaleString();
@@ -791,14 +731,7 @@
         }
 
         function updatePeriodLabel() {
-            const labels = {
-                7: 'Last Week',
-                30: 'Last Month', 
-                90: 'Last 3 Months',
-                180: 'Last 6 Months',
-                365: 'Last Year',
-                0: 'All Time'
-            };
+            const labels = { 7: 'Week', 30: 'Month', 90: '3 Months', 180: '6 Months', 365: 'Year', 0: 'All Time' };
             document.getElementById('stat-period').textContent = labels[currentDays] || 'Year';
         }
 
@@ -806,64 +739,14 @@
         // FILTERING
         // =============================================
 
-        function getFilteredTotal(byDate, days) {
-            if (days === 0 || !byDate || Object.keys(byDate).length === 0) {
-                return null; // Signal to use total
-            }
-
-            const cutoff = new Date();
-            cutoff.setDate(cutoff.getDate() - days);
-            const cutoffStr = cutoff.toISOString().split('T')[0];
-
-            let total = 0;
-            for (const [date, count] of Object.entries(byDate)) {
-                // Handle both YYYY-MM-DD and other formats
-                const normalizedDate = normalizeDate(date);
-                if (normalizedDate && normalizedDate >= cutoffStr) {
-                    total += count;
-                }
-            }
-            return total;
-        }
-
-        function normalizeDate(dateStr) {
-            if (!dateStr) return null;
-            // Already in YYYY-MM-DD format
-            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-                return dateStr;
-            }
-            // Try parsing other formats
-            try {
-                const d = new Date(dateStr);
-                if (!isNaN(d.getTime())) {
-                    return d.toISOString().split('T')[0];
-                }
-            } catch (e) {}
-            return null;
-        }
-
         function getReporterStats() {
             return REPORTERS.map(r => {
-                const filtered = getFilteredTotal(r.byDate, currentDays);
-                const total = filtered !== null ? filtered : r.total;
+                const filtered = getFilteredCount(r.byDate, currentDays);
+                const total = currentDays === 0 ? r.total : (filtered || r.total);
 
-                // Calculate previous period for trending
                 let prevTotal = 0;
-                if (currentDays > 0 && currentDays < 365) {
-                    const cutoff = new Date();
-                    cutoff.setDate(cutoff.getDate() - currentDays);
-                    const cutoffStr = cutoff.toISOString().split('T')[0];
-                    
-                    const prevCutoff = new Date();
-                    prevCutoff.setDate(prevCutoff.getDate() - (currentDays * 2));
-                    const prevCutoffStr = prevCutoff.toISOString().split('T')[0];
-
-                    for (const [date, count] of Object.entries(r.byDate || {})) {
-                        const normalizedDate = normalizeDate(date);
-                        if (normalizedDate && normalizedDate >= prevCutoffStr && normalizedDate < cutoffStr) {
-                            prevTotal += count;
-                        }
-                    }
+                if (currentDays > 0 && currentDays <= 180) {
+                    prevTotal = getFilteredCount(r.byDate, currentDays * 2) - filtered;
                 }
 
                 return {
@@ -877,10 +760,10 @@
 
         function getOutletStats() {
             return OUTLETS.map(o => {
-                const filtered = getFilteredTotal(o.byDate, currentDays);
+                const filtered = getFilteredCount(o.byDate, currentDays);
                 return {
                     ...o,
-                    filteredTotal: filtered !== null ? filtered : o.total
+                    filteredTotal: currentDays === 0 ? o.total : (filtered || o.total)
                 };
             }).filter(o => o.filteredTotal > 0);
         }
@@ -898,17 +781,12 @@
                 return;
             }
 
-            // Top 50
             document.getElementById('leaderboard-list').innerHTML = stats.slice(0, 50).map((r, i) => `
                 <div class="reporter-row" onclick="openProfile('${r.id}')">
                     <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
                     <div class="reporter-info">
                         <div class="reporter-name">${r.name}</div>
                         <div class="reporter-outlet">${r.outlet}</div>
-                        <div class="tags">
-                            ${r.byTopic?.trade ? `<span class="tag tag-trade">Trade ${r.byTopic.trade}</span>` : ''}
-                            ${r.byTopic?.injury ? `<span class="tag tag-injury">Injury ${r.byTopic.injury}</span>` : ''}
-                        </div>
                     </div>
                     <div class="reporter-stat">
                         <div class="reporter-stat-value">${r.filteredTotal.toLocaleString()}</div>
@@ -917,8 +795,7 @@
                 </div>
             `).join('');
 
-            // Trending
-            if (currentDays > 0 && currentDays < 365) {
+            if (currentDays > 0 && currentDays <= 180) {
                 const trending = stats.filter(r => r.change > 0).sort((a, b) => b.change - a.change).slice(0, 20);
                 document.getElementById('trending-list').innerHTML = trending.length > 0 
                     ? trending.map((r, i) => `
@@ -933,16 +810,12 @@
                                     <div class="reporter-stat-value" style="color: #27ae60;">+${r.change}</div>
                                     <div class="reporter-stat-label">vs prev</div>
                                 </div>
-                                <div class="reporter-stat">
-                                    <div class="reporter-stat-value">${r.filteredTotal}</div>
-                                    <div class="reporter-stat-label">Total</div>
-                                </div>
                             </div>
                         </div>
                     `).join('')
                     : '<div class="loading">No trending data</div>';
             } else {
-                document.getElementById('trending-list').innerHTML = '<div class="loading">Select Week/Month/3Mo to see trending</div>';
+                document.getElementById('trending-list').innerHTML = '<div class="loading">Select Week/Month/3Mo/6Mo to see trending</div>';
             }
         }
 
@@ -953,11 +826,8 @@
         function renderTeams() {
             const stats = getReporterStats();
             
-            // Build team -> reporters mapping
             const teamReporters = {};
-            NBA_TEAMS.forEach(team => {
-                teamReporters[team] = [];
-            });
+            NBA_TEAMS.forEach(team => { teamReporters[team] = []; });
 
             stats.forEach(r => {
                 for (const [team, count] of Object.entries(r.byTeam || {})) {
@@ -967,18 +837,17 @@
                 }
             });
 
-            // Sort each team's reporters and take top 5
             const html = NBA_TEAMS.map(team => {
                 const reporters = teamReporters[team].sort((a, b) => b.teamCount - a.teamCount).slice(0, 5);
                 return `
                     <div class="team-coverage-card">
                         <div class="team-name">${team}</div>
-                        ${reporters.map(r => `
+                        ${reporters.length > 0 ? reporters.map(r => `
                             <div class="reporter-mini" onclick="openProfile('${r.id}')">
                                 <span>${r.name}</span>
                                 <span class="count">${r.teamCount}</span>
                             </div>
-                        `).join('') || '<div class="loading">No data</div>'}
+                        `).join('') : '<div style="color:#888;font-size:13px;">No data</div>'}
                     </div>
                 `;
             }).join('');
@@ -994,7 +863,6 @@
         function renderPlayers() {
             const stats = getReporterStats();
             
-            // Find top 50 most mentioned players across all reporters
             const playerCounts = {};
             stats.forEach(r => {
                 for (const [player, count] of Object.entries(r.byPlayer || {})) {
@@ -1007,7 +875,6 @@
                 .slice(0, 50)
                 .map(([name]) => name);
 
-            // For each player, find top 5 reporters
             const html = topPlayers.map(player => {
                 const reporters = stats
                     .filter(r => r.byPlayer && r.byPlayer[player])
@@ -1018,12 +885,12 @@
                 return `
                     <div class="team-coverage-card">
                         <div class="team-name">${player}</div>
-                        ${reporters.map(r => `
+                        ${reporters.length > 0 ? reporters.map(r => `
                             <div class="reporter-mini" onclick="openProfile('${r.id}')">
                                 <span>${r.name}</span>
                                 <span class="count">${r.playerCount}</span>
                             </div>
-                        `).join('') || '<div class="loading">No data</div>'}
+                        `).join('') : '<div style="color:#888;font-size:13px;">No data</div>'}
                     </div>
                 `;
             }).join('');
@@ -1033,28 +900,13 @@
         }
 
         // =============================================
-        // RENDERING - HEATMAP
+        // RENDERING - HEATMAP (ALL 30 TEAMS)
         // =============================================
 
         function renderHeatmap() {
-            const stats = getReporterStats().sort((a, b) => b.filteredTotal - a.filteredTotal).slice(0, 15);
-            const teams = NBA_TEAMS.slice(0, 20);
-            
-            // Short names for header display
-            const TEAM_FULL_TO_SHORT = {
-                "Atlanta Hawks": "ATL", "Boston Celtics": "BOS", "Brooklyn Nets": "BKN",
-                "Charlotte Hornets": "CHA", "Chicago Bulls": "CHI", "Cleveland Cavaliers": "CLE",
-                "Dallas Mavericks": "DAL", "Denver Nuggets": "DEN", "Detroit Pistons": "DET",
-                "Golden State Warriors": "GSW", "Houston Rockets": "HOU", "Indiana Pacers": "IND",
-                "Los Angeles Clippers": "LAC", "Los Angeles Lakers": "LAL", "Memphis Grizzlies": "MEM",
-                "Miami Heat": "MIA", "Milwaukee Bucks": "MIL", "Minnesota Timberwolves": "MIN",
-                "New Orleans Pelicans": "NOP", "New York Knicks": "NYK", "Oklahoma City Thunder": "OKC",
-                "Orlando Magic": "ORL", "Philadelphia 76ers": "PHI", "Phoenix Suns": "PHX",
-                "Portland Trail Blazers": "POR", "Sacramento Kings": "SAC", "San Antonio Spurs": "SAS",
-                "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WAS"
-            };
+            const stats = getReporterStats().sort((a, b) => b.filteredTotal - a.filteredTotal).slice(0, 20);
+            const teams = NBA_TEAMS; // All 30 teams
 
-            // Find max for scaling
             let maxCount = 0;
             stats.forEach(r => {
                 teams.forEach(t => {
@@ -1073,7 +925,7 @@
                 return 'heat-5';
             };
 
-            const headerRow = `<tr><th>Reporter</th>${teams.map(t => `<th title="${t}">${TEAM_FULL_TO_SHORT[t] || t}</th>`).join('')}</tr>`;
+            const headerRow = `<tr><th>Reporter</th>${teams.map(t => `<th title="${t}">${TEAM_ABBREV[t] || t}</th>`).join('')}</tr>`;
             
             const dataRows = stats.map(r => {
                 const cells = teams.map(t => {
@@ -1111,7 +963,7 @@
         }
 
         // =============================================
-        // REPORTER PROFILE
+        // REPORTER PROFILE (WITH TIME BREAKDOWNS)
         // =============================================
 
         function openProfile(reporterId) {
@@ -1127,10 +979,13 @@
             document.getElementById('profile-tier').textContent = `Tier ${reporter.tier}`;
             document.getElementById('profile-tier').className = `tier-badge tier-${reporter.tier}`;
 
+            // Time-based stats
+            document.getElementById('profile-week').textContent = getFilteredCount(reporter.byDate, 7).toLocaleString();
+            document.getElementById('profile-month').textContent = getFilteredCount(reporter.byDate, 30).toLocaleString();
+            document.getElementById('profile-3mo').textContent = getFilteredCount(reporter.byDate, 90).toLocaleString();
+            document.getElementById('profile-6mo').textContent = getFilteredCount(reporter.byDate, 180).toLocaleString();
+            document.getElementById('profile-year').textContent = getFilteredCount(reporter.byDate, 365).toLocaleString();
             document.getElementById('profile-total').textContent = reporter.total.toLocaleString();
-            document.getElementById('profile-teams').textContent = Object.keys(reporter.byTeam || {}).length;
-            document.getElementById('profile-players').textContent = Object.keys(reporter.byPlayer || {}).length;
-            document.getElementById('profile-trade').textContent = (reporter.byTopic?.trade || 0).toLocaleString();
 
             // Top 30 teams
             const topTeams = Object.entries(reporter.byTeam || {})
@@ -1192,10 +1047,7 @@
                 tab.classList.add('active');
                 currentView = tab.dataset.view;
                 document.getElementById(currentView).classList.add('active');
-                
-                // Close profile if open
                 closeProfile();
-                
                 renderCurrentView();
             });
         });
@@ -1210,7 +1062,7 @@
         });
 
         // =============================================
-        // INITIALIZATION
+        // INIT
         // =============================================
 
         document.addEventListener('DOMContentLoaded', () => {
