@@ -119,13 +119,9 @@
         .coverage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; padding: 16px; }
         .coverage-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 14px; background: #f8f9fa; border-radius: 6px; cursor: pointer;
-            transition: all 0.2s;
+            padding: 10px 14px; background: #f8f9fa; border-radius: 6px;
         }
-        .coverage-item:hover { background: #e74c3c; color: white; }
-        .coverage-item:hover .count { color: white; }
         .coverage-item .name { font-size: 13px; color: #333; }
-        .coverage-item:hover .name { color: white; }
         .coverage-item .count { font-weight: 600; color: #e74c3c; font-size: 13px; }
 
         .team-coverage-card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
@@ -293,7 +289,7 @@
                     <div class="profile-stat-box"><div class="value" id="profile-year">0</div><div class="label">Year</div></div>
                     <div class="profile-stat-box"><div class="value" id="profile-total">0</div><div class="label">All-Time</div></div>
                 </div>
-                <div class="period-note">Use the time filter buttons above to change the period. Click on any team/player/agent below to see related rumors.</div>
+                <div class="period-note">Use the time filter buttons above to change the period for Teams, Players, and Agents below.</div>
             </div>
 
             <div class="card">
@@ -960,7 +956,7 @@
 
             document.getElementById('profile-teams-list').innerHTML = topTeams.length > 0
                 ? `<div class="coverage-grid">${topTeams.map(([team, count]) => `
-                    <div class="coverage-item" onclick="showRumorsModal('${reporter.id}', 'team', '${team}')">
+                    <div class="coverage-item">
                         <span class="name">${team}</span><span class="count">${count}</span>
                     </div>`).join('')}</div>`
                 : '<div class="loading">No team data</div>';
@@ -974,7 +970,7 @@
 
             document.getElementById('profile-players-list').innerHTML = topPlayers.length > 0
                 ? `<div class="coverage-grid">${topPlayers.map(([player, count]) => `
-                    <div class="coverage-item" onclick="showRumorsModal('${reporter.id}', 'player', '${player.replace(/'/g, "\\'")}')">
+                    <div class="coverage-item">
                         <span class="name">${player}</span><span class="count">${count}</span>
                     </div>`).join('')}</div>`
                 : '<div class="loading">No player data</div>';
@@ -988,7 +984,7 @@
 
             document.getElementById('profile-agents-list').innerHTML = topAgents.length > 0
                 ? `<div class="coverage-grid">${topAgents.map(([agent, count]) => `
-                    <div class="coverage-item" onclick="showRumorsModal('${reporter.id}', 'agent', '${agent.replace(/'/g, "\\'")}')">
+                    <div class="coverage-item">
                         <span class="name">${agent}</span><span class="count">${count}</span>
                     </div>`).join('')}</div>`
                 : '<div class="loading">No agent data yet</div>';
