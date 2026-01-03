@@ -572,7 +572,9 @@
                         byTeam: normalizedByTeam,
                         byAgent: r.by_agent || {},
                         byDate: r.by_date || {},
-                        recentRumors: r.recent_rumors || []
+                        rumorsByTeam: r.rumors_by_team || {},
+                        rumorsByPlayer: r.rumors_by_player || {},
+                        rumorsByAgent: r.rumors_by_agent || {}
                     };
                 });
 
@@ -643,25 +645,32 @@
 
             title.textContent = `${reporter.name} on ${name}`;
 
-            // Filter rumors that mention this player/team/agent
-            const nameLower = name.toLowerCase();
-            const relevantRumors = (reporter.recentRumors || []).filter(r => {
-                const text = (r.text || '').toLowerCase();
-                const teams = (r.teams || []).map(t => t.toLowerCase());
-                const players = (r.players || []).map(p => p.toLowerCase());
+            // Get rumors directly from the appropriate structure
+            let rumors = [];
+            let totalCount = 0;
+            
+            if (type === 'team') {
+                // Try exact match first, then try short name
+                rumors = reporter.rumorsByTeam[name] || [];
+                totalCount = reporter.byTeam[name] || 0;
                 
-                if (type === 'team') {
-                    return teams.some(t => t.includes(nameLower) || nameLower.includes(t)) || text.includes(nameLower);
-                } else if (type === 'player') {
-                    return players.some(p => p.includes(nameLower) || nameLower.includes(p)) || text.includes(nameLower);
-                } else if (type === 'agent') {
-                    return text.includes(nameLower);
+                // Also check for short team names
+                if (rumors.length === 0) {
+                    const shortName = Object.entries(TEAM_SHORT_TO_FULL).find(([short, full]) => full === name)?.[0];
+                    if (shortName) {
+                        rumors = reporter.rumorsByTeam[shortName] || [];
+                    }
                 }
-                return false;
-            });
+            } else if (type === 'player') {
+                rumors = reporter.rumorsByPlayer[name] || [];
+                totalCount = reporter.byPlayer[name] || 0;
+            } else if (type === 'agent') {
+                rumors = reporter.rumorsByAgent[name] || [];
+                totalCount = reporter.byAgent[name] || 0;
+            }
 
-            if (relevantRumors.length > 0) {
-                body.innerHTML = relevantRumors.map(r => `
+            if (rumors.length > 0) {
+                body.innerHTML = rumors.map(r => `
                     <div class="rumor-item">
                         <div class="rumor-date">${r.date || 'Unknown date'}</div>
                         <div class="rumor-text">${r.text || ''}</div>
@@ -671,8 +680,8 @@
             } else {
                 body.innerHTML = `
                     <div class="no-rumors">
-                        <p>No recent rumors found mentioning ${name}.</p>
-                        <p style="margin-top: 10px; font-size: 12px;">Note: We only store the 10 most recent rumors per reporter. The full count (${type === 'team' ? reporter.byTeam[name] : type === 'player' ? reporter.byPlayer[name] : reporter.byAgent[name]} total) includes historical data.</p>
+                        <p>No recent rumors found for ${name}.</p>
+                        <p style="margin-top: 10px; font-size: 12px;">Total mentions: ${totalCount}. Rumor text is only stored for recent entries.</p>
                     </div>
                 `;
             }
