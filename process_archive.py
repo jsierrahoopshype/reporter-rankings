@@ -1,1592 +1,1035 @@
-"""
-Reporter Rankings Data Processor v3
-Extracts reporter statistics from the HoopsHype Rumors Archive.
-
-Changes in v3:
-- Separate outlets from reporters
-- Resolve unknown Twitter handles
-- Better date filtering
-- More comprehensive reporter database
-"""
-
-import json
-import re
-from collections import defaultdict
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple
-import os
-
-# =============================================
-# COMPREHENSIVE REPORTER DATABASE
-# =============================================
-
-REPORTERS_DB = {
-    # ===================
-    # TIER 1 - Major National Insiders
-    # ===================
-    "shams charania": {
-        "name": "Shams Charania",
-        "outlet": "ESPN",
-        "tier": 1,
-        "handles": ["shaborz", "shamscharania", "shaborz_"],
-        "variations": ["shams", "charania"]
-    },
-    "adrian wojnarowski": {
-        "name": "Adrian Wojnarowski",
-        "outlet": "ESPN (Retired)",
-        "tier": 1,
-        "handles": ["wojespn", "wikihoops"],
-        "variations": ["woj", "wojnarowski"]
-    },
-    "marc stein": {
-        "name": "Marc Stein",
-        "outlet": "The Stein Line",
-        "tier": 1,
-        "handles": ["thesteinline", "marcstein"],
-        "variations": ["stein"]
-    },
-    "jake fischer": {
-        "name": "Jake Fischer",
-        "outlet": "Yahoo Sports",
-        "tier": 1,
-        "handles": ["jakelfischer", "jaborz_nba"],
-        "variations": ["fischer"]
-    },
-    "chris haynes": {
-        "name": "Chris Haynes",
-        "outlet": "TNT/Bleacher Report",
-        "tier": 1,
-        "handles": ["chrisbhaynes"],
-        "variations": ["haynes"]
-    },
-    
-    # ===================
-    # TIER 2 - National Reporters/Analysts
-    # ===================
-    "brian windhorst": {
-        "name": "Brian Windhorst",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["windhorstespn"],
-        "variations": ["windhorst"]
-    },
-    "bobby marks": {
-        "name": "Bobby Marks",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["bobbymarks42"],
-        "variations": ["marks"]
-    },
-    "tim bontemps": {
-        "name": "Tim Bontemps",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["timbontemps"],
-        "variations": ["bontemps"]
-    },
-    "ramona shelburne": {
-        "name": "Ramona Shelburne",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["ramonashelburne"],
-        "variations": ["shelburne"]
-    },
-    "dave mcmenamin": {
-        "name": "Dave McMenamin",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["mcaborsky", "davemcmenamin"],
-        "variations": ["mcmenamin"]
-    },
-    "zach lowe": {
-        "name": "Zach Lowe",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["zachlowe_nba"],
-        "variations": ["lowe"]
-    },
-    "tim macmahon": {
-        "name": "Tim MacMahon",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["espn_macmahon"],
-        "variations": ["macmahon"]
-    },
-    "andrew lopez": {
-        "name": "Andrew Lopez",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["_andrew_lopez"],
-        "variations": ["lopez"]
-    },
-    "kendra andrews": {
-        "name": "Kendra Andrews",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["kaborz", "kendraandrews"],
-        "variations": []
-    },
-    "ohm youngmisuk": {
-        "name": "Ohm Youngmisuk",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["notoriousohm"],
-        "variations": ["youngmisuk"]
-    },
-    "kevin pelton": {
-        "name": "Kevin Pelton",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["kpelton"],
-        "variations": ["pelton"]
-    },
-    "baxter holmes": {
-        "name": "Baxter Holmes",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["baborz", "baxterholmes"],
-        "variations": ["holmes"]
-    },
-    "michael scotto": {
-        "name": "Michael Scotto",
-        "outlet": "HoopsHype",
-        "tier": 2,
-        "handles": ["mikeascotto"],
-        "variations": ["scotto"]
-    },
-    "jorge sierra": {
-        "name": "Jorge Sierra",
-        "outlet": "HoopsHype",
-        "tier": 2,
-        "handles": ["hoaborz", "jsiaborz", "jsierra"],
-        "variations": ["sierra", "jorge"]
-    },
-    "alex kennedy": {
-        "name": "Alex Kennedy",
-        "outlet": "HoopsHype",
-        "tier": 2,
-        "handles": ["alexkennedynba"],
-        "variations": ["kennedy"]
-    },
-    "sam amick": {
-        "name": "Sam Amick",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["sam_amick", "saborz"],
-        "variations": ["amick"]
-    },
-    "john hollinger": {
-        "name": "John Hollinger",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["johnhollinger"],
-        "variations": ["hollinger"]
-    },
-    "sam vecenie": {
-        "name": "Sam Vecenie",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["samvecenie"],
-        "variations": ["vecenie"]
-    },
-    "anthony slater": {
-        "name": "Anthony Slater",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["anthonyslater"],
-        "variations": ["slater"]
-    },
-    "joe vardon": {
-        "name": "Joe Vardon",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["joevardon"],
-        "variations": ["vardon"]
-    },
-    "jason jones": {
-        "name": "Jason Jones",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["mr_jasonjones"],
-        "variations": []
-    },
-    "david aldridge": {
-        "name": "David Aldridge",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["davidaldridgedc"],
-        "variations": ["aldridge"]
-    },
-    "marcus thompson": {
-        "name": "Marcus Thompson II",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["thompsonscribe"],
-        "variations": []
-    },
-    "jovan buha": {
-        "name": "Jovan Buha",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["jovanbuha"],
-        "variations": ["buha"]
-    },
-    "chris kirschner": {
-        "name": "Chris Kirschner",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["chriskirschner"],
-        "variations": ["kirschner"]
-    },
-    "tony jones": {
-        "name": "Tony Jones",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["taborz", "taborz_"],
-        "variations": []
-    },
-    "will guillory": {
-        "name": "Will Guillory",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["willguillory"],
-        "variations": ["guillory"]
-    },
-    "fred katz": {
-        "name": "Fred Katz",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["fredkatz"],
-        "variations": ["katz"]
-    },
-    "mike vorkunov": {
-        "name": "Mike Vorkunov",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["mikevorkunov"],
-        "variations": ["vorkunov"]
-    },
-    "darnell mayberry": {
-        "name": "Darnell Mayberry",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["darnellmayberry"],
-        "variations": ["mayberry"]
-    },
-    "kevin oconnor": {
-        "name": "Kevin O'Connor",
-        "outlet": "The Ringer",
-        "tier": 2,
-        "handles": ["kevinoconnornba"],
-        "variations": ["koc", "o'connor", "oconnor"]
-    },
-    "bill simmons": {
-        "name": "Bill Simmons",
-        "outlet": "The Ringer",
-        "tier": 2,
-        "handles": ["billsimmons"],
-        "variations": ["simmons"]
-    },
-    "eric pincus": {
-        "name": "Eric Pincus",
-        "outlet": "Bleacher Report",
-        "tier": 2,
-        "handles": ["ericpincus"],
-        "variations": ["pincus"]
-    },
-    "marc spears": {
-        "name": "Marc Spears",
-        "outlet": "Andscape",
-        "tier": 2,
-        "handles": ["marcjspears"],
-        "variations": ["spears"]
-    },
-    "dan woike": {
-        "name": "Dan Woike",
-        "outlet": "LA Times",
-        "tier": 2,
-        "handles": ["danwoikesports"],
-        "variations": ["woike"]
-    },
-    "brad turner": {
-        "name": "Brad Turner",
-        "outlet": "LA Times",
-        "tier": 2,
-        "handles": ["bradturner"],
-        "variations": ["turner"]
-    },
-    "chris mannix": {
-        "name": "Chris Mannix",
-        "outlet": "Sports Illustrated",
-        "tier": 2,
-        "handles": ["simannix"],
-        "variations": ["mannix"]
-    },
-    "howard beck": {
-        "name": "Howard Beck",
-        "outlet": "Sports Illustrated",
-        "tier": 2,
-        "handles": ["howardbeck"],
-        "variations": ["beck"]
-    },
-    "chris broussard": {
-        "name": "Chris Broussard",
-        "outlet": "Fox Sports",
-        "tier": 2,
-        "handles": ["chrisbroussard"],
-        "variations": ["broussard"]
-    },
-    "ric bucher": {
-        "name": "Ric Bucher",
-        "outlet": "Fox Sports",
-        "tier": 2,
-        "handles": ["ricbucher"],
-        "variations": ["bucher"]
-    },
-    "kurt helin": {
-        "name": "Kurt Helin",
-        "outlet": "NBC Sports",
-        "tier": 2,
-        "handles": ["basketballtalk"],
-        "variations": ["helin"]
-    },
-    "tom haberstroh": {
-        "name": "Tom Haberstroh",
-        "outlet": "NBC Sports",
-        "tier": 2,
-        "handles": ["tomhaberstroh"],
-        "variations": ["haberstroh"]
-    },
-    "jon krawczynski": {
-        "name": "Jon Krawczynski",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["jonkrawczynski"],
-        "variations": ["krawczynski"]
-    },
-    "james edwards iii": {
-        "name": "James Edwards III",
-        "outlet": "The Athletic",
-        "tier": 2,
-        "handles": ["jedwardsiii"],
-        "variations": ["edwards"]
-    },
-    
-    # ===================
-    # TIER 3 - Beat Writers & Regional Reporters
-    # ===================
-    "mark medina": {
-        "name": "Mark Medina",
-        "outlet": "NBA.com",
-        "tier": 3,
-        "handles": ["markg_medina"],
-        "variations": ["medina"]
-    },
-    "marc berman": {
-        "name": "Marc Berman",
-        "outlet": "NY Post",
-        "tier": 3,
-        "handles": ["nyaborz", "marcberman"],
-        "variations": ["berman"]
-    },
-    "stefan bondy": {
-        "name": "Stefan Bondy",
-        "outlet": "NY Daily News",
-        "tier": 3,
-        "handles": ["stefanbondy"],
-        "variations": ["bondy"]
-    },
-    "ian begley": {
-        "name": "Ian Begley",
-        "outlet": "SNY",
-        "tier": 3,
-        "handles": ["iaborz", "ianbegley"],
-        "variations": ["begley"]
-    },
-    "kyle neubeck": {
-        "name": "Kyle Neubeck",
-        "outlet": "PhillyVoice",
-        "tier": 3,
-        "handles": ["kyleneubeck"],
-        "variations": ["neubeck"]
-    },
-    "keith pompey": {
-        "name": "Keith Pompey",
-        "outlet": "Philadelphia Inquirer",
-        "tier": 3,
-        "handles": ["pompeyonsixers"],
-        "variations": ["pompey"]
-    },
-    "derek bodner": {
-        "name": "Derek Bodner",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["derekbodnernba"],
-        "variations": ["bodner"]
-    },
-    "monte poole": {
-        "name": "Monte Poole",
-        "outlet": "NBC Sports Bay Area",
-        "tier": 3,
-        "handles": ["montepoole"],
-        "variations": ["poole"]
-    },
-    "jason dumas": {
-        "name": "Jason Dumas",
-        "outlet": "KRON4",
-        "tier": 3,
-        "handles": ["jaborz_", "jasondumas"],
-        "variations": ["dumas"]
-    },
-    "ira winderman": {
-        "name": "Ira Winderman",
-        "outlet": "South Florida Sun-Sentinel",
-        "tier": 3,
-        "handles": ["irawinderman"],
-        "variations": ["winderman"]
-    },
-    "barry jackson": {
-        "name": "Barry Jackson",
-        "outlet": "Miami Herald",
-        "tier": 3,
-        "handles": ["flaborzy", "barryjackson"],
-        "variations": ["jackson"]
-    },
-    "anthony chiang": {
-        "name": "Anthony Chiang",
-        "outlet": "Miami Herald",
-        "tier": 3,
-        "handles": ["anthonychiang"],
-        "variations": ["chiang"]
-    },
-    "brian lewis": {
-        "name": "Brian Lewis",
-        "outlet": "NY Post",
-        "tier": 3,
-        "handles": ["nyaborzy", "brianlewis"],
-        "variations": ["lewis"]
-    },
-    "alex schiffer": {
-        "name": "Alex Schiffer",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["alexschiffer"],
-        "variations": ["schiffer"]
-    },
-    "k.c. johnson": {
-        "name": "K.C. Johnson",
-        "outlet": "NBC Sports Chicago",
-        "tier": 3,
-        "handles": ["kcjhoop"],
-        "variations": ["johnson"]
-    },
-    "joe cowley": {
-        "name": "Joe Cowley",
-        "outlet": "Chicago Sun-Times",
-        "tier": 3,
-        "handles": ["joecowleyhoops"],
-        "variations": ["cowley"]
-    },
-    "eric koreen": {
-        "name": "Eric Koreen",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["ekoreen"],
-        "variations": ["koreen"]
-    },
-    "blake murphy": {
-        "name": "Blake Murphy",
-        "outlet": "Sportsnet",
-        "tier": 3,
-        "handles": ["blakemurphy7"],
-        "variations": ["murphy"]
-    },
-    "josh lewenberg": {
-        "name": "Josh Lewenberg",
-        "outlet": "TSN",
-        "tier": 3,
-        "handles": ["jaborz_", "jlew1050"],
-        "variations": ["lewenberg"]
-    },
-    "rod beard": {
-        "name": "Rod Beard",
-        "outlet": "Detroit News",
-        "tier": 3,
-        "handles": ["daborz", "rodbeard"],
-        "variations": ["beard"]
-    },
-    "chris fedor": {
-        "name": "Chris Fedor",
-        "outlet": "Cleveland.com",
-        "tier": 3,
-        "handles": ["chrisfedor"],
-        "variations": ["fedor"]
-    },
-    "kelsey russo": {
-        "name": "Kelsey Russo",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["kelseyrusso"],
-        "variations": ["russo"]
-    },
-    "eric nehm": {
-        "name": "Eric Nehm",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["eric_nehm"],
-        "variations": ["nehm"]
-    },
-    "jim owczarski": {
-        "name": "Jim Owczarski",
-        "outlet": "Milwaukee Journal Sentinel",
-        "tier": 3,
-        "handles": ["jaborz", "jimowczarski"],
-        "variations": ["owczarski"]
-    },
-    "dane moore": {
-        "name": "Dane Moore",
-        "outlet": "SKOR North",
-        "tier": 3,
-        "handles": ["daborz", "danemoore"],
-        "variations": ["moore"]
-    },
-    "chris hine": {
-        "name": "Chris Hine",
-        "outlet": "Minneapolis Star Tribune",
-        "tier": 3,
-        "handles": ["chrishinemn"],
-        "variations": ["hine"]
-    },
-    "drew hill": {
-        "name": "Drew Hill",
-        "outlet": "Daily Memphian",
-        "tier": 3,
-        "handles": ["drewhill_dm"],
-        "variations": ["hill"]
-    },
-    "jonathan feigen": {
-        "name": "Jonathan Feigen",
-        "outlet": "Houston Chronicle",
-        "tier": 3,
-        "handles": ["jonathan_feigen"],
-        "variations": ["feigen"]
-    },
-    "kelly iko": {
-        "name": "Kelly Iko",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["kellyiko"],
-        "variations": ["iko"]
-    },
-    "christian clark": {
-        "name": "Christian Clark",
-        "outlet": "NOLA.com",
-        "tier": 3,
-        "handles": ["claborz"],
-        "variations": ["clark"]
-    },
-    "tom orsborn": {
-        "name": "Tom Orsborn",
-        "outlet": "San Antonio Express-News",
-        "tier": 3,
-        "handles": ["tom_orsborn"],
-        "variations": ["orsborn"]
-    },
-    "joe mussatto": {
-        "name": "Joe Mussatto",
-        "outlet": "The Oklahoman",
-        "tier": 3,
-        "handles": ["joeaborz", "joemussatto"],
-        "variations": ["mussatto"]
-    },
-    "callie caplan": {
-        "name": "Callie Caplan",
-        "outlet": "Dallas Morning News",
-        "tier": 3,
-        "handles": ["calliecaplan"],
-        "variations": ["caplan"]
-    },
-    "brad townsend": {
-        "name": "Brad Townsend",
-        "outlet": "Dallas Morning News",
-        "tier": 3,
-        "handles": ["townborz", "btownsend"],
-        "variations": ["townsend"]
-    },
-    "kevin chouinard": {
-        "name": "Kevin Chouinard",
-        "outlet": "Hawks.com",
-        "tier": 3,
-        "handles": ["kchouinard"],
-        "variations": ["chouinard"]
-    },
-    "sarah spencer": {
-        "name": "Sarah Spencer",
-        "outlet": "Atlanta Journal-Constitution",
-        "tier": 3,
-        "handles": ["sarahkspencer"],
-        "variations": ["spencer"]
-    },
-    "rick bonnell": {
-        "name": "Rick Bonnell",
-        "outlet": "Charlotte Observer",
-        "tier": 3,
-        "handles": ["rickbonnell"],
-        "variations": ["bonnell"]
-    },
-    "rod boone": {
-        "name": "Rod Boone",
-        "outlet": "Charlotte Observer",
-        "tier": 3,
-        "handles": ["rodboone"],
-        "variations": ["boone"]
-    },
-    "chase hughes": {
-        "name": "Chase Hughes",
-        "outlet": "NBC Sports Washington",
-        "tier": 3,
-        "handles": ["chaborz", "caborz"],
-        "variations": ["hughes"]
-    },
-    "ava wallace": {
-        "name": "Ava Wallace",
-        "outlet": "Washington Post",
-        "tier": 3,
-        "handles": ["avawallace"],
-        "variations": ["wallace"]
-    },
-    "andy larsen": {
-        "name": "Andy Larsen",
-        "outlet": "Salt Lake Tribune",
-        "tier": 3,
-        "handles": ["andyaborz", "andylarsen"],
-        "variations": ["larsen"]
-    },
-    "aaron fentress": {
-        "name": "Aaron Fentress",
-        "outlet": "The Oregonian",
-        "tier": 3,
-        "handles": ["aaborz", "aaronfentress"],
-        "variations": ["fentress"]
-    },
-    "sean highkin": {
-        "name": "Sean Highkin",
-        "outlet": "Rose Garden Report",
-        "tier": 3,
-        "handles": ["seanhighkin"],
-        "variations": ["highkin"]
-    },
-    "brendan vogt": {
-        "name": "Brendan Vogt",
-        "outlet": "Denver Sports",
-        "tier": 3,
-        "handles": ["brendanvogt"],
-        "variations": ["vogt"]
-    },
-    "bennett durando": {
-        "name": "Bennett Durando",
-        "outlet": "Denver Post",
-        "tier": 3,
-        "handles": ["bennettnba", "bennettdurando"],
-        "variations": ["durando"]
-    },
-    "harrison wind": {
-        "name": "Harrison Wind",
-        "outlet": "DNVR",
-        "tier": 3,
-        "handles": ["harrisonwind"],
-        "variations": ["wind"]
-    },
-    "mike singer": {
-        "name": "Mike Singer",
-        "outlet": "Denver Post",
-        "tier": 3,
-        "handles": ["msinger"],
-        "variations": ["singer"]
-    },
-    "adam mares": {
-        "name": "Adam Mares",
-        "outlet": "DNVR",
-        "tier": 3,
-        "handles": ["adamaborz", "adammares"],
-        "variations": ["mares"]
-    },
-    "stephen a. smith": {
-        "name": "Stephen A. Smith",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["stephenasmith"],
-        "variations": ["stephen a", "smith"]
-    },
-    "malika andrews": {
-        "name": "Malika Andrews",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["malaborz", "maborz"],
-        "variations": ["andrews"]
-    },
-    "kendrick perkins": {
-        "name": "Kendrick Perkins",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["kendrickperkins"],
-        "variations": ["perkins"]
-    },
-    "jonathan givony": {
-        "name": "Jonathan Givony",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["draftexpress"],
-        "variations": ["givony"]
-    },
-    "mike schmitz": {
-        "name": "Mike Schmitz",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["mike_schmitz"],
-        "variations": ["schmitz"]
-    },
-    "evan sidery": {
-        "name": "Evan Sidery",
-        "outlet": "Forbes",
-        "tier": 3,
-        "handles": ["evansidery"],
-        "variations": ["sidery"]
-    },
-    "jake weingarten": {
-        "name": "Jake Weingarten",
-        "outlet": "StockRisers",
-        "tier": 3,
-        "handles": ["jweingarten"],
-        "variations": ["weingarten"]
-    },
-    "brett siegel": {
-        "name": "Brett Siegel",
-        "outlet": "ClutchPoints",
-        "tier": 3,
-        "handles": ["brettsiegel_"],
-        "variations": ["siegel"]
-    },
-    
-    # ===================
-    # Additional reporters seen in the data
-    # ===================
-    "mike curtis": {
-        "name": "Mike Curtis",
-        "outlet": "Baltimore Sun",
-        "tier": 3,
-        "handles": ["mikeacurtis2"],
-        "variations": ["curtis"]
-    },
-    "jordan schultz": {
-        "name": "Jordan Schultz",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["schulaborz_nba", "schultzreports"],
-        "variations": ["schultz"]
-    },
-    "michael lee": {
-        "name": "Michael Lee",
-        "outlet": "The Washington Post",
-        "tier": 3,
-        "handles": ["maborz"],
-        "variations": ["lee"]
-    },
-    "greg swartz": {
-        "name": "Greg Swartz",
-        "outlet": "Bleacher Report",
-        "tier": 3,
-        "handles": ["swaborz"],
-        "variations": ["swartz"]
-    },
-    "chris milholen": {
-        "name": "Chris Milholen",
-        "outlet": "Locked On",
-        "tier": 3,
-        "handles": ["chrismilaborz"],
-        "variations": ["milholen"]
-    },
-    "greg sylvander": {
-        "name": "Greg Sylvander",
-        "outlet": "Bally Sports",
-        "tier": 3,
-        "handles": ["gaborz", "graborz"],
-        "variations": ["sylvander"]
-    },
-    "sam quinn": {
-        "name": "Sam Quinn",
-        "outlet": "CBS Sports",
-        "tier": 3,
-        "handles": ["samquinncbs"],
-        "variations": ["quinn"]
-    },
-    "mark murphy": {
-        "name": "Mark Murphy",
-        "outlet": "Boston Herald",
-        "tier": 3,
-        "handles": ["muraborz", "muaborz"],
-        "variations": []
-    },
-    "gary washburn": {
-        "name": "Gary Washburn",
-        "outlet": "Boston Globe",
-        "tier": 3,
-        "handles": ["gwashburnglobe"],
-        "variations": ["washburn"]
-    },
-    "adam himmelsbach": {
-        "name": "Adam Himmelsbach",
-        "outlet": "Boston Globe",
-        "tier": 3,
-        "handles": ["adamhimmelsbach"],
-        "variations": ["himmelsbach"]
-    },
-    "jay king": {
-        "name": "Jay King",
-        "outlet": "The Athletic",
-        "tier": 3,
-        "handles": ["jaykingaborz", "jayking"],
-        "variations": ["king"]
-    },
-    "kyle draper": {
-        "name": "Kyle Draper",
-        "outlet": "NBC Sports Boston",
-        "tier": 3,
-        "handles": ["draborz"],
-        "variations": ["draper"]
-    },
-    "chris forsberg": {
-        "name": "Chris Forsberg",
-        "outlet": "NBC Sports Boston",
-        "tier": 3,
-        "handles": ["chrisforsberg_"],
-        "variations": ["forsberg"]
-    },
-    "nick friedell": {
-        "name": "Nick Friedell",
-        "outlet": "ESPN",
-        "tier": 2,
-        "handles": ["nickfriedell"],
-        "variations": ["friedell"]
-    },
-    "kayla johnson": {
-        "name": "Kayla Johnson",
-        "outlet": "Bleacher Report",
-        "tier": 3,
-        "handles": ["kaylaborz"],
-        "variations": []
-    },
-    "nick wright": {
-        "name": "Nick Wright",
-        "outlet": "Fox Sports",
-        "tier": 2,
-        "handles": ["gaborzy"],
-        "variations": ["wright"]
-    },
-    "vincent goodwill": {
-        "name": "Vincent Goodwill",
-        "outlet": "Yahoo Sports",
-        "tier": 2,
-        "handles": ["vaborz", "vincegoodwill"],
-        "variations": ["goodwill"]
-    },
-    "chris herring": {
-        "name": "Chris Herring",
-        "outlet": "Sports Illustrated",
-        "tier": 2,
-        "handles": ["chrisaborz", "heraborz"],
-        "variations": ["herring"]
-    },
-    "yaron weitzman": {
-        "name": "Yaron Weitzman",
-        "outlet": "Fox Sports",
-        "tier": 2,
-        "handles": ["yaronweitzman"],
-        "variations": ["weitzman"]
-    },
-}
-
-# Known outlets that should NOT be treated as reporters
-OUTLET_NAMES = {
-    "espn", "the athletic", "bleacher report", "yahoo sports", "nba.com",
-    "cbs sports", "fox sports", "nbc sports", "sports illustrated",
-    "the ringer", "hoopshype", "usa today", "associated press", "ap",
-    "reuters", "new york times", "washington post", "los angeles times",
-    "boston globe", "chicago tribune", "miami herald", "dallas morning news",
-    "denver post", "philadelphia inquirer", "ny post", "new york post",
-    "ny daily news", "san antonio express-news", "houston chronicle",
-    "cleveland.com", "detroit news", "detroit free press", "milwaukee journal sentinel",
-    "minneapolis star tribune", "salt lake tribune", "the oregonian",
-    "sacramento bee", "arizona republic", "atlanta journal-constitution",
-    "charlotte observer", "orlando sentinel", "tampa bay times",
-    "south florida sun-sentinel", "basketnews", "eurohoops", "sportando",
-    "slam", "slam online", "si.com", "youtube", "twitter", "x.com",
-    "instagram", "facebook", "tiktok", "reddit", "threads",
-    "sny", "tsn", "sportsnet", "msg", "bally sports",
-    "nbc sports boston", "nbc sports chicago", "nbc sports philadelphia",
-    "nbc sports bay area", "nbc sports washington", "spectrum sportsnet",
-    "altitude sports", "bally sports southwest", "bally sports sun",
-    "bally sports ohio", "bally sports indiana", "bally sports north",
-    "bally sports wisconsin", "bally sports detroit", "bally sports southeast",
-    "bally sports oklahoma", "root sports", "at&t sportsnet",
-    "the athletic nba", "espn nba", "bleacher report nba"
-}
-
-# Build lookup indices
-HANDLE_TO_REPORTER = {}
-NAME_TO_REPORTER = {}
-
-for key, data in REPORTERS_DB.items():
-    NAME_TO_REPORTER[key] = data
-    NAME_TO_REPORTER[data["name"].lower()] = data
-    for handle in data.get("handles", []):
-        HANDLE_TO_REPORTER[handle.lower()] = data
-
-
-# =============================================
-# TOPIC DETECTION
-# =============================================
-
-TOPIC_KEYWORDS = {
-    "trade": [
-        "trade", "traded", "trading", "deal", "swap", "move", "acquire", "acquisition",
-        "package", "destination", "interested in", "pursuing", "target", "on the block",
-        "available", "shopping", "exploring trades", "trade talks", "trade discussions",
-        "trade deadline", "trade market", "trade value", "trade request"
-    ],
-    "injury": [
-        "injury", "injured", "hurt", "out", "miss", "sidelined", "rehab", "surgery",
-        "sprain", "strain", "tear", "fracture", "concussion", "return", "recovery",
-        "day-to-day", "questionable", "doubtful", "ruled out", "dnp", "rest",
-        "load management", "soreness", "inflammation", "ankle", "knee", "hamstring",
-        "calf", "shoulder", "back", "hip", "wrist", "foot", "achilles"
-    ],
-    "contract": [
-        "contract", "extension", "sign", "signing", "free agent", "free agency",
-        "max", "deal", "years", "million", "salary", "option", "decline", "accept",
-        "negotiate", "offer", "restricted", "unrestricted", "rfa", "ufa", "supermax",
-        "player option", "team option", "buyout", "waive", "release"
-    ],
-    "frontoffice": [
-        "coach", "coaching", "fired", "hire", "gm", "general manager", "president",
-        "front office", "executive", "owner", "ownership", "management", "staff",
-        "assistant", "interim", "promote", "search", "candidate", "head coach"
-    ],
-    "draft": [
-        "draft", "pick", "lottery", "prospect", "mock", "workout", "combine",
-        "rookie", "selection", "projected", "tank", "tanking", "draft night"
-    ]
-}
-
-
-# =============================================
-# EXTRACTION FUNCTIONS
-# =============================================
-
-def extract_handle_from_url(url: str) -> Optional[str]:
-    """Extract Twitter/X handle from source URL."""
-    if not url:
-        return None
-    
-    # Match x.com/handle or twitter.com/handle
-    match = re.search(r'(?:x\.com|twitter\.com)/([A-Za-z0-9_]+)', url)
-    if match:
-        handle = match.group(1).lower()
-        # Skip common non-user paths
-        if handle not in ['status', 'i', 'search', 'hashtag', 'home', 'explore', 'settings', 'messages']:
-            return handle
-    return None
-
-
-def is_outlet_name(name: str) -> bool:
-    """Check if a name is an outlet rather than a reporter."""
-    name_lower = name.lower().strip()
-    # Direct match
-    if name_lower in OUTLET_NAMES:
-        return True
-    # Partial match for common patterns
-    for outlet in OUTLET_NAMES:
-        if outlet in name_lower or name_lower in outlet:
-            return True
-    return False
-
-
-def extract_reporter_from_text_start(text: str) -> Optional[Dict]:
-    """Extract reporter from 'Name Name:' pattern at start of text."""
-    if not text:
-        return None
-    
-    # Pattern: "First Last:" or "First Middle Last:" at the very start
-    # Also handles "First Last II:" or "First Last Jr.:"
-    match = re.match(r'^([A-Z][a-z]+(?:\s+[A-Z]\.?)?\s+[A-Z][a-zA-Z]+(?:\s+(?:II|III|Jr\.?|Sr\.?))?)\s*:', text)
-    if match:
-        name = match.group(1).strip()
-        name_lower = name.lower()
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Reporter Rankings | HoopsHype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #333; line-height: 1.5; }
         
-        # Check if this is an outlet, not a reporter
-        if is_outlet_name(name_lower):
-            return None
-            
-        # Check if this matches a known reporter
-        if name_lower in NAME_TO_REPORTER:
-            return NAME_TO_REPORTER[name_lower]
-        
-        # Try without middle initial
-        name_parts = name_lower.split()
-        if len(name_parts) >= 2:
-            simple_name = f"{name_parts[0]} {name_parts[-1]}"
-            if simple_name in NAME_TO_REPORTER:
-                return NAME_TO_REPORTER[simple_name]
-        
-        # Return as a new reporter (will be added dynamically)
-        return {
-            "name": name,
-            "outlet": "Unknown",
-            "tier": 3,
-            "handles": [],
-            "variations": [],
-            "_dynamic": True
+        .header {
+            background: white; border-bottom: 3px solid #e74c3c; padding: 20px 0;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-    
-    return None
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo { font-size: 24px; font-weight: 700; color: #e74c3c; margin-bottom: 16px; }
+        .logo span { color: #333; }
 
+        .stats-banner { display: flex; gap: 30px; padding: 16px 0; border-bottom: 1px solid #eee; margin-bottom: 16px; flex-wrap: wrap; }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 28px; font-weight: 700; color: #e74c3c; }
+        .stat-label { font-size: 12px; color: #666; text-transform: uppercase; }
 
-def extract_reporter_from_text_body(text: str) -> Optional[Dict]:
-    """Extract reporter mentioned in text body."""
-    if not text:
-        return None
-    
-    text_lower = text.lower()
-    
-    # Patterns to look for
-    patterns = [
-        r'according to ([a-z]+(?:\s+[a-z]\.?)?\s+[a-z]+)',
-        r'per ([a-z]+(?:\s+[a-z]\.?)?\s+[a-z]+)',
-        r'([a-z]+\s+[a-z]+) reports that',
-        r'([a-z]+\s+[a-z]+) reported that',
-        r'([a-z]+\s+[a-z]+) says that',
-        r'([a-z]+\s+[a-z]+) said that',
-        r'source[s]? told ([a-z]+\s+[a-z]+)',
-        r'source[s]? tell ([a-z]+\s+[a-z]+)',
-        r'([a-z]+\s+[a-z]+) of espn',
-        r'([a-z]+\s+[a-z]+) of the athletic',
-        r'([a-z]+\s+[a-z]+) of yahoo',
-        r'([a-z]+\s+[a-z]+) of bleacher report',
-        r'([a-z]+\s+[a-z]+) of nba\.com',
-    ]
-    
-    for pattern in patterns:
-        match = re.search(pattern, text_lower)
-        if match:
-            potential_name = match.group(1).strip()
-            if is_outlet_name(potential_name):
-                continue
-            if potential_name in NAME_TO_REPORTER:
-                return NAME_TO_REPORTER[potential_name]
-    
-    return None
+        .nav-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .nav-tab {
+            padding: 10px 20px; border: 1px solid #ddd; background: white;
+            color: #666; font-size: 13px; font-weight: 500; cursor: pointer;
+            border-radius: 6px; transition: all 0.2s;
+        }
+        .nav-tab:hover { border-color: #e74c3c; color: #e74c3c; }
+        .nav-tab.active { background: #e74c3c; border-color: #e74c3c; color: white; }
 
+        .time-filter { display: flex; gap: 4px; flex-wrap: wrap; }
+        .time-btn {
+            padding: 8px 14px; border: 1px solid #ddd; background: white;
+            color: #666; font-size: 12px; cursor: pointer; border-radius: 4px; transition: all 0.2s;
+        }
+        .time-btn:hover { border-color: #e74c3c; }
+        .time-btn.active { background: #e74c3c; border-color: #e74c3c; color: white; }
 
-def extract_reporter(rumor: Dict) -> Tuple[Optional[Dict], str, bool]:
-    """
-    Extract reporter from a rumor using multiple methods.
-    Returns (reporter_dict, detection_method, is_outlet)
-    """
-    text = rumor.get("text", "") or ""
-    source_url = rumor.get("source_url", "") or ""
-    outlet = rumor.get("outlet", "") or ""
-    
-    # Method 1: Check for "Name Name:" at start of text
-    reporter = extract_reporter_from_text_start(text)
-    if reporter:
-        return reporter, "text_start", False
-    
-    # Method 2: Extract handle from X/Twitter URL
-    handle = extract_handle_from_url(source_url)
-    if handle:
-        if handle in HANDLE_TO_REPORTER:
-            return HANDLE_TO_REPORTER[handle], "twitter_handle", False
-        else:
-            # Unknown handle - create dynamic entry
-            return {
-                "name": f"@{handle}",
-                "outlet": "X/Twitter",
-                "tier": 4,
-                "handles": [handle],
-                "variations": [],
-                "_dynamic": True,
-                "_handle": handle
-            }, "unknown_handle", False
-    
-    # Method 3: Check for reporter mentioned in text body
-    reporter = extract_reporter_from_text_body(text)
-    if reporter:
-        return reporter, "text_body", False
-    
-    # Method 4: Fall back to outlet (marked as outlet, not reporter)
-    if outlet and outlet.lower() not in ['x.com', 'twitter.com', '']:
-        return {
-            "name": outlet,
-            "outlet": outlet,
-            "tier": 5,
-            "handles": [],
-            "variations": []
-        }, "outlet_fallback", True
-    
-    return None, "none", False
+        .main { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        .section-title { font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #333; }
 
+        .card {
+            background: white; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; margin-bottom: 20px;
+        }
+        .card-header {
+            padding: 16px 20px; border-bottom: 1px solid #eee;
+            font-weight: 600; color: #333; display: flex; align-items: center; gap: 10px;
+        }
 
-def detect_topic(text: str, tags: List[str] = None) -> str:
-    """Detect the primary topic of a rumor."""
-    text_lower = (text or "").lower()
-    tags_lower = [t.lower() for t in (tags or [])]
-    
-    scores = defaultdict(int)
-    
-    for topic, keywords in TOPIC_KEYWORDS.items():
-        for keyword in keywords:
-            if keyword in text_lower:
-                scores[topic] += 1
-            for tag in tags_lower:
-                if keyword in tag:
-                    scores[topic] += 2
-    
-    # Check tags for direct topic matches
-    if "trade" in tags_lower or "trades" in tags_lower:
-        scores["trade"] += 5
-    if "injuries" in tags_lower or "injury" in tags_lower:
-        scores["injury"] += 5
-    if "free agency" in tags_lower:
-        scores["contract"] += 5
-    if "draft" in tags_lower:
-        scores["draft"] += 5
-    
-    if not scores:
-        return "general"
-    
-    return max(scores, key=scores.get)
+        .reporter-row {
+            display: flex; align-items: center; padding: 16px 20px;
+            border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: background 0.2s;
+        }
+        .reporter-row:hover { background: #fafafa; }
+        .reporter-row:last-child { border-bottom: none; }
 
+        .rank {
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px; margin-right: 16px; border-radius: 50%; flex-shrink: 0;
+        }
+        .rank-1 { background: linear-gradient(135deg, #f5a623, #f7931a); color: white; }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a8a8a8); color: white; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b8860b); color: white; }
+        .rank-default { background: #f0f0f0; color: #666; }
 
-def extract_teams(tags: List[str]) -> List[str]:
-    """Extract team names from tags."""
-    team_mappings = {
-        "atlanta hawks": "Hawks", "boston celtics": "Celtics", "brooklyn nets": "Nets",
-        "charlotte hornets": "Hornets", "chicago bulls": "Bulls", "cleveland cavaliers": "Cavaliers",
-        "dallas mavericks": "Mavericks", "denver nuggets": "Nuggets", "detroit pistons": "Pistons",
-        "golden state warriors": "Warriors", "houston rockets": "Rockets", "indiana pacers": "Pacers",
-        "los angeles clippers": "Clippers", "los angeles lakers": "Lakers", "memphis grizzlies": "Grizzlies",
-        "miami heat": "Heat", "milwaukee bucks": "Bucks", "minnesota timberwolves": "Timberwolves",
-        "new orleans pelicans": "Pelicans", "new york knicks": "Knicks", "oklahoma city thunder": "Thunder",
-        "orlando magic": "Magic", "philadelphia 76ers": "76ers", "phoenix suns": "Suns",
-        "portland trail blazers": "Trail Blazers", "sacramento kings": "Kings", "san antonio spurs": "Spurs",
-        "toronto raptors": "Raptors", "utah jazz": "Jazz", "washington wizards": "Wizards"
-    }
-    
-    short_to_full = {v.lower(): v for v in team_mappings.values()}
-    
-    teams = []
-    for tag in (tags or []):
-        tag_lower = tag.lower()
-        if tag_lower in team_mappings:
-            teams.append(team_mappings[tag_lower])
-        elif tag_lower in short_to_full:
-            teams.append(short_to_full[tag_lower])
-    
-    return list(set(teams))
+        .reporter-info { flex: 1; min-width: 0; }
+        .reporter-name { font-weight: 600; font-size: 15px; color: #333; }
+        .reporter-outlet { font-size: 13px; color: #888; }
 
+        .reporter-stat { text-align: right; }
+        .reporter-stat-value { font-size: 20px; font-weight: 700; color: #e74c3c; }
+        .reporter-stat-label { font-size: 11px; color: #888; text-transform: uppercase; }
 
-def extract_players(tags: List[str]) -> List[str]:
-    """Extract player names from tags."""
-    excluded = {
-        "trade", "trades", "injuries", "injury", "contract", "free agency",
-        "draft", "coaching", "front office", "rumors", "nba", "statistics",
-        "business", "media", "awards", "all-star"
-    }
-    
-    team_names = {
-        "atlanta hawks", "boston celtics", "brooklyn nets", "charlotte hornets",
-        "chicago bulls", "cleveland cavaliers", "dallas mavericks", "denver nuggets",
-        "detroit pistons", "golden state warriors", "houston rockets", "indiana pacers",
-        "los angeles clippers", "los angeles lakers", "memphis grizzlies", "miami heat",
-        "milwaukee bucks", "minnesota timberwolves", "new orleans pelicans", "new york knicks",
-        "oklahoma city thunder", "orlando magic", "philadelphia 76ers", "phoenix suns",
-        "portland trail blazers", "sacramento kings", "san antonio spurs", "toronto raptors",
-        "utah jazz", "washington wizards", "hawks", "celtics", "nets", "hornets", "bulls",
-        "cavaliers", "mavericks", "nuggets", "pistons", "warriors", "rockets", "pacers",
-        "clippers", "lakers", "grizzlies", "heat", "bucks", "timberwolves", "pelicans",
-        "knicks", "thunder", "magic", "76ers", "sixers", "suns", "trail blazers", "blazers",
-        "kings", "spurs", "raptors", "jazz", "wizards"
-    }
-    
-    players = []
-    for tag in (tags or []):
-        tag_lower = tag.lower()
-        if tag_lower not in excluded and tag_lower not in team_names:
-            if " " in tag and tag[0].isupper():
-                players.append(tag)
-    
-    return players
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
+        .profile-page { display: none; }
+        .profile-page.active { display: block; }
 
-# Agent names for tracking
-AGENT_NAMES = {
-    "aaron goodwin", "aaron klevan", "aaron mintz", "aaron reilly", "aaron turner",
-    "adam godes", "adam pensack", "ademola okulaja", "adie von gontard", "adisa bakari",
-    "aj vaynerchuk", "alberto ebanks", "aleksander raskovic", "alex saratsis", "alvaro tor",
-    "amandeep dhesi", "andre buck", "andre colona", "andrew hoenig", "andrew lehman",
-    "andrew morrison", "andrew vye", "andy bountogianis", "andy miller", "andy shiffman",
-    "anthony coleman", "anthony fields", "ara vartanian", "arn tellem", "arturo ortega",
-    "arturs kalnitis", "austin brown", "austin eastman", "austin walton", "aviad gronich",
-    "aylton tesch", "bj armstrong", "bj bass", "barry bolahood", "bellonora mccallum",
-    "ben pensack", "benji burke", "bernie lee", "bill duffy", "bill mccandless",
-    "bill neff", "billy ceisler", "billy davis", "bobby petriella", "boris lelchitski",
-    "bouna ndiaye", "brad ames", "brandon cavanaugh", "brandon grier", "brandon rosenthal",
-    "brian dyke", "brian elfus", "brian jungreis", "buddy baker", "byron irvin",
-    "calvin andrews", "cam brennick", "carmen wallace", "cervando tejeda", "chad speck",
-    "chafie fields", "charles bonsignore", "charles briscoe", "charles grantham", "charles tucker",
-    "chet ervin", "chris emens", "chris gaston", "chris luchey", "chris patrick",
-    "chris warren", "christian dawkins", "cody castleman", "colin bryant", "corey barker",
-    "corey marcum", "dan brinkley", "dan fegan", "dan tobin", "dana dotson",
-    "daniel curtin", "daniel frank", "daniel green", "daniel harrison", "daniel hazan",
-    "daniel moldovan", "daniel poneman", "danielle cantor", "danny servick", "darrell comer",
-    "darren matsubara", "darren weiner", "dave spahn", "david bauman", "david carro",
-    "david falk", "david gasman", "david hamilton", "david mondress",
-    "david putterie", "deangelo simmons", "deddrick faison", "deirunas visockas", "derek jackson",
-    "derek lafayette", "derek malloy", "derrick powell", "diana day", "diego arguelles",
-    "dino pergola", "donald dell", "donte grant", "doug davis", "doug neustadt",
-    "drew gross", "duncan lloyd", "dwayne washington", "dwon clifton", "ej kusnyer",
-    "eddie grochowiak", "elias sbiet", "emilio duran", "eric fleisher", "erik kabe",
-    "erika ruiz", "errol bennett", "fletcher cockrell", "francois nyman", "frank catapano",
-    "gary durrant", "geoffrey mcguire", "george bass", "george david", "george langberg",
-    "george roussakis", "george sfairopoulos", "gerald collier", "giovanni funiciello",
-    "glenn schwartzman", "graham boone", "greer love", "greg lawrence", "gregory nunn",
-    "guillermo bermejo", "gustavo monella", "guy zucker", "happy walters", "harrison gaines",
-    "henry thomas", "herb rudoy", "hirant manakian", "holger geschwindner", "holman harley",
-    "igor crespo", "isaiah garrett", "isiah turner", "jr hensley", "jaafar choufani",
-    "james dunleavy", "jamie knox", "jan rohdewald", "janis porzingis", "jared karnes",
-    "jared mucha", "jarinn akana", "jason elam", "jason glushon", "jason martin",
-    "jason ranne", "javon phillips", "jay baptiste", "jay-z", "jeff austin",
-    "jeff fried", "jeff schwartz", "jeff wechsler", "jelani floyd", "jenn carton",
-    "jeremiah haylett", "jeremy medjana", "jerome stanley", "jerry dianis", "jerry hicks",
-    "jessica holtz", "jim buckley", "jim tanner", "joby branion", "joe abunassar",
-    "joe branch", "joe smith", "joel bell", "joel cornette", "joey pennavaria",
-    "john baker", "john foster", "john hamilton", "john huizinga", "john noonan",
-    "john spencer", "jordan cornish", "jordan gertler", "jose paris ramirez",
-    "josh beauregard-bell", "josh goodwin", "josh hairston", "josh ketroser", "joshua ebrahim",
-    "juan morrow", "juan perez", "justin haynes", "justin zanik", "kareem memarian",
-    "kashif pratt", "keith glass", "keith kreiter", "kenge stevenson", "kenny grant",
-    "kevin bradbury", "kevin poston", "kevin t. conner", "kieran piller",
-    "kim grillier", "kurt schoeppler", "kyle mcalarney", "lance young", "larry fox",
-    "lee melchioni", "leon rose", "lewis tucker", "lorenzo mccloud", "lucas newton",
-    "makhtar ndiaye", "marc cornstein", "marc fleisher", "marcus monk", "mark bartelstein",
-    "mark bryant", "mark mcneil", "mark termini", "marlon harrison", "matt bollero",
-    "matt brown", "matt laczkowski", "matt ranker", "matt ward", "matthew babcock",
-    "maurizio balducci", "max ergul", "max lipsett", "maxwell saidman", "maxwell wiepking",
-    "mayar zokaei", "melvin booker", "merle scott", "michael harrison", "michael lelchitski",
-    "michael siegel", "michael silverman", "michael tellem", "michael whitaker", "mick sandhu",
-    "mike george", "mike higgins", "mike hodges", "mike kneisley",
-    "mike lindeman", "mike naiditch", "mike simonetta", "mindaugas veromejus",
-    "misko raznatovic", "mitch frankel", "mitch nathan", "mitchell butler", "muhammad abdur-rahim",
-    "nate daniels", "nathan conley", "nathan pezeshki", "neal rosenshein", "nick blatchford",
-    "nick lotsos", "nicolas dos santos", "niko filipovich", "nima namakian", "noah croom",
-    "obrad fimic", "odell mccants", "odell witherspoon iii", "olivier mazet", "omar cooper",
-    "omar wilkes", "paco lopez", "paolo zamorano", "paul washington", "pedja materic",
-    "pedro power", "perry rogers", "phillip parun", "qais haider", "quique villalobos",
-    "rade filipovich", "rafael calvo", "ramon sessions", "raymond brothers", "reggie brown",
-    "rich beda", "rich kleiman", "rich paul", "richard clarke", "richard felder",
-    "richard gray", "richard howell", "richard kaplan", "rishi daulat", "rob pelinka",
-    "robert fayne", "rodney blackstock", "roger montgomery", "ronald shade", "ronnie zeidel",
-    "roosevelt barnes", "ross aroyo", "ryan davis", "sam goldfeder", "sam permut",
-    "sam porter", "sam rose", "sammy wloszczowski", "sarunas broga", "scott alexander",
-    "scott nichols", "sead galijasevic", "sean davis", "sean kennedy", "seth cohen",
-    "shayaun saee", "shetellia riley irving", "stephen george boykin", "stephen pina",
-    "steve haney", "steve heumann", "steve kauffman", "steve mccaskill", "steve mountain",
-    "stu lash", "tabetha plummer", "tadas bulotas", "tallen todorovich", "terrance doyle",
-    "terrence felder", "thaddeus foucher", "toby bailey", "todd eley", "todd ramasar",
-    "todd seidel", "tony dutt", "tony ronzone", "torrell harris", "tracey carney",
-    "travis king", "trinity best", "troy payne", "troy thompson", "ty sullivan",
-    "tyler glass", "ugo udezue", "wallace prather", "wassim boutanos", "wilmer jackson",
-    "yann balikouzou", "zach kurtin", "zach schreiber", "zack charles"
-}
+        .profile-header-card {
+            background: white; border-radius: 12px; padding: 30px;
+            margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .profile-top { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+        .profile-avatar {
+            width: 80px; height: 80px; border-radius: 50%; background: #e74c3c; color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 700; flex-shrink: 0;
+        }
+        .profile-info h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+        .profile-info .outlet { font-size: 16px; color: #666; margin-bottom: 8px; }
 
-def extract_agents(tags: List[str], text: str = "") -> List[str]:
-    """Extract agent names from tags and text."""
-    agents = []
-    
-    # Check tags
-    for tag in (tags or []):
-        tag_lower = tag.lower()
-        if tag_lower in AGENT_NAMES:
-            agents.append(tag)
-    
-    # Also check text for agent mentions
-    text_lower = (text or "").lower()
-    for agent in AGENT_NAMES:
-        if agent in text_lower:
-            # Capitalize properly
-            agents.append(agent.title())
-    
-    return list(set(agents))
+        .tier-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+        .tier-1 { background: #e74c3c; color: white; }
+        .tier-2 { background: #3498db; color: white; }
+        .tier-3 { background: #95a5a6; color: white; }
 
+        .profile-stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+        @media (max-width: 900px) { .profile-stats-grid { grid-template-columns: repeat(3, 1fr); } }
 
-# =============================================
-# MAIN PROCESSING
-# =============================================
+        .profile-stat-box { background: #f8f9fa; padding: 16px; border-radius: 8px; text-align: center; }
+        .profile-stat-box .value { font-size: 24px; font-weight: 700; color: #e74c3c; }
+        .profile-stat-box .label { font-size: 10px; color: #666; text-transform: uppercase; margin-top: 4px; }
 
-def process_archive(archive_data: List[Dict], days_filter: int = None) -> Dict:
-    """
-    Process the full archive and generate reporter statistics.
-    
-    Args:
-        archive_data: List of rumor objects
-        days_filter: Optional - only include rumors from last N days
-    """
-    
-    # Filter by date if specified
-    if days_filter:
-        cutoff = (datetime.now() - timedelta(days=days_filter)).strftime('%Y-%m-%d')
-        archive_data = [r for r in archive_data if r.get('archive_date', '9999') >= cutoff]
-        print(f"Filtered to {len(archive_data)} rumors from last {days_filter} days")
-    
-    reporter_stats = defaultdict(lambda: {
-        "total": 0,
-        "by_topic": defaultdict(int),
-        "by_player": defaultdict(int),
-        "by_team": defaultdict(int),
-        "by_agent": defaultdict(int),
-        "by_date": defaultdict(int),
-        "breaking": 0,
-        "detection_methods": defaultdict(int),
-        "rumors_by_team": defaultdict(list),
-        "rumors_by_player": defaultdict(list),
-        "rumors_by_agent": defaultdict(list)
-    })
-    
-    outlet_stats = defaultdict(lambda: {
-        "total": 0,
-        "by_topic": defaultdict(int),
-        "by_date": defaultdict(int)
-    })
-    
-    processed_count = 0
-    skipped_count = 0
-    method_counts = defaultdict(int)
-    unknown_handles = defaultdict(int)
-    
-    for rumor in archive_data:
-        result, method, is_outlet = extract_reporter(rumor)
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
+            background: white; border: 1px solid #ddd; border-radius: 6px;
+            color: #333; font-size: 14px; cursor: pointer; margin-bottom: 20px; transition: all 0.2s;
+        }
+        .back-btn:hover { border-color: #e74c3c; color: #e74c3c; }
+        .back-btn-bottom { margin-top: 20px; margin-bottom: 0; }
+
+        .coverage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; padding: 16px; }
+        .coverage-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 14px; background: #f8f9fa; border-radius: 6px; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .coverage-item:hover { background: #e74c3c; color: white; }
+        .coverage-item:hover .count { color: white; }
+        .coverage-item .name { font-size: 13px; color: #333; }
+        .coverage-item:hover .name { color: white; }
+        .coverage-item .count { font-weight: 600; color: #e74c3c; font-size: 13px; }
+
+        .team-coverage-card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+        .team-name { font-weight: 600; font-size: 15px; color: #333; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+        .reporter-mini { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; cursor: pointer; }
+        .reporter-mini:hover { color: #e74c3c; }
+        .reporter-mini .count { color: #e74c3c; font-weight: 600; }
+
+        /* Heatmap - Desktop */
+        .heatmap-container { overflow-x: auto; }
+        .heatmap { display: table; border-collapse: collapse; font-size: 11px; width: 100%; }
+        .heatmap th, .heatmap td { padding: 6px 8px; text-align: center; border: 1px solid #eee; white-space: nowrap; }
+        .heatmap th { background: #f5f5f5; font-weight: 600; position: sticky; top: 0; }
+        .heatmap td:first-child { position: sticky; left: 0; background: white; font-weight: 500; text-align: left; z-index: 1; min-width: 140px; }
+        .heatmap td { min-width: 40px; }
+
+        .heat-0 { background: #fff; color: #ccc; }
+        .heat-1 { background: #fff5f5; }
+        .heat-2 { background: #fed7d7; }
+        .heat-3 { background: #feb2b2; }
+        .heat-4 { background: #fc8181; }
+        .heat-5 { background: #f56565; color: white; }
+
+        /* Heatmap - Mobile */
+        .heatmap-mobile { display: none; }
+        @media (max-width: 768px) {
+            .heatmap-container { display: none; }
+            .heatmap-mobile { display: block; }
+            .heatmap-card { background: #f8f9fa; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+            .heatmap-card-header { font-weight: 600; font-size: 14px; margin-bottom: 8px; color: #333; }
+            .heatmap-card-teams { display: flex; flex-wrap: wrap; gap: 6px; }
+            .heatmap-team-badge { 
+                padding: 4px 8px; border-radius: 4px; font-size: 11px; 
+                display: inline-flex; align-items: center; gap: 4px;
+            }
+            .heatmap-team-badge .team-abbr { font-weight: 600; }
+            .heatmap-team-badge .team-count { opacity: 0.8; }
+        }
+
+        .loading { padding: 40px; text-align: center; color: #888; }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+
+        .timeline-container { padding: 20px; }
+        .timeline-chart { display: flex; align-items: flex-end; gap: 2px; height: 120px; margin-bottom: 8px; }
+        .timeline-bar { flex: 1; background: #e74c3c; border-radius: 2px 2px 0 0; min-width: 8px; transition: all 0.2s; position: relative; }
+        .timeline-bar:hover { background: #c0392b; }
+        .timeline-bar:hover::after {
+            content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%;
+            transform: translateX(-50%); background: #333; color: white; padding: 4px 8px;
+            border-radius: 4px; font-size: 11px; white-space: nowrap; z-index: 10;
+        }
+        .timeline-labels { display: flex; gap: 2px; font-size: 10px; color: #888; }
+        .timeline-labels span { flex: 1; text-align: center; min-width: 8px; }
+
+        .period-note { font-size: 12px; color: #888; margin-top: 8px; text-align: center; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white; border-radius: 12px; max-width: 600px; width: 90%; max-height: 80vh;
+            overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            padding: 20px; border-bottom: 1px solid #eee; display: flex;
+            justify-content: space-between; align-items: center;
+        }
+        .modal-header h2 { font-size: 18px; font-weight: 600; }
+        .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #888; }
+        .modal-close:hover { color: #333; }
+        .modal-body { padding: 20px; overflow-y: auto; max-height: calc(80vh - 80px); }
+        .rumor-item { padding: 12px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px; }
+        .rumor-date { font-size: 11px; color: #888; margin-bottom: 4px; }
+        .rumor-text { font-size: 13px; line-height: 1.5; }
+        .rumor-link { color: #e74c3c; text-decoration: none; font-size: 12px; margin-top: 6px; display: inline-block; }
+        .no-rumors { color: #888; text-align: center; padding: 20px; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">REPORTER <span>RANKINGS</span></div>
+            
+            <div class="stats-banner">
+                <div class="stat-item"><div class="stat-value" id="stat-reporters">-</div><div class="stat-label">Reporters</div></div>
+                <div class="stat-item"><div class="stat-value" id="stat-rumors">-</div><div class="stat-label">Rumors Tracked</div></div>
+                <div class="stat-item"><div class="stat-value" id="stat-outlets">-</div><div class="stat-label">Outlets</div></div>
+                <div class="stat-item"><div class="stat-value" id="stat-period">-</div><div class="stat-label">Current Period</div></div>
+            </div>
+
+            <div class="nav-row">
+                <div class="nav-tabs">
+                    <button class="nav-tab active" data-view="leaderboard">Leaderboard</button>
+                    <button class="nav-tab" data-view="teams">By Team</button>
+                    <button class="nav-tab" data-view="players">By Player</button>
+                    <button class="nav-tab" data-view="heatmap">Heatmap</button>
+                    <button class="nav-tab" data-view="outlets">Outlets</button>
+                </div>
+                <div class="time-filter">
+                    <button class="time-btn" data-days="7">Week</button>
+                    <button class="time-btn" data-days="30">Month</button>
+                    <button class="time-btn active" data-days="90">3 Mo</button>
+                    <button class="time-btn" data-days="180">6 Mo</button>
+                    <button class="time-btn" data-days="365">Year</button>
+                    <button class="time-btn" data-days="0">All</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div id="main-content">
+            <section id="leaderboard" class="view-section active">
+                <div class="grid-2">
+                    <div class="card"><div class="card-header">📊 Top 50 Reporters</div><div id="leaderboard-list" class="loading">Loading...</div></div>
+                    <div class="card"><div class="card-header">📈 Trending Up</div><div id="trending-list" class="loading">Loading...</div></div>
+                </div>
+            </section>
+
+            <section id="teams" class="view-section">
+                <h2 class="section-title">Top 5 Reporters for Each Team</h2>
+                <div id="teams-grid" class="grid-3 loading">Loading...</div>
+            </section>
+
+            <section id="players" class="view-section">
+                <h2 class="section-title">Top 5 Reporters for Most Mentioned Players</h2>
+                <div id="players-grid" class="grid-3 loading">Loading...</div>
+            </section>
+
+            <section id="heatmap" class="view-section">
+                <h2 class="section-title">Reporter × Team Coverage Heatmap</h2>
+                <div class="card">
+                    <div class="heatmap-container"><table class="heatmap" id="heatmap-table"></table></div>
+                    <div class="heatmap-mobile" id="heatmap-mobile"></div>
+                </div>
+            </section>
+
+            <section id="outlets" class="view-section">
+                <h2 class="section-title">Media Outlets</h2>
+                <div class="card"><div class="card-header">📰 Top Outlets by Volume</div><div id="outlets-list" class="loading">Loading...</div></div>
+            </section>
+        </div>
+
+        <div id="profile-page" class="profile-page">
+            <button class="back-btn" onclick="closeProfile()">← Back to Rankings</button>
+            
+            <div class="profile-header-card">
+                <div class="profile-top">
+                    <div class="profile-avatar" id="profile-avatar"></div>
+                    <div class="profile-info">
+                        <h1 id="profile-name"></h1>
+                        <div class="outlet" id="profile-outlet"></div>
+                        <span class="tier-badge" id="profile-tier"></span>
+                    </div>
+                </div>
+                <div class="profile-stats-grid">
+                    <div class="profile-stat-box"><div class="value" id="profile-week">0</div><div class="label">Week</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-month">0</div><div class="label">Month</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-3mo">0</div><div class="label">3 Months</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-6mo">0</div><div class="label">6 Months</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-year">0</div><div class="label">Year</div></div>
+                    <div class="profile-stat-box"><div class="value" id="profile-total">0</div><div class="label">All-Time</div></div>
+                </div>
+                <div class="period-note">Use the time filter buttons above to change the period. Click on any team/player/agent below to see related rumors.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">📈 Activity Over Time</div>
+                <div class="timeline-container">
+                    <div class="timeline-chart" id="timeline-chart"></div>
+                    <div class="timeline-labels" id="timeline-labels"></div>
+                </div>
+            </div>
+
+            <div class="grid-3" id="profile-coverage-grid">
+                <div class="card"><div class="card-header">🏀 Top 30 Teams</div><div id="profile-teams-list"></div></div>
+                <div class="card"><div class="card-header">⭐ Top 30 Players</div><div id="profile-players-list"></div></div>
+                <div class="card"><div class="card-header">🤝 Top 10 Agents</div><div id="profile-agents-list"></div></div>
+            </div>
+
+            <button class="back-btn back-btn-bottom" onclick="closeProfile()">← Back to Rankings</button>
+        </div>
+    </main>
+
+    <!-- Modal for showing rumors -->
+    <div class="modal-overlay" id="rumor-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-title">Rumors</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="reporter_data.js"></script>
+    <script>
+        // =============================================
+        // CONSTANTS
+        // =============================================
         
-        if not result:
-            skipped_count += 1
-            continue
+        const NBA_TEAMS = [
+            "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets", 
+            "Chicago Bulls", "Cleveland Cavaliers", "Dallas Mavericks", "Denver Nuggets", 
+            "Detroit Pistons", "Golden State Warriors", "Houston Rockets", "Indiana Pacers",
+            "Los Angeles Clippers", "Los Angeles Lakers", "Memphis Grizzlies", "Miami Heat", 
+            "Milwaukee Bucks", "Minnesota Timberwolves", "New Orleans Pelicans", "New York Knicks", 
+            "Oklahoma City Thunder", "Orlando Magic", "Philadelphia 76ers", "Phoenix Suns",
+            "Portland Trail Blazers", "Sacramento Kings", "San Antonio Spurs", 
+            "Toronto Raptors", "Utah Jazz", "Washington Wizards"
+        ];
         
-        processed_count += 1
-        method_counts[method] += 1
+        const TEAM_SHORT_TO_FULL = {
+            "Hawks": "Atlanta Hawks", "Celtics": "Boston Celtics", "Nets": "Brooklyn Nets",
+            "Hornets": "Charlotte Hornets", "Bulls": "Chicago Bulls", "Cavaliers": "Cleveland Cavaliers",
+            "Mavericks": "Dallas Mavericks", "Nuggets": "Denver Nuggets", "Pistons": "Detroit Pistons",
+            "Warriors": "Golden State Warriors", "Rockets": "Houston Rockets", "Pacers": "Indiana Pacers",
+            "Clippers": "Los Angeles Clippers", "Lakers": "Los Angeles Lakers", "Grizzlies": "Memphis Grizzlies",
+            "Heat": "Miami Heat", "Bucks": "Milwaukee Bucks", "Timberwolves": "Minnesota Timberwolves",
+            "Pelicans": "New Orleans Pelicans", "Knicks": "New York Knicks", "Thunder": "Oklahoma City Thunder",
+            "Magic": "Orlando Magic", "76ers": "Philadelphia 76ers", "Sixers": "Philadelphia 76ers",
+            "Suns": "Phoenix Suns", "Trail Blazers": "Portland Trail Blazers", "Blazers": "Portland Trail Blazers",
+            "Kings": "Sacramento Kings", "Spurs": "San Antonio Spurs", "Raptors": "Toronto Raptors", 
+            "Jazz": "Utah Jazz", "Wizards": "Washington Wizards"
+        };
+
+        const TEAM_ABBREV = {
+            "Atlanta Hawks": "ATL", "Boston Celtics": "BOS", "Brooklyn Nets": "BKN",
+            "Charlotte Hornets": "CHA", "Chicago Bulls": "CHI", "Cleveland Cavaliers": "CLE",
+            "Dallas Mavericks": "DAL", "Denver Nuggets": "DEN", "Detroit Pistons": "DET",
+            "Golden State Warriors": "GSW", "Houston Rockets": "HOU", "Indiana Pacers": "IND",
+            "Los Angeles Clippers": "LAC", "Los Angeles Lakers": "LAL", "Memphis Grizzlies": "MEM",
+            "Miami Heat": "MIA", "Milwaukee Bucks": "MIL", "Minnesota Timberwolves": "MIN",
+            "New Orleans Pelicans": "NOP", "New York Knicks": "NYK", "Oklahoma City Thunder": "OKC",
+            "Orlando Magic": "ORL", "Philadelphia 76ers": "PHI", "Phoenix Suns": "PHX",
+            "Portland Trail Blazers": "POR", "Sacramento Kings": "SAC", "San Antonio Spurs": "SAS",
+            "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WAS"
+        };
+
+        // Non-players to exclude
+        const NON_PLAYERS = new Set([
+            "team usa", "usa basketball", "g league", "nba", "all-star", "hall of fame", 
+            "olympics", "fiba", "eurobasket", "world cup", "summer league", "social media",
+            "free agency", "trade", "draft", "new orleans hornets", "training camp",
+            "two-way contracts", "two-way contract",
+            // Commissioners/Executives
+            "david stern", "adam silver", "billy hunter", "mark cuban", "mat ishbia",
+            // Coaches
+            "doc rivers", "brad stevens", "gregg popovich", "brett brown", "rick carlisle",
+            "erik spoelstra", "phil jackson", "mike d'antoni", "dwane casey", "frank vogel",
+            "steve kerr", "tyronn lue", "tom thibodeau", "mike budenholzer", "nick nurse",
+            "quin snyder", "monty williams", "jason kidd", "ime udoka", "jb bickerstaff",
+            "mark daigneault", "doug christie", "scott brooks", "steve nash",
+            "pat riley", "david blatt", "jordi fernandez", "mike brown",
+            // GMs/Executives  
+            "bob myers", "sam presti", "daryl morey", "masai ujiri", "rob pelinka",
+            "james jones", "koby altman",
+            // Reporters (not players)
+            "shams charania",
+            // Agents
+            "mark bartelstein", "rich paul", "jeff schwartz", "aaron mintz", "bill duffy",
+            "leon rose", "dan fegan", "arn tellem", "aaron goodwin", "happy walters"
+        ].map(s => s.toLowerCase()));
+
+        // Excluded "reporters" (PR accounts, teams, players, non-reporters)
+        const EXCLUDED_REPORTERS = new Set([
+            // PR accounts
+            "@mrbuckbucknba", "@nbapr", "@ohnohedidnt24", "@hornetspr", "@espnstatsinfo",
+            "@trailblazerspr", "@trailblazerpr", "@pelicansnba", "@magic_pr", "@fullcourtpass",
+            "@kingjames", "@nba__courtside", "@hellowelcomepod", "@wwe",
+            "mrbuckbucknba", "nbapr", "ohnohedidnt24", "hornetspr", "espnstatsinfo",
+            "trailblazerspr", "trailblazerpr", "pelicansnba", "magic_pr", "fullcourtpass",
+            "mavs pr", "grizzlies pr", "timberwolves pr", "heat centel",
+            // Teams listed as reporters
+            "atlanta hawks", "chicago bulls", "indiana pacers", "milwaukee bucks",
+            "utah jazz", "miami heat",
+            // Players listed as reporters
+            "carmelo anthony", "chris paul", "dwight howard", "giannis antetokounmpo",
+            "dwyane wade", "bradley beal", "magic johnson", "isaiah thomas", "john wall",
+            "damian lillard", "cade cunningham", "tyrese haliburton", "tyrese maxey",
+            "austin reaves", "ben simmons", "norman powell",
+            "kobe bryant", "kevin love", "rudy gobert", "donovan mitchell", "trae young",
+            "kevin durant", "joel embiid", "draymond green", "kyrie irving", "steve nash",
+            "pau gasol", "andre iguodala", "kyle kuzma",
+            "ricky rubio", "patrick beverley", "ja morant", "jamal crawford",
+            // Coaches/Others
+            "steve kerr", "mat ishbia", "kevin hart", "doug christie", "training camp",
+            // Generic
+            "social media", "unknown", "n/a", "clutch points"
+        ].map(s => s.toLowerCase()));
+
+        // Excluded outlets
+        const EXCLUDED_OUTLETS = new Set([
+            "youtube", "reddit", "twitter", "x.com", "instagram", "facebook", 
+            "tiktok", "threads", "unknown", "@kcjhoop"
+        ].map(s => s.toLowerCase()));
+
+        // Handle to reporter name mapping
+        const HANDLE_TO_NAME = {
+            "kcjhoop": "K.C. Johnson"
+        };
+
+        // Reporter to outlet mapping
+        const REPORTER_TO_OUTLET = {
+            "jorge sierra": "HoopsHype",
+            "michael scotto": "HoopsHype"
+        };
+
+        // Outlet normalization
+        const OUTLET_NORMALIZE = {
+            "espn.com": "ESPN", "ESPN.com": "ESPN",
+            "hoopshype": "HoopsHype", "Hoopshype": "HoopsHype"
+        };
+
+        // =============================================
+        // STATE
+        // =============================================
         
-        text = rumor.get("text", "") or ""
-        tags = rumor.get("tags", [])
-        date = rumor.get("archive_date", "") or rumor.get("date", "")
-        topic = detect_topic(text, tags)
-        
-        if is_outlet:
-            # Track outlet separately
-            outlet_key = result["name"].lower().replace(" ", "_")
-            outlet_stats[outlet_key]["name"] = result["name"]
-            outlet_stats[outlet_key]["total"] += 1
-            outlet_stats[outlet_key]["by_topic"][topic] += 1
-            if date:
-                outlet_stats[outlet_key]["by_date"][date] += 1
-        else:
-            # Track reporter
-            reporter_key = result["name"].lower().replace(" ", "_").replace("@", "")
+        let REPORTERS = [];
+        let OUTLETS = [];
+        let currentDays = 90; // Default to 3 months
+        let currentView = 'leaderboard';
+        let currentProfileId = null;
+
+        // =============================================
+        // HELPER FUNCTIONS
+        // =============================================
+
+        function getFilteredCount(byDate, days) {
+            if (!byDate || Object.keys(byDate).length === 0) return 0;
+            if (days === 0) return Object.values(byDate).reduce((sum, c) => sum + c, 0);
             
-            # Track unknown handles
-            if method == "unknown_handle":
-                handle = result.get("_handle", result["name"])
-                unknown_handles[handle] += 1
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - days);
+            const cutoffStr = cutoff.toISOString().split('T')[0];
+
+            let total = 0;
+            for (const [date, count] of Object.entries(byDate)) {
+                if (date >= cutoffStr) total += count;
+            }
+            return total;
+        }
+
+        function getProportionalCount(totalCount, byDate, days) {
+            if (days === 0) return totalCount;
+            const allTimeTotal = Object.values(byDate || {}).reduce((sum, c) => sum + c, 0);
+            if (allTimeTotal === 0) return 0;
+            const filteredTotal = getFilteredCount(byDate, days);
+            return Math.round(totalCount * (filteredTotal / allTimeTotal));
+        }
+
+        function isValidReporter(name) {
+            if (!name) return false;
+            const nameLower = name.toLowerCase().trim();
+            if (EXCLUDED_REPORTERS.has(nameLower)) return false;
+            if (nameLower.startsWith('@') && nameLower.length < 4) return false;
+            for (const team of NBA_TEAMS) {
+                if (nameLower === team.toLowerCase()) return false;
+            }
+            return true;
+        }
+
+        function isValidPlayer(name) {
+            if (!name) return false;
+            const nameLower = name.toLowerCase().trim();
+            if (NON_PLAYERS.has(nameLower)) return false;
+            if (EXCLUDED_REPORTERS.has(nameLower)) return false;
+            for (const short of Object.keys(TEAM_SHORT_TO_FULL)) {
+                if (nameLower === short.toLowerCase()) return false;
+            }
+            for (const team of NBA_TEAMS) {
+                if (nameLower === team.toLowerCase()) return false;
+            }
+            return true;
+        }
+
+        function isValidOutlet(name) {
+            if (!name) return false;
+            return !EXCLUDED_OUTLETS.has(name.toLowerCase().trim());
+        }
+
+        function normalizeTeamName(team) {
+            return TEAM_SHORT_TO_FULL[team] || team;
+        }
+
+        function normalizeOutletName(outlet) {
+            if (!outlet) return outlet;
+            const lower = outlet.toLowerCase();
+            for (const [key, val] of Object.entries(OUTLET_NORMALIZE)) {
+                if (key.toLowerCase() === lower) return val;
+            }
+            return outlet;
+        }
+
+        function normalizeReporterName(name) {
+            if (!name) return name;
+            const handle = name.replace('@', '').toLowerCase();
+            return HANDLE_TO_NAME[handle] || name;
+        }
+
+        function getReporterOutlet(name, defaultOutlet) {
+            const nameLower = name.toLowerCase();
+            if (REPORTER_TO_OUTLET[nameLower]) return REPORTER_TO_OUTLET[nameLower];
+            return normalizeOutletName(defaultOutlet);
+        }
+
+        // =============================================
+        // INITIALIZATION
+        // =============================================
+
+        function initializeData() {
+            if (typeof REPORTER_DATA === 'undefined') return false;
+
+            REPORTERS = REPORTER_DATA.reporters
+                .filter(r => isValidReporter(r.name))
+                .map((r, i) => {
+                    const name = normalizeReporterName(r.name);
+                    
+                    const filteredByPlayer = {};
+                    for (const [playerName, count] of Object.entries(r.by_player || {})) {
+                        if (isValidPlayer(playerName)) {
+                            filteredByPlayer[playerName] = count;
+                        }
+                    }
+                    
+                    const normalizedByTeam = {};
+                    for (const [team, count] of Object.entries(r.by_team || {})) {
+                        const fullName = normalizeTeamName(team);
+                        if (NBA_TEAMS.includes(fullName)) {
+                            normalizedByTeam[fullName] = (normalizedByTeam[fullName] || 0) + count;
+                        }
+                    }
+
+                    return {
+                        id: r.id || `reporter_${i}`,
+                        name,
+                        outlet: getReporterOutlet(name, r.outlet),
+                        tier: r.tier || 3,
+                        avatar: r.avatar || name.replace('@', '').substring(0, 2).toUpperCase(),
+                        total: r.total || 0,
+                        byTopic: r.by_topic || {},
+                        byPlayer: filteredByPlayer,
+                        byTeam: normalizedByTeam,
+                        byAgent: r.by_agent || {},
+                        byDate: r.by_date || {},
+                        rumorsByTeam: r.rumors_by_team || {},
+                        rumorsByPlayer: r.rumors_by_player || {},
+                        rumorsByAgent: r.rumors_by_agent || {}
+                    };
+                });
+
+            // Merge and filter outlets
+            const outletMap = {};
+            for (const o of (REPORTER_DATA.outlets || [])) {
+                const name = normalizeOutletName(o.name);
+                if (!isValidOutlet(name)) continue;
+                if (!outletMap[name]) outletMap[name] = { name, total: 0, byDate: {} };
+                outletMap[name].total += o.total || 0;
+                for (const [date, count] of Object.entries(o.by_date || {})) {
+                    outletMap[name].byDate[date] = (outletMap[name].byDate[date] || 0) + count;
+                }
+            }
+            OUTLETS = Object.values(outletMap);
+
+            document.getElementById('stat-reporters').textContent = REPORTERS.length.toLocaleString();
+            document.getElementById('stat-rumors').textContent = (REPORTER_DATA.processed_rumors || 0).toLocaleString();
+            document.getElementById('stat-outlets').textContent = OUTLETS.length.toLocaleString();
+            updatePeriodLabel();
+            return true;
+        }
+
+        function updatePeriodLabel() {
+            const labels = { 7: 'Week', 30: 'Month', 90: '3 Months', 180: '6 Months', 365: 'Year', 0: 'All Time' };
+            document.getElementById('stat-period').textContent = labels[currentDays] || 'All Time';
+        }
+
+        // =============================================
+        // FILTERING
+        // =============================================
+
+        function getReporterStats() {
+            return REPORTERS.map(r => {
+                const filteredTotal = getFilteredCount(r.byDate, currentDays);
+                let prevTotal = 0;
+                if (currentDays > 0 && currentDays <= 180) {
+                    const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - currentDays);
+                    const cutoffStr = cutoff.toISOString().split('T')[0];
+                    const doubleCutoff = new Date(); doubleCutoff.setDate(doubleCutoff.getDate() - (currentDays * 2));
+                    const doubleCutoffStr = doubleCutoff.toISOString().split('T')[0];
+                    for (const [date, count] of Object.entries(r.byDate || {})) {
+                        if (date >= doubleCutoffStr && date < cutoffStr) prevTotal += count;
+                    }
+                }
+                return { ...r, filteredTotal, previousTotal: prevTotal, change: filteredTotal - prevTotal };
+            }).filter(r => r.filteredTotal > 0);
+        }
+
+        function getOutletStats() {
+            return OUTLETS.map(o => ({
+                ...o,
+                filteredTotal: getFilteredCount(o.byDate, currentDays)
+            })).filter(o => o.filteredTotal > 0);
+        }
+
+        // =============================================
+        // MODAL
+        // =============================================
+
+        function showRumorsModal(reporterId, type, name) {
+            const reporter = REPORTERS.find(r => r.id === reporterId);
+            if (!reporter) return;
+
+            const modal = document.getElementById('rumor-modal');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+
+            title.textContent = `${reporter.name} on ${name}`;
+
+            // Get rumors directly from the appropriate structure
+            let rumors = [];
+            let totalCount = 0;
             
-            stats = reporter_stats[reporter_key]
-            stats["name"] = result["name"]
-            stats["outlet"] = result["outlet"]
-            stats["tier"] = result.get("tier", 4)
-            stats["total"] += 1
-            stats["detection_methods"][method] += 1
-            stats["by_topic"][topic] += 1
+            if (type === 'team') {
+                // Try exact match first, then try short name
+                rumors = reporter.rumorsByTeam[name] || [];
+                totalCount = reporter.byTeam[name] || 0;
+                
+                // Also check for short team names
+                if (rumors.length === 0) {
+                    const shortName = Object.entries(TEAM_SHORT_TO_FULL).find(([short, full]) => full === name)?.[0];
+                    if (shortName) {
+                        rumors = reporter.rumorsByTeam[shortName] || [];
+                    }
+                }
+            } else if (type === 'player') {
+                rumors = reporter.rumorsByPlayer[name] || [];
+                totalCount = reporter.byPlayer[name] || 0;
+            } else if (type === 'agent') {
+                rumors = reporter.rumorsByAgent[name] || [];
+                totalCount = reporter.byAgent[name] || 0;
+            }
+
+            if (rumors.length > 0) {
+                body.innerHTML = rumors.map(r => `
+                    <div class="rumor-item">
+                        <div class="rumor-date">${r.date || 'Unknown date'}</div>
+                        <div class="rumor-text">${r.text || ''}</div>
+                        ${r.source_url ? `<a href="${r.source_url}" target="_blank" class="rumor-link">View source →</a>` : ''}
+                    </div>
+                `).join('');
+            } else {
+                body.innerHTML = `
+                    <div class="no-rumors">
+                        <p>No recent rumors found for ${name}.</p>
+                        <p style="margin-top: 10px; font-size: 12px;">Total mentions: ${totalCount}. Rumor text is only stored for recent entries.</p>
+                    </div>
+                `;
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('rumor-modal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('rumor-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'rumor-modal') closeModal();
+        });
+
+        // =============================================
+        // RENDERING
+        // =============================================
+
+        function renderLeaderboard() {
+            const stats = getReporterStats().sort((a, b) => b.filteredTotal - a.filteredTotal);
+            if (stats.length === 0) {
+                document.getElementById('leaderboard-list').innerHTML = '<div class="loading">No data for this period</div>';
+                document.getElementById('trending-list').innerHTML = '<div class="loading">No data for this period</div>';
+                return;
+            }
+
+            document.getElementById('leaderboard-list').innerHTML = stats.slice(0, 50).map((r, i) => `
+                <div class="reporter-row" onclick="openProfile('${r.id}')">
+                    <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
+                    <div class="reporter-info">
+                        <div class="reporter-name">${r.name}</div>
+                        <div class="reporter-outlet">${r.outlet}</div>
+                    </div>
+                    <div class="reporter-stat">
+                        <div class="reporter-stat-value">${r.filteredTotal.toLocaleString()}</div>
+                        <div class="reporter-stat-label">Rumors</div>
+                    </div>
+                </div>
+            `).join('');
+
+            if (currentDays > 0 && currentDays <= 180) {
+                const trending = stats.filter(r => r.change > 0).sort((a, b) => b.change - a.change).slice(0, 20);
+                document.getElementById('trending-list').innerHTML = trending.length > 0 
+                    ? trending.map((r, i) => `
+                        <div class="reporter-row" onclick="openProfile('${r.id}')">
+                            <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
+                            <div class="reporter-info"><div class="reporter-name">${r.name}</div><div class="reporter-outlet">${r.outlet}</div></div>
+                            <div class="reporter-stat"><div class="reporter-stat-value" style="color: #27ae60;">+${r.change}</div><div class="reporter-stat-label">vs prev</div></div>
+                        </div>
+                    `).join('')
+                    : '<div class="loading">No trending data</div>';
+            } else {
+                document.getElementById('trending-list').innerHTML = '<div class="loading">Select Week/Month/3Mo/6Mo to see trending</div>';
+            }
+        }
+
+        function renderTeams() {
+            const stats = getReporterStats();
+            const teamReporters = {}; NBA_TEAMS.forEach(team => { teamReporters[team] = []; });
+
+            stats.forEach(r => {
+                for (const [team, totalCount] of Object.entries(r.byTeam || {})) {
+                    if (teamReporters[team]) {
+                        const filteredCount = getProportionalCount(totalCount, r.byDate, currentDays);
+                        if (filteredCount > 0) teamReporters[team].push({ ...r, teamCount: filteredCount });
+                    }
+                }
+            });
+
+            document.getElementById('teams-grid').innerHTML = NBA_TEAMS.map(team => {
+                const reporters = teamReporters[team].sort((a, b) => b.teamCount - a.teamCount).slice(0, 5);
+                return `<div class="team-coverage-card"><div class="team-name">${team}</div>
+                    ${reporters.length > 0 ? reporters.map(r => `<div class="reporter-mini" onclick="openProfile('${r.id}')"><span>${r.name}</span><span class="count">${r.teamCount}</span></div>`).join('') : '<div style="color:#888;font-size:13px;">No data</div>'}</div>`;
+            }).join('');
+            document.getElementById('teams-grid').classList.remove('loading');
+        }
+
+        function renderPlayers() {
+            const stats = getReporterStats();
+            const playerCounts = {};
+            stats.forEach(r => {
+                for (const [player, totalCount] of Object.entries(r.byPlayer || {})) {
+                    const filteredCount = getProportionalCount(totalCount, r.byDate, currentDays);
+                    if (filteredCount > 0) playerCounts[player] = (playerCounts[player] || 0) + filteredCount;
+                }
+            });
+
+            const topPlayers = Object.entries(playerCounts).sort((a, b) => b[1] - a[1]).slice(0, 50).map(([name]) => name);
+
+            document.getElementById('players-grid').innerHTML = topPlayers.map(player => {
+                const reporters = stats.filter(r => r.byPlayer && r.byPlayer[player])
+                    .map(r => ({ ...r, playerCount: getProportionalCount(r.byPlayer[player], r.byDate, currentDays) }))
+                    .filter(r => r.playerCount > 0).sort((a, b) => b.playerCount - a.playerCount).slice(0, 5);
+                return `<div class="team-coverage-card"><div class="team-name">${player}</div>
+                    ${reporters.length > 0 ? reporters.map(r => `<div class="reporter-mini" onclick="openProfile('${r.id}')"><span>${r.name}</span><span class="count">${r.playerCount}</span></div>`).join('') : '<div style="color:#888;font-size:13px;">No data</div>'}</div>`;
+            }).join('');
+            document.getElementById('players-grid').classList.remove('loading');
+        }
+
+        function renderHeatmap() {
+            // Get top 30 reporters by ALL-TIME total, then sort alphabetically for display
+            const allStats = REPORTERS.map(r => ({
+                ...r,
+                allTimeTotal: Object.values(r.byDate || {}).reduce((sum, c) => sum + c, 0)
+            })).filter(r => r.allTimeTotal > 0);
             
-            if date:
-                stats["by_date"][date] += 1
+            const top30 = allStats.sort((a, b) => b.allTimeTotal - a.allTimeTotal).slice(0, 30);
+            const stats = top30.sort((a, b) => a.name.localeCompare(b.name));
+            const teams = NBA_TEAMS;
+
+            const heatData = stats.map(r => {
+                const teamCounts = {};
+                teams.forEach(t => { teamCounts[t] = getProportionalCount(r.byTeam?.[t] || 0, r.byDate, currentDays); });
+                return { reporter: r, teamCounts };
+            });
+
+            let maxCount = 0;
+            heatData.forEach(d => { Object.values(d.teamCounts).forEach(c => { if (c > maxCount) maxCount = c; }); });
+
+            const getHeatClass = (count) => {
+                if (count === 0) return 'heat-0';
+                const ratio = count / maxCount;
+                if (ratio < 0.1) return 'heat-1';
+                if (ratio < 0.25) return 'heat-2';
+                if (ratio < 0.5) return 'heat-3';
+                if (ratio < 0.75) return 'heat-4';
+                return 'heat-5';
+            };
+
+            // Desktop table
+            const headerRow = `<tr><th>Reporter</th>${teams.map(t => `<th title="${t}">${TEAM_ABBREV[t]}</th>`).join('')}</tr>`;
+            const dataRows = heatData.map(d => {
+                const cells = teams.map(t => {
+                    const count = d.teamCounts[t];
+                    return `<td class="${getHeatClass(count)}" title="${d.reporter.name}: ${count} rumors about ${t}">${count || '-'}</td>`;
+                }).join('');
+                return `<tr><td onclick="openProfile('${d.reporter.id}')" style="cursor:pointer">${d.reporter.name}</td>${cells}</tr>`;
+            }).join('');
+            document.getElementById('heatmap-table').innerHTML = headerRow + dataRows;
+
+            // Mobile cards
+            const mobileHtml = heatData.map(d => {
+                const topTeams = Object.entries(d.teamCounts)
+                    .filter(([_, count]) => count > 0)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 10);
+                
+                return `
+                    <div class="heatmap-card" onclick="openProfile('${d.reporter.id}')">
+                        <div class="heatmap-card-header">${d.reporter.name}</div>
+                        <div class="heatmap-card-teams">
+                            ${topTeams.map(([team, count]) => `
+                                <span class="heatmap-team-badge ${getHeatClass(count)}">
+                                    <span class="team-abbr">${TEAM_ABBREV[team]}</span>
+                                    <span class="team-count">${count}</span>
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('heatmap-mobile').innerHTML = mobileHtml;
+        }
+
+        function renderOutlets() {
+            const stats = getOutletStats().sort((a, b) => b.filteredTotal - a.filteredTotal).slice(0, 30);
+            document.getElementById('outlets-list').innerHTML = stats.length > 0
+                ? stats.map((o, i) => `
+                    <div class="reporter-row">
+                        <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
+                        <div class="reporter-info"><div class="reporter-name">${o.name}</div><div class="reporter-outlet">Media Outlet</div></div>
+                        <div class="reporter-stat"><div class="reporter-stat-value">${o.filteredTotal.toLocaleString()}</div><div class="reporter-stat-label">Rumors</div></div>
+                    </div>
+                `).join('')
+                : '<div class="loading">No outlet data</div>';
+        }
+
+        // =============================================
+        // REPORTER PROFILE
+        // =============================================
+
+        function openProfile(reporterId) {
+            const reporter = REPORTERS.find(r => r.id === reporterId);
+            if (!reporter) return;
+
+            currentProfileId = reporterId;
+
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('profile-page').classList.add('active');
+
+            document.getElementById('profile-avatar').textContent = reporter.avatar;
+            document.getElementById('profile-name').textContent = reporter.name;
+            document.getElementById('profile-outlet').textContent = reporter.outlet;
+            document.getElementById('profile-tier').textContent = `Tier ${reporter.tier}`;
+            document.getElementById('profile-tier').className = `tier-badge tier-${reporter.tier}`;
+
+            document.getElementById('profile-week').textContent = getFilteredCount(reporter.byDate, 7).toLocaleString();
+            document.getElementById('profile-month').textContent = getFilteredCount(reporter.byDate, 30).toLocaleString();
+            document.getElementById('profile-3mo').textContent = getFilteredCount(reporter.byDate, 90).toLocaleString();
+            document.getElementById('profile-6mo').textContent = getFilteredCount(reporter.byDate, 180).toLocaleString();
+            document.getElementById('profile-year').textContent = getFilteredCount(reporter.byDate, 365).toLocaleString();
+            document.getElementById('profile-total').textContent = reporter.total.toLocaleString();
+
+            renderTimelineChart(reporter);
+            updateProfileCoverage(reporter);
+
+            window.scrollTo(0, 0);
+        }
+
+        function renderTimelineChart(reporter) {
+            const byDate = reporter.byDate || {};
+            const dates = Object.keys(byDate).sort();
+            if (dates.length === 0) {
+                document.getElementById('timeline-chart').innerHTML = '<div class="loading">No timeline data</div>';
+                document.getElementById('timeline-labels').innerHTML = '';
+                return;
+            }
+
+            const byYear = {};
+            for (const [date, count] of Object.entries(byDate)) {
+                const year = date.substring(0, 4);
+                byYear[year] = (byYear[year] || 0) + count;
+            }
+
+            const years = Object.keys(byYear).sort();
+            const maxCount = Math.max(...Object.values(byYear));
+
+            document.getElementById('timeline-chart').innerHTML = years.map(year => {
+                const count = byYear[year];
+                const height = maxCount > 0 ? Math.max(5, (count / maxCount) * 100) : 5;
+                return `<div class="timeline-bar" style="height: ${height}%" data-tooltip="${year}: ${count} rumors"></div>`;
+            }).join('');
+
+            document.getElementById('timeline-labels').innerHTML = years.map(y => `<span>${y}</span>`).join('');
+        }
+
+        function updateProfileCoverage(reporter) {
+            if (!reporter) {
+                reporter = REPORTERS.find(r => r.id === currentProfileId);
+                if (!reporter) return;
+            }
+
+            const days = currentDays;
+
+            // Top 30 teams - clickable
+            const topTeams = Object.entries(reporter.byTeam || {})
+                .map(([team, count]) => [team, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
+                .filter(([_, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 30);
+
+            document.getElementById('profile-teams-list').innerHTML = topTeams.length > 0
+                ? `<div class="coverage-grid">${topTeams.map(([team, count]) => `
+                    <div class="coverage-item" onclick="showRumorsModal('${reporter.id}', 'team', '${team}')">
+                        <span class="name">${team}</span><span class="count">${count}</span>
+                    </div>`).join('')}</div>`
+                : '<div class="loading">No team data</div>';
+
+            // Top 30 players - clickable
+            const topPlayers = Object.entries(reporter.byPlayer || {})
+                .map(([player, count]) => [player, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
+                .filter(([_, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 30);
+
+            document.getElementById('profile-players-list').innerHTML = topPlayers.length > 0
+                ? `<div class="coverage-grid">${topPlayers.map(([player, count]) => `
+                    <div class="coverage-item" onclick="showRumorsModal('${reporter.id}', 'player', '${player.replace(/'/g, "\\'")}')">
+                        <span class="name">${player}</span><span class="count">${count}</span>
+                    </div>`).join('')}</div>`
+                : '<div class="loading">No player data</div>';
+
+            // Top 10 agents - clickable
+            const topAgents = Object.entries(reporter.byAgent || {})
+                .map(([agent, count]) => [agent, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
+                .filter(([_, count]) => count > 0)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            document.getElementById('profile-agents-list').innerHTML = topAgents.length > 0
+                ? `<div class="coverage-grid">${topAgents.map(([agent, count]) => `
+                    <div class="coverage-item" onclick="showRumorsModal('${reporter.id}', 'agent', '${agent.replace(/'/g, "\\'")}')">
+                        <span class="name">${agent}</span><span class="count">${count}</span>
+                    </div>`).join('')}</div>`
+                : '<div class="loading">No agent data yet</div>';
+        }
+
+        function closeProfile() {
+            document.getElementById('profile-page').classList.remove('active');
+            document.getElementById('main-content').style.display = 'block';
+            currentProfileId = null;
+        }
+
+        // =============================================
+        // VIEW SWITCHING
+        // =============================================
+
+        function renderCurrentView() {
+            updatePeriodLabel();
             
-            for team in extract_teams(tags):
-                stats["by_team"][team] += 1
-            for player in extract_players(tags):
-                stats["by_player"][player] += 1
-            for agent in extract_agents(tags, text):
-                stats["by_agent"][agent] += 1
-            
-            # Create rumor object
-            rumor_obj = {
-                "date": date,
-                "text": text[:300] + "..." if len(text) > 300 else text,
-                "topic": topic,
-                "source_url": rumor.get("source_url", "")
+            if (currentProfileId) {
+                updateProfileCoverage();
+                return;
             }
             
-            # Store up to 10 rumors per team
-            for team in extract_teams(tags):
-                if len(stats["rumors_by_team"][team]) < 10:
-                    stats["rumors_by_team"][team].append(rumor_obj)
-            
-            # Store up to 10 rumors per player
-            for player in extract_players(tags):
-                if len(stats["rumors_by_player"][player]) < 10:
-                    stats["rumors_by_player"][player].append(rumor_obj)
-            
-            # Store up to 10 rumors per agent
-            for agent in extract_agents(tags, text):
-                if len(stats["rumors_by_agent"][agent]) < 10:
-                    stats["rumors_by_agent"][agent].append(rumor_obj)
-    
-    # Convert reporters to list
-    reporters = []
-    for key, stats in reporter_stats.items():
-        # Convert rumors dicts - only include teams/players/agents that have rumors
-        rumors_by_team = {k: v for k, v in stats["rumors_by_team"].items() if v}
-        rumors_by_player = {k: v for k, v in stats["rumors_by_player"].items() if v}
-        rumors_by_agent = {k: v for k, v in stats["rumors_by_agent"].items() if v}
-        
-        reporters.append({
-            "id": key,
-            "name": stats["name"],
-            "outlet": stats["outlet"],
-            "tier": stats["tier"],
-            "avatar": "".join([n[0] for n in stats["name"].replace("@", "").split()[:2]]).upper()[:2] or "??",
-            "total": stats["total"],
-            "breaking": stats["breaking"],
-            "by_topic": dict(stats["by_topic"]),
-            "by_player": dict(sorted(stats["by_player"].items(), key=lambda x: -x[1])[:100]),
-            "by_team": dict(sorted(stats["by_team"].items(), key=lambda x: -x[1])),
-            "by_agent": dict(sorted(stats["by_agent"].items(), key=lambda x: -x[1])[:50]),
-            "by_date": dict(stats["by_date"]),
-            "detection_methods": dict(stats["detection_methods"]),
-            "rumors_by_team": rumors_by_team,
-            "rumors_by_player": rumors_by_player,
-            "rumors_by_agent": rumors_by_agent
-        })
-    
-    # Convert outlets to list
-    outlets = []
-    for key, stats in outlet_stats.items():
-        outlets.append({
-            "id": key,
-            "name": stats["name"],
-            "total": stats["total"],
-            "by_topic": dict(stats["by_topic"]),
-            "by_date": dict(stats["by_date"])
-        })
-    
-    # Sort by total
-    reporters.sort(key=lambda x: -x["total"])
-    outlets.sort(key=lambda x: -x["total"])
-    
-    print(f"\n=== Processing Summary ===")
-    print(f"Total rumors: {len(archive_data)}")
-    print(f"Processed: {processed_count}")
-    print(f"Skipped (no reporter): {skipped_count}")
-    print(f"Reporters found: {len(reporters)}")
-    print(f"Outlets found: {len(outlets)}")
-    print(f"\nDetection methods:")
-    for method, count in sorted(method_counts.items(), key=lambda x: -x[1]):
-        print(f"  {method}: {count}")
-    
-    if unknown_handles:
-        print(f"\n=== Top 20 Unknown Twitter Handles ===")
-        print("(Add these to REPORTERS_DB for better attribution)")
-        for handle, count in sorted(unknown_handles.items(), key=lambda x: -x[1])[:20]:
-            print(f"  @{handle}: {count}")
-    
-    return {
-        "generated_at": datetime.now().isoformat(),
-        "total_rumors": len(archive_data),
-        "processed_rumors": processed_count,
-        "total_reporters": len(reporters),
-        "total_outlets": len(outlets),
-        "detection_methods": dict(method_counts),
-        "reporters": reporters,
-        "outlets": outlets,
-        "unknown_handles": dict(sorted(unknown_handles.items(), key=lambda x: -x[1])[:50])
-    }
+            switch(currentView) {
+                case 'leaderboard': renderLeaderboard(); break;
+                case 'teams': renderTeams(); break;
+                case 'players': renderPlayers(); break;
+                case 'heatmap': renderHeatmap(); break;
+                case 'outlets': renderOutlets(); break;
+            }
+        }
 
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+                tab.classList.add('active');
+                currentView = tab.dataset.view;
+                document.getElementById(currentView).classList.add('active');
+                closeProfile();
+                renderCurrentView();
+            });
+        });
 
-def generate_js_data(data: Dict, output_path: str = "reporter_data.js"):
-    """Generate JavaScript file for the HTML tool."""
-    
-    js_content = f"""// Reporter Rankings Data
-// Generated: {data['generated_at']}
-// Total Rumors: {data['total_rumors']}
-// Processed: {data['processed_rumors']}
-// Total Reporters: {data['total_reporters']}
-// Total Outlets: {data['total_outlets']}
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDays = parseInt(btn.dataset.days);
+                renderCurrentView();
+            });
+        });
 
-const REPORTER_DATA = {json.dumps(data, indent=2)};
+        // =============================================
+        // INIT
+        // =============================================
 
-// Export for use in HTML
-if (typeof window !== 'undefined') {{
-    window.REPORTER_DATA = REPORTER_DATA;
-}}
-"""
-    
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(js_content)
-    
-    print(f"\nGenerated {output_path}")
-    print(f"  - {data['total_reporters']} reporters")
-    print(f"  - {data['total_outlets']} outlets")
-    print(f"  - {data['processed_rumors']} rumors attributed")
-
-
-def main():
-    """Main entry point."""
-    import argparse
-    
-    parser = argparse.ArgumentParser(description='Process HoopsHype Rumors Archive for Reporter Rankings')
-    parser.add_argument('input', help='Path to archive JSON file')
-    parser.add_argument('-o', '--output', default='reporter_data.js', help='Output JS file path')
-    parser.add_argument('--json', action='store_true', help='Also output raw JSON')
-    parser.add_argument('--days', type=int, default=None, help='Only include rumors from last N days')
-    
-    args = parser.parse_args()
-    
-    # Load archive
-    print(f"Loading archive from {args.input}...")
-    with open(args.input, 'r', encoding='utf-8') as f:
-        archive = json.load(f)
-    
-    print(f"Loaded {len(archive)} rumors")
-    
-    # Process
-    print("Processing...")
-    data = process_archive(archive, days_filter=args.days)
-    
-    # Output
-    generate_js_data(data, args.output)
-    
-    if args.json:
-        json_path = args.output.replace('.js', '.json')
-        with open(json_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2)
-        print(f"Also saved JSON to {json_path}")
-    
-    # Print top reporters
-    print("\n=== Top 20 Reporters by Volume ===")
-    for i, r in enumerate(data['reporters'][:20], 1):
-        methods = r.get('detection_methods', {})
-        method_str = ", ".join([f"{k}:{v}" for k, v in methods.items()])
-        print(f"  {i:2}. {r['name']:25} ({r['outlet']:20}) - {r['total']:4} rumors [{method_str}]")
-    
-    print("\n=== Top 10 Outlets by Volume ===")
-    for i, o in enumerate(data['outlets'][:10], 1):
-        print(f"  {i:2}. {o['name']:30} - {o['total']:4} rumors")
-
-
-if __name__ == "__main__":
-    main()
+        document.addEventListener('DOMContentLoaded', () => {
+            if (initializeData()) renderCurrentView();
+            else document.getElementById('leaderboard-list').innerHTML = '<div class="loading">Failed to load data</div>';
+        });
+    </script>
+</body>
+</html>
