@@ -374,9 +374,13 @@
             "team usa", "usa basketball", "g league", "nba", "all-star", "hall of fame", 
             "olympics", "fiba", "eurobasket", "world cup", "summer league", "social media",
             "free agency", "trade", "draft", "new orleans hornets", "training camp",
-            "two-way contracts", "two-way contract",
-            // Commissioners/Executives
+            "two-way contracts", "two-way contract", "salary cap", "load management",
+            "drew league", "real madrid", "charlotte bobcats",
+            // Commissioners/Executives/Owners
             "david stern", "adam silver", "billy hunter", "mark cuban", "mat ishbia",
+            "james dolan", "jeanie buss", "mikhail prokhorov", "robert sarver",
+            "billy king", "david griffin", "donnie nelson", "mitch kupchak", "neil olshey",
+            "nico harrison", "jon horst", "sean marks", "lawrence frank",
             // Coaches
             "doc rivers", "brad stevens", "gregg popovich", "brett brown", "rick carlisle",
             "erik spoelstra", "phil jackson", "mike d'antoni", "dwane casey", "frank vogel",
@@ -384,11 +388,16 @@
             "quin snyder", "monty williams", "jason kidd", "ime udoka", "jb bickerstaff",
             "mark daigneault", "doug christie", "scott brooks", "steve nash",
             "pat riley", "david blatt", "jordi fernandez", "mike brown",
+            "billy donovan", "chris finch", "david fizdale", "darvin ham",
+            "igor kokoskov", "jacque vaughn", "jeff van gundy", "joe mazzulla",
+            "kenny atkinson", "stephen silas", "jj redick",
             // GMs/Executives  
             "bob myers", "sam presti", "daryl morey", "masai ujiri", "rob pelinka",
             "james jones", "koby altman",
             // Reporters (not players)
             "shams charania",
+            // Other non-players
+            "donald trump",
             // Agents
             "mark bartelstein", "rich paul", "jeff schwartz", "aaron mintz", "bill duffy",
             "leon rose", "dan fegan", "arn tellem", "aaron goodwin", "happy walters"
@@ -653,23 +662,34 @@
             let totalCount = 0;
             
             if (type === 'team') {
-                // Try exact match first, then try short name
-                rumors = reporter.rumorsByTeam[name] || [];
                 totalCount = reporter.byTeam[name] || 0;
                 
-                // Also check for short team names
-                if (rumors.length === 0) {
-                    const shortName = Object.entries(TEAM_SHORT_TO_FULL).find(([short, full]) => full === name)?.[0];
-                    if (shortName) {
-                        rumors = reporter.rumorsByTeam[shortName] || [];
-                    }
+                // Try multiple lookup variations for team names
+                const lookupKeys = [name];
+                
+                // Add short name (e.g., "Warriors" for "Golden State Warriors")
+                const shortName = Object.entries(TEAM_SHORT_TO_FULL).find(([short, full]) => full === name)?.[0];
+                if (shortName) lookupKeys.push(shortName);
+                
+                // Add lowercase variations
+                lookupKeys.push(name.toLowerCase());
+                if (shortName) lookupKeys.push(shortName.toLowerCase());
+                
+                // Try each key until we find rumors
+                for (const key of lookupKeys) {
+                    rumors = reporter.rumorsByTeam?.[key] || [];
+                    if (rumors.length > 0) break;
                 }
             } else if (type === 'player') {
-                rumors = reporter.rumorsByPlayer[name] || [];
                 totalCount = reporter.byPlayer[name] || 0;
+                // Try exact match and lowercase
+                rumors = reporter.rumorsByPlayer?.[name] || reporter.rumorsByPlayer?.[name.toLowerCase()] || [];
             } else if (type === 'agent') {
-                rumors = reporter.rumorsByAgent[name] || [];
                 totalCount = reporter.byAgent[name] || 0;
+                // Try exact match, lowercase, and title case
+                rumors = reporter.rumorsByAgent?.[name] || 
+                         reporter.rumorsByAgent?.[name.toLowerCase()] || 
+                         reporter.rumorsByAgent?.[name.replace(/\b\w/g, c => c.toUpperCase())] || [];
             }
 
             if (rumors.length > 0) {
