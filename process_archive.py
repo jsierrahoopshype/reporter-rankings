@@ -47,14 +47,14 @@ REPORTERS_DB = {
     },
     "jake fischer": {
         "name": "Jake Fischer",
-        "outlet": "Yahoo Sports",
+        "outlet": "The Stein Line",
         "tier": 1,
         "handles": ["jakelfischer", "jaborz_nba"],
         "variations": ["fischer"]
     },
     "chris haynes": {
         "name": "Chris Haynes",
-        "outlet": "TNT/Bleacher Report",
+        "outlet": "NBA on Prime",
         "tier": 1,
         "handles": ["chrisbhaynes"],
         "variations": ["haynes"]
@@ -191,7 +191,7 @@ REPORTERS_DB = {
     },
     "anthony slater": {
         "name": "Anthony Slater",
-        "outlet": "The Athletic",
+        "outlet": "ESPN",
         "tier": 2,
         "handles": ["anthonyslater"],
         "variations": ["slater"]
@@ -461,7 +461,7 @@ REPORTERS_DB = {
     },
     "brian lewis": {
         "name": "Brian Lewis",
-        "outlet": "NY Post",
+        "outlet": "New York Post",
         "tier": 3,
         "handles": ["nyaborzy", "brianlewis"],
         "variations": ["lewis"]
@@ -475,7 +475,7 @@ REPORTERS_DB = {
     },
     "k.c. johnson": {
         "name": "K.C. Johnson",
-        "outlet": "NBC Sports Chicago",
+        "outlet": "Chicago Sports Network",
         "tier": 3,
         "handles": ["kcjhoop"],
         "variations": ["johnson"]
@@ -773,7 +773,7 @@ REPORTERS_DB = {
     # ===================
     "mike curtis": {
         "name": "Mike Curtis",
-        "outlet": "Baltimore Sun",
+        "outlet": "Dallas Morning News",
         "tier": 3,
         "handles": ["mikeacurtis2"],
         "variations": ["curtis"]
@@ -903,6 +903,202 @@ REPORTERS_DB = {
         "tier": 2,
         "handles": ["yaronweitzman"],
         "variations": ["weitzman"]
+    },
+    "law murray": {
+        "name": "Law Murray",
+        "outlet": "The Athletic",
+        "tier": 3,
+        "handles": ["lawmurraythenu"],
+        "variations": ["murray"]
+    },
+    "brandon rahbar": {
+        "name": "Brandon Rahbar",
+        "outlet": "Daily Thunder",
+        "tier": 3,
+        "handles": ["brandonrahbar"],
+        "variations": ["rahbar"]
+    },
+    "duane rankin": {
+        "name": "Duane Rankin",
+        "outlet": "Arizona Republic",
+        "tier": 3,
+        "handles": ["duaborz"],
+        "variations": ["rankin"]
+    },
+    "jason beede": {
+        "name": "Jason Beede",
+        "outlet": "Orlando Sentinel",
+        "tier": 3,
+        "handles": ["jasonbeede"],
+        "variations": ["beede"]
+    },
+    "austin krell": {
+        "name": "Austin Krell",
+        "outlet": "Sports Illustrated",
+        "tier": 3,
+        "handles": ["austinkrell"],
+        "variations": ["krell"]
+    },
+    "dan woike": {
+        "name": "Dan Woike",
+        "outlet": "The Athletic",
+        "tier": 3,
+        "handles": ["danwoikenba"],
+        "variations": ["woike"]
+    },
+    "joel lorenzi": {
+        "name": "Joel Lorenzi",
+        "outlet": "The Athletic",
+        "tier": 3,
+        "handles": ["joellorenzi"],
+        "variations": ["lorenzi"]
+    },
+    "justin russo": {
+        "name": "Justin Russo",
+        "outlet": "Russo Writes",
+        "tier": 3,
+        "handles": ["justinrusso"],
+        "variations": ["russo"]
+    },
+    "bennett durando": {
+        "name": "Bennett Durando",
+        "outlet": "The Denver Post",
+        "tier": 3,
+        "handles": ["bennettdurando"],
+        "variations": ["durando"]
+    },
+    "sean highkin": {
+        "name": "Sean Highkin",
+        "outlet": "Rose Garden Report",
+        "tier": 3,
+        "handles": ["seanhighkin"],
+        "variations": ["highkin"]
+    },
+    "grant afseth": {
+        "name": "Grant Afseth",
+        "outlet": "Dallas Hoops Journal",
+        "tier": 3,
+        "handles": ["grantafseth"],
+        "variations": ["afseth"]
+    },
+    "nick depaula": {
+        "name": "Nick DePaula",
+        "outlet": "Freelance",
+        "tier": 3,
+        "handles": ["nickdepaula"],
+        "variations": ["depaula"]
+    },
+    "kellan olson": {
+        "name": "Kellan Olson",
+        "outlet": "Arizona Sports",
+        "tier": 3,
+        "handles": ["kellanolson"],
+        "variations": ["olson"]
+    },
+    "adam aaronson": {
+        "name": "Adam Aaronson",
+        "outlet": "The Philly Voice",
+        "tier": 3,
+        "handles": ["adamaaronson"],
+        "variations": ["aaronson"]
+    },
+    "joey linn": {
+        "name": "Joey Linn",
+        "outlet": "Freelance",
+        "tier": 3,
+        "handles": ["joeylinn_"],
+        "variations": ["linn"]
+    },
+    "tony east": {
+        "name": "Tony East",
+        "outlet": "Forbes Sports",
+        "tier": 3,
+        "handles": ["taborz_"],
+        "variations": ["east"]
+    },
+    "khobi price": {
+        "name": "Khobi Price",
+        "outlet": "The California Post",
+        "tier": 3,
+        "handles": ["khobiprice"],
+        "variations": ["price"]
+    },
+    "damichael cole": {
+        "name": "Damichael Cole",
+        "outlet": "Memphis Commercial Appeal",
+        "tier": 3,
+        "handles": ["damaborz"],
+        "variations": ["cole"]
+    },
+    "keerthika uthayakumar": {
+        "name": "Keerthika Uthayakumar",
+        "outlet": "Freelance",
+        "tier": 3,
+        "handles": ["keaborz"],
+        "variations": ["uthayakumar"]
+    },
+    "marc j. spears": {
+        "name": "Marc J. Spears",
+        "outlet": "Andscape",
+        "tier": 2,
+        "handles": ["marcjspears"],
+        "variations": ["spears"]
+    },
+    "josh robbins": {
+        "name": "Josh Robbins",
+        "outlet": "The Athletic",
+        "tier": 3,
+        "handles": ["joshuabrobabbins"],
+        "variations": ["robbins"]
+    },
+    "dustin dopirak": {
+        "name": "Dustin Dopirak",
+        "outlet": "Indianapolis Star",
+        "tier": 3,
+        "handles": ["dustindopirak"],
+        "variations": ["dopirak"]
+    },
+    "sean cunningham": {
+        "name": "Sean Cunningham",
+        "outlet": "NBC Sacramento",
+        "tier": 3,
+        "handles": ["seaborz"],
+        "variations": ["cunningham"]
+    },
+    "stefan bondy": {
+        "name": "Stefan Bondy",
+        "outlet": "New York Post",
+        "tier": 3,
+        "handles": ["stefanbondy"],
+        "variations": ["bondy"]
+    },
+    "tim reynolds": {
+        "name": "Tim Reynolds",
+        "outlet": "The Associated Press",
+        "tier": 2,
+        "handles": ["bytiaborz"],
+        "variations": ["reynolds"]
+    },
+    "michael grange": {
+        "name": "Michael Grange",
+        "outlet": "Sportsnet",
+        "tier": 3,
+        "handles": ["michaelgrange"],
+        "variations": ["grange"]
+    },
+    "maxime aubin": {
+        "name": "Maxime Aubin",
+        "outlet": "L'Equipe",
+        "tier": 3,
+        "handles": ["maximeaubin"],
+        "variations": ["aubin"]
+    },
+    "omari sanfoka ii": {
+        "name": "Omari Sanfoka II",
+        "outlet": "Detroit Free Press",
+        "tier": 3,
+        "handles": ["osanfoka"],
+        "variations": ["sanfoka"]
     },
 }
 
