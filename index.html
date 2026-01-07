@@ -14,8 +14,30 @@
             position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .logo { font-size: 24px; font-weight: 700; color: #e74c3c; margin-bottom: 16px; }
+        .logo { font-size: 24px; font-weight: 700; color: #e74c3c; margin-bottom: 4px; }
         .logo span { color: #333; }
+        .subtitle { font-size: 12px; color: #888; margin-bottom: 12px; }
+
+        .search-container { position: relative; margin-bottom: 16px; }
+        .search-input {
+            width: 100%; max-width: 400px; padding: 10px 16px; border: 1px solid #ddd;
+            border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s;
+        }
+        .search-input:focus { border-color: #e74c3c; }
+        .search-results {
+            position: absolute; top: 100%; left: 0; right: 0; max-width: 400px;
+            background: white; border: 1px solid #ddd; border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; z-index: 200; max-height: 300px; overflow-y: auto;
+        }
+        .search-results.active { display: block; }
+        .search-result-item {
+            padding: 10px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .search-result-item:hover { background: #fafafa; }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-name { font-weight: 500; }
+        .search-result-outlet { font-size: 12px; color: #888; }
 
         .stats-banner { display: flex; gap: 30px; padding: 16px 0; border-bottom: 1px solid #eee; margin-bottom: 16px; flex-wrap: wrap; }
         .stat-item { text-align: center; }
@@ -119,8 +141,11 @@
         .coverage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; padding: 16px; }
         .coverage-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 14px; background: #f8f9fa; border-radius: 6px;
+            padding: 10px 14px; background: #f8f9fa; border-radius: 6px; cursor: pointer;
+            transition: all 0.2s;
         }
+        .coverage-item:hover { background: #e74c3c; }
+        .coverage-item:hover .name, .coverage-item:hover .count { color: white; }
         .coverage-item .name { font-size: 13px; color: #333; }
         .coverage-item .count { font-weight: 600; color: #e74c3c; font-size: 13px; }
 
@@ -208,6 +233,12 @@
     <header class="header">
         <div class="header-content">
             <div class="logo">REPORTER <span>RANKINGS</span></div>
+            <div class="subtitle">Based on <a href="https://hoopshype.com/rumors/" target="_blank" style="color: #e74c3c; text-decoration: none;">HoopsHype NBA Rumors</a> mentions</div>
+            
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search reporters...">
+                <div id="search-results" class="search-results"></div>
+            </div>
             
             <div class="stats-banner">
                 <div class="stat-item"><div class="stat-value" id="stat-reporters">-</div><div class="stat-label">Reporters</div></div>
@@ -289,7 +320,7 @@
                     <div class="profile-stat-box"><div class="value" id="profile-year">0</div><div class="label">Year</div></div>
                     <div class="profile-stat-box"><div class="value" id="profile-total">0</div><div class="label">All-Time</div></div>
                 </div>
-                <div class="period-note">Use the time filter buttons above to change the period for Teams, Players, and Agents below.</div>
+                <div class="period-note">Use the time filter buttons above to change the period. Click on any team/person/agent to see which reporters cover them most.</div>
             </div>
 
             <div class="card">
@@ -302,7 +333,7 @@
 
             <div class="grid-3" id="profile-coverage-grid">
                 <div class="card"><div class="card-header">🏀 Top 30 Teams</div><div id="profile-teams-list"></div></div>
-                <div class="card"><div class="card-header">⭐ Top 30 Players</div><div id="profile-players-list"></div></div>
+                <div class="card"><div class="card-header">⭐ Top 30 People</div><div id="profile-players-list"></div></div>
                 <div class="card"><div class="card-header">🤝 Top 10 Agents</div><div id="profile-agents-list"></div></div>
             </div>
 
@@ -501,7 +532,7 @@
             if (!name) return false;
             const nameLower = name.toLowerCase().trim();
             if (NON_PLAYERS.has(nameLower)) return false;
-            if (EXCLUDED_REPORTERS.has(nameLower)) return false;
+            // Don't check EXCLUDED_REPORTERS here - players like Damian Lillard should still appear as players
             for (const short of Object.keys(TEAM_SHORT_TO_FULL)) {
                 if (nameLower === short.toLowerCase()) return false;
             }
@@ -644,63 +675,58 @@
         // =============================================
 
         function showRumorsModal(reporterId, type, name) {
-            const reporter = REPORTERS.find(r => r.id === reporterId);
-            if (!reporter) return;
-
+            // This function now shows TOP REPORTERS who cover this entity
             const modal = document.getElementById('rumor-modal');
             const title = document.getElementById('modal-title');
             const body = document.getElementById('modal-body');
 
-            title.textContent = `${reporter.name} on ${name}`;
+            title.textContent = `Top Reporters: ${name}`;
 
-            // Get rumors directly from the appropriate structure
-            let rumors = [];
-            let totalCount = 0;
+            // Find all reporters who cover this entity
+            const coveringReporters = [];
             
-            if (type === 'team') {
-                totalCount = reporter.byTeam[name] || 0;
-                
-                // Try multiple lookup variations for team names
-                const lookupKeys = [name];
-                
-                // Add short name (e.g., "Warriors" for "Golden State Warriors")
-                const shortName = Object.entries(TEAM_SHORT_TO_FULL).find(([short, full]) => full === name)?.[0];
-                if (shortName) lookupKeys.push(shortName);
-                
-                // Add lowercase variations
-                lookupKeys.push(name.toLowerCase());
-                if (shortName) lookupKeys.push(shortName.toLowerCase());
-                
-                // Try each key until we find rumors
-                for (const key of lookupKeys) {
-                    rumors = reporter.rumorsByTeam?.[key] || [];
-                    if (rumors.length > 0) break;
+            for (const reporter of REPORTERS) {
+                let count = 0;
+                if (type === 'team') {
+                    count = reporter.byTeam?.[name] || 0;
+                } else if (type === 'player') {
+                    count = reporter.byPlayer?.[name] || 0;
+                } else if (type === 'agent') {
+                    count = reporter.byAgent?.[name] || 0;
                 }
-            } else if (type === 'player') {
-                totalCount = reporter.byPlayer[name] || 0;
-                // Try exact match and lowercase
-                rumors = reporter.rumorsByPlayer?.[name] || reporter.rumorsByPlayer?.[name.toLowerCase()] || [];
-            } else if (type === 'agent') {
-                totalCount = reporter.byAgent[name] || 0;
-                // Try exact match, lowercase, and title case
-                rumors = reporter.rumorsByAgent?.[name] || 
-                         reporter.rumorsByAgent?.[name.toLowerCase()] || 
-                         reporter.rumorsByAgent?.[name.replace(/\b\w/g, c => c.toUpperCase())] || [];
+                
+                if (count > 0) {
+                    coveringReporters.push({ ...reporter, entityCount: count });
+                }
             }
+            
+            // Sort by count and take top 20
+            coveringReporters.sort((a, b) => b.entityCount - a.entityCount);
+            const top20 = coveringReporters.slice(0, 20);
 
-            if (rumors.length > 0) {
-                body.innerHTML = rumors.map(r => `
-                    <div class="rumor-item">
-                        <div class="rumor-date">${r.date || 'Unknown date'}</div>
-                        <div class="rumor-text">${r.text || ''}</div>
-                        ${r.source_url ? `<a href="${r.source_url}" target="_blank" class="rumor-link">View source →</a>` : ''}
+            if (top20.length > 0) {
+                body.innerHTML = `
+                    <div style="margin-bottom: 12px; font-size: 13px; color: #666;">
+                        Reporters who mention ${name} the most in HoopsHype Rumors:
                     </div>
-                `).join('');
+                    ${top20.map((r, i) => `
+                        <div class="reporter-row" onclick="closeModal(); openProfile('${r.id}');" style="cursor: pointer;">
+                            <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
+                            <div class="reporter-info">
+                                <div class="reporter-name">${r.name}</div>
+                                <div class="reporter-outlet">${r.outlet}</div>
+                            </div>
+                            <div class="reporter-stat">
+                                <div class="reporter-stat-value">${r.entityCount}</div>
+                                <div class="reporter-stat-label">mentions</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                `;
             } else {
                 body.innerHTML = `
                     <div class="no-rumors">
-                        <p>No recent rumors found for ${name}.</p>
-                        <p style="margin-top: 10px; font-size: 12px;">Total mentions: ${totalCount}. Rumor text is only stored for recent entries.</p>
+                        <p>No reporters found covering ${name}.</p>
                     </div>
                 `;
             }
@@ -956,12 +982,12 @@
 
             document.getElementById('profile-teams-list').innerHTML = topTeams.length > 0
                 ? `<div class="coverage-grid">${topTeams.map(([team, count]) => `
-                    <div class="coverage-item">
+                    <div class="coverage-item" onclick="showRumorsModal(null, 'team', '${team}')">
                         <span class="name">${team}</span><span class="count">${count}</span>
                     </div>`).join('')}</div>`
                 : '<div class="loading">No team data</div>';
 
-            // Top 30 players - clickable
+            // Top 30 people - clickable
             const topPlayers = Object.entries(reporter.byPlayer || {})
                 .map(([player, count]) => [player, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
                 .filter(([_, count]) => count > 0)
@@ -970,7 +996,7 @@
 
             document.getElementById('profile-players-list').innerHTML = topPlayers.length > 0
                 ? `<div class="coverage-grid">${topPlayers.map(([player, count]) => `
-                    <div class="coverage-item">
+                    <div class="coverage-item" onclick="showRumorsModal(null, 'player', '${player.replace(/'/g, "\\'")}')">
                         <span class="name">${player}</span><span class="count">${count}</span>
                     </div>`).join('')}</div>`
                 : '<div class="loading">No player data</div>';
@@ -984,7 +1010,7 @@
 
             document.getElementById('profile-agents-list').innerHTML = topAgents.length > 0
                 ? `<div class="coverage-grid">${topAgents.map(([agent, count]) => `
-                    <div class="coverage-item">
+                    <div class="coverage-item" onclick="showRumorsModal(null, 'agent', '${agent.replace(/'/g, "\\'")}')">
                         <span class="name">${agent}</span><span class="count">${count}</span>
                     </div>`).join('')}</div>`
                 : '<div class="loading">No agent data yet</div>';
@@ -1037,6 +1063,59 @@
                 renderCurrentView();
             });
         });
+
+        // =============================================
+        // SEARCH
+        // =============================================
+
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            
+            if (query.length < 2) {
+                searchResults.classList.remove('active');
+                return;
+            }
+
+            const matches = REPORTERS
+                .filter(r => r.name.toLowerCase().includes(query) || r.outlet.toLowerCase().includes(query))
+                .sort((a, b) => b.total - a.total)
+                .slice(0, 10);
+
+            if (matches.length > 0) {
+                searchResults.innerHTML = matches.map(r => `
+                    <div class="search-result-item" onclick="selectSearchResult('${r.id}')">
+                        <div>
+                            <div class="search-result-name">${r.name}</div>
+                            <div class="search-result-outlet">${r.outlet}</div>
+                        </div>
+                        <div style="color: #e74c3c; font-weight: 600;">${r.total.toLocaleString()}</div>
+                    </div>
+                `).join('');
+                searchResults.classList.add('active');
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item"><div class="search-result-name">No reporters found</div></div>';
+                searchResults.classList.add('active');
+            }
+        });
+
+        searchInput.addEventListener('blur', () => {
+            setTimeout(() => searchResults.classList.remove('active'), 200);
+        });
+
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.length >= 2) {
+                searchResults.classList.add('active');
+            }
+        });
+
+        function selectSearchResult(reporterId) {
+            searchInput.value = '';
+            searchResults.classList.remove('active');
+            openProfile(reporterId);
+        }
 
         // =============================================
         // INIT
