@@ -1,5 +1,4 @@
 name: Update Reporter Rankings
-
 on:
   schedule:
     # Run every 6 hours
@@ -9,7 +8,6 @@ on:
     paths:
       - 'process_archive.py'
       - '.github/workflows/update-rankings.yml'
-
 jobs:
   update-rankings:
     runs-on: ubuntu-latest
@@ -36,7 +34,7 @@ jobs:
         mkdir -p data
         # Fetch all archive chunks
         for i in {0..20}; do
-          url="https://raw.githubusercontent.com/HoopsHype/hoopshype-rumors/main/archive/rumors_chunk_${i}.json"
+          url="https://raw.githubusercontent.com/jsierrahoopshype/hoopshype-rumors/main/archive/rumors_chunk_${i}.json"
           if curl --fail -sL "$url" -o "data/rumors_chunk_${i}.json" 2>/dev/null; then
             echo "Downloaded chunk $i"
           else
