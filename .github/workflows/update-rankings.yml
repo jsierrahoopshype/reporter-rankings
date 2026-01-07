@@ -32,13 +32,13 @@ jobs:
     - name: Fetch archive data from hoopshype-rumors repo
       run: |
         mkdir -p data
-        # Fetch all archive chunks
-        for i in {0..20}; do
-          url="https://raw.githubusercontent.com/jsierrahoopshype/hoopshype-rumors/main/archive/rumors_chunk_${i}.json"
-          if curl --fail -sL "$url" -o "data/rumors_chunk_${i}.json" 2>/dev/null; then
-            echo "Downloaded chunk $i"
+        # Fetch all archive parts
+        for i in {1..10}; do
+          url="https://raw.githubusercontent.com/jsierrahoopshype/hoopshype-rumors/main/hoopshype_rumors_part${i}.json"
+          if curl --fail -sL "$url" -o "data/hoopshype_rumors_part${i}.json" 2>/dev/null; then
+            echo "Downloaded part $i"
           else
-            echo "Chunk $i not found, stopping"
+            echo "Part $i not found, stopping"
             break
           fi
         done
@@ -50,7 +50,7 @@ jobs:
         import glob
         
         all_rumors = []
-        for f in sorted(glob.glob('data/rumors_chunk_*.json')):
+        for f in sorted(glob.glob('data/hoopshype_rumors_part*.json')):
             with open(f) as file:
                 all_rumors.extend(json.load(file))
         
