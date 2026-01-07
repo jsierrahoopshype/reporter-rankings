@@ -453,6 +453,8 @@
             "ricky rubio", "patrick beverley", "ja morant", "jamal crawford",
             // Coaches/Others
             "steve kerr", "mat ishbia", "kevin hart", "doug christie", "training camp",
+            // Non-reporter accounts
+            "underdog nba", "pels film room", "rich paul",
             // Generic
             "social media", "unknown", "n/a", "clutch points"
         ].map(s => s.toLowerCase()));
@@ -611,9 +613,7 @@
                         byTeam: normalizedByTeam,
                         byAgent: r.by_agent || {},
                         byDate: r.by_date || {},
-                        rumorsByTeam: r.rumors_by_team || {},
-                        rumorsByPlayer: r.rumors_by_player || {},
-                        rumorsByAgent: r.rumors_by_agent || {}
+                        recentRumors: r.recent_rumors || []
                     };
                 });
 
