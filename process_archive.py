@@ -1553,9 +1553,7 @@ def process_archive(archive_data: List[Dict], days_filter: int = None) -> Dict:
         "by_date": defaultdict(int),
         "breaking": 0,
         "detection_methods": defaultdict(int),
-        "rumors_by_team": defaultdict(list),
-        "rumors_by_player": defaultdict(list),
-        "rumors_by_agent": defaultdict(list)
+        "recent_rumors": []
     })
     
     outlet_stats = defaultdict(lambda: {
@@ -1619,37 +1617,17 @@ def process_archive(archive_data: List[Dict], days_filter: int = None) -> Dict:
             for agent in extract_agents(tags, text):
                 stats["by_agent"][agent] += 1
             
-            # Create rumor object
-            rumor_obj = {
-                "date": date,
-                "text": text[:300] + "..." if len(text) > 300 else text,
-                "topic": topic,
-                "source_url": rumor.get("source_url", "")
-            }
-            
-            # Store up to 10 rumors per team
-            for team in extract_teams(tags):
-                if len(stats["rumors_by_team"][team]) < 10:
-                    stats["rumors_by_team"][team].append(rumor_obj)
-            
-            # Store up to 10 rumors per player
-            for player in extract_players(tags):
-                if len(stats["rumors_by_player"][player]) < 10:
-                    stats["rumors_by_player"][player].append(rumor_obj)
-            
-            # Store up to 10 rumors per agent
-            for agent in extract_agents(tags, text):
-                if len(stats["rumors_by_agent"][agent]) < 10:
-                    stats["rumors_by_agent"][agent].append(rumor_obj)
+            # Store up to 15 recent rumors per reporter
+            if len(stats["recent_rumors"]) < 15:
+                stats["recent_rumors"].append({
+                    "date": date,
+                    "text": text[:200] + "..." if len(text) > 200 else text,
+                    "source_url": rumor.get("source_url", "")
+                })
     
     # Convert reporters to list
     reporters = []
     for key, stats in reporter_stats.items():
-        # Convert rumors dicts - only include teams/players/agents that have rumors
-        rumors_by_team = {k: v for k, v in stats["rumors_by_team"].items() if v}
-        rumors_by_player = {k: v for k, v in stats["rumors_by_player"].items() if v}
-        rumors_by_agent = {k: v for k, v in stats["rumors_by_agent"].items() if v}
-        
         reporters.append({
             "id": key,
             "name": stats["name"],
@@ -1664,9 +1642,7 @@ def process_archive(archive_data: List[Dict], days_filter: int = None) -> Dict:
             "by_agent": dict(sorted(stats["by_agent"].items(), key=lambda x: -x[1])[:50]),
             "by_date": dict(stats["by_date"]),
             "detection_methods": dict(stats["detection_methods"]),
-            "rumors_by_team": rumors_by_team,
-            "rumors_by_player": rumors_by_player,
-            "rumors_by_agent": rumors_by_agent
+            "recent_rumors": stats["recent_rumors"]
         })
     
     # Convert outlets to list
