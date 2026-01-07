@@ -141,11 +141,8 @@
         .coverage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; padding: 16px; }
         .coverage-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 14px; background: #f8f9fa; border-radius: 6px; cursor: pointer;
-            transition: all 0.2s;
+            padding: 10px 14px; background: #f8f9fa; border-radius: 6px;
         }
-        .coverage-item:hover { background: #e74c3c; }
-        .coverage-item:hover .name, .coverage-item:hover .count { color: white; }
         .coverage-item .name { font-size: 13px; color: #333; }
         .coverage-item .count { font-weight: 600; color: #e74c3c; font-size: 13px; }
 
@@ -1022,12 +1019,12 @@
 
             document.getElementById('profile-teams-list').innerHTML = topTeams.length > 0
                 ? `<div class="coverage-grid">${topTeams.map(([team, count]) => `
-                    <div class="coverage-item" onclick="showRumorsModal(null, 'team', '${team}')">
+                    <div class="coverage-item">
                         <span class="name">${team}</span><span class="count">${count}</span>
                     </div>`).join('')}</div>`
                 : '<div class="loading">No team data</div>';
 
-            // Top 30 people - clickable
+            // Top 30 people
             const topPlayers = Object.entries(reporter.byPlayer || {})
                 .map(([player, count]) => [player, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
                 .filter(([_, count]) => count > 0)
@@ -1036,12 +1033,12 @@
 
             document.getElementById('profile-players-list').innerHTML = topPlayers.length > 0
                 ? `<div class="coverage-grid">${topPlayers.map(([player, count]) => `
-                    <div class="coverage-item" onclick="showRumorsModal(null, 'player', '${player.replace(/'/g, "\\'")}')">
+                    <div class="coverage-item">
                         <span class="name">${player}</span><span class="count">${count}</span>
                     </div>`).join('')}</div>`
                 : '<div class="loading">No player data</div>';
 
-            // Top 10 agents - clickable
+            // Top 10 agents
             const topAgents = Object.entries(reporter.byAgent || {})
                 .map(([agent, count]) => [agent, days === 0 ? count : getProportionalCount(count, reporter.byDate, days)])
                 .filter(([_, count]) => count > 0)
@@ -1050,7 +1047,7 @@
 
             document.getElementById('profile-agents-list').innerHTML = topAgents.length > 0
                 ? `<div class="coverage-grid">${topAgents.map(([agent, count]) => `
-                    <div class="coverage-item" onclick="showRumorsModal(null, 'agent', '${agent.replace(/'/g, "\\'")}')">
+                    <div class="coverage-item">
                         <span class="name">${agent}</span><span class="count">${count}</span>
                     </div>`).join('')}</div>`
                 : '<div class="loading">No agent data yet</div>';
