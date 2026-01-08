@@ -7,7 +7,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: #f5f5f5; color: #333; line-height: 1.5; }
+        html, body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background: #f5f5f5; 
+            color: #333; 
+            line-height: 1.5;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        #app-wrapper {
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
         
         .header {
             background: white; border-bottom: 3px solid #e74c3c; padding: 20px 0;
@@ -62,7 +77,7 @@
         .time-btn:hover { border-color: #e74c3c; }
         .time-btn.active { background: #e74c3c; border-color: #e74c3c; color: white; }
 
-        .main { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        .main { max-width: 1200px; margin: 0 auto; padding: 30px 20px 100px 20px; }
         .section-title { font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #333; }
 
         .card {
@@ -250,6 +265,7 @@
     </style>
 </head>
 <body>
+<div id="app-wrapper">
     <header class="header">
         <div class="header-content">
             <div class="subtitle">Based on <a href="https://hoopshype.com/rumors/" target="_blank" style="color: #e74c3c; text-decoration: none;">HoopsHype NBA Rumors</a> mentions</div>
@@ -370,6 +386,7 @@
             <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
+</div>
 
     <script src="reporter_data.js"></script>
     <script>
@@ -492,7 +509,10 @@
         // Name corrections for misspellings and variations
         const NAME_CORRECTIONS = {
             "shams charnia": "Shams Charania",
-            "dave mcmenanim": "Dave McMenamin"
+            "dave mcmenanim": "Dave McMenamin",
+            "omari sanfoka": "Omari Sanfoka II",
+            "omari sankofa ii": "Omari Sanfoka II",
+            "omari sankofa": "Omari Sanfoka II"
         };
 
         // Reporter to outlet mapping
@@ -582,6 +602,13 @@
         // =============================================
         // HELPER FUNCTIONS
         // =============================================
+
+        function scrollToTop() {
+            const wrapper = document.getElementById('app-wrapper');
+            if (wrapper) {
+                wrapper.scrollTop = 0;
+            }
+        }
 
         function getFilteredCount(byDate, days) {
             if (!byDate || Object.keys(byDate).length === 0) return 0;
@@ -1063,7 +1090,7 @@
             renderTimelineChart(reporter);
             updateProfileCoverage(reporter);
 
-            setTimeout(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }, 10);
+            scrollToTop();
         }
 
         function renderTimelineChart(reporter) {
@@ -1148,7 +1175,7 @@
             document.getElementById('profile-page').classList.remove('active');
             document.getElementById('main-content').style.display = 'block';
             currentProfileId = null;
-            setTimeout(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }, 10);
+            scrollToTop();
         }
 
         // =============================================
@@ -1181,7 +1208,7 @@
                 document.getElementById(currentView).classList.add('active');
                 closeProfile();
                 renderCurrentView();
-                setTimeout(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }, 10);
+                scrollToTop();
             });
         });
 
@@ -1251,10 +1278,17 @@
         // INIT
         // =============================================
 
-        document.addEventListener('DOMContentLoaded', () => {
+        function init() {
             if (initializeData()) renderCurrentView();
             else document.getElementById('leaderboard-list').innerHTML = '<div class="loading">Failed to load data</div>';
-        });
+        }
+
+        // Initialize immediately if DOM ready, otherwise wait
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 </body>
 </html>
