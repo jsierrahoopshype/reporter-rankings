@@ -489,6 +489,12 @@
             "kcjhoop": "K.C. Johnson"
         };
 
+        // Name corrections for misspellings and variations
+        const NAME_CORRECTIONS = {
+            "shams charnia": "Shams Charania",
+            "dave mcmenanim": "Dave McMenamin"
+        };
+
         // Reporter to outlet mapping
         const REPORTER_TO_OUTLET = {
             "jorge sierra": "HoopsHype",
@@ -646,7 +652,18 @@
         function normalizeReporterName(name) {
             if (!name) return name;
             const handle = name.replace('@', '').toLowerCase();
-            return HANDLE_TO_NAME[handle] || name;
+            if (HANDLE_TO_NAME[handle]) return HANDLE_TO_NAME[handle];
+            
+            const nameLower = name.toLowerCase();
+            
+            // Apply direct corrections
+            if (NAME_CORRECTIONS[nameLower]) return NAME_CORRECTIONS[nameLower];
+            
+            // Pattern-based corrections
+            if (nameLower.includes('scotto')) return 'Michael Scotto';
+            if (nameLower.includes('woj')) return 'Adrian Wojnarowski';
+            
+            return name;
         }
 
         function getReporterOutlet(name, defaultOutlet) {
@@ -662,41 +679,65 @@
         function initializeData() {
             if (typeof REPORTER_DATA === 'undefined') return false;
 
-            REPORTERS = REPORTER_DATA.reporters
+            // First pass: normalize and collect reporters
+            const reporterMap = {};
+            
+            REPORTER_DATA.reporters
                 .filter(r => isValidReporter(r.name))
-                .map((r, i) => {
+                .forEach((r, i) => {
                     const name = normalizeReporterName(r.name);
+                    const nameLower = name.toLowerCase();
                     
-                    const filteredByPlayer = {};
+                    if (!reporterMap[nameLower]) {
+                        reporterMap[nameLower] = {
+                            id: r.id || `reporter_${i}`,
+                            name,
+                            outlet: getReporterOutlet(name, r.outlet),
+                            tier: r.tier || 3,
+                            avatar: r.avatar || name.replace('@', '').substring(0, 2).toUpperCase(),
+                            total: 0,
+                            byTopic: {},
+                            byPlayer: {},
+                            byTeam: {},
+                            byAgent: {},
+                            byDate: {},
+                            recentRumors: []
+                        };
+                    }
+                    
+                    const merged = reporterMap[nameLower];
+                    merged.total += r.total || 0;
+                    
+                    // Merge by_player
                     for (const [playerName, count] of Object.entries(r.by_player || {})) {
                         if (isValidPlayer(playerName)) {
-                            filteredByPlayer[playerName] = count;
+                            merged.byPlayer[playerName] = (merged.byPlayer[playerName] || 0) + count;
                         }
                     }
                     
-                    const normalizedByTeam = {};
+                    // Merge by_team (with normalization)
                     for (const [team, count] of Object.entries(r.by_team || {})) {
                         const fullName = normalizeTeamName(team);
                         if (NBA_TEAMS.includes(fullName)) {
-                            normalizedByTeam[fullName] = (normalizedByTeam[fullName] || 0) + count;
+                            merged.byTeam[fullName] = (merged.byTeam[fullName] || 0) + count;
                         }
                     }
-
-                    return {
-                        id: r.id || `reporter_${i}`,
-                        name,
-                        outlet: getReporterOutlet(name, r.outlet),
-                        tier: r.tier || 3,
-                        avatar: r.avatar || name.replace('@', '').substring(0, 2).toUpperCase(),
-                        total: r.total || 0,
-                        byTopic: r.by_topic || {},
-                        byPlayer: filteredByPlayer,
-                        byTeam: normalizedByTeam,
-                        byAgent: r.by_agent || {},
-                        byDate: r.by_date || {},
-                        recentRumors: r.recent_rumors || []
-                    };
+                    
+                    // Merge by_agent
+                    for (const [agent, count] of Object.entries(r.by_agent || {})) {
+                        merged.byAgent[agent] = (merged.byAgent[agent] || 0) + count;
+                    }
+                    
+                    // Merge by_date
+                    for (const [date, count] of Object.entries(r.by_date || {})) {
+                        merged.byDate[date] = (merged.byDate[date] || 0) + count;
+                    }
+                    
+                    // Merge recent_rumors
+                    merged.recentRumors = merged.recentRumors.concat(r.recent_rumors || []);
                 });
+            
+            REPORTERS = Object.values(reporterMap);
 
             // Merge and filter outlets
             const outletMap = {};
@@ -1022,7 +1063,7 @@
             renderTimelineChart(reporter);
             updateProfileCoverage(reporter);
 
-            window.scrollTo(0, 0);
+            setTimeout(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }, 10);
         }
 
         function renderTimelineChart(reporter) {
@@ -1107,7 +1148,7 @@
             document.getElementById('profile-page').classList.remove('active');
             document.getElementById('main-content').style.display = 'block';
             currentProfileId = null;
-            window.scrollTo(0, 0);
+            setTimeout(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }, 10);
         }
 
         // =============================================
@@ -1140,7 +1181,7 @@
                 document.getElementById(currentView).classList.add('active');
                 closeProfile();
                 renderCurrentView();
-                window.scrollTo(0, 0);
+                setTimeout(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }, 10);
             });
         });
 
