@@ -12,16 +12,12 @@
             background: #f5f5f5; 
             color: #333; 
             line-height: 1.5;
-            height: 100%;
-            overflow: hidden;
+            -webkit-overflow-scrolling: touch;
         }
         
-        #app-wrapper {
-            height: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
+        /* Ensure touch scrolling works everywhere */
+        .main, .view-section, .card, .grid-2, .grid-3 {
+            touch-action: pan-y;
         }
         
         .header {
@@ -205,7 +201,7 @@
             .time-filter { gap: 2px; }
             
             /* Reduce padding on main content */
-            .main { padding: 15px 10px; }
+            .main { padding: 15px 10px 100px 10px; }
             .header-content { padding: 0 10px; }
             
             /* Tighter reporter rows */
@@ -265,7 +261,6 @@
     </style>
 </head>
 <body>
-<div id="app-wrapper">
     <header class="header">
         <div class="header-content">
             <div class="subtitle">Based on <a href="https://hoopshype.com/rumors/" target="_blank" style="color: #e74c3c; text-decoration: none;">HoopsHype NBA Rumors</a> mentions</div>
@@ -386,7 +381,6 @@
             <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
-</div>
 
     <script src="reporter_data.js"></script>
     <script>
@@ -604,10 +598,23 @@
         // =============================================
 
         function scrollToTop() {
-            const wrapper = document.getElementById('app-wrapper');
-            if (wrapper) {
-                wrapper.scrollTop = 0;
-            }
+            // Try multiple scroll methods for iframe compatibility
+            try {
+                // For iframes - scroll the parent if accessible
+                if (window.parent && window.parent !== window) {
+                    window.parent.scrollTo(0, 0);
+                }
+            } catch(e) {}
+            
+            // Standard scroll methods
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            
+            // Also try scrolling any scrollable containers
+            document.querySelectorAll('.view-section, .main, main').forEach(el => {
+                el.scrollTop = 0;
+            });
         }
 
         function getFilteredCount(byDate, days) {
