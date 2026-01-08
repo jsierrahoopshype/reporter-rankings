@@ -239,7 +239,7 @@
             
             <div class="stats-banner">
                 <div class="stat-item"><div class="stat-value" id="stat-reporters">-</div><div class="stat-label">Reporters</div></div>
-                <div class="stat-item"><div class="stat-value" id="stat-rumors">-</div><div class="stat-label">Rumors Tracked</div></div>
+                <div class="stat-item"><div class="stat-value" id="stat-rumors">-</div><div class="stat-label">Mentions Tracked</div></div>
                 <div class="stat-item"><div class="stat-value" id="stat-outlets">-</div><div class="stat-label">Outlets</div></div>
                 <div class="stat-item"><div class="stat-value" id="stat-period">-</div><div class="stat-label">Current Period</div></div>
             </div>
@@ -482,7 +482,7 @@
             "joel lorenzi": "The Athletic",
             "justin russo": "Russo Writes Substack",
             "bennett durando": "The Denver Post",
-            "chris haynes": "NBA on Primen",
+            "chris haynes": "NBA on Prime",
             "sean highkin": "Rose Garden Report",
             "tim macmahon": "ESPN",
             "grant afseth": "Dallas Hoops Journal",
@@ -510,7 +510,29 @@
             "michael grange": "Sportsnet",
             "maxime aubin": "L'Equipe",
             "omari sanfoka ii": "Detroit Free Press",
-            "jake fischer": "The Stein Line"
+            "jake fischer": "The Stein Line",
+            "jeff mcdonald": "San Antonio Express-News",
+            "sam amick": "The Athletic",
+            "brad rowland": "FanSided",
+            "jay king": "The Athletic",
+            "derek bodner": "PHLY Sports",
+            "danny cunningham": "The Inside Shot",
+            "kris pursiainen": "ClutchPoints",
+            "chris fedor": "Cleveland Plain Dealer",
+            "ramona shelburne": "ESPN",
+            "andy larsen": "Salt Lake Tribune",
+            "keith smith": "Spotrac",
+            "michael c. wright": "ESPN",
+            "clemente almanza": "The Thunder Wire",
+            "dan weiss": "FanDuel Sports",
+            "tom orsborne": "San Antonio Express-News",
+            "bobby manning": "CLNS",
+            "scott agness": "Fieldhouse Files",
+            "gerald bourguet": "Suns After Dark",
+            "erik slater": "ClutchPoints",
+            "mike trudell": "Spectrum SportsNet",
+            "vinny benedetto": "Denver Gazette",
+            "james ham": "ESPN1320"
         };
 
         // Outlet normalization
@@ -801,7 +823,7 @@
                     </div>
                     <div class="reporter-stat">
                         <div class="reporter-stat-value">${r.filteredTotal.toLocaleString()}</div>
-                        <div class="reporter-stat-label">Rumors</div>
+                        <div class="reporter-stat-label">Mentions</div>
                     </div>
                 </div>
             `).join('');
@@ -866,19 +888,25 @@
         }
 
         function renderHeatmap() {
-            // Get top 30 reporters by ALL-TIME total, then sort alphabetically for display
+            // Reporters to exclude from heatmap
+            const HEATMAP_EXCLUDED = new Set([
+                "alex kennedy", "harrison wind", "jonathan feigen", "mark medina", "rod beard"
+            ]);
+            
+            // Get top 30 reporters by ALL-TIME total, excluding specific reporters
             const allStats = REPORTERS.map(r => ({
                 ...r,
                 allTimeTotal: Object.values(r.byDate || {}).reduce((sum, c) => sum + c, 0)
-            })).filter(r => r.allTimeTotal > 0);
+            })).filter(r => r.allTimeTotal > 0 && !HEATMAP_EXCLUDED.has(r.name.toLowerCase()));
             
             const top30 = allStats.sort((a, b) => b.allTimeTotal - a.allTimeTotal).slice(0, 30);
             const stats = top30.sort((a, b) => a.name.localeCompare(b.name));
             const teams = NBA_TEAMS;
 
+            // Heatmap always uses all-time data (days = 0)
             const heatData = stats.map(r => {
                 const teamCounts = {};
-                teams.forEach(t => { teamCounts[t] = getProportionalCount(r.byTeam?.[t] || 0, r.byDate, currentDays); });
+                teams.forEach(t => { teamCounts[t] = r.byTeam?.[t] || 0; });
                 return { reporter: r, teamCounts };
             });
 
@@ -937,7 +965,7 @@
                     <div class="reporter-row">
                         <div class="rank ${i < 3 ? `rank-${i+1}` : 'rank-default'}">${i + 1}</div>
                         <div class="reporter-info"><div class="reporter-name">${o.name}</div><div class="reporter-outlet">Media Outlet</div></div>
-                        <div class="reporter-stat"><div class="reporter-stat-value">${o.filteredTotal.toLocaleString()}</div><div class="reporter-stat-label">Rumors</div></div>
+                        <div class="reporter-stat"><div class="reporter-stat-value">${o.filteredTotal.toLocaleString()}</div><div class="reporter-stat-label">Mentions</div></div>
                     </div>
                 `).join('')
                 : '<div class="loading">No outlet data</div>';
