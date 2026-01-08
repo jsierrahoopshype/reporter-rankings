@@ -11,7 +11,7 @@
         
         .header {
             background: white; border-bottom: 3px solid #e74c3c; padding: 20px 0;
-            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .logo { font-size: 24px; font-weight: 700; color: #e74c3c; margin-bottom: 4px; }
@@ -181,6 +181,29 @@
             }
             .heatmap-team-badge .team-abbr { font-weight: 600; }
             .heatmap-team-badge .team-count { opacity: 0.8; }
+            
+            /* Smaller nav tabs on mobile */
+            .nav-tab { padding: 6px 10px; font-size: 11px; }
+            .time-btn { padding: 5px 8px; font-size: 10px; }
+            .nav-row { gap: 8px; }
+            .nav-tabs { gap: 4px; }
+            .time-filter { gap: 2px; }
+            
+            /* Reduce padding on main content */
+            .main { padding: 15px 10px; }
+            .header-content { padding: 0 10px; }
+            
+            /* Tighter reporter rows */
+            .reporter-row { padding: 12px 10px; }
+            .card-header { padding: 12px 10px; }
+            
+            /* Smaller stats banner */
+            .stats-banner { gap: 15px; padding: 10px 0; }
+            .stat-value { font-size: 20px; }
+            .stat-label { font-size: 10px; }
+            
+            /* Timeline labels */
+            .timeline-labels span { font-size: 8px; }
         }
 
         .loading { padding: 40px; text-align: center; color: #888; }
@@ -229,7 +252,6 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <div class="logo">REPORTER <span>RANKINGS</span></div>
             <div class="subtitle">Based on <a href="https://hoopshype.com/rumors/" target="_blank" style="color: #e74c3c; text-decoration: none;">HoopsHype NBA Rumors</a> mentions</div>
             
             <div class="search-container">
@@ -435,7 +457,7 @@
             "@kingjames", "@nba__courtside", "@hellowelcomepod", "@wwe",
             "mrbuckbucknba", "nbapr", "ohnohedidnt24", "hornetspr", "espnstatsinfo",
             "trailblazerspr", "trailblazerpr", "pelicansnba", "magic_pr", "fullcourtpass",
-            "mavs pr", "grizzlies pr", "timberwolves pr", "heat centel",
+            "mavs pr", "grizzlies pr", "timberwolves pr", "heat centel", "hawks pr",
             // Teams listed as reporters
             "atlanta hawks", "chicago bulls", "indiana pacers", "milwaukee bucks",
             "utah jazz", "miami heat",
@@ -451,7 +473,7 @@
             // Coaches/Others
             "steve kerr", "mat ishbia", "kevin hart", "doug christie", "training camp",
             // Non-reporter accounts
-            "underdog nba", "pels film room", "rich paul",
+            "underdog nba", "pels film room", "rich paul", "@pelsfilmroom", "pelsfilmroom",
             // Generic
             "social media", "unknown", "n/a", "clutch points"
         ].map(s => s.toLowerCase()));
@@ -1027,7 +1049,7 @@
                 return `<div class="timeline-bar" style="height: ${height}%" data-tooltip="${year}: ${count} rumors"></div>`;
             }).join('');
 
-            document.getElementById('timeline-labels').innerHTML = years.map(y => `<span>${y}</span>`).join('');
+            document.getElementById('timeline-labels').innerHTML = years.map(y => `<span>'${y.slice(2)}</span>`).join('');
         }
 
         function updateProfileCoverage(reporter) {
@@ -1085,6 +1107,7 @@
             document.getElementById('profile-page').classList.remove('active');
             document.getElementById('main-content').style.display = 'block';
             currentProfileId = null;
+            window.scrollTo(0, 0);
         }
 
         // =============================================
@@ -1117,6 +1140,7 @@
                 document.getElementById(currentView).classList.add('active');
                 closeProfile();
                 renderCurrentView();
+                window.scrollTo(0, 0);
             });
         });
 
