@@ -1,9 +1,8 @@
 name: Update Reporter Rankings
 on:
   schedule:
-    # Run every 6 hours
     - cron: '0 0,6,12,18 * * *'
-  workflow_dispatch:  # Allow manual triggers
+  workflow_dispatch:
   push:
     paths:
       - 'process_archive.py'
@@ -32,16 +31,23 @@ jobs:
     - name: Fetch archive data from hoopshype-rumors repo
       run: |
         mkdir -p data
-        # Fetch all archive parts
+        # Fetch all archive parts (1-10)
         for i in {1..10}; do
           url="https://raw.githubusercontent.com/jsierrahoopshype/hoopshype-rumors/main/hoopshype_rumors_part${i}.json"
           if curl --fail -sL "$url" -o "data/hoopshype_rumors_part${i}.json" 2>/dev/null; then
             echo "Downloaded part $i"
           else
-            echo "Part $i not found, stopping"
+            echo "Part $i not found, stopping parts download"
             break
           fi
         done
+        # Also fetch the latest rumors file
+        url="https://raw.githubusercontent.com/jsierrahoopshype/hoopshype-rumors/main/hoopshype_rumors_latest.json"
+        if curl --fail -sL "$url" -o "data/hoopshype_rumors_latest.json" 2>/dev/null; then
+          echo "Downloaded latest rumors"
+        else
+          echo "Latest rumors file not found"
+        fi
     
     - name: Merge archive data
       run: |
@@ -50,9 +56,19 @@ jobs:
         import glob
         
         all_rumors = []
+        # Load all part files
         for f in sorted(glob.glob('data/hoopshype_rumors_part*.json')):
             with open(f) as file:
                 all_rumors.extend(json.load(file))
+        
+        # Load latest rumors if exists
+        try:
+            with open('data/hoopshype_rumors_latest.json') as file:
+                latest = json.load(file)
+                all_rumors.extend(latest)
+                print(f"Added {len(latest)} latest rumors")
+        except FileNotFoundError:
+            print("No latest rumors file found")
         
         with open('data/full_archive.json', 'w') as f:
             json.dump(all_rumors, f)
