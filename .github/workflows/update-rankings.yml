@@ -10,7 +10,6 @@ on:
 jobs:
   update-rankings:
     runs-on: ubuntu-latest
-    
     steps:
     - name: Set up job
       run: echo "Starting reporter rankings update..."
@@ -31,22 +30,17 @@ jobs:
     - name: Fetch archive data from hoopshype-rumors repo
       run: |
         mkdir -p data
-        # Fetch all archive parts (1-10)
-        for i in {1..10}; do
-          url="https://raw.githubusercontent.com/jsierrahoopshype/hoopshype-rumors/main/hoopshype_rumors_part${i}.json"
-          if curl --fail -sL "$url" -o "data/hoopshype_rumors_part${i}.json" 2>/dev/null; then
+        BASE="https://raw.githubusercontent.com/jsierrahoopshype/hoopshype-rumors/main"
+        for i in 1 2 3 4 5 6 7 8 9 10; do
+          if curl --fail -sL "${BASE}/hoopshype_rumors_part${i}.json" -o "data/part${i}.json" 2>/dev/null; then
             echo "Downloaded part $i"
           else
-            echo "Part $i not found, stopping parts download"
+            echo "Part $i not found, stopping"
             break
           fi
         done
-        # Also fetch the latest rumors file
-        url="https://raw.githubusercontent.com/jsierrahoopshype/hoopshype-rumors/main/hoopshype_rumors_latest.json"
-        if curl --fail -sL "$url" -o "data/hoopshype_rumors_latest.json" 2>/dev/null; then
-          echo "Downloaded latest rumors"
-        else
-          echo "Latest rumors file not found"
+        if curl --fail -sL "${BASE}/hoopshype_rumors_latest.json" -o "data/latest.json" 2>/dev/null; then
+          echo "Downloaded latest"
         fi
     
     - name: Merge archive data
@@ -54,25 +48,17 @@ jobs:
         python3 << 'EOF'
         import json
         import glob
-        
         all_rumors = []
-        # Load all part files
-        for f in sorted(glob.glob('data/hoopshype_rumors_part*.json')):
+        for f in sorted(glob.glob('data/part*.json')):
             with open(f) as file:
                 all_rumors.extend(json.load(file))
-        
-        # Load latest rumors if exists
         try:
-            with open('data/hoopshype_rumors_latest.json') as file:
-                latest = json.load(file)
-                all_rumors.extend(latest)
-                print(f"Added {len(latest)} latest rumors")
-        except FileNotFoundError:
-            print("No latest rumors file found")
-        
+            with open('data/latest.json') as file:
+                all_rumors.extend(json.load(file))
+                print("Added latest rumors")
+        except: pass
         with open('data/full_archive.json', 'w') as f:
             json.dump(all_rumors, f)
-        
         print(f"Merged {len(all_rumors)} total rumors")
         EOF
     
@@ -80,8 +66,7 @@ jobs:
       run: python process_archive.py data/full_archive.json
     
     - name: Update timestamp
-      run: |
-        echo "Last updated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" > last_updated.txt
+      run: echo "Last updated $(date -u '+%Y-%m-%d %H:%M:%S UTC')" > last_updated.txt
     
     - name: Commit and push changes
       run: |
