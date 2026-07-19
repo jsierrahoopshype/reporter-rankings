@@ -1,12 +1,12 @@
 // Reporter Rankings Data
-// Generated: 2026-07-18T19:05:07.766841
+// Generated: 2026-07-19T02:47:50.134287
 // Total Rumors: 0
 // Processed: 0
 // Total Reporters: 0
 // Total Outlets: 0
 
 const REPORTER_DATA = {
-  "generated_at": "2026-07-18T19:05:07.766841",
+  "generated_at": "2026-07-19T02:47:50.134287",
   "total_rumors": 0,
   "processed_rumors": 0,
   "total_reporters": 0,
