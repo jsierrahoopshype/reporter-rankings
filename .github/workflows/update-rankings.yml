@@ -1,78 +1,67 @@
 name: Update Reporter Rankings
+
 on:
   schedule:
-    - cron: '0 0,6,12,18 * * *'
+    # Once a day. Every run commits a fresh reporter_data.js, so more often than
+    # this just grows the repo without making the rankings meaningfully fresher.
+    - cron: '0 7 * * *'
   workflow_dispatch:
-  push:
-    paths:
-      - 'process_archive.py'
-      - '.github/workflows/update-rankings.yml'
+    inputs:
+      rebuild_all:
+        description: 'Reprocess every part from scratch (ignore cached aggregates)'
+        type: boolean
+        default: false
+      force:
+        description: 'Publish even if the volume guard trips'
+        type: boolean
+        default: false
+
+# Never add a pull_request trigger here: HH_API_KEY must not be exposed to
+# workflows that anyone else can start.
+
+permissions:
+  contents: write
+
+concurrency:
+  group: reporter-rankings-build
+  cancel-in-progress: false
+
 jobs:
   update-rankings:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+
     steps:
-    - name: Set up job
-      run: echo "Starting reporter rankings update..."
-    
-    - name: Checkout this repo
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    
-    - name: Install dependencies
-      run: pip install requests
-    
-    - name: Fetch archive data from hoopshype-rumors repo
-      run: |
-        mkdir -p data
-        BASE="https://raw.githubusercontent.com/jsierrahoopshype/hoopshype-rumors/main"
-        for i in 1 2 3 4 5 6 7 8 9 10; do
-          if curl --fail -sL "${BASE}/hoopshype_rumors_part${i}.json" -o "data/part${i}.json" 2>/dev/null; then
-            echo "Downloaded part $i"
-          else
-            echo "Part $i not found, stopping"
-            break
-          fi
-        done
-        if curl --fail -sL "${BASE}/hoopshype_rumors_latest.json" -o "data/latest.json" 2>/dev/null; then
-          echo "Downloaded latest"
-        fi
-    
-    - name: Merge archive data
-      run: |
-        python3 << 'EOF'
-        import json
-        import glob
-        all_rumors = []
-        for f in sorted(glob.glob('data/part*.json')):
-            with open(f) as file:
-                all_rumors.extend(json.load(file))
-        try:
-            with open('data/latest.json') as file:
-                all_rumors.extend(json.load(file))
-                print("Added latest rumors")
-        except: pass
-        with open('data/full_archive.json', 'w') as f:
-            json.dump(all_rumors, f)
-        print(f"Merged {len(all_rumors)} total rumors")
-        EOF
-    
-    - name: Generate reporter rankings data
-      run: python process_archive.py data/full_archive.json
-    
-    - name: Update timestamp
-      run: echo "Last updated $(date -u '+%Y-%m-%d %H:%M:%S UTC')" > last_updated.txt
-    
-    - name: Commit and push changes
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add reporter_data.js last_updated.txt
-        git diff --staged --quiet || git commit -m "Update reporter rankings data - $(date -u '+%Y-%m-%d %H:%M')"
-        git pull --rebase origin main || true
-        git push origin main || git push --force origin main
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Build rankings
+        env:
+          HH_API_KEY: ${{ secrets.HH_API_KEY }}
+        run: |
+          ARGS=""
+          if [ "${{ inputs.rebuild_all }}" = "true" ]; then ARGS="$ARGS --rebuild-all"; fi
+          if [ "${{ inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          python reporter_rankings_build.py $ARGS
+
+      - name: Update timestamp
+        run: |
+          date -u '+Last updated: %Y-%m-%d %H:%M:%S UTC' > last_updated.txt
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add reporter_data.js last_updated.txt agg/
+          git diff --staged --quiet && echo "Nothing changed" && exit 0
+          git commit -m "Update reporter rankings data - $(date -u '+%Y-%m-%d %H:%M')"
+          git pull --rebase origin main
+          git push origin main
