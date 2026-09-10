@@ -45,7 +45,6 @@ from process_archive import (
     extract_teams,
     extract_players,
     extract_agents,
-    generate_js_data,
 )
 
 API_BASE = "https://hoopshype-rumors-api.thejorgesierra.workers.dev"
@@ -287,6 +286,27 @@ def merge(part_aggs):
     }
 
 
+def write_js(data, output_path=OUTPUT_JS):
+    """Write reporter_data.js. Same file the frontend already loads, but the JSON
+    is written compact instead of indented: identical data, ~40% fewer bytes."""
+    body = json.dumps(data, separators=(",", ":"), ensure_ascii=False)
+    js = (
+        "// Reporter Rankings Data\n"
+        f"// Generated: {data['generated_at']}\n"
+        f"// Total Rumors: {data['total_rumors']}\n"
+        f"// Processed: {data['processed_rumors']}\n"
+        f"// Total Reporters: {data['total_reporters']}\n"
+        f"// Total Outlets: {data['total_outlets']}\n\n"
+        f"const REPORTER_DATA = {body};\n\n"
+        "// Export for use in HTML\n"
+        "if (typeof window !== 'undefined') {\n"
+        "    window.REPORTER_DATA = REPORTER_DATA;\n"
+        "}\n"
+    )
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(js)
+
+
 def previous_processed():
     """Read '// Processed: N' out of the existing reporter_data.js."""
     try:
@@ -361,7 +381,7 @@ def main():
                 "Re-run with --force if this drop is expected."
             )
 
-        generate_js_data(data, OUTPUT_JS)
+        write_js(data, OUTPUT_JS)
         print(f"\nWrote {OUTPUT_JS} ({os.path.getsize(OUTPUT_JS) / 1e6:.1f} MB)")
 
         print("\n=== Top 20 reporters ===")
