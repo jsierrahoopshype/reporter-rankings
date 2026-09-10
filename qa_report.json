@@ -1,0 +1,1284 @@
+{
+ "generated_at": "2026-09-10T20:57:55.377965",
+ "summary": {
+  "unknown_outlet": 200,
+  "name_matches_team": 0,
+  "malformed_name": 94,
+  "duplicate_canonical": 21,
+  "suspicious_handle": 0,
+  "period_exceeds_total": 0,
+  "subject_exceeds_reporter_total": 0
+ },
+ "checks": {
+  "unknown_outlet": [
+   [
+    "Clutch Points",
+    1659
+   ],
+   [
+    "Tom Moore",
+    1489
+   ],
+   [
+    "Mark Berman",
+    1417
+   ],
+   [
+    "Ryan Ward",
+    1335
+   ],
+   [
+    "Connor Letourneau",
+    1272
+   ],
+   [
+    "Justin Kubatko",
+    1224
+   ],
+   [
+    "Dwain Price",
+    1211
+   ],
+   [
+    "Adam Zagoria",
+    1194
+   ],
+   [
+    "Ken Berger",
+    1164
+   ],
+   [
+    "Jeff Goodman",
+    1149
+   ],
+   [
+    "Paul Garcia",
+    1149
+   ],
+   [
+    "Jared Weiss",
+    1135
+   ],
+   [
+    "Emiliano Carchia",
+    1107
+   ],
+   [
+    "Michael Singer",
+    1050
+   ],
+   [
+    "Andrew Greif",
+    1038
+   ],
+   [
+    "Ben Golliver",
+    1031
+   ],
+   [
+    "Steve Kyler",
+    983
+   ],
+   [
+    "Arash Markazi",
+    981
+   ],
+   [
+    "Ethan J. Skolnick",
+    978
+   ],
+   [
+    "Eric Walden",
+    967
+   ],
+   [
+    "Chris Vivlamore",
+    959
+   ],
+   [
+    "Royce Young",
+    955
+   ],
+   [
+    "Candace Buckner",
+    939
+   ],
+   [
+    "Nets Daily",
+    929
+   ],
+   [
+    "Jerry Zgoda",
+    928
+   ],
+   [
+    "Bill Oram",
+    917
+   ],
+   [
+    "Diamond Leung",
+    906
+   ],
+   [
+    "Earl K. Sneed",
+    893
+   ],
+   [
+    "Brian Robb",
+    879
+   ],
+   [
+    "Kyle Goon",
+    869
+   ],
+   [
+    "Melissa Rohlin",
+    823
+   ],
+   [
+    "Jason Anderson",
+    818
+   ],
+   [
+    "Serena Winters",
+    760
+   ],
+   [
+    "Jody Genessy",
+    749
+   ],
+   [
+    "Scott Souza",
+    734
+   ],
+   [
+    "Jessica Camerato",
+    719
+   ],
+   [
+    "Steve Popper",
+    695
+   ],
+   [
+    "Jim Eichenhofer",
+    687
+   ],
+   [
+    "Harrison Faigen",
+    662
+   ],
+   [
+    "Jason Quick",
+    653
+   ],
+   [
+    "Charles F. Gardner",
+    646
+   ],
+   [
+    "Al Iannazzone",
+    643
+   ],
+   [
+    "Gina Mizell",
+    636
+   ],
+   [
+    "Mike Bresnahan",
+    629
+   ],
+   [
+    "Mirjam Swanson",
+    624
+   ],
+   [
+    "Chris Tomasson",
+    614
+   ],
+   [
+    "Jared Zwerling",
+    612
+   ],
+   [
+    "Ben Bolch",
+    612
+   ],
+   [
+    "Tommy Beer",
+    574
+   ],
+   [
+    "Erik Horne",
+    573
+   ],
+   [
+    "Eddie Sefko",
+    561
+   ],
+   [
+    "Salman Ali",
+    560
+   ],
+   [
+    "Frank Isola",
+    559
+   ],
+   [
+    "Rylan Stiles",
+    557
+   ],
+   [
+    "Eric Woodyard",
+    550
+   ],
+   [
+    "David Hardisty",
+    534
+   ],
+   [
+    "Joe Freeman",
+    533
+   ],
+   [
+    "Rick Noland",
+    532
+   ],
+   [
+    "Ronald Tillery",
+    525
+   ],
+   [
+    "Gery Woelfel",
+    504
+   ],
+   [
+    "Wes Goldberg",
+    498
+   ],
+   [
+    "Brady Hawk",
+    494
+   ],
+   [
+    "Sam Amico",
+    483
+   ],
+   [
+    "Ky Carlin",
+    481
+   ],
+   [
+    "Chris Dempsey",
+    476
+   ],
+   [
+    "Brian T. Smith",
+    474
+   ],
+   [
+    "Brett Dawson",
+    473
+   ],
+   [
+    "John Karalis",
+    472
+   ],
+   [
+    "Anthony Puccio",
+    470
+   ],
+   [
+    "Tania Ganguli",
+    466
+   ],
+   [
+    "Chris Grenham",
+    464
+   ],
+   [
+    "Scott Kushner",
+    458
+   ],
+   [
+    "Paul Coro",
+    444
+   ],
+   [
+    "Alykhan Bijani",
+    437
+   ],
+   [
+    "Magic Johnson",
+    432
+   ],
+   [
+    "Draymond Green",
+    431
+   ],
+   [
+    "Manny Navarro",
+    431
+   ],
+   [
+    "Vincent Ellis",
+    430
+   ],
+   [
+    "Rusty Simmons",
+    417
+   ],
+   [
+    "Matt Velazquez",
+    412
+   ],
+   [
+    "Kevin Durant",
+    404
+   ],
+   [
+    "Mike McGraw",
+    398
+   ],
+   [
+    "Noah Levick",
+    391
+   ],
+   [
+    "Tim Kawakami",
+    389
+   ],
+   [
+    "Chad Ford",
+    388
+   ],
+   [
+    "Adam Spolane",
+    388
+   ],
+   [
+    "Logan Murdock",
+    385
+   ],
+   [
+    "Brian Mahoney",
+    383
+   ],
+   [
+    "Ryan Blackburn",
+    383
+   ],
+   [
+    "Dwyane Wade",
+    372
+   ],
+   [
+    "Calvin Watkins",
+    367
+   ],
+   [
+    "Jason Lloyd",
+    366
+   ],
+   [
+    "Brian Seltzer",
+    362
+   ],
+   [
+    "Aaron Rose",
+    356
+   ],
+   [
+    "Casey Holdahl",
+    354
+   ],
+   [
+    "Justin Grasso",
+    352
+   ],
+   [
+    "Kevin Ding",
+    345
+   ],
+   [
+    "David Locke",
+    341
+   ],
+   [
+    "Jason Lieser",
+    336
+   ],
+   [
+    "Katy Winge",
+    336
+   ],
+   [
+    "Jared Dudley",
+    333
+   ],
+   [
+    "Pau Gasol",
+    329
+   ],
+   [
+    "Albert Nahmad",
+    327
+   ],
+   [
+    "John Reid",
+    322
+   ],
+   [
+    "Dalton Johnson",
+    322
+   ],
+   [
+    "Jamal Crawford",
+    319
+   ],
+   [
+    "Chris Reichert",
+    316
+   ],
+   [
+    "Mike Mazzeo",
+    314
+   ],
+   [
+    "John Denton",
+    310
+   ],
+   [
+    "Sean Deveney",
+    307
+   ],
+   [
+    "Isaiah Thomas",
+    307
+   ],
+   [
+    "Tom Westerholm",
+    297
+   ],
+   [
+    "Jon Johnson",
+    291
+   ],
+   [
+    "Alan Hahn",
+    290
+   ],
+   [
+    "Steve Bulpett",
+    290
+   ],
+   [
+    "Michael Wallace",
+    287
+   ],
+   [
+    "Yossi Gozlan",
+    284
+   ],
+   [
+    "Cody Taylor",
+    283
+   ],
+   [
+    "Ben Anderson",
+    283
+   ],
+   [
+    "Ben Rohrbach",
+    280
+   ],
+   [
+    "Sarah Todd",
+    280
+   ],
+   [
+    "Enes Kanter",
+    273
+   ],
+   [
+    "Mark Cuban",
+    271
+   ],
+   [
+    "Joseph Goodman",
+    271
+   ],
+   [
+    "Rob Schaefer",
+    269
+   ],
+   [
+    "Julia Poe",
+    268
+   ],
+   [
+    "Damian Lillard",
+    266
+   ],
+   [
+    "Donatas Urbonas",
+    265
+   ],
+   [
+    "Liz Mullen",
+    264
+   ],
+   [
+    "Jay Allen",
+    264
+   ],
+   [
+    "Doug Smith",
+    255
+   ],
+   [
+    "Scott Bordow",
+    255
+   ],
+   [
+    "Michael Cunningham",
+    249
+   ],
+   [
+    "Giannis Antetokounmpo",
+    249
+   ],
+   [
+    "Adam Wexler",
+    246
+   ],
+   [
+    "Eric Smith",
+    244
+   ],
+   [
+    "Adam Johnson",
+    241
+   ],
+   [
+    "Jabari Young",
+    241
+   ],
+   [
+    "Marla Ridenour",
+    240
+   ],
+   [
+    "Lauren L. Williams",
+    238
+   ],
+   [
+    "David Pick",
+    235
+   ],
+   [
+    "Peter Vecsey",
+    235
+   ],
+   [
+    "Cameron Tabatabaie",
+    233
+   ],
+   [
+    "Michael Gallagher",
+    231
+   ],
+   [
+    "Roy Parry",
+    227
+   ],
+   [
+    "Orazio Cauchi",
+    226
+   ],
+   [
+    "Trae Young",
+    225
+   ],
+   [
+    "Kerry Eggers",
+    224
+   ],
+   [
+    "Aaron Falk",
+    222
+   ],
+   [
+    "Kerith Burke",
+    222
+   ],
+   [
+    "Daryl Morey",
+    218
+   ],
+   [
+    "Joel Embiid",
+    217
+   ],
+   [
+    "Ajayi Browne",
+    217
+   ],
+   [
+    "Jorge Castillo",
+    215
+   ],
+   [
+    "Stephen Curry",
+    208
+   ],
+   [
+    "Kevin Love",
+    204
+   ],
+   [
+    "Joe Mullinax",
+    204
+   ],
+   [
+    "Mark Followill",
+    203
+   ],
+   [
+    "Mike Fisher",
+    201
+   ],
+   [
+    "Justin Martinez",
+    200
+   ],
+   [
+    "Cayleigh Griffin",
+    198
+   ],
+   [
+    "Heat Central",
+    198
+   ],
+   [
+    "John Canzano",
+    196
+   ],
+   [
+    "Kyle Kuzma",
+    194
+   ],
+   [
+    "Oleh Kosel",
+    193
+   ],
+   [
+    "Sam Smith",
+    192
+   ],
+   [
+    "Christopher A. Vito",
+    191
+   ],
+   [
+    "Peter Edmiston",
+    191
+   ],
+   [
+    "Matt George",
+    191
+   ],
+   [
+    "Drew Shiller",
+    190
+   ],
+   [
+    "Olgun Uluc",
+    188
+   ],
+   [
+    "Donovan Mitchell",
+    188
+   ],
+   [
+    "Tim Cato",
+    186
+   ],
+   [
+    "Matthew Tynan",
+    185
+   ],
+   [
+    "Christos Tsaltas",
+    185
+   ],
+   [
+    "Mike Wells",
+    184
+   ],
+   [
+    "Dan McCarney",
+    184
+   ],
+   [
+    "Janis Carr",
+    178
+   ],
+   [
+    "Neil Dalal",
+    178
+   ],
+   [
+    "Kobe Bryant",
+    177
+   ],
+   [
+    "Jon Rothstein",
+    176
+   ],
+   [
+    "John Gambadoro",
+    176
+   ],
+   [
+    "Rudy Gobert",
+    176
+   ],
+   [
+    "Spencer Dinwiddie",
+    175
+   ],
+   [
+    "Kyrie Irving",
+    174
+   ],
+   [
+    "Justin Verrier",
+    171
+   ],
+   [
+    "Barbara Barker",
+    171
+   ],
+   [
+    "Farbod Esnaashari",
+    171
+   ],
+   [
+    "Josh Hart",
+    170
+   ],
+   [
+    "The Jump",
+    169
+   ],
+   [
+    "Lauren Rosen",
+    169
+   ],
+   [
+    "George Karl",
+    166
+   ],
+   [
+    "Souichi Terada",
+    166
+   ],
+   [
+    "Duvalier Johnson",
+    164
+   ],
+   [
+    "Chris Miller",
+    158
+   ],
+   [
+    "Boston Celtics",
+    158
+   ],
+   [
+    "Nick Kosmider",
+    157
+   ],
+   [
+    "Kane Pitman",
+    157
+   ],
+   [
+    "Brian Schmitz",
+    156
+   ],
+   [
+    "Mark Haynes",
+    156
+   ]
+  ],
+  "name_matches_team": [],
+  "malformed_name": [
+   [
+    "@2018",
+    91
+   ],
+   [
+    "@957thegame",
+    82
+   ],
+   [
+    "@2017",
+    68
+   ],
+   [
+    "@2021",
+    53
+   ],
+   [
+    "@2019",
+    46
+   ],
+   [
+    "@2022",
+    32
+   ],
+   [
+    "@2023",
+    32
+   ],
+   [
+    "@2020",
+    21
+   ],
+   [
+    "@2024",
+    14
+   ],
+   [
+    "@2026",
+    14
+   ],
+   [
+    "@2014",
+    11
+   ],
+   [
+    "@2015",
+    8
+   ],
+   [
+    "@2025",
+    7
+   ],
+   [
+    "@gambo620",
+    6
+   ],
+   [
+    "@975thefanatic",
+    6
+   ],
+   [
+    "@jareddudley619",
+    5
+   ],
+   [
+    "@2016",
+    5
+   ],
+   [
+    "@fan590",
+    5
+   ],
+   [
+    "@wells222",
+    4
+   ],
+   [
+    "@2012",
+    4
+   ],
+   [
+    "@gambo987",
+    4
+   ],
+   [
+    "@sactown1140",
+    4
+   ],
+   [
+    "@flea333",
+    3
+   ],
+   [
+    "@2013",
+    3
+   ],
+   [
+    "@1057fmthefan",
+    3
+   ],
+   [
+    "@1280sports",
+    3
+   ],
+   [
+    "@kgformvp211",
+    3
+   ],
+   [
+    "@thechat101",
+    3
+   ],
+   [
+    "@wangyifan314",
+    2
+   ],
+   [
+    "@929espn",
+    2
+   ],
+   [
+    "@aa000g9",
+    2
+   ],
+   [
+    "@1",
+    2
+   ],
+   [
+    "@closeup360",
+    2
+   ],
+   [
+    "@670thescore",
+    2
+   ],
+   [
+    "@espn1000",
+    2
+   ],
+   [
+    "@923thefan",
+    2
+   ],
+   [
+    "@eli560",
+    1
+   ],
+   [
+    "@973espn",
+    1
+   ],
+   [
+    "@2011",
+    1
+   ],
+   [
+    "@espnla710",
+    1
+   ],
+   [
+    "@dennismike1993",
+    1
+   ],
+   [
+    "@nedovic1624",
+    1
+   ],
+   [
+    "@qross2011",
+    1
+   ],
+   [
+    "@newstalk1010",
+    1
+   ],
+   [
+    "@shuff247",
+    1
+   ],
+   [
+    "@304skywalkerjr",
+    1
+   ],
+   [
+    "@thebeast980",
+    1
+   ],
+   [
+    "@kesn1033",
+    1
+   ],
+   [
+    "@chapman1051",
+    1
+   ],
+   [
+    "@120sports",
+    1
+   ],
+   [
+    "@gneal1414",
+    1
+   ],
+   [
+    "@1395fiveaa",
+    1
+   ],
+   [
+    "@raptors905",
+    1
+   ],
+   [
+    "@1340amfoxsports",
+    1
+   ],
+   [
+    "@younghef007",
+    1
+   ],
+   [
+    "@raptors905mr",
+    1
+   ],
+   [
+    "@espn980",
+    1
+   ],
+   [
+    "@schultz975",
+    1
+   ],
+   [
+    "@anthonyg729",
+    1
+   ],
+   [
+    "@overdrive1050",
+    1
+   ],
+   [
+    "@1053thefan",
+    1
+   ],
+   [
+    "@espn991sf",
+    1
+   ],
+   [
+    "@mccauley318",
+    1
+   ],
+   [
+    "@sportstalk790",
+    1
+   ],
+   [
+    "@969thegame",
+    1
+   ],
+   [
+    "@joetsai1999",
+    1
+   ],
+   [
+    "@deven2021nu",
+    1
+   ],
+   [
+    "@503blazerfans",
+    1
+   ],
+   [
+    "@tisoldier971",
+    1
+   ],
+   [
+    "@eloy98631379",
+    1
+   ],
+   [
+    "@olskool888",
+    1
+   ],
+   [
+    "@davidjsmith1232",
+    1
+   ],
+   [
+    "@1075thefan",
+    1
+   ],
+   [
+    "@toxik916",
+    1
+   ],
+   [
+    "@305sportss",
+    1
+   ],
+   [
+    "@goober2221",
+    1
+   ],
+   [
+    "@ripcityradio620",
+    1
+   ],
+   [
+    "@livislife201",
+    1
+   ],
+   [
+    "@560wqam",
+    1
+   ],
+   [
+    "@espn975",
+    1
+   ],
+   [
+    "@live105fm",
+    1
+   ],
+   [
+    "@jai_305_",
+    1
+   ],
+   [
+    "@sportsnet650",
+    1
+   ],
+   [
+    "@dubs408",
+    1
+   ],
+   [
+    "@ballersp420",
+    1
+   ],
+   [
+    "@stunna999_",
+    1
+   ],
+   [
+    "@dstacey1913",
+    1
+   ],
+   [
+    "@air305",
+    1
+   ],
+   [
+    "@vinod_r108",
+    1
+   ],
+   [
+    "@433",
+    1
+   ],
+   [
+    "@parkervb901",
+    1
+   ],
+   [
+    "@wfan660",
+    1
+   ],
+   [
+    "@espn1320",
+    1
+   ],
+   [
+    "@dillybar2145__",
+    1
+   ]
+  ],
+  "duplicate_canonical": [
+   [
+    "Ethan J Skolnick",
+    "Ethan J. Skolnick"
+   ],
+   [
+    "Earl K Sneed",
+    "Earl K. Sneed"
+   ],
+   [
+    "Charles F Gardner",
+    "Charles F. Gardner"
+   ],
+   [
+    "Michael C Wright",
+    "Michael C. Wright"
+   ],
+   [
+    "Lauren L Williams",
+    "Lauren L. Williams"
+   ],
+   [
+    "Larry Nance Jr",
+    "Larry Nance Jr."
+   ],
+   [
+    "Stephen A Smith",
+    "Stephen A. Smith"
+   ],
+   [
+    "James L Edwards III",
+    "James L. Edwards III"
+   ],
+   [
+    "Jaren Jackson Jr",
+    "Jaren Jackson Jr."
+   ],
+   [
+    "Carlos Douglas Jr",
+    "Carlos Douglas Jr."
+   ],
+   [
+    "Michael Porter Jr",
+    "Michael Porter Jr."
+   ],
+   [
+    "Ron Harrod Jr",
+    "Ron Harrod Jr."
+   ],
+   [
+    "Kevin Gray Jr",
+    "Kevin Gray Jr."
+   ],
+   [
+    "Tim Hardaway Jr",
+    "Tim Hardaway Jr."
+   ],
+   [
+    "Eddie A Johnson",
+    "Eddie A. Johnson"
+   ],
+   [
+    "Gary Trent Jr",
+    "Gary Trent Jr."
+   ],
+   [
+    "Scoop B Robinson",
+    "Scoop B. Robinson"
+   ],
+   [
+    "Jabari Smith Jr",
+    "Jabari Smith Jr."
+   ],
+   [
+    "Mike Dunleavy Jr",
+    "Mike Dunleavy Jr."
+   ],
+   [
+    "Matthew R Tynan",
+    "Matthew R. Tynan"
+   ],
+   [
+    "Tim Hardaway Sr",
+    "Tim Hardaway Sr."
+   ]
+  ],
+  "suspicious_handle": [],
+  "period_exceeds_total": [],
+  "subject_exceeds_reporter_total": []
+ }
+}
