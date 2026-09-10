@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Which NBA reporters cover each player | HoopsMatic</title>
-<meta name="description" content="Search any NBA player and see which reporters break the most news about them, ranked by mentions in the HoopsHype rumors archive.">
+<meta name="description" content="Search any NBA player and see which reporters are cited most often for news involving him, ranked by attributed mentions in the HoopsHype rumors archive.">
 <!-- Swap these to https://hoopsmatic.com/reporter-rankings/... once the route is live. -->
 <link rel="canonical" href="https://jsierrahoopshype.github.io/reporter-rankings/players.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HoopsMatic">
 <meta property="og:title" content="Which NBA reporters cover each player | HoopsMatic">
-<meta property="og:description" content="Search any NBA player and see which reporters break the most news about them, ranked by mentions in the HoopsHype rumors archive.">
+<meta property="og:description" content="Search any NBA player and see which reporters are cited most often for news involving him, ranked by attributed mentions in the HoopsHype rumors archive.">
 <meta property="og:url" content="https://jsierrahoopshype.github.io/reporter-rankings/players.html">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@
   <div class="seo">
     <h2>Reading player coverage</h2>
     <p>Rumors are tagged by player, so this view answers a question agents and front offices
-    track closely: when news about a given player breaks, whose byline is on it?</p>
+    track closely: when an item about a given player is archived, whose byline is on it?</p>
     <p>Concentration matters more than raw volume. A player whose mentions cluster around one
     or two reporters usually has a tight information channel. A player spread across dozens of
     names is being covered nationally, or is in the middle of something everyone is chasing.</p>
@@ -56,26 +56,33 @@
 <script src="rr-core.js"></script>
 <script>
 
-let days = 0;
+let days = RR.days;
 let player = null;
+let DETAIL = {};
+let TOTALS = {};       // every player in the dataset, not just the visible ones
 
 function playerTotals() {
   const t = {};
   for (const r of RR.reporters) {
-    for (const [name, c] of Object.entries(r.byPlayer || {})) {
-      t[name] = (t[name] || 0) + getProportionalCount(c, r.byDate, days);
+    for (const name of Object.keys(r.byPlayer || {})) {
+      const n = subjectCount(DETAIL, r, name, days);
+      if (n) t[name] = (t[name] || 0) + n;
     }
   }
   return t;
 }
 
 function render() {
-  const totals = playerTotals();
-  const ordered = Object.entries(totals).sort((a, b) => b[1] - a[1]).slice(0, 120);
-  if (!player || !totals[player]) player = ordered.length ? ordered[0][0] : null;
+  TOTALS = playerTotals();
+  const ranked = Object.entries(TOTALS).sort((a, b) => b[1] - a[1]);
+  if (!player || !TOTALS[player]) player = ranked.length ? ranked[0][0] : null;
 
-  const q = (document.getElementById("pfilter").value || "").toLowerCase();
-  const shown = ordered.filter(([n]) => !q || n.toLowerCase().includes(q)).slice(0, 60);
+  const q = (document.getElementById("pfilter").value || "").toLowerCase().trim();
+  // With no query the rail shows the top 120. With a query it searches the
+  // ENTIRE player universe, so a name ranked 400th still comes back.
+  const pool = q ? ranked.filter(([n]) => n.toLowerCase().includes(q)) : ranked.slice(0, 120);
+  const shown = pool.slice(0, 60);
+  const totals = TOTALS;
 
   document.getElementById("picker").innerHTML = shown.map(([n, c]) =>
     '<button data-p="' + esc(n) + '"' + (n === player ? ' class="active"' : '') + '>' +
@@ -86,7 +93,7 @@ function render() {
   if (!player) { document.getElementById("app").innerHTML = '<div class="empty">No player coverage in this period.</div>'; return; }
 
   const rows = RR.reporters.map(r => ({
-    r, n: getProportionalCount(r.byPlayer[player] || 0, r.byDate, days)
+    r, n: subjectCount(DETAIL, r, player, days)
   })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).slice(0, 40);
 
   const head = '<div class="block-head"><h2>' + esc(player) + '</h2>' +
@@ -114,10 +121,15 @@ function render() {
 }
 
 bootPage(() => {
-  const pick = d => { days = d; renderPeriodChips(days, pick); render(); };
+  const pick = d => { days = d; RR.days = d; setPeriodInUrl(d); renderPeriodChips(days, pick); render(); };
   renderPeriodChips(days, pick);
+  setPeriodInUrl(days);
   document.getElementById("pfilter").addEventListener("input", render);
-  render();
+  document.getElementById("app").innerHTML = '<div class="loading">Loading player detail...</div>';
+  loadDetail("players-data.js", "PLAYER_MONTHS")
+    .then(d => { DETAIL = d; render(); })
+    .catch(() => { document.getElementById("app").innerHTML =
+      '<div class="empty">Player detail failed to load.</div>'; });
 });
 
 </script>

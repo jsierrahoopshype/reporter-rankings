@@ -342,6 +342,17 @@ function rrValidOutlet(name) {
   return !/^twitter\s*@/i.test(String(name).trim());
 }
 
+/* The blanket "any name containing Woj is Adrian Wojnarowski" rule also
+   swallows Jakub Wojczynski (1 mention, a different person). Same shape of risk
+   for any substring rule. Names listed here are never folded by those rules. */
+const NEVER_MERGE = new Set(["jakub wojczynski"]);
+
+const _normalizeReporterNameRaw = normalizeReporterName;
+normalizeReporterName = function (name) {
+  if (NEVER_MERGE.has((name || "").toLowerCase().trim())) return name;
+  return _normalizeReporterNameRaw(name);
+};
+
 /* ==========================================================================
    Shared state + data build
    ========================================================================== */
@@ -362,6 +373,30 @@ const PERIODS = [
   { days: 180, label: "6 Mo" },
   { days: 365, label: "Year" }
 ];
+
+/* ---- period in the URL ----------------------------------------------------
+   ?period=7|30|90|180|365|all . Every nav link carries it, so switching pages
+   keeps the filter and a filtered view can be pasted to someone else. */
+function periodFromUrl() {
+  const raw = new URLSearchParams(location.search).get("period");
+  if (!raw) return 0;
+  if (raw === "all") return 0;
+  const n = parseInt(raw, 10);
+  return PERIODS.some(p => p.days === n) ? n : 0;
+}
+
+function periodParam(days) { return days === 0 ? "all" : String(days); }
+
+function setPeriodInUrl(days) {
+  const u = new URL(location.href);
+  u.searchParams.set("period", periodParam(days));
+  history.replaceState(null, "", u);
+  document.querySelectorAll("#nav a").forEach(a => {
+    const t = new URL(a.getAttribute("href"), location.href);
+    t.searchParams.set("period", periodParam(days));
+    a.setAttribute("href", t.pathname.split("/").pop() + t.search);
+  });
+}
 
 function periodLabel(days) {
   const p = PERIODS.find(p => p.days === days);
@@ -401,6 +436,7 @@ function buildData() {
     if (!reporterMap[key]) {
       reporterMap[key] = {
         id: slugify(name),
+        srcIds: [],
         name,
         outlet: getReporterOutlet(name, r.outlet),
         avatar: r.avatar || name.replace("@", "").substring(0, 2).toUpperCase(),
@@ -408,6 +444,7 @@ function buildData() {
       };
     }
     const m = reporterMap[key];
+    if (r.id) m.srcIds.push(r.id);   // merged aliases keep every source id
     m.total += r.total || 0;
 
     for (const [p, c] of Object.entries(r.by_player || {})) {
@@ -518,14 +555,20 @@ function wireSearch() {
   input.addEventListener("input", () => {
     const q = input.value.toLowerCase().trim();
     if (q.length < 2) { box.innerHTML = ""; box.style.display = "none"; return; }
+    const days = RR.days || 0;
     const hits = RR.reporters
+      .map(r => Object.assign({}, r, {
+        shown: days === 0 ? r.total : getFilteredCount(r.byDate, days)
+      }))
       .filter(r => r.name.toLowerCase().includes(q))
-      .sort((a, b) => b.total - a.total).slice(0, 8);
+      .sort((a, b) => b.shown - a.shown).slice(0, 8);
+    // never show a bare all-time number next to a page filtered to a week
+    const suffix = days === 0 ? " all-time" : " in " + periodLabel(days).toLowerCase();
     box.innerHTML = hits.length
       ? hits.map(r => '<a href="reporter.html?r=' + encodeURIComponent(r.id) + '">' +
           '<span class="rn">' + esc(r.name) + '</span>' +
           '<span class="ro">' + esc(r.outlet) + '</span>' +
-          '<span class="rc">' + num(r.total) + '</span></a>').join("")
+          '<span class="rc">' + num(r.shown) + suffix + '</span></a>').join("")
       : '<div class="nohit">No reporter found</div>';
     box.style.display = "block";
   });
@@ -534,10 +577,47 @@ function wireSearch() {
   });
 }
 
+/* Load teams-data.js / players-data.js on demand. Only the page that needs
+   the per-month detail pays for it. */
+function loadDetail(file, globalName) {
+  return new Promise((resolve, reject) => {
+    if (window[globalName]) return resolve(window[globalName]);
+    const s = document.createElement("script");
+    s.src = file;
+    s.onload = () => resolve(window[globalName] || {});
+    s.onerror = () => reject(new Error("could not load " + file));
+    document.head.appendChild(s);
+  });
+}
+
+/* Real period count for one reporter/subject, summed from stored monthly
+   buckets. No proportional estimation anywhere. */
+function monthsInPeriod(days) {
+  if (days === 0) return null;               // null = every month
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - days);
+  return cutoff.toISOString().slice(0, 7);   // inclusive lower bound, YYYY-MM
+}
+
+function subjectCount(detail, reporter, subject, days) {
+  let total = 0;
+  const floor = monthsInPeriod(days);
+  const ids = (reporter.srcIds && reporter.srcIds.length) ? reporter.srcIds : [reporter.id];
+  for (const id of ids) {
+    const months = (detail[id] || {})[subject];
+    if (!months) continue;
+    for (const [m, c] of Object.entries(months)) {
+      if (floor === null || m >= floor) total += c;
+    }
+  }
+  return total;
+}
+
 /* Every page calls this once. */
 function bootPage(render) {
   const nav = document.getElementById("nav");
   if (nav) nav.innerHTML = renderNav(nav.dataset.active);
+  RR.days = periodFromUrl();
   if (!buildData()) {
     const app = document.getElementById("app");
     if (app) app.innerHTML = '<div class="empty">Ranking data failed to load. Try a refresh.</div>';

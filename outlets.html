@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NBA outlet rankings - which outlets break the most news | HoopsMatic</title>
+<title>NBA outlet rankings - which outlets are cited most often | HoopsMatic</title>
 <meta name="description" content="Every media outlet ranked by attributed mentions in the HoopsHype NBA rumors archive, filterable by week, month or all time.">
 <!-- Swap these to https://hoopsmatic.com/reporter-rankings/... once the route is live. -->
 <link rel="canonical" href="https://jsierrahoopshype.github.io/reporter-rankings/outlets.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HoopsMatic">
-<meta property="og:title" content="NBA outlet rankings - which outlets break the most news | HoopsMatic">
+<meta property="og:title" content="NBA outlet rankings - which outlets are cited most often | HoopsMatic">
 <meta property="og:description" content="Every media outlet ranked by attributed mentions in the HoopsHype NBA rumors archive, filterable by week, month or all time.">
 <meta property="og:url" content="https://jsierrahoopshype.github.io/reporter-rankings/outlets.html">
 <meta name="twitter:card" content="summary">
@@ -54,7 +54,7 @@
 <script src="rr-core.js"></script>
 <script>
 
-let days = 0;
+let days = RR.days;
 
 function render() {
   const rows = outletStats(days).slice(0, 100);
@@ -78,8 +78,9 @@ function render() {
 }
 
 bootPage(() => {
-  const pick = d => { days = d; renderPeriodChips(days, pick); render(); };
+  const pick = d => { days = d; RR.days = d; setPeriodInUrl(d); renderPeriodChips(days, pick); render(); };
   renderPeriodChips(days, pick);
+  setPeriodInUrl(days);
   render();
 });
 

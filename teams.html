@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Which NBA reporters cover each team | HoopsMatic</title>
-<meta name="description" content="Pick any NBA team and see which reporters break the most news about them, ranked by mentions in the HoopsHype rumors archive.">
+<meta name="description" content="Pick any NBA team and see which reporters are cited most often for its news, ranked by attributed mentions in the HoopsHype rumors archive.">
 <!-- Swap these to https://hoopsmatic.com/reporter-rankings/... once the route is live. -->
 <link rel="canonical" href="https://jsierrahoopshype.github.io/reporter-rankings/teams.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HoopsMatic">
 <meta property="og:title" content="Which NBA reporters cover each team | HoopsMatic">
-<meta property="og:description" content="Pick any NBA team and see which reporters break the most news about them, ranked by mentions in the HoopsHype rumors archive.">
+<meta property="og:description" content="Pick any NBA team and see which reporters are cited most often for its news, ranked by attributed mentions in the HoopsHype rumors archive.">
 <meta property="og:url" content="https://jsierrahoopshype.github.io/reporter-rankings/teams.html">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,7 @@
     <h1>Coverage by Team</h1>
     <span class="brand">HoopsMatic</span>
   </div>
-  <div class="subtitle">Pick a team to see who actually breaks its news.</div>
+  <div class="subtitle">Pick a team to see which reporters are cited most often for its news.</div>
 
   <div class="esearch-wrap">
     <input class="esearch-global" type="text" placeholder="Search any reporter..." autocomplete="off" aria-label="Search reporters">
@@ -56,14 +56,18 @@
 <script src="rr-core.js"></script>
 <script>
 
-let days = 0;
+let days = RR.days;
 let team = null;
+let DETAIL = {};
 
+/* Every number on this page is summed from stored monthly buckets
+   (reporter -> team -> YYYY-MM -> count). Nothing is estimated. */
 function teamTotals() {
   const t = {};
   for (const r of RR.reporters) {
-    for (const [name, c] of Object.entries(r.byTeam || {})) {
-      t[name] = (t[name] || 0) + getProportionalCount(c, r.byDate, days);
+    for (const name of Object.keys(r.byTeam || {})) {
+      const n = subjectCount(DETAIL, r, name, days);
+      if (n) t[name] = (t[name] || 0) + n;
     }
   }
   return t;
@@ -81,7 +85,7 @@ function render() {
     b.onclick = () => { team = b.dataset.t; render(); });
 
   const rows = RR.reporters.map(r => ({
-    r, n: getProportionalCount(r.byTeam[team] || 0, r.byDate, days)
+    r, n: subjectCount(DETAIL, r, team, days)
   })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).slice(0, 40);
 
   const head = '<div class="block-head"><h2>' + esc(team) + '</h2>' +
@@ -93,7 +97,8 @@ function render() {
   }
 
   const table = '<div class="table-wrap"><table class="lb"><thead><tr>' +
-    '<th>#</th><th class="left">Reporter</th><th>Mentions</th><th>Share of team</th>' +
+    '<th>#</th><th class="left">Reporter</th><th>Attributed mentions</th>' +
+    '<th title="This reporter\'s share of all reporter-attributed mentions tagged with this team in the selected period. Outlet-only attributions and excluded accounts are not in the denominator.">Share of attributed reporter mentions</th>' +
     '</tr></thead><tbody>' + rows.map((x, i) =>
       '<tr onclick="location.href=\'reporter.html?r=' + encodeURIComponent(x.r.id) + '\'">' +
       '<td class="rank">' + (i + 1) + '</td>' +
@@ -114,9 +119,14 @@ function render() {
 }
 
 bootPage(() => {
-  const pick = d => { days = d; renderPeriodChips(days, pick); render(); };
+  const pick = d => { days = d; RR.days = d; setPeriodInUrl(d); renderPeriodChips(days, pick); render(); };
   renderPeriodChips(days, pick);
-  render();
+  setPeriodInUrl(days);
+  document.getElementById("app").innerHTML = '<div class="loading">Loading team detail...</div>';
+  loadDetail("teams-data.js", "TEAM_MONTHS")
+    .then(d => { DETAIL = d; render(); })
+    .catch(() => { document.getElementById("app").innerHTML =
+      '<div class="empty">Team detail failed to load.</div>'; });
 });
 
 </script>

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NBA Reporter Rankings - who breaks the most NBA news | HoopsMatic</title>
+<title>NBA Reporter Rankings - who gets cited most in NBA rumors | HoopsMatic</title>
 <meta name="description" content="Ranking every NBA reporter by how often they are cited in the HoopsHype rumors archive: 650,000+ attributed mentions since 2010, filterable by week, month or all time.">
 <!-- Swap these to https://hoopsmatic.com/reporter-rankings/... once the route is live. -->
 <link rel="canonical" href="https://jsierrahoopshype.github.io/reporter-rankings/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HoopsMatic">
-<meta property="og:title" content="NBA Reporter Rankings - who breaks the most NBA news | HoopsMatic">
+<meta property="og:title" content="NBA Reporter Rankings - who gets cited most in NBA rumors | HoopsMatic">
 <meta property="og:description" content="Ranking every NBA reporter by how often they are cited in the HoopsHype rumors archive: 650,000+ attributed mentions since 2010, filterable by week, month or all time.">
 <meta property="og:url" content="https://jsierrahoopshype.github.io/reporter-rankings/">
 <meta name="twitter:card" content="summary">
@@ -27,7 +27,7 @@
     <h1>NBA Reporter Rankings</h1>
     <span class="brand">HoopsMatic</span>
   </div>
-  <div class="subtitle">Who moves NBA news. Every reporter ranked by how often they are cited in the HoopsHype rumors archive.</div>
+  <div class="subtitle">Every reporter ranked by how often they are cited in the HoopsHype rumors archive. This counts attributions, not scoops.</div>
 
   <div class="esearch-wrap">
     <input class="esearch-global" type="text" placeholder="Search any reporter..." autocomplete="off" aria-label="Search reporters">
@@ -43,9 +43,11 @@
     <p>Every rumor in the HoopsHype archive carries an attribution: the reporter or outlet
     that originally reported it. Counting those attributions gives a straightforward measure
     of who is actually sourcing NBA news, rather than who is loudest about it.</p>
-    <p>The leaderboard counts mentions, not scoops. A reporter cited 40 times in a month
+    <p>Methodology: the leaderboard counts citations, not scoops. Being cited does not
+    establish that a reporter was first to a story, only that the archived item was
+    attributed to them. A reporter cited 40 times in a month
     has been the origin point for 40 separate items that HoopsHype archived. Use the period
-    filters to see who is breaking news right now versus who has the deepest back catalogue,
+    filters to see who is being cited most right now versus who has the deepest back catalogue,
     and open any reporter for their teams, players and month-by-month activity.</p>
   </div>
 
@@ -56,7 +58,7 @@
 <script src="rr-core.js"></script>
 <script>
 
-let days = 0;
+let days = RR.days;
 
 function statStrip() {
   const rs = reporterStats(days), os_ = outletStats(days);
@@ -117,8 +119,9 @@ function render() {
 }
 
 bootPage(() => {
-  const pick = d => { days = d; renderPeriodChips(days, pick); render(); };
+  const pick = d => { days = d; RR.days = d; setPeriodInUrl(d); renderPeriodChips(days, pick); render(); };
   renderPeriodChips(days, pick);
+  setPeriodInUrl(days);
   render();
 });
 
