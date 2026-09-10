@@ -1128,6 +1128,245 @@ OUTLET_NAMES = {
     "the athletic nba", "espn nba", "bleacher report nba"
 }
 
+# =============================================
+# CANONICAL AFFILIATION LAYER  (added September 2026)
+#
+# Everything below runs against REPORTERS_DB before the lookup indices are
+# built, so it is the canonical source of truth: a rebuild keeps these fixes
+# and the frontend does not have to patch anything at display time.
+#
+# Three jobs:
+#   1. Give known reporters a real outlet instead of "Unknown".
+#   2. Collapse alias spellings into one canonical reporter, preserving counts.
+#   3. Strip handles that are demonstrably corrupt.
+#
+# IMPORTANT: an entry here is a CURRENT (or last verified) affiliation for the
+# reporter's profile. It is deliberately NOT a claim that an item archived in
+# 2014 was published by that outlet. Per-item historical attribution needs the
+# affiliation-history table (see AFFILIATION_HISTORY below), not this map.
+# =============================================
+
+# reporter key -> (canonical display name, current/last verified outlet)
+CANONICAL_AFFILIATIONS = {
+    # --- September 2026 pass: reporters that were showing Unknown -----------
+    "kristian winfield":    ("Kristian Winfield", "New York Daily News"),
+    "chris hine":           ("Chris Hine", "Minnesota Star Tribune"),
+    "ryan wolstat":         ("Ryan Wolstat", "Toronto Sun"),
+    "darren wolfson":       ("Darren Wolfson", "KSTP-TV"),
+    "andy katz":            ("Andy Katz", "Hoops HQ"),
+    "nate taylor":          ("Nate Taylor", "The Athletic"),
+    "daniele labanti":      ("Daniele Labanti", "Corriere di Bologna"),
+    "jeremy rauch":         ("Jeremy Rauch", "FOX19 NOW"),
+    "tomer azarly":         ("Tomer Azarly", "ClutchPoints"),
+    "andrew schlecht":      ("Andrew Schlecht", "The Athletic"),
+    "mo dakhil":            ("Mo Dakhil", "Bleacher Report"),
+    "mark kiszla":          ("Mark Kiszla", "Denver Gazette"),
+    "jim meehan":           ("Jim Meehan", "The Spokesman-Review"),
+    "scott soshnick":       ("Scott Soshnick", "Sportico"),
+    "quixem ramirez":       ("Quixem Ramirez", "Project Spurs (historical)"),
+    "nakia hogan":          ("Nakia Hogan", "NOLA.com | The Times-Picayune (historical)"),
+    "moke hamilton":        ("Moke Hamilton", "BasketballNews.com (last known)"),
+    "simonas baranauskas":  ("Simonas Baranauskas", "FIBA.com (historical)"),
+    "vin parise":           ("Vin Parise", "NBC Sports / SNY (historical)"),
+
+    # --- promoted from the frontend REPORTER_TO_OUTLET map ------------------
+    # These were being fixed at display time only, which left the underlying
+    # data saying "Unknown" and made every consumer of reporter_data.js wrong.
+    "jorge sierra":          ("Jorge Sierra", "HoopsHype"),
+    "michael scotto":        ("Michael Scotto", "HoopsHype"),
+    "anthony slater":        ("Anthony Slater", "ESPN"),
+    "law murray":            ("Law Murray", "The Athletic"),
+    "brandon rahbar":        ("Brandon Rahbar", "Daily Thunder"),
+    "duane rankin":          ("Duane Rankin", "Arizona Republic"),
+    "mike curtis":           ("Mike Curtis", "Dallas Morning News"),
+    "jason beede":           ("Jason Beede", "Orlando Sentinel"),
+    "austin krell":          ("Austin Krell", "Sports Illustrated"),
+    "dan woike":             ("Dan Woike", "The Athletic"),
+    "joel lorenzi":          ("Joel Lorenzi", "The Athletic"),
+    "justin russo":          ("Justin Russo", "Russo Writes Substack"),
+    "bennett durando":       ("Bennett Durando", "The Denver Post"),
+    "chris haynes":          ("Chris Haynes", "NBA on Prime"),
+    "sean highkin":          ("Sean Highkin", "Rose Garden Report"),
+    "tim macmahon":          ("Tim MacMahon", "ESPN"),
+    "grant afseth":          ("Grant Afseth", "Dallas Hoops Journal"),
+    "tim bontemps":          ("Tim Bontemps", "ESPN"),
+    "nick depaula":          ("Nick DePaula", "Freelance"),
+    "bobby marks":           ("Bobby Marks", "ESPN"),
+    "kellan olson":          ("Kellan Olson", "Arizona Sports"),
+    "adam aaronson":         ("Adam Aaronson", "The Philly Voice"),
+    "joey linn":             ("Joey Linn", "Freelance"),
+    "tony east":             ("Tony East", "Forbes Sports"),
+    "khobi price":           ("Khobi Price", "The California Post"),
+    "damichael cole":        ("Damichael Cole", "Memphis Commercial Appeal"),
+    "keerthika uthayakumar": ("Keerthika Uthayakumar", "Freelance"),
+    "marc j. spears":        ("Marc J. Spears", "Andscape"),
+    "k.c. johnson":          ("K.C. Johnson", "Chicago Sports Network"),
+    "josh robbins":          ("Josh Robbins", "The Athletic"),
+    "brian lewis":           ("Brian Lewis", "New York Post"),
+    "dustin dopirak":        ("Dustin Dopirak", "Indianapolis Star"),
+    "sean cunningham":       ("Sean Cunningham", "NBC Sacramento"),
+    "stefan bondy":          ("Stefan Bondy", "New York Post"),
+    "tim reynolds":          ("Tim Reynolds", "The Associated Press"),
+    "ohm youngmisuk":        ("Ohm Youngmisuk", "ESPN"),
+    "rod boone":             ("Rod Boone", "Charlotte Observer"),
+    "michael grange":        ("Michael Grange", "Sportsnet"),
+    "maxime aubin":          ("Maxime Aubin", "L'Equipe"),
+    "omari sanfoka ii":      ("Omari Sanfoka II", "Detroit Free Press"),
+    "jake fischer":          ("Jake Fischer", "The Stein Line"),
+    "jeff mcdonald":         ("Jeff McDonald", "San Antonio Express-News"),
+    "sam amick":             ("Sam Amick", "The Athletic"),
+    "brad rowland":          ("Brad Rowland", "FanSided"),
+    "jay king":              ("Jay King", "The Athletic"),
+    "derek bodner":          ("Derek Bodner", "PHLY Sports"),
+    "danny cunningham":      ("Danny Cunningham", "The Inside Shot"),
+    "kris pursiainen":       ("Kris Pursiainen", "ClutchPoints"),
+    "chris fedor":           ("Chris Fedor", "Cleveland Plain Dealer"),
+    "ramona shelburne":      ("Ramona Shelburne", "ESPN"),
+    "andy larsen":           ("Andy Larsen", "Salt Lake Tribune"),
+    "keith smith":           ("Keith Smith", "Spotrac"),
+    "michael c. wright":     ("Michael C. Wright", "ESPN"),
+    "clemente almanza":      ("Clemente Almanza", "The Thunder Wire"),
+    "dan weiss":             ("Dan Weiss", "FanDuel Sports"),
+    "tom orsborn":           ("Tom Orsborn", "San Antonio Express-News"),
+    "bobby manning":         ("Bobby Manning", "CLNS"),
+    "scott agness":          ("Scott Agness", "Fieldhouse Files"),
+    "gerald bourguet":       ("Gerald Bourguet", "Suns After Dark"),
+    "erik slater":           ("Erik Slater", "ClutchPoints"),
+    "mike trudell":          ("Mike Trudell", "Spectrum SportsNet"),
+    "vinny benedetto":       ("Vinny Benedetto", "Denver Gazette"),
+    "james ham":             ("James Ham", "ESPN1320"),
+    "jeff zillgitt":         ("Jeff Zillgitt", "USA Today"),
+}
+
+# Alias spelling -> canonical key. The alias key is registered against the SAME
+# dict object as the canonical reporter, so every archived item under either
+# spelling lands on one profile and the historical counts add up rather than
+# splitting.
+CANONICAL_ALIASES = {
+    "christopher hine": "chris hine",
+    "tom azarly":       "tomer azarly",
+    "tommy azarly":     "tomer azarly",
+    "marc spears":      "marc j. spears",
+    "shams charnia":    "shams charania",
+    "dave mcmenanim":   "dave mcmenamin",
+    "omari sanfoka":    "omari sanfoka ii",
+    "omari sankofa":    "omari sanfoka ii",
+    "omari sankofa ii": "omari sanfoka ii",
+    "tom orsborne":     "tom orsborn",
+    "kc johnson":       "k.c. johnson",
+}
+
+# Handles matching this are corrupt. A bulk find-and-replace at some point
+# rewrote a substring of many handles to "aborz" ("shamscharania" -> "shaborz",
+# "tjonesonthenba" -> "taborz"), and several of the results now collide across
+# reporters, so a handle lookup could credit the wrong person. They are removed
+# rather than guessed at: an invented handle is worse than a missing one.
+CORRUPT_HANDLE_PATTERN = re.compile(r"aborz", re.IGNORECASE)
+
+
+def _apply_canonical_layer():
+    """Mutate REPORTERS_DB in place. Returns a report for the build log."""
+    report = {"affiliations_set": 0, "created": 0, "aliases": 0, "handles_removed": []}
+
+    for key, (display, outlet) in CANONICAL_AFFILIATIONS.items():
+        entry = REPORTERS_DB.get(key)
+        if entry is None:
+            REPORTERS_DB[key] = {
+                "name": display,
+                "outlet": outlet,
+                "tier": 3,
+                "handles": [],
+                "variations": [],
+            }
+            report["created"] += 1
+        else:
+            entry["name"] = display
+            entry["outlet"] = outlet
+            report["affiliations_set"] += 1
+
+    for alias, canonical in CANONICAL_ALIASES.items():
+        target = REPORTERS_DB.get(canonical)
+        if target is None:
+            continue
+        # same object, not a copy: both spellings resolve to one reporter
+        REPORTERS_DB[alias] = target
+        report["aliases"] += 1
+
+    seen = set()
+    for key, data in REPORTERS_DB.items():
+        if id(data) in seen:
+            continue
+        seen.add(id(data))
+        kept = []
+        for h in data.get("handles", []):
+            if CORRUPT_HANDLE_PATTERN.search(h):
+                report["handles_removed"].append((data["name"], h))
+            else:
+                kept.append(h)
+        data["handles"] = kept
+
+    return report
+
+
+CANONICAL_REPORT = _apply_canonical_layer()
+
+
+# =============================================
+# AFFILIATION HISTORY (scaffold)
+#
+# Outlet rankings should credit the outlet a reporter worked for WHEN the item
+# was archived, not their current employer. That needs dated affiliations:
+#
+#   "reporter key": [("Outlet", "YYYY-MM-DD start", "YYYY-MM-DD end or None")]
+#
+# The table below is intentionally near-empty. Only fill it with moves that can
+# actually be sourced. Anything not covered here resolves to None, and the
+# caller is expected to treat that as "unknown at the time" rather than
+# silently falling back to the current employer.
+# =============================================
+
+AFFILIATION_HISTORY = {
+    "adrian wojnarowski": [
+        ("Yahoo Sports", None, "2017-06-30"),
+        ("ESPN", "2017-07-01", "2024-09-18"),
+        ("ESPN (Retired)", "2024-09-19", None),
+    ],
+    "shams charania": [
+        ("Yahoo Sports", None, "2018-07-31"),
+        ("The Athletic", "2018-08-01", "2024-10-01"),
+        ("ESPN", "2024-10-02", None),
+    ],
+    "chris haynes": [
+        ("Cleveland Plain Dealer", None, "2016-08-31"),
+        ("ESPN", "2016-09-01", "2018-08-31"),
+        ("Yahoo Sports", "2018-09-01", "2021-08-31"),
+        ("TNT / Bleacher Report", "2021-09-01", "2025-06-30"),
+        ("NBA on Prime", "2025-07-01", None),
+    ],
+    "marc stein": [
+        ("ESPN", None, "2016-09-30"),
+        ("New York Times", "2016-10-01", "2021-05-31"),
+        ("The Stein Line", "2021-06-01", None),
+    ],
+}
+
+
+def outlet_at(reporter_key: str, date_str: str) -> Optional[str]:
+    """Outlet this reporter worked for on a given date, or None if unknown.
+
+    None is a real answer here. Callers must not substitute the current
+    employer, because that would retroactively credit a 2014 item to a 2026
+    outlet, which is exactly the distortion the outlet rankings need to avoid.
+    """
+    spans = AFFILIATION_HISTORY.get((reporter_key or "").lower())
+    if not spans or not date_str:
+        return None
+    for outlet, start, end in spans:
+        if (start is None or date_str >= start) and (end is None or date_str <= end):
+            return outlet
+    return None
+
+
 # Build lookup indices
 HANDLE_TO_REPORTER = {}
 NAME_TO_REPORTER = {}
