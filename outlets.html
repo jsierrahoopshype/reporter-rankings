@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA outlet rankings - which outlets break the most news | HoopsMatic</title>
+<meta name="description" content="Every media outlet ranked by attributed mentions in the HoopsHype NBA rumors archive, filterable by week, month or all time.">
+<!-- Swap these to https://hoopsmatic.com/reporter-rankings/... once the route is live. -->
+<link rel="canonical" href="https://jsierrahoopshype.github.io/reporter-rankings/outlets.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HoopsMatic">
+<meta property="og:title" content="NBA outlet rankings - which outlets break the most news | HoopsMatic">
+<meta property="og:description" content="Every media outlet ranked by attributed mentions in the HoopsHype NBA rumors archive, filterable by week, month or all time.">
+<meta property="og:url" content="https://jsierrahoopshype.github.io/reporter-rankings/outlets.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="rr-styles.css">
+</head>
+<body>
+<div class="container">
+
+  <div id="nav" data-active="outlets.html"></div>
+
+  <div class="hdr">
+    <h1>Outlet Rankings</h1>
+    <span class="brand">HoopsMatic</span>
+  </div>
+  <div class="subtitle">The same count, aggregated by outlet rather than byline.</div>
+
+  <div class="esearch-wrap">
+    <input class="esearch-global" type="text" placeholder="Search any reporter..." autocomplete="off" aria-label="Search reporters">
+    <div class="esearch-results"></div>
+  </div>
+
+  <div class="filters"><div class="chips" id="periods"></div></div>
+
+  <div id="app"><div class="loading">Loading ranking data...</div></div>
+
+  <div class="seo">
+    <h2>Outlets versus bylines</h2>
+    <p>Some archived rumors are credited to a publication rather than a person: a staff report,
+    a wire item, a team broadcast. Those land here instead of on the reporter leaderboard.</p>
+    <p>Outlet totals also shift when reporters move. A byline that changes employer takes its
+    future mentions with it, so an outlet's ranking reflects who was working there at the time
+    each item was archived.</p>
+  </div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script src="reporter_data.js"></script>
+<script src="rr-core.js"></script>
+<script>
+
+let days = 0;
+
+function render() {
+  const rows = outletStats(days).slice(0, 100);
+  const total = rows.reduce((s, o) => s + o.filtered, 0);
+  if (!rows.length) { document.getElementById("app").innerHTML = '<div class="empty">No mentions in this period.</div>'; return; }
+
+  const table = '<div class="table-wrap"><table class="lb"><thead><tr>' +
+    '<th>#</th><th class="left">Outlet</th><th>Mentions</th><th>Share</th>' +
+    '</tr></thead><tbody>' + rows.map((o, i) =>
+      '<tr><td class="rank">' + (i + 1) + '</td>' +
+      '<td class="name"><span class="q">' + esc(o.name) + '</span></td>' +
+      '<td class="pct">' + num(o.filtered) + '</td>' +
+      '<td class="vol">' + (total ? (o.filtered / total * 100).toFixed(1) + "%" : "-") + '</td></tr>'
+    ).join("") + '</tbody></table></div>';
+
+  const cards = '<div class="cards">' + rows.map((o, i) =>
+    '<div class="card"><div class="q">' + (i + 1) + '. ' + esc(o.name) + '</div>' +
+    '<div class="now"><div class="p">' + num(o.filtered) + '</div></div></div>').join("") + '</div>';
+
+  document.getElementById("app").innerHTML = table + cards;
+}
+
+bootPage(() => {
+  const pick = d => { days = d; renderPeriodChips(days, pick); render(); };
+  renderPeriodChips(days, pick);
+  render();
+});
+
+</script>
+</body>
+</html>

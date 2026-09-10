@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which NBA reporters cover each team | HoopsMatic</title>
+<meta name="description" content="Pick any NBA team and see which reporters break the most news about them, ranked by mentions in the HoopsHype rumors archive.">
+<!-- Swap these to https://hoopsmatic.com/reporter-rankings/... once the route is live. -->
+<link rel="canonical" href="https://jsierrahoopshype.github.io/reporter-rankings/teams.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HoopsMatic">
+<meta property="og:title" content="Which NBA reporters cover each team | HoopsMatic">
+<meta property="og:description" content="Pick any NBA team and see which reporters break the most news about them, ranked by mentions in the HoopsHype rumors archive.">
+<meta property="og:url" content="https://jsierrahoopshype.github.io/reporter-rankings/teams.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="rr-styles.css">
+</head>
+<body>
+<div class="container">
+
+  <div id="nav" data-active="teams.html"></div>
+
+  <div class="hdr">
+    <h1>Coverage by Team</h1>
+    <span class="brand">HoopsMatic</span>
+  </div>
+  <div class="subtitle">Pick a team to see who actually breaks its news.</div>
+
+  <div class="esearch-wrap">
+    <input class="esearch-global" type="text" placeholder="Search any reporter..." autocomplete="off" aria-label="Search reporters">
+    <div class="esearch-results"></div>
+  </div>
+
+  <div class="filters"><div class="chips" id="periods"></div></div>
+  <div class="picker" id="picker"></div>
+
+  <div id="app"><div class="loading">Loading ranking data...</div></div>
+
+  <div class="seo">
+    <h2>Reading team coverage</h2>
+    <p>Each rumor in the archive is tagged with the teams it concerns, so a reporter's team
+    split shows where their sourcing actually lives. Beat writers dominate their own team and
+    barely register elsewhere. National reporters spread thinly across all 30.</p>
+    <p>The share column is that reporter's slice of all archived mentions for the team in the
+    selected period, which is the quickest way to see whether a team's news flows through one
+    person or a crowded field.</p>
+  </div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script src="reporter_data.js"></script>
+<script src="rr-core.js"></script>
+<script>
+
+let days = 0;
+let team = null;
+
+function teamTotals() {
+  const t = {};
+  for (const r of RR.reporters) {
+    for (const [name, c] of Object.entries(r.byTeam || {})) {
+      t[name] = (t[name] || 0) + getProportionalCount(c, r.byDate, days);
+    }
+  }
+  return t;
+}
+
+function render() {
+  const totals = teamTotals();
+  const ordered = NBA_TEAMS.slice().sort((a, b) => (totals[b] || 0) - (totals[a] || 0));
+  if (!team || !NBA_TEAMS.includes(team)) team = ordered[0];
+
+  document.getElementById("picker").innerHTML = ordered.map(t =>
+    '<button data-t="' + esc(t) + '"' + (t === team ? ' class="active"' : '') + '>' +
+    esc(TEAM_ABBREV[t] || t) + '</button>').join("");
+  document.querySelectorAll("#picker button").forEach(b =>
+    b.onclick = () => { team = b.dataset.t; render(); });
+
+  const rows = RR.reporters.map(r => ({
+    r, n: getProportionalCount(r.byTeam[team] || 0, r.byDate, days)
+  })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).slice(0, 40);
+
+  const head = '<div class="block-head"><h2>' + esc(team) + '</h2>' +
+    '<span class="sub">' + num(totals[team] || 0) + ' mentions &middot; ' + periodLabel(days) + '</span></div>';
+
+  if (!rows.length) {
+    document.getElementById("app").innerHTML = head + '<div class="empty">No coverage in this period.</div>';
+    return;
+  }
+
+  const table = '<div class="table-wrap"><table class="lb"><thead><tr>' +
+    '<th>#</th><th class="left">Reporter</th><th>Mentions</th><th>Share of team</th>' +
+    '</tr></thead><tbody>' + rows.map((x, i) =>
+      '<tr onclick="location.href=\'reporter.html?r=' + encodeURIComponent(x.r.id) + '\'">' +
+      '<td class="rank">' + (i + 1) + '</td>' +
+      '<td class="name"><span class="rowname"><span class="av">' + esc(x.r.avatar) + '</span>' +
+      '<span class="txt"><span class="n">' + esc(x.r.name) + '</span><span class="o">' +
+      esc(x.r.outlet) + '</span></span></span></td>' +
+      '<td class="pct">' + num(x.n) + '</td>' +
+      '<td class="vol">' + (totals[team] ? (x.n / totals[team] * 100).toFixed(1) + "%" : "-") + '</td>' +
+      '</tr>').join("") + '</tbody></table></div>';
+
+  const cards = '<div class="cards">' + rows.map((x, i) =>
+    '<div class="card" onclick="location.href=\'reporter.html?r=' + encodeURIComponent(x.r.id) + '\'">' +
+    '<div class="q">' + (i + 1) + '. ' + esc(x.r.name) + '</div>' +
+    '<div class="ev">' + esc(x.r.outlet) + '</div>' +
+    '<div class="now"><div class="p">' + num(x.n) + '</div></div></div>').join("") + '</div>';
+
+  document.getElementById("app").innerHTML = head + table + cards;
+}
+
+bootPage(() => {
+  const pick = d => { days = d; renderPeriodChips(days, pick); render(); };
+  renderPeriodChips(days, pick);
+  render();
+});
+
+</script>
+</body>
+</html>

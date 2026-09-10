@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA reporter activity heatmap by month | HoopsMatic</title>
+<meta name="description" content="A month-by-month heatmap of NBA reporter activity, showing who was breaking news during each stretch of the calendar.">
+<!-- Swap these to https://hoopsmatic.com/reporter-rankings/... once the route is live. -->
+<link rel="canonical" href="https://jsierrahoopshype.github.io/reporter-rankings/heatmap.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HoopsMatic">
+<meta property="og:title" content="NBA reporter activity heatmap by month | HoopsMatic">
+<meta property="og:description" content="A month-by-month heatmap of NBA reporter activity, showing who was breaking news during each stretch of the calendar.">
+<meta property="og:url" content="https://jsierrahoopshype.github.io/reporter-rankings/heatmap.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="rr-styles.css">
+</head>
+<body>
+<div class="container">
+
+  <div id="nav" data-active="heatmap.html"></div>
+
+  <div class="hdr">
+    <h1>Activity Heatmap</h1>
+    <span class="brand">HoopsMatic</span>
+  </div>
+  <div class="subtitle">Month by month, who was actually working. Scroll sideways for older months.</div>
+
+  <div class="esearch-wrap">
+    <input class="esearch-global" type="text" placeholder="Search any reporter..." autocomplete="off" aria-label="Search reporters">
+    <div class="esearch-results"></div>
+  </div>
+
+  <div class="filters"><div class="toggle" id="hm-months"><button data-m="12">12 mo</button><button data-m="24" class="active">24 mo</button><button data-m="36">36 mo</button><button data-m="60">5 yrs</button></div><div class="toggle" id="hm-top" style="margin-top:.4rem"><button data-n="15">Top 15</button><button data-n="30" class="active">Top 30</button><button data-n="60">Top 60</button></div></div>
+
+  <div id="app"><div class="loading">Loading ranking data...</div></div>
+
+  <div class="seo">
+    <h2>What the heatmap shows</h2>
+    <p>Each cell is one reporter's archived mentions in one month, shaded against the busiest
+    cell on screen. Deadline weeks, the draft and the opening of free agency show up as vertical
+    bands where almost everyone lights up at once.</p>
+    <p>The horizontal reading is more useful. A steady row is a reporter with a consistent beat.
+    A row that stops is someone who changed jobs, moved off the NBA, or left the industry, and
+    a row that starts mid-grid is a newer voice arriving.</p>
+  </div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script src="reporter_data.js"></script>
+<script src="rr-core.js"></script>
+<script>
+
+/* Months across, reporters down. The whole grid lives in one scroll container
+   with a frozen name column, which is what makes it usable on a phone. */
+let months = 24;
+let topN = 30;
+
+function monthKeys(n) {
+  const out = [];
+  const d = new Date();
+  d.setDate(1);
+  for (let i = n - 1; i >= 0; i--) {
+    const m = new Date(d.getFullYear(), d.getMonth() - i, 1);
+    out.push(m.toISOString().slice(0, 7));
+  }
+  return out;
+}
+
+function byMonth(r) {
+  const m = {};
+  for (const [date, c] of Object.entries(r.byDate || {})) {
+    const k = date.slice(0, 7);
+    m[k] = (m[k] || 0) + c;
+  }
+  return m;
+}
+
+function render() {
+  const keys = monthKeys(months);
+  const first = keys[0];
+  const ranked = RR.reporters.map(r => {
+    const m = byMonth(r);
+    const windowTotal = keys.reduce((s, k) => s + (m[k] || 0), 0);
+    return { r, m, windowTotal };
+  }).filter(x => x.windowTotal > 0)
+    .sort((a, b) => b.windowTotal - a.windowTotal)
+    .slice(0, topN);
+
+  if (!ranked.length) { document.getElementById("app").innerHTML = '<div class="empty">No activity in this window.</div>'; return; }
+
+  const peak = Math.max(...ranked.map(x => Math.max(...keys.map(k => x.m[k] || 0))));
+  const level = v => v === 0 ? 0 : Math.min(5, Math.ceil(v / peak * 5));
+
+  const head = '<tr><th class="corner">Reporter</th>' + keys.map(k => {
+    const [y, mo] = k.split("-");
+    const lbl = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][parseInt(mo, 10) - 1];
+    return '<th>' + lbl + "<br>'" + y.slice(2) + '</th>';
+  }).join("") + '</tr>';
+
+  const body = ranked.map(x =>
+    '<tr><th class="rowhead"><a href="reporter.html?r=' + encodeURIComponent(x.r.id) + '">' +
+    esc(x.r.name) + '<span class="o">' + esc(x.r.outlet) + '</span></a></th>' +
+    keys.map(k => {
+      const v = x.m[k] || 0;
+      return '<td><span class="hm-cell" data-lvl="' + level(v) + '" title="' +
+        esc(x.r.name) + ' - ' + k + ': ' + num(v) + '">' + (v || "") + '</span></td>';
+    }).join("") + '</tr>').join("");
+
+  document.getElementById("app").innerHTML =
+    '<div class="hm-wrap"><table class="hm"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>' +
+    '<div class="hm-legend">Fewer<i class="hm-cell" data-lvl="1"></i><i class="hm-cell" data-lvl="2"></i>' +
+    '<i class="hm-cell" data-lvl="3"></i><i class="hm-cell" data-lvl="4"></i><i class="hm-cell" data-lvl="5"></i>More' +
+    '<span style="margin-left:.6rem">peak ' + num(peak) + ' in a month, from ' + first + '</span></div>';
+}
+
+function wireControls() {
+  document.querySelectorAll("#hm-months button").forEach(b => b.onclick = () => {
+    months = parseInt(b.dataset.m, 10);
+    document.querySelectorAll("#hm-months button").forEach(x => x.classList.toggle("active", x === b));
+    render();
+  });
+  document.querySelectorAll("#hm-top button").forEach(b => b.onclick = () => {
+    topN = parseInt(b.dataset.n, 10);
+    document.querySelectorAll("#hm-top button").forEach(x => x.classList.toggle("active", x === b));
+    render();
+  });
+}
+
+bootPage(() => { wireControls(); render(); });
+
+</script>
+</body>
+</html>
