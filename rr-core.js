@@ -300,6 +300,17 @@ function getReporterOutlet(name, defaultOutlet) {
    Curation added after the HoopsMatic rebuild
    ========================================================================== */
 
+// Players who were being parsed as reporters because the archive writes
+// "Michael Porter Jr.: ..." exactly like a byline. Listing them is a patch on
+// a symptom: the real fix is rejecting names that match an NBA roster file at
+// extraction time. Kept short deliberately.
+[
+  "larry nance jr", "larry nance jr.", "jaren jackson jr", "jaren jackson jr.",
+  "michael porter jr", "michael porter jr.", "tim hardaway jr", "tim hardaway jr.",
+  "tim hardaway sr", "tim hardaway sr.", "gary trent jr", "gary trent jr.",
+  "jabari smith jr", "jabari smith jr.", "mike dunleavy jr", "mike dunleavy jr."
+].forEach(n => EXCLUDED_REPORTERS.add(n));
+
 // Accounts that are not reporters.
 [
   "heat central", "heat centel", "@thenbabase", "thenbabase",
@@ -326,6 +337,14 @@ const RECLASSIFY_AS_OUTLET = {
 
 // The archive writes the same account several ways ("@espncleveland",
 // "Twitter @ESPNCleveland"), so match on the bare handle too.
+// "@2018", "@2017"... are parser debris from dates in the source text, not
+// accounts. Reject the shape rather than listing each year.
+const JUNK_NAME_PATTERNS = [/^@?\d{4}$/, /^@?\d+$/];
+function isJunkReporterName(name) {
+  const n = (name || "").trim().toLowerCase();
+  return JUNK_NAME_PATTERNS.some(re => re.test(n));
+}
+
 function reclassifiedOutlet(name) {
   const n = (name || "").toLowerCase().trim();
   return RECLASSIFY_AS_OUTLET[n] || RECLASSIFY_AS_OUTLET[n.replace(/^@/, "")] || null;
@@ -428,10 +447,13 @@ function buildData() {
     const asOutlet = reclassifiedOutlet(r.name);
     if (asOutlet) { addOutlet(asOutlet, r.total, r.by_date); continue; }
 
-    if (!isValidReporter(r.name)) continue;
+    if (!isValidReporter(r.name) || isJunkReporterName(r.name)) continue;
 
     const name = normalizeReporterName(r.name);
-    const key = name.toLowerCase();
+    // "Ethan J Skolnick" and "Ethan J. Skolnick" are one person. Key on the
+    // name with punctuation stripped; the data file is sorted by volume, so
+    // the first spelling seen is the dominant one and becomes the display name.
+    const key = name.toLowerCase().replace(/[.]/g, "").replace(/\s+/g, " ").trim();
 
     if (!reporterMap[key]) {
       reporterMap[key] = {
