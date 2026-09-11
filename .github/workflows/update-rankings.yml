@@ -52,15 +52,21 @@ jobs:
           if [ "${{ inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
           python reporter_rankings_build.py $ARGS
 
+      - name: Build static reporter pages
+        # No count argument: the generator reads STATIC_PAGE_COUNT from rr-core.js,
+        # so the site's links and the generated pages are always the same set.
+        run: node build_reporter_pages.js
+
       - name: Update timestamp
         run: |
           date -u '+Last updated: %Y-%m-%d %H:%M:%S UTC' > last_updated.txt
-          git add reporter_data.js teams-data.js players-data.js qa_report.json last_updated.txt agg/
+
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-
+          # every generated artifact, or the pages that load them 404
+          git add reporter_data.js teams-data.js players-data.js qa_report.json last_updated.txt agg/ reporter/ sitemap.xml
           git diff --staged --quiet && echo "Nothing changed" && exit 0
           git commit -m "Update reporter rankings data - $(date -u '+%Y-%m-%d %H:%M')"
           git pull --rebase origin main

@@ -103,7 +103,7 @@ function render() {
   }).join("") + '</tr>';
 
   const body = ranked.map(x =>
-    '<tr><th class="rowhead"><a href="reporter.html?r=' + encodeURIComponent(x.r.id) + '">' +
+    '<tr><th class="rowhead"><a href="' + reporterHref(x.r) + '">' +
     esc(x.r.name) + '<span class="o">' + esc(x.r.outlet) + '</span></a></th>' +
     keys.map(k => {
       const v = x.m[k] || 0;
