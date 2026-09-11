@@ -49,6 +49,12 @@ from process_archive import (
 )
 
 API_BASE = "https://hoopshype-rumors-api.thejorgesierra.workers.dev"
+# Full historical NBA roster, maintained in Jorge's own nba-headshots repo.
+# Used as a deterministic rejection list: the archive writes player quotes as
+# "Kevin Durant: ..." which is indistinguishable from a byline by shape, so
+# thousands of player mentions were landing in the reporter rankings.
+ROSTER_URL = ("https://raw.githubusercontent.com/jsierrahoopshype/nba-headshots"
+              "/main/players/metadata/players_all.json")
 ALLOWED_REFERER = "https://jsierrahoopshype.github.io/hoopshype-rumors/hoopshype_rumors_tool.html"
 ALLOWED_ORIGIN = "https://jsierrahoopshype.github.io"
 
@@ -91,6 +97,48 @@ def fetch_json(url, dest_path=None):
             f.write(chunk)
     with open(dest_path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def norm_name(n):
+    return (n or "").lower().replace(".", "").replace("  ", " ").strip()
+
+
+def load_roster():
+    """Player names to reject. Returns an empty set on any failure, which means
+    the build degrades to the old behaviour rather than dropping everyone."""
+    try:
+        r = requests.get(ROSTER_URL, timeout=60)
+        r.raise_for_status()
+        players = r.json().get("players", [])
+        names = {norm_name(p.get("full_name")) for p in players if p.get("full_name")}
+        names.discard("")
+        print(f"Loaded {len(names):,} player names for the reporter filter")
+        return names
+    except Exception as exc:
+        print(f"WARNING: could not load the roster filter ({exc}). "
+              "Players may appear as reporters in this build.")
+        return set()
+
+
+ROSTER = set()
+REJECTED_PLAYERS = []
+
+
+def is_player_not_reporter(name):
+    """Reject a name that matches the NBA roster, UNLESS the canonical reporter
+    database vouches for it. That protects ex-players who became media (Kendrick
+    Perkins, Eddie Johnson) while removing Kevin Durant from the rankings."""
+    if not ROSTER:
+        return False
+    try:
+        import process_archive as pa
+        known = pa.REPORTERS_DB
+    except Exception:
+        known = {}
+    n = norm_name(name)
+    if n in known or (name or "").lower() in known:
+        return False
+    return n in ROSTER
 
 
 def part_count():
@@ -276,6 +324,9 @@ def merge(part_aggs):
     team_months, player_months = {}, {}
     reporter_list = []
     for key, s in reporters.items():
+        if is_player_not_reporter(s["name"]):
+            REJECTED_PLAYERS.append([s["name"], s["total"]])
+            continue
         initials = "".join(n[0] for n in s["name"].replace("@", "").split()[:2]).upper()[:2] or "??"
         reporter_list.append({
             "id": key,
@@ -400,7 +451,9 @@ def qa_report(data, team_months, player_months):
         if isinstance(checks[k], list) and len(checks[k]) > 200:
             checks[k] = sorted(checks[k], key=lambda x: -(x[1] if isinstance(x, list) and len(x) > 1 and isinstance(x[1], int) else 0))[:200]
 
+    checks["rejected_as_player"] = REJECTED_PLAYERS[:200]
     summary = {k: len(v) for k, v in checks.items()}
+    summary["rejected_as_player"] = len(REJECTED_PLAYERS)
     with open("qa_report.json", "w", encoding="utf-8") as f:
         json.dump({"generated_at": data["generated_at"], "summary": summary, "checks": checks},
                   f, indent=1)
@@ -430,6 +483,9 @@ def main():
     scratch = tempfile.mkdtemp(prefix="rumors-")
 
     try:
+        global ROSTER
+        ROSTER = load_roster()
+
         n = part_count()
         print(f"Archive reports {n} parts")
 
@@ -489,6 +545,13 @@ def main():
         p_size = write_side_file("players-data.js", "PLAYER_MONTHS", player_months)
         print(f"\nWrote {OUTPUT_JS} ({os.path.getsize(OUTPUT_JS) / 1e6:.1f} MB)")
         print(f"Wrote teams-data.js ({t_size / 1e6:.1f} MB), players-data.js ({p_size / 1e6:.1f} MB)")
+
+        if REJECTED_PLAYERS:
+            REJECTED_PLAYERS.sort(key=lambda x: -x[1])
+            total = sum(x[1] for x in REJECTED_PLAYERS)
+            print(f"\nRejected {len(REJECTED_PLAYERS):,} player names as non-reporters "
+                  f"({total:,} mentions). Top: " +
+                  ", ".join(f"{n} ({c})" for n, c in REJECTED_PLAYERS[:5]))
 
         summary = qa_report(data, team_months, player_months)
         print("\n=== QA report (qa_report.json) ===")
