@@ -332,7 +332,12 @@ const RECLASSIFY_AS_OUTLET = {
   "sirius xmnba": "SiriusXM NBA Radio",
   "sirius xm nba": "SiriusXM NBA Radio",
   "siriusxm nba": "SiriusXM NBA Radio",
-  "twitter @siriusxmnba": "SiriusXM NBA Radio"
+  "twitter @siriusxmnba": "SiriusXM NBA Radio",
+  "clutch points": "ClutchPoints",
+  "clutchpoints": "ClutchPoints",
+  "twitter @clutchpointsapp": "ClutchPoints",
+  "clutchpointsapp": "ClutchPoints",
+  "clutchpointsnba": "ClutchPoints"
 };
 
 // The archive writes the same account several ways ("@espncleveland",
@@ -489,6 +494,9 @@ function buildData() {
     generated: REPORTER_DATA.generated_at || "",
     mentions: REPORTER_DATA.processed_rumors || 0
   };
+  RR.reporters.sort((a, b) => b.total - a.total);
+  STATIC_PAGES = new Set(RR.reporters.slice(0, STATIC_PAGE_COUNT).map(r => r.id));
+
   RR.ready = true;
   return true;
 }
@@ -524,6 +532,21 @@ function reporterById(id) {
    Shared UI
    ========================================================================== */
 
+/* Pages generated under /reporter/<slug>/ sit two directories deep, so every
+   shared link needs a prefix there. */
+const BASE = /\/reporter\/[^/]+\/?$/.test(location.pathname) ? "../../" : "";
+
+/* The top slice by all-time volume gets a real static page. Same ordering the
+   generator uses, so the two never disagree. */
+const STATIC_PAGE_COUNT = 500;
+let STATIC_PAGES = new Set();
+
+function reporterHref(r) {
+  return STATIC_PAGES.has(r.id)
+    ? BASE + "reporter/" + r.id + "/"
+    : BASE + "reporter.html?r=" + encodeURIComponent(r.id);
+}
+
 const NAV = [
   { href: "index.html",   label: "Leaderboard" },
   { href: "teams.html",   label: "By Team" },
@@ -534,7 +557,7 @@ const NAV = [
 
 function renderNav(active) {
   return '<div class="tabs">' + NAV.map(n =>
-    '<a href="' + n.href + '"' + (n.href === active ? ' class="active"' : '') + '>' + n.label + '</a>'
+    '<a href="' + BASE + n.href + '"' + (n.href === active ? ' class="active"' : '') + '>' + n.label + '</a>'
   ).join("") + '</div>';
 }
 
@@ -587,7 +610,7 @@ function wireSearch() {
     // never show a bare all-time number next to a page filtered to a week
     const suffix = days === 0 ? " all-time" : " in " + periodLabel(days).toLowerCase();
     box.innerHTML = hits.length
-      ? hits.map(r => '<a href="reporter.html?r=' + encodeURIComponent(r.id) + '">' +
+      ? hits.map(r => '<a href="' + reporterHref(r) + '">' +
           '<span class="rn">' + esc(r.name) + '</span>' +
           '<span class="ro">' + esc(r.outlet) + '</span>' +
           '<span class="rc">' + num(r.shown) + suffix + '</span></a>').join("")
@@ -605,7 +628,7 @@ function loadDetail(file, globalName) {
   return new Promise((resolve, reject) => {
     if (window[globalName]) return resolve(window[globalName]);
     const s = document.createElement("script");
-    s.src = file;
+    s.src = BASE + file;
     s.onload = () => resolve(window[globalName] || {});
     s.onerror = () => reject(new Error("could not load " + file));
     document.head.appendChild(s);

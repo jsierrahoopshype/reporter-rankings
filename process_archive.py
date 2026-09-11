@@ -1168,6 +1168,7 @@ CANONICAL_AFFILIATIONS = {
     "moke hamilton":        ("Moke Hamilton", "BasketballNews.com (last known)"),
     "simonas baranauskas":  ("Simonas Baranauskas", "FIBA.com (historical)"),
     "vin parise":           ("Vin Parise", "NBC Sports / SNY (historical)"),
+    "connor letourneau":    ("Connor Letourneau", "San Francisco Chronicle (no longer on the NBA beat)"),
 
     # --- promoted from the frontend REPORTER_TO_OUTLET map ------------------
     # These were being fixed at display time only, which left the underlying
@@ -1309,7 +1310,6 @@ def _apply_canonical_layer():
 
 
 CANONICAL_REPORT = _apply_canonical_layer()
-REPORTERS_DB.pop("kendrick perkins", None)
 
 
 # =============================================
