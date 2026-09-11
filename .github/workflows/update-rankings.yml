@@ -53,7 +53,9 @@ jobs:
           python reporter_rankings_build.py $ARGS
 
       - name: Build static reporter pages
-        run: node build_reporter_pages.js 300
+        # No count argument: the generator reads STATIC_PAGE_COUNT from rr-core.js,
+        # so the site's links and the generated pages are always the same set.
+        run: node build_reporter_pages.js
 
       - name: Update timestamp
         run: |

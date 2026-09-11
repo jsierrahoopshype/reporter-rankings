@@ -21,7 +21,10 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 
-const COUNT = parseInt(process.argv[2] || "500", 10);
+// How many pages to write. Read from rr-core.js below unless overridden on the
+// command line, so STATIC_PAGE_COUNT is the single source of truth: the site's
+// links and the generated directories are always the same set.
+const COUNT_OVERRIDE = process.argv[2] ? parseInt(process.argv[2], 10) : null;
 const SITE = "https://jsierrahoopshype.github.io/reporter-rankings";
 const OUT_DIR = "reporter";
 
@@ -51,6 +54,11 @@ for (const f of ["reporter_data.js", "rr-core.js"]) {
   }
   vm.runInContext(fs.readFileSync(f, "utf8"), sandbox, { filename: f });
 }
+
+const COUNT = COUNT_OVERRIDE || vm.runInContext(
+  'typeof STATIC_PAGE_COUNT !== "undefined" ? STATIC_PAGE_COUNT : 500', sandbox);
+console.log(`Generating the top ${COUNT} reporter pages` +
+  (COUNT_OVERRIDE ? " (command-line override)" : " (from STATIC_PAGE_COUNT in rr-core.js)"));
 
 if (!vm.runInContext("buildData()", sandbox)) {
   console.error("ERROR: buildData() failed — reporter_data.js may be empty.");

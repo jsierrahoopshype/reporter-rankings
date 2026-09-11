@@ -536,9 +536,10 @@ function reporterById(id) {
    shared link needs a prefix there. */
 const BASE = /\/reporter\/[^/]+\/?$/.test(location.pathname) ? "../../" : "";
 
-/* The top slice by all-time volume gets a real static page. Same ordering the
-   generator uses, so the two never disagree. */
-const STATIC_PAGE_COUNT = 500;
+/* The top slice by all-time volume gets a real static page. This constant is
+   the single source of truth: build_reporter_pages.js reads it from here, so
+   the links below and the directories on disk are always the same set. */
+const STATIC_PAGE_COUNT = 300;
 let STATIC_PAGES = new Set();
 
 function reporterHref(r) {
