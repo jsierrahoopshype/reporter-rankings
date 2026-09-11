@@ -100,7 +100,7 @@ function render() {
     '<th>#</th><th class="left">Reporter</th><th>Attributed mentions</th>' +
     '<th title="This reporter\'s share of all reporter-attributed mentions tagged with this team in the selected period. Outlet-only attributions and excluded accounts are not in the denominator.">Share of attributed reporter mentions</th>' +
     '</tr></thead><tbody>' + rows.map((x, i) =>
-      '<tr onclick="location.href=\'reporter.html?r=' + encodeURIComponent(x.r.id) + '\'">' +
+      '<tr onclick="location.href=\'' + reporterHref(x.r) + '\'">' +
       '<td class="rank">' + (i + 1) + '</td>' +
       '<td class="name"><span class="rowname"><span class="av">' + esc(x.r.avatar) + '</span>' +
       '<span class="txt"><span class="n">' + esc(x.r.name) + '</span><span class="o">' +
@@ -110,7 +110,7 @@ function render() {
       '</tr>').join("") + '</tbody></table></div>';
 
   const cards = '<div class="cards">' + rows.map((x, i) =>
-    '<div class="card" onclick="location.href=\'reporter.html?r=' + encodeURIComponent(x.r.id) + '\'">' +
+    '<div class="card" onclick="location.href=\'' + reporterHref(x.r) + '\'">' +
     '<div class="q">' + (i + 1) + '. ' + esc(x.r.name) + '</div>' +
     '<div class="ev">' + esc(x.r.outlet) + '</div>' +
     '<div class="now"><div class="p">' + num(x.n) + '</div></div></div>').join("") + '</div>';
