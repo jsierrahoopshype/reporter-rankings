@@ -1309,6 +1309,7 @@ def _apply_canonical_layer():
 
 
 CANONICAL_REPORT = _apply_canonical_layer()
+REPORTERS_DB.pop("kendrick perkins", None)
 
 
 # =============================================
