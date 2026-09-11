@@ -1,13 +1,14 @@
 {
- "generated_at": "2026-09-11T12:02:34.140379",
+ "generated_at": "2026-09-11T13:22:29.370867",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
   "malformed_name": 94,
-  "duplicate_canonical": 21,
+  "duplicate_canonical": 15,
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
-  "subject_exceeds_reporter_total": 0
+  "subject_exceeds_reporter_total": 0,
+  "rejected_as_player": 909
  },
  "checks": {
   "unknown_outlet": [
@@ -308,14 +309,6 @@
     437
    ],
    [
-    "Magic Johnson",
-    432
-   ],
-   [
-    "Draymond Green",
-    431
-   ],
-   [
     "Manny Navarro",
     431
    ],
@@ -330,10 +323,6 @@
    [
     "Matt Velazquez",
     412
-   ],
-   [
-    "Kevin Durant",
-    404
    ],
    [
     "Mike McGraw",
@@ -366,10 +355,6 @@
    [
     "Ryan Blackburn",
     383
-   ],
-   [
-    "Dwyane Wade",
-    372
    ],
    [
     "Calvin Watkins",
@@ -412,14 +397,6 @@
     336
    ],
    [
-    "Jared Dudley",
-    333
-   ],
-   [
-    "Pau Gasol",
-    329
-   ],
-   [
     "Albert Nahmad",
     327
    ],
@@ -430,10 +407,6 @@
    [
     "Dalton Johnson",
     322
-   ],
-   [
-    "Jamal Crawford",
-    319
    ],
    [
     "Chris Reichert",
@@ -449,10 +422,6 @@
    ],
    [
     "Sean Deveney",
-    307
-   ],
-   [
-    "Isaiah Thomas",
     307
    ],
    [
@@ -516,10 +485,6 @@
     268
    ],
    [
-    "Damian Lillard",
-    266
-   ],
-   [
     "Donatas Urbonas",
     265
    ],
@@ -541,10 +506,6 @@
    ],
    [
     "Michael Cunningham",
-    249
-   ],
-   [
-    "Giannis Antetokounmpo",
     249
    ],
    [
@@ -596,10 +557,6 @@
     226
    ],
    [
-    "Trae Young",
-    225
-   ],
-   [
     "Kerry Eggers",
     224
    ],
@@ -616,24 +573,12 @@
     218
    ],
    [
-    "Joel Embiid",
-    217
-   ],
-   [
     "Ajayi Browne",
     217
    ],
    [
     "Jorge Castillo",
     215
-   ],
-   [
-    "Stephen Curry",
-    208
-   ],
-   [
-    "Kevin Love",
-    204
    ],
    [
     "Joe Mullinax",
@@ -664,10 +609,6 @@
     196
    ],
    [
-    "Kyle Kuzma",
-    194
-   ],
-   [
     "Oleh Kosel",
     193
    ],
@@ -693,10 +634,6 @@
    ],
    [
     "Olgun Uluc",
-    188
-   ],
-   [
-    "Donovan Mitchell",
     188
    ],
    [
@@ -728,28 +665,12 @@
     178
    ],
    [
-    "Kobe Bryant",
-    177
-   ],
-   [
     "Jon Rothstein",
     176
    ],
    [
     "John Gambadoro",
     176
-   ],
-   [
-    "Rudy Gobert",
-    176
-   ],
-   [
-    "Spencer Dinwiddie",
-    175
-   ],
-   [
-    "Kyrie Irving",
-    174
    ],
    [
     "Justin Verrier",
@@ -762,10 +683,6 @@
    [
     "Farbod Esnaashari",
     171
-   ],
-   [
-    "Josh Hart",
-    170
    ],
    [
     "The Jump",
@@ -804,12 +721,96 @@
     157
    ],
    [
-    "Chris Paul",
+    "Brian Schmitz",
     156
    ],
    [
-    "Brian Schmitz",
+    "Mark Haynes",
     156
+   ],
+   [
+    "David Baumann",
+    155
+   ],
+   [
+    "Lakers Nation",
+    155
+   ],
+   [
+    "Ethan Strauss",
+    153
+   ],
+   [
+    "Quinton Mayo",
+    153
+   ],
+   [
+    "Roland Lazenby",
+    151
+   ],
+   [
+    "Steve Luhm",
+    149
+   ],
+   [
+    "Sean Grande",
+    148
+   ],
+   [
+    "Darren Rovell",
+    147
+   ],
+   [
+    "Adam Lauridsen",
+    146
+   ],
+   [
+    "Bob Cooney",
+    144
+   ],
+   [
+    "Fred Kerber",
+    143
+   ],
+   [
+    "Chris Herrington",
+    142
+   ],
+   [
+    "Vivek Jacob",
+    139
+   ],
+   [
+    "James Boyd",
+    138
+   ],
+   [
+    "Mark Woods",
+    137
+   ],
+   [
+    "Chris Vernon",
+    135
+   ],
+   [
+    "Mark Deeks",
+    135
+   ],
+   [
+    "Bob Garcia",
+    135
+   ],
+   [
+    "John Schuhmann",
+    133
+   ],
+   [
+    "Jon Santiago",
+    132
+   ],
+   [
+    "Bill Herenda",
+    131
    ]
   ],
   "name_matches_team": [],
@@ -1213,10 +1214,6 @@
     "Lauren L. Williams"
    ],
    [
-    "Larry Nance Jr",
-    "Larry Nance Jr."
-   ],
-   [
     "Stephen A Smith",
     "Stephen A. Smith"
    ],
@@ -1225,16 +1222,8 @@
     "James L. Edwards III"
    ],
    [
-    "Jaren Jackson Jr",
-    "Jaren Jackson Jr."
-   ],
-   [
     "Carlos Douglas Jr",
     "Carlos Douglas Jr."
-   ],
-   [
-    "Michael Porter Jr",
-    "Michael Porter Jr."
    ],
    [
     "Ron Harrod Jr",
@@ -1245,24 +1234,12 @@
     "Kevin Gray Jr."
    ],
    [
-    "Tim Hardaway Jr",
-    "Tim Hardaway Jr."
-   ],
-   [
     "Eddie A Johnson",
     "Eddie A. Johnson"
    ],
    [
-    "Gary Trent Jr",
-    "Gary Trent Jr."
-   ],
-   [
     "Scoop B Robinson",
     "Scoop B. Robinson"
-   ],
-   [
-    "Jabari Smith Jr",
-    "Jabari Smith Jr."
    ],
    [
     "Mike Dunleavy Jr",
@@ -1279,6 +1256,808 @@
   ],
   "suspicious_handle": [],
   "period_exceeds_total": [],
-  "subject_exceeds_reporter_total": []
+  "subject_exceeds_reporter_total": [],
+  "rejected_as_player": [
+   [
+    "Magic Johnson",
+    432
+   ],
+   [
+    "Draymond Green",
+    431
+   ],
+   [
+    "Kevin Durant",
+    404
+   ],
+   [
+    "Dwyane Wade",
+    372
+   ],
+   [
+    "Jared Dudley",
+    333
+   ],
+   [
+    "Pau Gasol",
+    329
+   ],
+   [
+    "Jamal Crawford",
+    319
+   ],
+   [
+    "Isaiah Thomas",
+    307
+   ],
+   [
+    "Damian Lillard",
+    266
+   ],
+   [
+    "Giannis Antetokounmpo",
+    249
+   ],
+   [
+    "Trae Young",
+    225
+   ],
+   [
+    "Joel Embiid",
+    217
+   ],
+   [
+    "Stephen Curry",
+    208
+   ],
+   [
+    "Kevin Love",
+    204
+   ],
+   [
+    "Kyle Kuzma",
+    194
+   ],
+   [
+    "Donovan Mitchell",
+    188
+   ],
+   [
+    "Kobe Bryant",
+    177
+   ],
+   [
+    "Rudy Gobert",
+    176
+   ],
+   [
+    "Spencer Dinwiddie",
+    175
+   ],
+   [
+    "Kyrie Irving",
+    174
+   ],
+   [
+    "Kendrick Perkins",
+    174
+   ],
+   [
+    "Josh Hart",
+    170
+   ],
+   [
+    "Chris Paul",
+    156
+   ],
+   [
+    "Bradley Beal",
+    140
+   ],
+   [
+    "Jaylen Brown",
+    140
+   ],
+   [
+    "Gilbert Arenas",
+    137
+   ],
+   [
+    "Dwight Howard",
+    134
+   ],
+   [
+    "Paul Pierce",
+    133
+   ],
+   [
+    "Patrick Beverley",
+    131
+   ],
+   [
+    "Andrew Bogut",
+    129
+   ],
+   [
+    "Nicolas Batum",
+    125
+   ],
+   [
+    "Anthony Tolliver",
+    123
+   ],
+   [
+    "Ricky Rubio",
+    121
+   ],
+   [
+    "Jeremy Lin",
+    120
+   ],
+   [
+    "Matt Barnes",
+    119
+   ],
+   [
+    "Carmelo Anthony",
+    117
+   ],
+   [
+    "Evan Turner",
+    116
+   ],
+   [
+    "Ja Morant",
+    115
+   ],
+   [
+    "Andre Iguodala",
+    112
+   ],
+   [
+    "Brandon Jennings",
+    110
+   ],
+   [
+    "Manu Ginobili",
+    109
+   ],
+   [
+    "Marcin Gortat",
+    109
+   ],
+   [
+    "Dirk Nowitzki",
+    107
+   ],
+   [
+    "Serge Ibaka",
+    104
+   ],
+   [
+    "Paul George",
+    104
+   ],
+   [
+    "Nazr Mohammed",
+    103
+   ],
+   [
+    "Chris Bosh",
+    96
+   ],
+   [
+    "Chandler Parsons",
+    94
+   ],
+   [
+    "Evan Fournier",
+    94
+   ],
+   [
+    "Tyrese Haliburton",
+    94
+   ],
+   [
+    "Steve Nash",
+    88
+   ],
+   [
+    "Stephon Marbury",
+    87
+   ],
+   [
+    "Andre Drummond",
+    87
+   ],
+   [
+    "John Wall",
+    84
+   ],
+   [
+    "Steve Kerr",
+    83
+   ],
+   [
+    "Gordon Hayward",
+    81
+   ],
+   [
+    "Bobby Portis",
+    79
+   ],
+   [
+    "Larry Nance Jr",
+    78
+   ],
+   [
+    "Jayson Tatum",
+    78
+   ],
+   [
+    "Tracy McGrady",
+    77
+   ],
+   [
+    "Myles Turner",
+    77
+   ],
+   [
+    "James Harden",
+    76
+   ],
+   [
+    "Spencer Hawes",
+    76
+   ],
+   [
+    "Wilson Chandler",
+    73
+   ],
+   [
+    "Goran Dragic",
+    73
+   ],
+   [
+    "Austin Rivers",
+    72
+   ],
+   [
+    "Danny Green",
+    72
+   ],
+   [
+    "Tony Allen",
+    71
+   ],
+   [
+    "Joe Ingles",
+    71
+   ],
+   [
+    "Charlie Villanueva",
+    68
+   ],
+   [
+    "Roy Hibbert",
+    68
+   ],
+   [
+    "Channing Frye",
+    68
+   ],
+   [
+    "Anthony Morrow",
+    67
+   ],
+   [
+    "Marreese Speights",
+    67
+   ],
+   [
+    "Meyers Leonard",
+    66
+   ],
+   [
+    "Iman Shumpert",
+    65
+   ],
+   [
+    "Blake Griffin",
+    62
+   ],
+   [
+    "Reggie Miller",
+    61
+   ],
+   [
+    "Nick Young",
+    60
+   ],
+   [
+    "Udonis Haslem",
+    60
+   ],
+   [
+    "Allen Iverson",
+    59
+   ],
+   [
+    "Kevin Garnett",
+    59
+   ],
+   [
+    "Charles Barkley",
+    58
+   ],
+   [
+    "Mario Chalmers",
+    57
+   ],
+   [
+    "Tony Parker",
+    57
+   ],
+   [
+    "Tobias Harris",
+    57
+   ],
+   [
+    "Devin Booker",
+    56
+   ],
+   [
+    "Victor Oladipo",
+    55
+   ],
+   [
+    "Zach LaVine",
+    55
+   ],
+   [
+    "Marc Gasol",
+    54
+   ],
+   [
+    "Kendall Marshall",
+    54
+   ],
+   [
+    "Rudy Gay",
+    53
+   ],
+   [
+    "Baron Davis",
+    52
+   ],
+   [
+    "Vince Carter",
+    52
+   ],
+   [
+    "Jordan Clarkson",
+    52
+   ],
+   [
+    "Michael Beasley",
+    51
+   ],
+   [
+    "Garrett Temple",
+    51
+   ],
+   [
+    "Deron Williams",
+    51
+   ],
+   [
+    "Jason Kidd",
+    51
+   ],
+   [
+    "Montrezl Harrell",
+    51
+   ],
+   [
+    "Trevor Booker",
+    50
+   ],
+   [
+    "Anthony Davis",
+    50
+   ],
+   [
+    "Russell Westbrook",
+    50
+   ],
+   [
+    "Richard Jefferson",
+    50
+   ],
+   [
+    "Kent Bazemore",
+    49
+   ],
+   [
+    "Rudy Fernandez",
+    48
+   ],
+   [
+    "Patrick Patterson",
+    47
+   ],
+   [
+    "Nikola Mirotic",
+    47
+   ],
+   [
+    "Jamal Murray",
+    47
+   ],
+   [
+    "Al Horford",
+    46
+   ],
+   [
+    "Quincy Pondexter",
+    46
+   ],
+   [
+    "Robin Lopez",
+    46
+   ],
+   [
+    "Isiah Thomas",
+    46
+   ],
+   [
+    "Jae Crowder",
+    45
+   ],
+   [
+    "Caron Butler",
+    44
+   ],
+   [
+    "Scottie Pippen",
+    44
+   ],
+   [
+    "Jalen Brunson",
+    44
+   ],
+   [
+    "Chris Kaman",
+    43
+   ],
+   [
+    "Marcus Smart",
+    43
+   ],
+   [
+    "Dejounte Murray",
+    43
+   ],
+   [
+    "Kyle Lowry",
+    42
+   ],
+   [
+    "Hassan Whiteside",
+    42
+   ],
+   [
+    "Mike Conley",
+    42
+   ],
+   [
+    "Bismack Biyombo",
+    42
+   ],
+   [
+    "Sam Dekker",
+    42
+   ],
+   [
+    "Fred VanVleet",
+    42
+   ],
+   [
+    "Miles Bridges",
+    42
+   ],
+   [
+    "Danilo Gallinari",
+    41
+   ],
+   [
+    "Markieff Morris",
+    41
+   ],
+   [
+    "Harrison Barnes",
+    41
+   ],
+   [
+    "Tristan Thompson",
+    41
+   ],
+   [
+    "Bill Russell",
+    41
+   ],
+   [
+    "Dion Waiters",
+    41
+   ],
+   [
+    "Jaren Jackson Jr.",
+    41
+   ],
+   [
+    "Eric Gordon",
+    39
+   ],
+   [
+    "Rajon Rondo",
+    39
+   ],
+   [
+    "Luol Deng",
+    38
+   ],
+   [
+    "Ty Lawson",
+    38
+   ],
+   [
+    "Mikal Bridges",
+    38
+   ],
+   [
+    "Terrence Ross",
+    37
+   ],
+   [
+    "Klay Thompson",
+    37
+   ],
+   [
+    "Jared Sullinger",
+    36
+   ],
+   [
+    "Festus Ezeli",
+    36
+   ],
+   [
+    "Lonzo Ball",
+    36
+   ],
+   [
+    "Joakim Noah",
+    35
+   ],
+   [
+    "Willy Hernangomez",
+    35
+   ],
+   [
+    "Solomon Hill",
+    35
+   ],
+   [
+    "Lou Williams",
+    35
+   ],
+   [
+    "Josh Richardson",
+    34
+   ],
+   [
+    "Greivis Vasquez",
+    33
+   ],
+   [
+    "Jason Terry",
+    33
+   ],
+   [
+    "Brandon Rush",
+    33
+   ],
+   [
+    "Jeff Teague",
+    33
+   ],
+   [
+    "Marco Belinelli",
+    32
+   ],
+   [
+    "Boris Diaw",
+    32
+   ],
+   [
+    "Norman Powell",
+    32
+   ],
+   [
+    "Malcolm Delaney",
+    32
+   ],
+   [
+    "Aaron Gordon",
+    31
+   ],
+   [
+    "Ben Simmons",
+    31
+   ],
+   [
+    "Jalen Rose",
+    30
+   ],
+   [
+    "David West",
+    30
+   ],
+   [
+    "Leandro Barbosa",
+    30
+   ],
+   [
+    "Zaza Pachulia",
+    30
+   ],
+   [
+    "Derrick Rose",
+    30
+   ],
+   [
+    "Tyrese Maxey",
+    30
+   ],
+   [
+    "Kai Jones",
+    30
+   ],
+   [
+    "Thaddeus Young",
+    29
+   ],
+   [
+    "Mario Hezonja",
+    29
+   ],
+   [
+    "Omri Casspi",
+    28
+   ],
+   [
+    "Will Barton",
+    27
+   ],
+   [
+    "Matthew Dellavedova",
+    27
+   ],
+   [
+    "Kris Humphries",
+    26
+   ],
+   [
+    "Jeff Green",
+    26
+   ],
+   [
+    "David Lee",
+    26
+   ],
+   [
+    "Kenneth Faried",
+    26
+   ],
+   [
+    "Mike Miller",
+    26
+   ],
+   [
+    "Shaun Livingston",
+    26
+   ],
+   [
+    "Richaun Holmes",
+    26
+   ],
+   [
+    "Tiago Splitter",
+    25
+   ],
+   [
+    "Luis Scola",
+    25
+   ],
+   [
+    "Andres Nocioni",
+    25
+   ],
+   [
+    "Damien Wilkins",
+    25
+   ],
+   [
+    "Kenyon Martin",
+    25
+   ],
+   [
+    "Reggie Jackson",
+    25
+   ],
+   [
+    "Tyus Jones",
+    25
+   ],
+   [
+    "Bam Adebayo",
+    25
+   ],
+   [
+    "Michael Porter Jr",
+    25
+   ],
+   [
+    "Gerald Henderson",
+    24
+   ],
+   [
+    "Robert Covington",
+    24
+   ],
+   [
+    "Dorell Wright",
+    23
+   ],
+   [
+    "Ekpe Udoh",
+    23
+   ],
+   [
+    "John Henson",
+    23
+   ],
+   [
+    "Tony Wroten",
+    23
+   ],
+   [
+    "Julius Randle",
+    23
+   ],
+   [
+    "Andrew Wiggins",
+    23
+   ],
+   [
+    "Langston Galloway",
+    23
+   ],
+   [
+    "Grant Williams",
+    23
+   ],
+   [
+    "Jordan Crawford",
+    22
+   ],
+   [
+    "Jonas Jerebko",
+    22
+   ],
+   [
+    "Ray Allen",
+    22
+   ]
+  ]
  }
 }
