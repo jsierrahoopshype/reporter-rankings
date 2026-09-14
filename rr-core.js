@@ -427,12 +427,30 @@ const PERIODS = [
 /* ---- period in the URL ----------------------------------------------------
    ?period=7|30|90|180|365|all . Every nav link carries it, so switching pages
    keeps the filter and a filtered view can be pasted to someone else. */
+const DEFAULT_DAYS = 90;   // a page with no ?period= opens on the last 3 months
+
 function periodFromUrl() {
   const raw = new URLSearchParams(location.search).get("period");
-  if (!raw) return 0;
+  if (!raw) return DEFAULT_DAYS;
   if (raw === "all") return 0;
   const n = parseInt(raw, 10);
-  return PERIODS.some(p => p.days === n) ? n : 0;
+  return PERIODS.some(p => p.days === n) ? n : DEFAULT_DAYS;
+}
+
+/* Deep-link helpers: teams.html?team=Atlanta%20Hawks, players.html?player=... */
+function subjectFromUrl(param) {
+  return new URLSearchParams(location.search).get(param) || null;
+}
+function setSubjectInUrl(param, value) {
+  const u = new URL(location.href);
+  if (value) u.searchParams.set(param, value); else u.searchParams.delete(param);
+  history.replaceState(null, "", u);
+}
+function teamHref(team, days) {
+  return BASE + "teams.html?team=" + encodeURIComponent(team) + "&period=" + periodParam(days == null ? RR.days : days);
+}
+function playerHref(player, days) {
+  return BASE + "players.html?player=" + encodeURIComponent(player) + "&period=" + periodParam(days == null ? RR.days : days);
 }
 
 function periodParam(days) { return days === 0 ? "all" : String(days); }
@@ -505,7 +523,13 @@ function buildData() {
     }
     for (const [t, c] of Object.entries(r.by_team || {})) {
       const full = normalizeTeamName(t);
-      if (NBA_TEAMS.includes(full)) m.byTeam[full] = (m.byTeam[full] || 0) + c;
+      if (!NBA_TEAMS.includes(full)) continue;
+      m.byTeam[full] = (m.byTeam[full] || 0) + c;
+      // The detail files are keyed by the archive's raw team names ("Hawks"),
+      // while the page works in full names ("Atlanta Hawks"). Keep the raw
+      // keys so period lookups can reach the stored monthly buckets.
+      m.teamKeys = m.teamKeys || {};
+      (m.teamKeys[full] = m.teamKeys[full] || []).includes(t) || m.teamKeys[full].push(t);
     }
     for (const [a, c] of Object.entries(r.by_agent || {})) m.byAgent[a] = (m.byAgent[a] || 0) + c;
     for (const [d, c] of Object.entries(r.by_date || {})) m.byDate[d] = (m.byDate[d] || 0) + c;
@@ -672,14 +696,24 @@ function monthsInPeriod(days) {
 }
 
 function subjectCount(detail, reporter, subject, days) {
+  // All-time is exact from the main payload (it also covers the few undated
+  // items that have no monthly bucket). Only periods need the detail file.
+  if (days === 0) {
+    if (reporter.byTeam && subject in reporter.byTeam) return reporter.byTeam[subject];
+    if (reporter.byPlayer && subject in reporter.byPlayer) return reporter.byPlayer[subject];
+  }
   let total = 0;
   const floor = monthsInPeriod(days);
   const ids = (reporter.srcIds && reporter.srcIds.length) ? reporter.srcIds : [reporter.id];
+  const keys = [subject].concat((reporter.teamKeys && reporter.teamKeys[subject]) || []);
   for (const id of ids) {
-    const months = (detail[id] || {})[subject];
-    if (!months) continue;
-    for (const [m, c] of Object.entries(months)) {
-      if (floor === null || m >= floor) total += c;
+    const bySubject = detail[id] || {};
+    for (const key of keys) {
+      const months = bySubject[key];
+      if (!months) continue;
+      for (const [m, c] of Object.entries(months)) {
+        if (floor === null || m >= floor) total += c;
+      }
     }
   }
   return total;

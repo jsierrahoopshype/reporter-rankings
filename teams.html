@@ -57,7 +57,7 @@
 <script>
 
 let days = RR.days;
-let team = null;
+let team = subjectFromUrl("team");
 let DETAIL = {};
 
 /* Every number on this page is summed from stored monthly buckets
@@ -82,7 +82,8 @@ function render() {
     '<button data-t="' + esc(t) + '"' + (t === team ? ' class="active"' : '') + '>' +
     esc(TEAM_ABBREV[t] || t) + '</button>').join("");
   document.querySelectorAll("#picker button").forEach(b =>
-    b.onclick = () => { team = b.dataset.t; render(); });
+    b.onclick = () => { team = b.dataset.t; setSubjectInUrl("team", team); render(); });
+  setSubjectInUrl("team", team);
 
   const rows = RR.reporters.map(r => ({
     r, n: subjectCount(DETAIL, r, team, days)

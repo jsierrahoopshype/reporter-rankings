@@ -404,3 +404,11 @@ table.hm tbody td{border-bottom:1px solid var(--border);border-right:1px solid r
   table.hm th.rowhead{max-width:8.5rem;font-size:.68rem}
   table.hm th.rowhead .o{display:none}
 }
+
+/* related reporters on profile pages */
+.related{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:.25rem .9rem}
+.related a{display:flex;justify-content:space-between;align-items:baseline;padding:.35rem 0;
+  border-bottom:1px solid var(--border);color:var(--text);font-size:.84rem;font-weight:600}
+.related a .ro{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-secondary);font-weight:500}
+.bd-row .lbl a{color:var(--text)}
+.bd-row .lbl a:hover{color:var(--accent)}
