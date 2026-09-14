@@ -1,13 +1,45 @@
 /* shared by reporter.html and every /reporter/<slug>/ page */
 
-function bars(map, limit) {
+/* hrefFor turns a row label into a link: teams and players deep-link into
+   their ranking pages with the current period carried along. */
+function bars(map, limit, hrefFor) {
   const rows = Object.entries(map || {}).sort((a, b) => b[1] - a[1]).slice(0, limit);
   if (!rows.length) return '<div class="hint">Nothing tracked yet.</div>';
   const peak = rows[0][1];
-  return rows.map(([k, v]) =>
-    '<div class="bd-row"><span class="lbl">' + esc(k) + '</span>' +
-    '<span class="bar" style="width:' + Math.max(4, v / peak * 90) + 'px"></span>' +
-    '<span class="v">' + num(v) + '</span></div>').join("");
+  return rows.map(([k, v]) => {
+    const label = hrefFor
+      ? '<a href="' + hrefFor(k) + '">' + esc(k) + '</a>'
+      : esc(k);
+    return '<div class="bd-row"><span class="lbl">' + label + '</span>' +
+      '<span class="bar" style="width:' + Math.max(4, v / peak * 90) + 'px"></span>' +
+      '<span class="v">' + num(v) + '</span></div>';
+  }).join("");
+}
+
+/* Cross-links to other reporters: colleagues at the same outlet, then the
+   reporters ranked immediately around this one. Useful for readers and it
+   gives the 300 static pages real internal linking. */
+function relatedReporters(r) {
+  const ranked = RR.reporters;                 // already sorted by total
+  const idx = ranked.findIndex(x => x.id === r.id);
+  const link = x => '<a href="' + reporterHref(x) + '">' + esc(x.name) + '</a>' +
+    '<span class="ro">' + num(x.total) + '</span>';
+
+  const colleagues = r.outlet && r.outlet !== "Unknown"
+    ? ranked.filter(x => x.outlet === r.outlet && x.id !== r.id).slice(0, 6) : [];
+  const nearby = idx >= 0
+    ? ranked.slice(Math.max(0, idx - 3), idx).concat(ranked.slice(idx + 1, idx + 4)) : [];
+
+  let html = "";
+  if (colleagues.length) {
+    html += '<div class="section"><h2>Also at ' + esc(r.outlet) + '</h2><div class="related">' +
+      colleagues.map(link).join("") + '</div></div>';
+  }
+  if (nearby.length) {
+    html += '<div class="section"><h2>Ranked nearby</h2><div class="related">' +
+      nearby.map(link).join("") + '</div></div>';
+  }
+  return html;
 }
 
 function monthlyChart(r) {
@@ -87,13 +119,14 @@ function render() {
     '<div class="section"><h2>Mentions by month</h2><div class="hint">Every dated mention in the archive.</div>' +
       monthlyChart(r) + '</div>' +
     '<div class="breakdown">' +
-      '<div class="section"><h2>Teams covered</h2>' + bars(r.byTeam, 12) + '</div>' +
-      '<div class="section"><h2>Players covered</h2>' + bars(r.byPlayer, 12) + '</div>' +
+      '<div class="section"><h2>Teams covered</h2>' + bars(r.byTeam, 12, t => teamHref(t, 0)) + '</div>' +
+      '<div class="section"><h2>Players covered</h2>' + bars(r.byPlayer, 12, p => playerHref(p, 0)) + '</div>' +
     '</div>' +
     '<div class="breakdown">' +
       '<div class="section"><h2>Topics</h2>' + bars(r.byTopic, 8) + '</div>' +
       '<div class="section"><h2>Agents mentioned</h2>' + bars(r.byAgent, 8) + '</div>' +
-    '</div>';
+    '</div>' +
+    relatedReporters(r);
 }
 
 bootPage(render);

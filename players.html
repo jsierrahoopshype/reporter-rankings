@@ -57,7 +57,7 @@
 <script>
 
 let days = RR.days;
-let player = null;
+let player = subjectFromUrl("player");
 let DETAIL = {};
 let TOTALS = {};       // every player in the dataset, not just the visible ones
 
@@ -88,7 +88,8 @@ function render() {
     '<button data-p="' + esc(n) + '"' + (n === player ? ' class="active"' : '') + '>' +
     esc(n) + ' <span style="opacity:.6">' + num(c) + '</span></button>').join("");
   document.querySelectorAll("#picker button").forEach(b =>
-    b.onclick = () => { player = b.dataset.p; render(); });
+    b.onclick = () => { player = b.dataset.p; setSubjectInUrl("player", player); render(); });
+  setSubjectInUrl("player", player);
 
   if (!player) { document.getElementById("app").innerHTML = '<div class="empty">No player coverage in this period.</div>'; return; }
 
