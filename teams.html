@@ -120,6 +120,7 @@ function render() {
 }
 
 bootPage(() => {
+  days = RR.days;   // bootPage read ?period= into RR.days; the page-level copy was set before that
   const pick = d => { days = d; RR.days = d; setPeriodInUrl(d); renderPeriodChips(days, pick); render(); };
   renderPeriodChips(days, pick);
   setPeriodInUrl(days);
