@@ -337,17 +337,43 @@ const RECLASSIFY_AS_OUTLET = {
   "clutchpoints": "ClutchPoints",
   "twitter @clutchpointsapp": "ClutchPoints",
   "clutchpointsapp": "ClutchPoints",
-  "clutchpointsnba": "ClutchPoints"
+  "clutchpointsnba": "ClutchPoints",
+  // network and league accounts cited as sources are outlets, not bylines
+  "nba": "NBA (league account)",
+  "nbaofficial": "NBA (league account)",
+  "nbatv": "NBA TV",
+  "espnnba": "ESPN",
+  "bleacherreport": "Bleacher Report",
+  "br_nba": "Bleacher Report",
+  "br_radio": "Bleacher Report",
+  "runitbackfdtv": "FanDuel TV",
+  "fandueltv": "FanDuel TV",
+  "snytv": "SNY",
+  "sbnation": "SB Nation",
+  "foxsportsradio": "FOX Sports Radio",
+  "yesnetwork": "YES Network",
+  // team blogs are publications
+  "nets daily": "NetsDaily",
+  "netsdaily": "NetsDaily",
+  "omagicdaily": "Orlando Magic Daily"
 };
 
 // The archive writes the same account several ways ("@espncleveland",
 // "Twitter @ESPNCleveland"), so match on the bare handle too.
 // "@2018", "@2017"... are parser debris from dates in the source text, not
 // accounts. Reject the shape rather than listing each year.
-const JUNK_NAME_PATTERNS = [/^@?\d{4}$/, /^@?\d+$/];
+//
+// Team and league PR handles (@mavspr, @twolves_pr, @hawkspr, @espnpr) are
+// press offices, not reporters. Jorge already ruled that for "Hawks PR" and
+// "Mavs PR" by name; this catches the handle form of the same accounts. It is
+// deliberately narrow: only a handle (no spaces) ending in "pr", so reporter
+// handles like @keithsmithnba or @schultz_report are untouched.
+const JUNK_NAME_PATTERNS = [/^@?\d{4}$/, /^@?\d+$/, /^@sports$/];
+const PR_HANDLE = /^@?[a-z0-9_]+pr$/;
 function isJunkReporterName(name) {
   const n = (name || "").trim().toLowerCase();
-  return JUNK_NAME_PATTERNS.some(re => re.test(n));
+  if (JUNK_NAME_PATTERNS.some(re => re.test(n))) return true;
+  return !/\s/.test(n) && PR_HANDLE.test(n);
 }
 
 function reclassifiedOutlet(name) {
