@@ -25,7 +25,7 @@ const vm = require("vm");
 // command line, so STATIC_PAGE_COUNT is the single source of truth: the site's
 // links and the generated directories are always the same set.
 const COUNT_OVERRIDE = process.argv[2] ? parseInt(process.argv[2], 10) : null;
-const SITE = "https://jsierrahoopshype.github.io/reporter-rankings";
+const SITE = "https://hoopsmatic.com/reporter-rankings";
 const OUT_DIR = "reporter";
 
 function esc(s) {
