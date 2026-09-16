@@ -1174,6 +1174,28 @@ CANONICAL_AFFILIATIONS = {
     "adam zagoria":         ("Adam Zagoria", "ZagsBlog / Forbes"),
     "tom moore":            ("Tom Moore", "Bucks County Courier Times"),
 
+    # --- Top 100 "Unknown" sweep, September 2026 -------------------------
+    # Verified this session (both had changed employer in 2026):
+    "bill oram":            ("Bill Oram", "The Oregonian"),
+    "ryan ward":            ("Ryan Ward", "Lakers on SI (previously Lakers Nation)"),
+    # Long-standing affiliations:
+    "dwain price":          ("Dwain Price", "Mavs.com"),
+    "earl k. sneed":        ("Earl K. Sneed", "Mavs.com"),
+    "jeff goodman":         ("Jeff Goodman", "The Field of 68"),
+    "paul garcia":          ("Paul Garcia", "Project Spurs"),
+    "jared weiss":          ("Jared Weiss", "The Athletic"),
+    "andrew greif":         ("Andrew Greif", "The Athletic"),
+    "emiliano carchia":     ("Emiliano Carchia", "Sportando"),
+    "ben golliver":         ("Ben Golliver", "Washington Post"),
+    "candace buckner":      ("Candace Buckner", "Washington Post"),
+    "steve kyler":          ("Steve Kyler", "Basketball Insiders"),
+    "ethan j. skolnick":    ("Ethan J. Skolnick", "Five Reasons Sports"),
+    "eric walden":          ("Eric Walden", "Salt Lake Tribune"),
+    "chris vivlamore":      ("Chris Vivlamore", "Atlanta Journal-Constitution"),
+    "royce young":          ("Royce Young", "ESPN"),
+    "jerry zgoda":          ("Jerry Zgoda", "Minnesota Star Tribune"),
+    "brian robb":           ("Brian Robb", "MassLive"),
+
     # --- promoted from the frontend REPORTER_TO_OUTLET map ------------------
     # These were being fixed at display time only, which left the underlying
     # data saying "Unknown" and made every consumer of reporter_data.js wrong.
