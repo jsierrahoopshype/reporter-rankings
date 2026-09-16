@@ -1186,7 +1186,7 @@ CANONICAL_AFFILIATIONS = {
     "jared weiss":          ("Jared Weiss", "The Athletic"),
     "andrew greif":         ("Andrew Greif", "The Athletic"),
     "emiliano carchia":     ("Emiliano Carchia", "Sportando"),
-    "ben golliver":         ("Ben Golliver", "Washington Post"),
+    "ben golliver":         ("Ben Golliver", "ESPN"),
     "candace buckner":      ("Candace Buckner", "Washington Post"),
     "steve kyler":          ("Steve Kyler", "Basketball Insiders"),
     "ethan j. skolnick":    ("Ethan J. Skolnick", "Five Reasons Sports"),
@@ -1195,6 +1195,29 @@ CANONICAL_AFFILIATIONS = {
     "royce young":          ("Royce Young", "ESPN"),
     "jerry zgoda":          ("Jerry Zgoda", "Minnesota Star Tribune"),
     "brian robb":           ("Brian Robb", "MassLive"),
+
+    # --- Sept 16 batch, supplied by Jorge --------------------------------
+    "yossi gozlan":         ("Yossi Gozlan", "The Third Apron"),
+    "bobby krivitsky":      ("Bobby Krivitsky", "Sports Illustrated"),
+    "daniel donabedian":    ("Daniel Donabedian", "ClutchPoints"),
+    "justin martinez":      ("Justin Martinez", "The Oklahoman"),
+    "pablo torre":          ("Pablo Torre", "Pablo Torre Finds Out"),
+    "jon chepkevich":       ("Jon Chepkevich", "DraftExpress"),
+    "shamit dua":           ("Shamit Dua", "In the NO"),
+    "olgun uluc":           ("Olgun Uluc", "ESPN"),
+    "benjamin royer":       ("Benjamin Royer", "Orange County Register"),
+    "john gambadoro":       ("John Gambadoro", "Arizona Sports 98.7 FM"),
+    "kevin o'connor":       ("Kevin O'Connor", "Yahoo! Sports"),
+    "dushawn london":       ("Dushawn London", "247Sports"),
+    "vincent goodwill":     ("Vincent Goodwill", "ESPN"),
+    "noa dolzell":          ("Noa Dolzell", "CelticsBlog"),
+    "dalton johnson":       ("Dalton Johnson", "NBC Sports"),
+    "varun shankar":        ("Varun Shankar", "Houston Chronicle"),
+    "alexa philippou":      ("Alexa Philippou", "ESPN"),
+    "jason quick":          ("Jason Quick", "The Athletic"),
+    "zach lowe":            ("Zach Lowe", "The Ringer"),
+    "hunter patterson":     ("Hunter Patterson", "The Athletic"),
+    "john karalis":         ("John Karalis", "Sports Illustrated"),
 
     # --- promoted from the frontend REPORTER_TO_OUTLET map ------------------
     # These were being fixed at display time only, which left the underlying
