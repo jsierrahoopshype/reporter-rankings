@@ -422,6 +422,21 @@ normalizeReporterName = function (name) {
    Shared state + data build
    ========================================================================== */
 
+/* Outlets that carry no information. When several source rows merge into one
+   reporter, a real outlet on any of them beats these, regardless of which row
+   happened to have the most mentions. Without this, merging a handle row
+   (outlet "X/Twitter") into a named row can overwrite a correct affiliation
+   purely because the handle had more volume. */
+const PLACEHOLDER_OUTLETS = new Set(["", "unknown", "x/twitter", "twitter", "n/a"]);
+
+function betterOutlet(current, candidate) {
+  const cur = (current || "").toLowerCase().trim();
+  const cand = (candidate || "").toLowerCase().trim();
+  if (PLACEHOLDER_OUTLETS.has(cand)) return current;      // never downgrade
+  if (PLACEHOLDER_OUTLETS.has(cur)) return candidate;     // upgrade a placeholder
+  return current;                                         // first real one wins
+}
+
 const RR = {
   reporters: [],
   outlets: [],
@@ -530,6 +545,7 @@ function buildData() {
       };
     }
     const m = reporterMap[key];
+    m.outlet = betterOutlet(m.outlet, getReporterOutlet(name, r.outlet));
     if (r.id) m.srcIds.push(r.id);   // merged aliases keep every source id
     m.total += r.total || 0;
 
