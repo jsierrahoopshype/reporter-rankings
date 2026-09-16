@@ -1218,6 +1218,10 @@ CANONICAL_AFFILIATIONS = {
     "zach lowe":            ("Zach Lowe", "The Ringer"),
     "hunter patterson":     ("Hunter Patterson", "The Athletic"),
     "john karalis":         ("John Karalis", "Sports Illustrated"),
+    "nick friedell":        ("Nick Friedell", "The Athletic"),
+    "alex kennedy":         ("Alex Kennedy", "PFSN"),
+    "chase hughes":         ("Chase Hughes", "Monumental Sports Network"),
+    "chema de lucas":       ("Chema de Lucas", "Independent"),
 
     # --- promoted from the frontend REPORTER_TO_OUTLET map ------------------
     # These were being fixed at display time only, which left the underlying
