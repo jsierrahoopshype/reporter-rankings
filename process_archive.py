@@ -1169,6 +1169,10 @@ CANONICAL_AFFILIATIONS = {
     "simonas baranauskas":  ("Simonas Baranauskas", "FIBA.com (historical)"),
     "vin parise":           ("Vin Parise", "NBC Sports / SNY (historical)"),
     "connor letourneau":    ("Connor Letourneau", "San Francisco Chronicle (no longer on the NBA beat)"),
+    "mark berman":          ("Mark Berman", "FOX 26 Houston"),
+    "justin kubatko":       ("Justin Kubatko", "Statitudes"),
+    "adam zagoria":         ("Adam Zagoria", "ZagsBlog / Forbes"),
+    "tom moore":            ("Tom Moore", "Bucks County Courier Times"),
 
     # --- promoted from the frontend REPORTER_TO_OUTLET map ------------------
     # These were being fixed at display time only, which left the underlying
@@ -1310,6 +1314,9 @@ def _apply_canonical_layer():
 
 
 CANONICAL_REPORT = _apply_canonical_layer()
+
+# Analysts are not reporters. He is an ex-player giving takes, and vouching for
+# him while the roster filter drops Barkley, Jefferson and Frye is arbitrary.
 REPORTERS_DB.pop("kendrick perkins", None)
 
 

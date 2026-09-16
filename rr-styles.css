@@ -412,3 +412,19 @@ table.hm tbody td{border-bottom:1px solid var(--border);border-right:1px solid r
 .related a .ro{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-secondary);font-weight:500}
 .bd-row .lbl a{color:var(--text)}
 .bd-row .lbl a:hover{color:var(--accent)}
+
+/* ---- mobile pass, Sept 2026 ----
+   The player picker can run to 60 buttons and the team picker to 30, which on a
+   phone pushed the actual ranking below two screens of chips. Cap their height
+   and let them scroll in place. */
+@media(max-width:860px){
+  .picker{max-height:7.5rem;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    padding:.35rem;border:1px solid var(--border);border-radius:9px;background:var(--surface)}
+  .picker button{font-size:.7rem;padding:.35rem .5rem}
+  .related{grid-template-columns:1fr}
+  .breakdown{gap:.6rem}
+  .seo{font-size:.8rem}
+  .esearch-wrap{max-width:100%}
+  /* tap targets: rows in the card view need room for a thumb */
+  .cards .card{padding:.8rem .85rem}
+}
