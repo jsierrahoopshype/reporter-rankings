@@ -119,8 +119,8 @@ function render() {
     '<div class="section"><h2>Mentions by month</h2><div class="hint">Every dated mention in the archive.</div>' +
       monthlyChart(r) + '</div>' +
     '<div class="breakdown">' +
-      '<div class="section"><h2>Teams covered</h2>' + bars(r.byTeam, 12, t => teamHref(t, 0)) + '</div>' +
-      '<div class="section"><h2>Players covered</h2>' + bars(r.byPlayer, 12, p => playerHref(p, 0)) + '</div>' +
+      '<div class="section"><h2>Teams covered</h2>' + bars(r.byTeam, 12, t => teamHref(t)) + '</div>' +
+      '<div class="section"><h2>Players covered</h2>' + bars(r.byPlayer, 12, p => playerHref(p)) + '</div>' +
     '</div>' +
     '<div class="breakdown">' +
       '<div class="section"><h2>Topics</h2>' + bars(r.byTopic, 8) + '</div>' +

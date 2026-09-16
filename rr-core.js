@@ -314,13 +314,23 @@ function getReporterOutlet(name, defaultOutlet) {
 // Handles that belong to a named reporter already in the rankings. Merging
 // them means the handle's mentions land on the person rather than sitting as a
 // separate stub. Only handles Jorge has identified go here.
+// Outlets for reporters the data file only knows by handle. getReporterOutlet
+// checks this map before the row's own outlet, so it wins over "X/Twitter".
+Object.assign(REPORTER_TO_OUTLET, {
+  "chema de lucas": "Independent"
+});
+
 Object.assign(HANDLE_TO_NAME, {
   "kevinoconnor":  "Kevin O'Connor",
-  "pablofindsout": "Pablo Torre"
+  "pablofindsout": "Pablo Torre",
+  "chemadelucas":  "Chema de Lucas"
 });
 
 // Accounts that are not reporters.
 [
+  // Sept 16, second pass: players and a non-reporter specialist.
+  "etienne catalan", "@kylekuzma", "kylekuzma", "kingston flemings",
+  "@enesfreedom", "enesfreedom",
   // Sept 16 pass: aggregators, show accounts, ex-players and executives.
   // Eddie Johnson is an analyst rather than a reporter, same ruling as Perkins;
   // the middle-initial spelling goes with him.
@@ -458,6 +468,7 @@ const PERIODS = [
    ?period=7|30|90|180|365|all . Every nav link carries it, so switching pages
    keeps the filter and a filtered view can be pasted to someone else. */
 const DEFAULT_DAYS = 90;   // a page with no ?period= opens on the last 3 months
+RR.days = DEFAULT_DAYS;    // so links built before bootPage() runs carry it too
 
 function periodFromUrl() {
   const raw = new URLSearchParams(location.search).get("period");
