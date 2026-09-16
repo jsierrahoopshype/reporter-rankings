@@ -124,6 +124,25 @@ ROSTER = set()
 REJECTED_PLAYERS = []
 
 
+def canonical_outlet(name, fallback):
+    """Outlet from the canonical database, by display name or key.
+
+    Aggregates for parts 1..N-1 are cached and never recomputed, so they carry
+    whatever outlet was known when they were first built. Resolving here means a
+    new affiliation in process_archive.py takes effect on the very next run
+    instead of needing a full --rebuild-all.
+    """
+    try:
+        import process_archive as pa
+        db = pa.REPORTERS_DB
+    except Exception:
+        return fallback
+    entry = db.get((name or "").lower()) or db.get(norm_name(name))
+    if entry and entry.get("outlet"):
+        return entry["outlet"]
+    return fallback
+
+
 def is_player_not_reporter(name):
     """Reject a name that matches the NBA roster, UNLESS the canonical reporter
     database vouches for it. That protects ex-players who became media (Kendrick
@@ -331,7 +350,7 @@ def merge(part_aggs):
         reporter_list.append({
             "id": key,
             "name": s["name"],
-            "outlet": s["outlet"],
+            "outlet": canonical_outlet(s["name"], s["outlet"]),
             "tier": s["tier"],
             "avatar": initials,
             "total": s["total"],
