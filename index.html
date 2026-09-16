@@ -24,7 +24,6 @@
 
   <div class="hdr">
     <h1>NBA Reporter Rankings</h1>
-    <span class="brand">HoopsMatic</span>
   </div>
   <div class="subtitle">Every reporter ranked by how often they are cited in the HoopsHype rumors archive. This counts attributions, not scoops.</div>
 
@@ -59,20 +58,6 @@
 
 let days = RR.days;
 
-function statStrip() {
-  const rs = reporterStats(days), os_ = outletStats(days);
-  const mentions = rs.reduce((s, r) => s + r.filtered, 0);
-  return '<div class="stat-cards four">' +
-    card("Reporters", num(rs.length)) +
-    card("Mentions", num(mentions)) +
-    card("Outlets", num(os_.length)) +
-    card("Period", periodLabel(days)) +
-    '</div>';
-}
-function card(l, v) {
-  return '<div class="stat-card"><div class="lbl">' + l + '</div><div class="num">' + v + '</div></div>';
-}
-
 function changeCell(r) {
   if (days === 0 || days > 180) return '<span class="dash">-</span>';
   if (r.prev === 0 && r.filtered === 0) return '<span class="dash">-</span>';
@@ -85,7 +70,7 @@ function changeCell(r) {
 function render() {
   const rows = reporterStats(days).slice(0, 100);
   if (!rows.length) {
-    document.getElementById("app").innerHTML = statStrip() +
+    document.getElementById("app").innerHTML =
       '<div class="empty">No mentions in this period.</div>';
     return;
   }
@@ -97,7 +82,7 @@ function render() {
     rows.map((r, i) =>
       '<tr onclick="location.href=\'' + reporterHref(r) + '\'">' +
       '<td class="rank">' + (i + 1) + '</td>' +
-      '<td class="name"><span class="rowname"><span class="av">' + esc(r.avatar) + '</span>' +
+      '<td class="name"><span class="rowname">' +
         '<span class="txt"><span class="n">' + esc(r.name) + '</span>' +
         '<span class="o">' + esc(r.outlet) + '</span></span></span></td>' +
       '<td class="pct">' + num(r.filtered) + '</td>' +
@@ -114,11 +99,11 @@ function render() {
       (total ? (r.filtered / total * 100).toFixed(1) + "%" : "-") +
       '<span class="lbl">Change</span>' + changeCell(r) + '</div></div>').join("") + '</div>';
 
-  document.getElementById("app").innerHTML = statStrip() + table + cards;
+  document.getElementById("app").innerHTML = table + cards;
 }
 
 bootPage(() => {
-  days = RR.days;   // bootPage read ?period= into RR.days; the page-level copy was set before that
+  days = RR.days;   // set by bootPage from ?period=, after this script's top-level ran
   const pick = d => { days = d; RR.days = d; setPeriodInUrl(d); renderPeriodChips(days, pick); render(); };
   renderPeriodChips(days, pick);
   setPeriodInUrl(days);

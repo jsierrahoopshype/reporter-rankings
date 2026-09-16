@@ -24,7 +24,6 @@
 
   <div class="hdr">
     <h1>Coverage by Player</h1>
-    <span class="brand">HoopsMatic</span>
   </div>
   <div class="subtitle">Search a player to see the reporters closest to his news.</div>
 
@@ -104,7 +103,7 @@ function render() {
     '</tr></thead><tbody>' + rows.map((x, i) =>
       '<tr onclick="location.href=\'' + reporterHref(x.r) + '\'">' +
       '<td class="rank">' + (i + 1) + '</td>' +
-      '<td class="name"><span class="rowname"><span class="av">' + esc(x.r.avatar) + '</span>' +
+      '<td class="name"><span class="rowname">' +
       '<span class="txt"><span class="n">' + esc(x.r.name) + '</span><span class="o">' +
       esc(x.r.outlet) + '</span></span></span></td>' +
       '<td class="pct">' + num(x.n) + '</td>' +
@@ -121,7 +120,7 @@ function render() {
 }
 
 bootPage(() => {
-  days = RR.days;   // bootPage read ?period= into RR.days; the page-level copy was set before that
+  days = RR.days;   // set by bootPage from ?period=, after this script's top-level ran
   const pick = d => { days = d; RR.days = d; setPeriodInUrl(d); renderPeriodChips(days, pick); render(); };
   renderPeriodChips(days, pick);
   setPeriodInUrl(days);
