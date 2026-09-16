@@ -311,8 +311,23 @@ function getReporterOutlet(name, defaultOutlet) {
   "jabari smith jr", "jabari smith jr.", "mike dunleavy jr", "mike dunleavy jr."
 ].forEach(n => EXCLUDED_REPORTERS.add(n));
 
+// Handles that belong to a named reporter already in the rankings. Merging
+// them means the handle's mentions land on the person rather than sitting as a
+// separate stub. Only handles Jorge has identified go here.
+Object.assign(HANDLE_TO_NAME, {
+  "kevinoconnor":  "Kevin O'Connor",
+  "pablofindsout": "Pablo Torre"
+});
+
 // Accounts that are not reporters.
 [
+  // Sept 16 pass: aggregators, show accounts, ex-players and executives.
+  // Eddie Johnson is an analyst rather than a reporter, same ruling as Perkins;
+  // the middle-initial spelling goes with him.
+  "@thedunkcentral", "thedunkcentral", "eddie johnson", "eddie a. johnson",
+  "@draymondshow", "draymondshow", "@dru_star", "dru_star",
+  "crazy stats", "@crazystats", "bob myers", "glen davis",
+  "@phnx_suns", "phnx_suns",
   "heat central", "heat centel", "@thenbabase", "thenbabase",
   "@thenbacentral", "thenbacentral", "@thenbahustle",
   "legion hoops", "@legionhoops", "legion sports",
