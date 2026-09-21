@@ -102,7 +102,7 @@ const EXCLUDED_REPORTERS = new Set([
 // Excluded outlets
 const EXCLUDED_OUTLETS = new Set([
     "youtube", "reddit", "twitter", "x.com", "instagram", "facebook", 
-    "tiktok", "threads", "unknown", "@kcjhoop"
+    "tiktok", "threads", "unknown", "@kcjhoop", "bluesky"
 ].map(s => s.toLowerCase()));
 
 // Handle to reporter name mapping
@@ -324,6 +324,14 @@ Object.assign(HANDLE_TO_NAME, {
   "kevinoconnor":  "Kevin O'Connor",
   "pablofindsout": "Pablo Torre",
   "chemadelucas":  "Chema de Lucas"
+});
+
+// The @hoopshype account posts are Jorge's. The key keeps its "@" on purpose:
+// normalizeReporterName checks NAME_CORRECTIONS with the raw lowercased name,
+// so only the handle form folds in and the bare outlet name "HoopsHype" is
+// left alone. Adding "hoopshype" to HANDLE_TO_NAME would catch both.
+Object.assign(NAME_CORRECTIONS, {
+  "@hoopshype": "Jorge Sierra"
 });
 
 // Accounts that are not reporters.
