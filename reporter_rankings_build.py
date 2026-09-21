@@ -33,6 +33,7 @@ import re
 import shutil
 import sys
 import tempfile
+import unicodedata
 from collections import defaultdict
 from datetime import datetime
 
@@ -103,6 +104,18 @@ def norm_name(n):
     return (n or "").lower().replace(".", "").replace("  ", " ").strip()
 
 
+def fold_accents(s):
+    """Strip combining marks so "Nikola Vucevic" matches "Nikola Vucevic".
+
+    players_all.json carries the properly accented spelling and the archive
+    does not, so the roster lookup missed every accented player. Deliberately
+    separate from norm_name(), which canonical_outlet uses to hit REPORTERS_DB
+    keys that are stored unfolded.
+    """
+    return "".join(c for c in unicodedata.normalize("NFKD", s or "")
+                   if not unicodedata.combining(c))
+
+
 def load_roster():
     """Player names to reject. Returns an empty set on any failure, which means
     the build degrades to the old behaviour rather than dropping everyone."""
@@ -110,7 +123,8 @@ def load_roster():
         r = requests.get(ROSTER_URL, timeout=60)
         r.raise_for_status()
         players = r.json().get("players", [])
-        names = {norm_name(p.get("full_name")) for p in players if p.get("full_name")}
+        names = {fold_accents(norm_name(p.get("full_name")))
+                 for p in players if p.get("full_name")}
         names.discard("")
         print(f"Loaded {len(names):,} player names for the reporter filter")
         return names
@@ -157,7 +171,7 @@ def is_player_not_reporter(name):
     n = norm_name(name)
     if n in known or (name or "").lower() in known:
         return False
-    return n in ROSTER
+    return fold_accents(n) in ROSTER
 
 
 def part_count():
