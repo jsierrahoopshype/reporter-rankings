@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-21T13:39:03.897732",
+ "generated_at": "2026-09-21T22:23:38.997414",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 909
+  "rejected_as_player": 923
  },
  "checks": {
   "unknown_outlet": [
@@ -347,10 +347,6 @@
    [
     "Ben Anderson",
     283
-   ],
-   [
-    "Sarah Todd",
-    281
    ],
    [
     "Ben Rohrbach",
@@ -785,15 +781,15 @@
     114
    ],
    [
+    "Legion Hoops",
+    114
+   ],
+   [
     "Kyle Ratke",
     113
    ],
    [
     "Jamie Hudson",
-    113
-   ],
-   [
-    "Legion Hoops",
     113
    ],
    [
@@ -811,6 +807,10 @@
    [
     "Dan Gelston",
     109
+   ],
+   [
+    "Sole Collector",
+    108
    ]
   ],
   "name_matches_team": [],
@@ -1447,6 +1447,10 @@
     96
    ],
    [
+    "Tyrese Haliburton",
+    96
+   ],
+   [
     "Chandler Parsons",
     94
    ],
@@ -1455,7 +1459,7 @@
     94
    ],
    [
-    "Tyrese Haliburton",
+    "Jusuf Nurkic",
     94
    ],
    [
@@ -1559,8 +1563,16 @@
     66
    ],
    [
+    "Nikola Vucevic",
+    66
+   ],
+   [
     "Iman Shumpert",
     65
+   ],
+   [
+    "Luka Doncic",
+    64
    ],
    [
     "Blake Griffin",
@@ -1793,6 +1805,10 @@
    [
     "Jaren Jackson Jr.",
     41
+   ],
+   [
+    "Bogdan Bogdanovic",
+    40
    ],
    [
     "Eric Gordon",
@@ -2041,22 +2057,6 @@
    [
     "Langston Galloway",
     23
-   ],
-   [
-    "Grant Williams",
-    23
-   ],
-   [
-    "Jordan Crawford",
-    22
-   ],
-   [
-    "Jonas Jerebko",
-    22
-   ],
-   [
-    "Ray Allen",
-    22
    ]
   ]
  }
