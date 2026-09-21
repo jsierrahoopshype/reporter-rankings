@@ -1173,6 +1173,7 @@ CANONICAL_AFFILIATIONS = {
     "justin kubatko":       ("Justin Kubatko", "Statitudes"),
     "adam zagoria":         ("Adam Zagoria", "ZagsBlog / Forbes"),
     "tom moore":            ("Tom Moore", "Bucks County Courier Times"),
+    "sarah todd":           ("Sarah Todd", "Minnesota Star Tribune"),
 
     # --- Top 100 "Unknown" sweep, September 2026 -------------------------
     # Verified this session (both had changed employer in 2026):
