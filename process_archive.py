@@ -552,7 +552,7 @@ REPORTERS_DB = {
     },
     "chris hine": {
         "name": "Chris Hine",
-        "outlet": "Minneapolis Star Tribune",
+        "outlet": "Minnesota Star Tribune",
         "tier": 3,
         "handles": ["chrishinemn"],
         "variations": ["hine"]

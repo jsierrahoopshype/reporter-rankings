@@ -320,6 +320,18 @@ Object.assign(REPORTER_TO_OUTLET, {
   "chema de lucas": "Independent"
 });
 
+// The paper rebranded from "Minneapolis Star Tribune" to "Minnesota Star
+// Tribune" in 2024 and the archive carries every spelling it ever used, which
+// split one outlet across three rows. normalizeOutletName compares the whole
+// string, so "Terre Haute Tribune-Star" and the other Tribune/Star papers are
+// untouched.
+Object.assign(OUTLET_NORMALIZE, {
+  "Minneapolis Star-Tribune": "Minnesota Star Tribune",
+  "Minneapolis Star Tribune": "Minnesota Star Tribune",
+  "Star Tribune":             "Minnesota Star Tribune",
+  "StarTribune":              "Minnesota Star Tribune"
+});
+
 Object.assign(HANDLE_TO_NAME, {
   "kevinoconnor":  "Kevin O'Connor",
   "pablofindsout": "Pablo Torre",
@@ -336,6 +348,15 @@ Object.assign(NAME_CORRECTIONS, {
 
 // Accounts that are not reporters.
 [
+  // Sept 22: Magic Johnson's own account. The "magic johnson" entry further up
+  // only catches the spaced spelling, so the handle forms came through.
+  "@magicjohnson", "magicjohnson", "via magicjohnson",
+  // Sept 22: the Orlando Magic's own team accounts, same ruling as the team PR
+  // handles above. @magic_prdish is not caught by the PR_HANDLE rule because it
+  // does not end in "pr". @omagicdaily stays out of this: it is Orlando Magic
+  // Daily, a real blog, and is reclassified to an outlet below.
+  "orlando magic", "@orlandomagic", "orlandomagic",
+  "@magic_prdish", "magic_prdish",
   // Sept 16, second pass: players and a non-reporter specialist.
   "etienne catalan", "@kylekuzma", "kylekuzma", "kingston flemings",
   "@enesfreedom", "enesfreedom",
