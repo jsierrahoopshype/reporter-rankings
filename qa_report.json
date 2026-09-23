@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-22T12:22:32.353137",
+ "generated_at": "2026-09-23T12:34:52.379614",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,13 +8,13 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 923
+  "rejected_as_player": 924
  },
  "checks": {
   "unknown_outlet": [
    [
     "Clutch Points",
-    1659
+    1660
    ],
    [
     "Ken Berger",
@@ -137,12 +137,12 @@
     550
    ],
    [
-    "David Hardisty",
+    "Joe Freeman",
     534
    ],
    [
-    "Joe Freeman",
-    533
+    "David Hardisty",
+    534
    ],
    [
     "Rick Noland",
@@ -398,7 +398,7 @@
    ],
    [
     "Adam Wexler",
-    246
+    247
    ],
    [
     "Eric Smith",
@@ -1327,20 +1327,20 @@
     177
    ],
    [
+    "Kyrie Irving",
+    177
+   ],
+   [
     "Rudy Gobert",
     176
    ],
    [
-    "Kyrie Irving",
+    "Kendrick Perkins",
     175
    ],
    [
     "Spencer Dinwiddie",
     175
-   ],
-   [
-    "Kendrick Perkins",
-    174
    ],
    [
     "Josh Hart",
