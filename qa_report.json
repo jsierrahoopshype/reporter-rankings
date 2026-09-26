@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-25T12:35:07.924471",
+ "generated_at": "2026-09-26T12:04:26.598899",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 924
+  "rejected_as_player": 925
  },
  "checks": {
   "unknown_outlet": [
@@ -625,12 +625,12 @@
     151
    ],
    [
-    "Steve Luhm",
+    "Darren Rovell",
     149
    ],
    [
-    "Darren Rovell",
-    148
+    "Steve Luhm",
+    149
    ],
    [
     "Sean Grande",
@@ -773,15 +773,15 @@
     116
    ],
    [
+    "Legion Hoops",
+    115
+   ],
+   [
     "Alex Raskin",
     114
    ],
    [
     "Geoff Calkins",
-    114
-   ],
-   [
-    "Legion Hoops",
     114
    ],
    [
@@ -802,7 +802,7 @@
    ],
    [
     "Steve Aschburner",
-    109
+    110
    ],
    [
     "Dan Gelston",
@@ -1308,7 +1308,7 @@
    ],
    [
     "Stephen Curry",
-    209
+    210
    ],
    [
     "Kevin Love",
@@ -1443,11 +1443,11 @@
     103
    ],
    [
-    "Chris Bosh",
-    96
+    "Tyrese Haliburton",
+    97
    ],
    [
-    "Tyrese Haliburton",
+    "Chris Bosh",
     96
    ],
    [
@@ -1464,7 +1464,7 @@
    ],
    [
     "Steve Nash",
-    88
+    89
    ],
    [
     "Stephon Marbury",
@@ -1523,16 +1523,16 @@
     73
    ],
    [
+    "Tony Allen",
+    72
+   ],
+   [
     "Austin Rivers",
     72
    ],
    [
     "Danny Green",
     72
-   ],
-   [
-    "Tony Allen",
-    71
    ],
    [
     "Joe Ingles",
@@ -2039,6 +2039,10 @@
     23
    ],
    [
+    "Ray Allen",
+    23
+   ],
+   [
     "John Henson",
     23
    ],
@@ -2052,10 +2056,6 @@
    ],
    [
     "Andrew Wiggins",
-    23
-   ],
-   [
-    "Langston Galloway",
     23
    ]
   ]
