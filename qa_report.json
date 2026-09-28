@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-27T12:46:52.725641",
+ "generated_at": "2026-09-28T14:58:43.959640",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 925
+  "rejected_as_player": 926
  },
  "checks": {
   "unknown_outlet": [
@@ -469,15 +469,15 @@
     215
    ],
    [
+    "Heat Central",
+    205
+   ],
+   [
     "Joe Mullinax",
     204
    ],
    [
     "Mark Followill",
-    203
-   ],
-   [
-    "Heat Central",
     203
    ],
    [
@@ -1296,7 +1296,7 @@
    ],
    [
     "Giannis Antetokounmpo",
-    249
+    250
    ],
    [
     "Trae Young",
@@ -1464,7 +1464,7 @@
    ],
    [
     "Steve Nash",
-    89
+    90
    ],
    [
     "Stephon Marbury",
