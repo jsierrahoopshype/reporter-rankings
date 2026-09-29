@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-28T14:58:43.959640",
+ "generated_at": "2026-09-29T13:45:33.018084",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 926
+  "rejected_as_player": 927
  },
  "checks": {
   "unknown_outlet": [
@@ -70,7 +70,7 @@
    ],
    [
     "Jim Eichenhofer",
-    687
+    688
    ],
    [
     "Harrison Faigen",
@@ -174,7 +174,7 @@
    ],
    [
     "Chris Dempsey",
-    476
+    477
    ],
    [
     "Brian T. Smith",
@@ -250,7 +250,7 @@
    ],
    [
     "Brian Mahoney",
-    383
+    384
    ],
    [
     "Ryan Blackburn",
@@ -470,7 +470,7 @@
    ],
    [
     "Heat Central",
-    205
+    206
    ],
    [
     "Joe Mullinax",
@@ -645,12 +645,12 @@
     144
    ],
    [
-    "Fred Kerber",
+    "Chris Herrington",
     143
    ],
    [
-    "Chris Herrington",
-    142
+    "Fred Kerber",
+    143
    ],
    [
     "Vivek Jacob",
@@ -753,6 +753,10 @@
     118
    ],
    [
+    "Legion Hoops",
+    117
+   ],
+   [
     "Chris Palmer",
     116
    ],
@@ -766,10 +770,6 @@
    ],
    [
     "Bill Doyle",
-    116
-   ],
-   [
-    "Legion Hoops",
     116
    ],
    [
@@ -1572,7 +1572,7 @@
    ],
    [
     "Luka Doncic",
-    64
+    65
    ],
    [
     "Blake Griffin",
@@ -1951,6 +1951,10 @@
     28
    ],
    [
+    "Michael Porter Jr",
+    28
+   ],
+   [
     "Will Barton",
     27
    ],
@@ -1988,10 +1992,6 @@
    ],
    [
     "Richaun Holmes",
-    26
-   ],
-   [
-    "Michael Porter Jr",
     26
    ],
    [
