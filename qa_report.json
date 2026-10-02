@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-01T14:11:58.714793",
+ "generated_at": "2026-10-02T13:35:27.817126",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 927
+  "rejected_as_player": 928
  },
  "checks": {
   "unknown_outlet": [
@@ -465,12 +465,12 @@
     217
    ],
    [
-    "Jorge Castillo",
-    215
+    "Heat Central",
+    216
    ],
    [
-    "Heat Central",
-    211
+    "Jorge Castillo",
+    215
    ],
    [
     "Joe Mullinax",
@@ -709,6 +709,10 @@
     123
    ],
    [
+    "Mike Finger",
+    123
+   ],
+   [
     "Tom Petrini",
     123
    ],
@@ -718,10 +722,6 @@
    ],
    [
     "Mike Tokito",
-    122
-   ],
-   [
-    "Mike Finger",
     122
    ],
    [
@@ -754,7 +754,7 @@
    ],
    [
     "Legion Hoops",
-    117
+    118
    ],
    [
     "Chris Palmer",
@@ -1320,7 +1320,7 @@
    ],
    [
     "Donovan Mitchell",
-    188
+    190
    ],
    [
     "Kobe Bryant",
