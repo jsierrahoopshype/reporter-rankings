@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-03T12:15:28.407895",
+ "generated_at": "2026-10-04T13:03:23.342116",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 928
+  "rejected_as_player": 930
  },
  "checks": {
   "unknown_outlet": [
@@ -1995,6 +1995,10 @@
     26
    ],
    [
+    "Bam Adebayo",
+    26
+   ],
+   [
     "Tiago Splitter",
     25
    ],
@@ -2016,10 +2020,6 @@
    ],
    [
     "Tyus Jones",
-    25
-   ],
-   [
-    "Bam Adebayo",
     25
    ],
    [
