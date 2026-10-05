@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-04T13:03:23.342116",
+ "generated_at": "2026-10-05T15:34:25.148041",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 930
+  "rejected_as_player": 932
  },
  "checks": {
   "unknown_outlet": [
@@ -461,12 +461,12 @@
     218
    ],
    [
-    "Ajayi Browne",
-    217
+    "Heat Central",
+    218
    ],
    [
-    "Heat Central",
-    216
+    "Ajayi Browne",
+    217
    ],
    [
     "Jorge Castillo",
@@ -549,15 +549,15 @@
     176
    ],
    [
+    "Farbod Esnaashari",
+    174
+   ],
+   [
     "Justin Verrier",
     171
    ],
    [
     "Barbara Barker",
-    171
-   ],
-   [
-    "Farbod Esnaashari",
     171
    ],
    [
@@ -1260,7 +1260,7 @@
   "rejected_as_player": [
    [
     "Draymond Green",
-    437
+    440
    ],
    [
     "Magic Johnson",
