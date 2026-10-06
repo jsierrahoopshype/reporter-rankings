@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-05T15:34:25.148041",
+ "generated_at": "2026-10-06T13:56:30.342473",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 932
+  "rejected_as_player": 934
  },
  "checks": {
   "unknown_outlet": [
@@ -457,11 +457,11 @@
     222
    ],
    [
-    "Daryl Morey",
-    218
+    "Heat Central",
+    219
    ],
    [
-    "Heat Central",
+    "Daryl Morey",
     218
    ],
    [
@@ -1475,12 +1475,12 @@
     87
    ],
    [
-    "John Wall",
-    84
+    "Steve Kerr",
+    85
    ],
    [
-    "Steve Kerr",
-    83
+    "John Wall",
+    84
    ],
    [
     "Gordon Hayward",
