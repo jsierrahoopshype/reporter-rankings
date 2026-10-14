@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-13T14:49:13.552491",
+ "generated_at": "2026-10-14T12:40:03.542875",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 952
+  "rejected_as_player": 954
  },
  "checks": {
   "unknown_outlet": [
@@ -230,7 +230,7 @@
    ],
    [
     "Noah Levick",
-    393
+    394
    ],
    [
     "Tim Kawakami",
@@ -1296,7 +1296,7 @@
    ],
    [
     "Giannis Antetokounmpo",
-    251
+    253
    ],
    [
     "Trae Young",
@@ -1495,15 +1495,15 @@
     80
    ],
    [
+    "Myles Turner",
+    78
+   ],
+   [
     "Larry Nance Jr",
     78
    ],
    [
     "Tracy McGrady",
-    77
-   ],
-   [
-    "Myles Turner",
     77
    ],
    [
@@ -1627,16 +1627,16 @@
     55
    ],
    [
+    "Rudy Gay",
+    54
+   ],
+   [
     "Marc Gasol",
     54
    ],
    [
     "Kendall Marshall",
     54
-   ],
-   [
-    "Rudy Gay",
-    53
    ],
    [
     "Baron Davis",
