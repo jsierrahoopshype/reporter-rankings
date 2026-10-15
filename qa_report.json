@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-14T12:40:03.542875",
+ "generated_at": "2026-10-15T12:28:37.593974",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 954
+  "rejected_as_player": 955
  },
  "checks": {
   "unknown_outlet": [
@@ -458,7 +458,7 @@
    ],
    [
     "Heat Central",
-    219
+    220
    ],
    [
     "Daryl Morey",
@@ -1272,7 +1272,7 @@
    ],
    [
     "Dwyane Wade",
-    373
+    374
    ],
    [
     "Jared Dudley",
@@ -1323,11 +1323,11 @@
     193
    ],
    [
-    "Kobe Bryant",
-    177
+    "Kyrie Irving",
+    178
    ],
    [
-    "Kyrie Irving",
+    "Kobe Bryant",
     177
    ],
    [
@@ -1783,6 +1783,10 @@
     42
    ],
    [
+    "Jaren Jackson Jr.",
+    42
+   ],
+   [
     "Markieff Morris",
     41
    ],
@@ -1800,10 +1804,6 @@
    ],
    [
     "Dion Waiters",
-    41
-   ],
-   [
-    "Jaren Jackson Jr.",
     41
    ],
    [
