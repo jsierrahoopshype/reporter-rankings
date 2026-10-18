@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-17T11:23:53.335496",
+ "generated_at": "2026-10-18T11:57:08.061734",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 955
+  "rejected_as_player": 956
  },
  "checks": {
   "unknown_outlet": [
@@ -1268,7 +1268,7 @@
    ],
    [
     "Kevin Durant",
-    404
+    406
    ],
    [
     "Dwyane Wade",
@@ -1352,7 +1352,7 @@
    ],
    [
     "Jaylen Brown",
-    143
+    144
    ],
    [
     "Bradley Beal",
@@ -1487,11 +1487,11 @@
     81
    ],
    [
-    "Bobby Portis",
-    80
+    "Jayson Tatum",
+    81
    ],
    [
-    "Jayson Tatum",
+    "Bobby Portis",
     80
    ],
    [
