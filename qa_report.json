@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T14:22:14.875632",
+ "generated_at": "2026-10-20T12:33:13.909885",
  "summary": {
   "unknown_outlet": 200,
   "name_matches_team": 0,
@@ -8,7 +8,7 @@
   "suspicious_handle": 0,
   "period_exceeds_total": 0,
   "subject_exceeds_reporter_total": 0,
-  "rejected_as_player": 957
+  "rejected_as_player": 958
  },
  "checks": {
   "unknown_outlet": [
@@ -166,7 +166,7 @@
    ],
    [
     "Ky Carlin",
-    484
+    486
    ],
    [
     "Sam Amico",
@@ -230,7 +230,7 @@
    ],
    [
     "Noah Levick",
-    394
+    395
    ],
    [
     "Tim Kawakami",
